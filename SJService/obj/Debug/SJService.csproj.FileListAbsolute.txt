@@ -1,0 +1,76 @@
+D:\Sandeep\SpiceStarAcademy\SJService\bin\Debug\SJService.dll.config
+D:\Sandeep\SpiceStarAcademy\SJService\bin\Debug\SJService.dll
+D:\Sandeep\SpiceStarAcademy\SJService\bin\Debug\SJService.pdb
+D:\Sandeep\SpiceStarAcademy\SJService\bin\Debug\EntityFramework.dll
+D:\Sandeep\SpiceStarAcademy\SJService\bin\Debug\EntityFramework.SqlServer.dll
+D:\Sandeep\SpiceStarAcademy\SJService\bin\Debug\SJData.dll
+D:\Sandeep\SpiceStarAcademy\SJService\bin\Debug\SJModel.dll
+D:\Sandeep\SpiceStarAcademy\SJService\bin\Debug\SJData.pdb
+D:\Sandeep\SpiceStarAcademy\SJService\bin\Debug\SJData.dll.config
+D:\Sandeep\SpiceStarAcademy\SJService\bin\Debug\SJModel.pdb
+D:\Sandeep\SpiceStarAcademy\SJService\bin\Debug\EntityFramework.xml
+D:\Sandeep\SpiceStarAcademy\SJService\bin\Debug\EntityFramework.SqlServer.xml
+D:\Sandeep\SpiceStarAcademy\SJService\obj\Debug\SJService.csprojAssemblyReference.cache
+D:\Sandeep\SpiceStarAcademy\SJService\obj\Debug\SJService.csproj.CoreCompileInputs.cache
+D:\Sandeep\SpiceStarAcademy\SJService\obj\Debug\SJService.csproj.CopyComplete
+D:\Sandeep\SpiceStarAcademy\SJService\obj\Debug\SJService.dll
+D:\Sandeep\SpiceStarAcademy\SJService\obj\Debug\SJService.pdb
+D:\gitPtojects\SpicestarERP\SJService\bin\Debug\SJService.dll.config
+D:\gitPtojects\SpicestarERP\SJService\bin\Debug\SJService.dll
+D:\gitPtojects\SpicestarERP\SJService\bin\Debug\SJService.pdb
+D:\gitPtojects\SpicestarERP\SJService\bin\Debug\EntityFramework.dll
+D:\gitPtojects\SpicestarERP\SJService\bin\Debug\EntityFramework.SqlServer.dll
+D:\gitPtojects\SpicestarERP\SJService\bin\Debug\Newtonsoft.Json.dll
+D:\gitPtojects\SpicestarERP\SJService\bin\Debug\Razorpay.dll
+D:\gitPtojects\SpicestarERP\SJService\bin\Debug\SJData.dll
+D:\gitPtojects\SpicestarERP\SJService\bin\Debug\SJModel.dll
+D:\gitPtojects\SpicestarERP\SJService\bin\Debug\SJData.pdb
+D:\gitPtojects\SpicestarERP\SJService\bin\Debug\SJData.dll.config
+D:\gitPtojects\SpicestarERP\SJService\bin\Debug\SJModel.pdb
+D:\gitPtojects\SpicestarERP\SJService\bin\Debug\EntityFramework.xml
+D:\gitPtojects\SpicestarERP\SJService\bin\Debug\EntityFramework.SqlServer.xml
+D:\gitPtojects\SpicestarERP\SJService\bin\Debug\Newtonsoft.Json.xml
+D:\gitPtojects\SpicestarERP\SJService\obj\Debug\SJService.csprojAssemblyReference.cache
+D:\gitPtojects\SpicestarERP\SJService\obj\Debug\SJService.csproj.CoreCompileInputs.cache
+D:\gitPtojects\SpicestarERP\SJService\obj\Debug\SJService.csproj.CopyComplete
+D:\gitPtojects\SpicestarERP\SJService\obj\Debug\SJService.dll
+D:\gitPtojects\SpicestarERP\SJService\obj\Debug\SJService.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\obj\Debug\SJService.csprojAssemblyReference.cache
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\obj\Debug\SJService.csproj.CoreCompileInputs.cache
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\bin\Debug\SJService.dll.config
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\bin\Debug\SJService.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\bin\Debug\SJService.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\bin\Debug\EntityFramework.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\bin\Debug\EntityFramework.SqlServer.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\bin\Debug\Newtonsoft.Json.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\bin\Debug\Razorpay.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\bin\Debug\SJData.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\bin\Debug\SJModel.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\bin\Debug\SJData.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\bin\Debug\SJData.dll.config
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\bin\Debug\SJModel.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\bin\Debug\EntityFramework.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\bin\Debug\EntityFramework.SqlServer.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\bin\Debug\Newtonsoft.Json.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\obj\Debug\SJService.csproj.CopyComplete
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\obj\Debug\SJService.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SJService\obj\Debug\SJService.pdb
+F:\SpicestarERP\SJService\bin\Debug\SJService.dll.config
+F:\SpicestarERP\SJService\bin\Debug\SJService.dll
+F:\SpicestarERP\SJService\bin\Debug\SJService.pdb
+F:\SpicestarERP\SJService\bin\Debug\EntityFramework.dll
+F:\SpicestarERP\SJService\bin\Debug\EntityFramework.SqlServer.dll
+F:\SpicestarERP\SJService\bin\Debug\Newtonsoft.Json.dll
+F:\SpicestarERP\SJService\bin\Debug\Razorpay.dll
+F:\SpicestarERP\SJService\bin\Debug\SJData.dll
+F:\SpicestarERP\SJService\bin\Debug\SJModel.dll
+F:\SpicestarERP\SJService\bin\Debug\SJData.pdb
+F:\SpicestarERP\SJService\bin\Debug\SJData.dll.config
+F:\SpicestarERP\SJService\bin\Debug\SJModel.pdb
+F:\SpicestarERP\SJService\bin\Debug\EntityFramework.xml
+F:\SpicestarERP\SJService\bin\Debug\EntityFramework.SqlServer.xml
+F:\SpicestarERP\SJService\bin\Debug\Newtonsoft.Json.xml
+F:\SpicestarERP\SJService\obj\Debug\SJService.csprojAssemblyReference.cache
+F:\SpicestarERP\SJService\obj\Debug\SJService.csproj.CopyComplete
+F:\SpicestarERP\SJService\obj\Debug\SJService.dll
+F:\SpicestarERP\SJService\obj\Debug\SJService.pdb

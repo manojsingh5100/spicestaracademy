@@ -1,0 +1,434 @@
+﻿@model SJModel.ScreeningInfoViewModel
+<link href="~/Content/ScreeningModelCss.css" rel="stylesheet" />
+<style type="text/css">
+    .disableCtrl {
+        pointer-events: none;
+        /*opacity: 0.1;*/
+    }
+</style>
+
+<form class="form-horizontal">
+    <div class="box-body">
+        <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg1" style="display:none;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong id="lblMsg1"></strong>
+        </div>
+        <div class="form-group">
+            @Html.HiddenFor(m => m.ScreeningTest.Id)
+            @Html.HiddenFor(m => m.RegId)
+            @Html.HiddenFor(m => m.SessionYr)
+            <input type="hidden" value="" id="hdnCourse" />
+            <label for="inputEmail3" class="col-sm-2 ">Registration No</label>
+            <div class="col-sm-2">
+                @Html.TextBoxFor(m => m.RegistrationId, new { @class = "form-control", placeholder = "Registration No.", disabled = "disabled" })
+            </div>
+            <label for="inputEmail3" class="col-sm-2 ">Course Name</label>
+            <div class="col-sm-2">
+                @Html.DropDownListFor(m => m.CourseId, new SelectList(Model.GetCourseList, "Id", "CourseName"), new { @class = "form-control cl", onchange = "changeCourse(this,'SessionYr','SessionName')" })
+                @*@Html.TextBoxFor(m => m.CourseName, new { @class = "form-control", placeholder = "Course Name", disabled = "disabled" })*@
+            </div>
+            <label for="inputEmail3" class="col-sm-2 ">Session</label>
+            <div class="col-sm-2">
+                @Html.TextBoxFor(m => m.SessionName, new { @class = "form-control", placeholder = "Session Name", disabled = "disabled" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 ">First Name</label>
+            <div class="col-sm-2">
+                @Html.TextBoxFor(m => m.FName, new { @class = "form-control", placeholder = "First Name", disabled = "disabled" })
+            </div>
+            <label for="inputEmail3" class="col-sm-2 ">Last Name</label>
+            <div class="col-sm-2">
+                @Html.TextBoxFor(m => m.LName, new { @class = "form-control", placeholder = "Last Name", disabled = "disabled" })
+            </div>
+            <label for="inputEmail3" class="col-sm-2 ">Date </label>
+            <div class="col-sm-2">
+                @Html.TextBoxFor(m => m.ScreeningTest.Date, new { @class = "form-control", placeholder = "Date", disabled = "disabled" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 ">Age</label>
+            <div class="col-sm-2">
+                @Html.TextBoxFor(m => m.Age, new { @class = "form-control", placeholder = "Age", disabled = "disabled" })
+            </div>
+            <label for="inputEmail3" class="col-sm-2 ">Height </label>
+            <div class="col-sm-2">
+                @Html.TextBoxFor(m => m.Height, new { @class = "form-control", placeholder = "Height", onkeypress = "return isDecimalNumber(event,this)", @maxlength = "5" })
+            </div>
+            <label for="inputEmail3" class="col-sm-2 ">Weight</label>
+            <div class="col-sm-2">
+                @Html.TextBoxFor(m => m.Weight, new { @class = "form-control", placeholder = "Weight", onkeypress = "return isDecimalNumber(event,this)", @maxlength = "5" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 ">Eye-Sight</label>
+            <div class="col-sm-1">
+                @Html.TextBoxFor(m => m.ScreeningTest.EyeSightLeft, new { @class = "form-control", placeholder = "L-Eye", value = "L - 6/6" })
+            </div>
+            <div class="col-sm-1">
+                @Html.TextBoxFor(m => m.ScreeningTest.EyeSightRight, new { @class = "form-control", placeholder = "R-Eye", value = "R - 6/6" })
+            </div>
+            <label for="inputEmail3" class="col-sm-2 ">Flying Exp.</label>
+            <div class="col-sm-2">
+                @Html.TextBoxFor(m => m.ScreeningTest.FlyingExp, new { @class = "form-control", placeholder = "Flying Exp." })
+            </div>
+            <label for="inputEmail3" class="col-sm-2 ">Id Proof</label>
+            <div class="col-sm-2">
+                @Html.DropDownListFor(m => m.ScreeningTest.DocumentMasterId, new SelectList(Model.GetDocumentList, "Id", "Name"), "Select", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 ">Passport (Date of issue) </label>
+            <div class="col-sm-2">
+                @Html.TextBoxFor(m => m.ScreeningTest.PassportIssueDateStr, new { @class = "form-control", placeholder = "dd/mm/yyyy" })
+            </div>
+            <label for="inputEmail3" class="col-sm-2 ">Passport (Date of expiry)</label>
+            <div class="col-sm-2">
+                @Html.TextBoxFor(m => m.ScreeningTest.PassportExpiryDateStr, new { @class = "form-control", placeholder = "dd/mm/yyyy" })
+            </div>
+            <label for="inputEmail3" class="col-sm-2 ">Tatto/Scar</label>
+            <div class="col-sm-2">
+                @Html.DropDownListFor(m => m.ScreeningTest.TatooOrScarId, new SelectList(Model.GetTatooList, "Id", "Name"), "Select", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group text-center" id="divbmi">
+            <br />
+            <span style="background-color:antiquewhite;padding:10px;font-weight:600" id="spncalcBMI"></span>
+        </div>
+        <hr />
+        <div class="form-group">
+            <div class="col-md-12">
+                <table class="table table-striped table-responsive" style="width:100%;margin-bottom:5px; border:solid 1px #efefef">
+                    <tr>
+                        <th width="29%">PARAMETERS</th>
+                        <th width="10%">GOOD</th>
+                        <th width="10%">FAIR</th>
+                        <th width="10%">POOR</th>
+                        <th width="41%">REMARKS</th>
+                    </tr>
+                    @if (Model.ParameterOption.Count > 0)
+                    {
+                        foreach (var item in Model.ParameterOption)
+                        {
+                            <tr class="Communicate" spid="@(item.ScreeningParameterId + "_" + item.Id)">
+                                <td><label>@item.ParameterName</label> </td>
+                                <td class="heightofField">
+                                    <label class="radio">
+                                        <input type="radio" class="parameter" onchange="CandidateSelectedRejected()" id="Good_@item.ScreeningParameterId" name="@item.ParameterName" @(item.Good ? "checked" : "")>
+                                        <span class="checkround"></span>
+                                    </label>
+                                </td>
+                                <td class="heightofField">
+                                    <label class="radio">
+                                        <input type="radio" class="parameter" onchange="CandidateSelectedRejected()" id="Fair_@item.ScreeningParameterId" name="@item.ParameterName" @(item.Fair ? "checked" : "")>
+                                        <span class="checkround"></span>
+                                    </label>
+                                </td>
+                                <td class="heightofField">
+                                    <label class="radio">
+                                        <input type="radio" class="parameter" onchange="CandidateSelectedRejected()" id="Poor_@item.ScreeningParameterId" name="@item.ParameterName" @(item.Poor ? "checked" : "")>
+                                        <span class="checkround"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <textarea id="commnicationRemark_@item.ScreeningParameterId" rows="3" placeholder="Remark" spellcheck="true">@item.Remark</textarea>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        </div>
+        <div class="form-group" style="margin-bottom:5px;">
+            <div class="col-md-12">
+                @Html.TextAreaFor(m => m.ScreeningTest.Remark, new { placeholder = "Consolidated remarks", rows = "3", spellcheck = "true" })
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $(document).ready(function () {
+        var u_type = $('#hdnRoleType').val();
+        var text = $('#hdnBtnText').val();
+        $('#ddlBatch').find('option:eq(0)').prop('selected', true);
+        '@Model.IsStandBy' == 'True' ? $('#chkstandby').iCheck('check') : $('#chkstandby').iCheck('uncheck');
+        if ('@Model.BatchId' != null && '@Model.BatchId' != ''  && '@Model.BatchId' > 0) {
+            $('#ddlBatch').val('@Model.BatchId');
+        }
+        if (u_type != undefined && u_type != null && u_type != "") {
+            if (u_type == "Admin")
+                $('#btnSubmitScreenTest').removeAttr("disabled");
+            //else if (u_type == "Deputy Manager" && text == "Screening")
+            else if (u_type == "Deputy Manager")
+                $('#btnSubmitScreenTest').removeAttr("disabled");
+            else
+                $('#btnSubmitScreenTest').attr("disabled", "disabled");
+        } else
+            $('#btnSubmitScreenTest').attr("disabled", "disabled");
+
+        $('#SettleDate').datepicker('setDate', $('#ScreeningTest_Date').val());
+        calculateBMI('@Model.Height', '@Model.Weight', 'spncalcBMI');
+
+        if ('@Model.CourseId' == '' || '@Model.CourseId' == 'Null')
+            $("#CourseId").prepend("<option value='' selected='selected'>Select Course</option>");
+        else if ('@Model.IsAnyCourseFeePay' == 'True')
+            $('#CourseId').attr("disabled", "disabled");
+        else {
+            if ($('#CourseId option:selected').text() == "MBA")
+                $("#CourseId").children("option[value^=1]").hide()
+            else if ($('.cl option:selected').text() == "BBA")
+                $("#CourseId").children("option[value^=2]").hide()
+        }
+        $('#hdnCourse').val($('.cl option:selected').text());
+
+
+        @*if ('@Model.CourseId' == '1') {
+            $('#CourseId').attr("disabled", "disabled");
+        } else {
+            debugger;
+            if ('@Model.CourseId' == '' || '@Model.CourseId' == 'Null')
+                $("#CourseId").prepend("<option value='' selected='selected'>Select Course</option>");
+            $("#CourseId").children("option[value^=1]").hide()
+        }
+
+        if ('@Model.IsAnyCourseFeePay' == 'True')
+            $('#CourseId').attr("disabled", "disabled");*@
+
+    });
+
+    $('#ScreeningTest_Date').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+    });
+    $('#ScreeningTest_PassportIssueDateStr').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+    });
+    $('#ScreeningTest_PassportExpiryDateStr').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+    });
+    $('#ScreeningTest_ReviewDateStr').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+    });
+
+    function GetBMI() {
+        var height = $('#Height').val() != "" ? $('#Height').val():0;
+        var weight = $('#Weight').val() != "" ? $('#Weight').val() : 0;
+        calculateBMI(height, weight, 'spncalcBMI');
+    }
+
+    $("#Height").blur(function () {
+        var height = $(this).val();
+        if (height == "") {
+            return false;
+        }
+        if (height < 155) {
+            var r = confirm("Height should not be less than 155cm!");
+            if (r == false) {
+                $('#Height').val('');
+                $('#Height').focus();
+            }
+        }
+        GetBMI();
+    });
+
+    $("#Weight").blur(function () {
+        var weight = $(this).val();
+        if (weight == "") {
+            return false;
+        }
+        if (weight < 38) {
+            var r = confirm("Weight should not be less than 38kg.!");
+            if (r == false) {
+                $('#Weight').val('');
+                $('#Weight').focus();
+            }
+        }
+        GetBMI();
+    });
+
+    function CandidateSelectedRejected() {
+            var isInitial = false;
+            var isSelected = false;
+            var number = 0;
+            $(".parameter").each(function () {
+                var status = $(this).attr("id").split("_")[0];
+                if ($(this).prop('checked') == true)
+                    isInitial = true;
+                if (status == "Poor" && $(this).prop('checked') == true) {
+                    isSelected = true;
+                }
+                if (status != "Poor" && $(this).prop('checked') == true)
+                    number++;
+            });
+            if (!isInitial) {
+                $('#rdbSelected').prop('checked', false);
+                $('#rdbRejected').prop('checked', false);
+                $('#chkstandby').iCheck('disable');
+                $('#ddlBatch').css('display', 'none');
+            } else {
+                if (isSelected) {
+                    $('#rdbRejected').prop('checked', true);
+                    $('#chkstandby').iCheck('enable');
+                    $('#ddlBatch').css('display', 'none');
+                }
+                else {
+                    if (number == 3) {
+                        $('#rdbSelected').prop('checked', true);
+                        $('#chkstandby').iCheck('uncheck');
+                        $('#chkstandby').iCheck('disable');
+                        $('#ddlBatch').css('display', 'block');
+                    }
+                }
+            }
+    }
+
+    function changeInDate(dateString) {
+        var dateParts = dateString.split("/");
+        return new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+    }
+
+    function changeCourse(obj, sessionyr, txtsession) {
+    var courseId = $(obj).val();
+    var sessionyr = $('#' + sessionyr).val();
+    if (courseId != null && courseId != null) {
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.Action("CandidateCourseChange", "FeeManagement"))",
+            data: { CourseId: courseId, SessionYr: sessionyr },
+            success: function (data) {
+                if (data != "") {
+                    $('#' + txtsession).val(data);
+                    SavedCourseChangeDeatil();
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed!');
+            }
+        });
+    }
+    }
+
+        function SavedCourseChangeDeatil() {
+            var courseId = $('#CourseId').val();
+            var sessionyr = $('#SessionYr').val();
+            var regNo = $('#RegistrationId').val();
+            var oldC = $('#hdnCourse').val();
+        if (courseId != null && sessionyr != null && regNo != null && oldC != null) {
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.Action("SaveCourseChange", "Registration"))",
+            data: { CourseId: courseId, SessionYr: sessionyr, RegNo: regNo, OldCourse: oldC},
+            success: function (data) {
+                if (data != "") {
+                    $("#lblMsg1").text(data);
+                    $("#dvMsg1").css("display", "block");
+                    $('#hdnCourse').val($('.cl option:selected').text());
+                    Table.draw(false);
+                    setTimeout(function () {
+                        $("#dvMsg1").css("display", "none");
+                    }, 8000);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed!');
+            }
+        });
+      }
+    }
+
+    function submitScreenTest() {
+        // Screen
+        Loading();
+        var passportExpiryDate = changeInDate($('#ScreeningTest_PassportExpiryDateStr').val().replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+        var passportIssueDate = changeInDate($('#ScreeningTest_PassportIssueDateStr').val().replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+        if ($('#ScreeningTest_PassportExpiryDateStr').val() != "" && $('#ScreeningTest_PassportIssueDateStr').val()!="" &&  (passportExpiryDate  <= passportIssueDate)) {
+            $("#lblMsg1").text('Passport expiry date should not greater or equal than issue date!');
+            $("#dvMsg1").css("display", "block");
+            setTimeout(function () {
+                $("#dvMsg1").css("display", "none");
+            }, 8000);
+            $('#modal-default').animate({
+                scrollTop: $("#dvMsg1").offset().top
+            }, 2000);
+            return false;
+            StopLoading();
+        }
+
+        var screenTest = {};
+        screenTest.RegistrationId = getValue('RegistrationId');
+        screenTest.Id = getValue('ScreeningTest_Id');
+        screenTest.EyeSightLeft = getValue('ScreeningTest_EyeSightLeft');
+        screenTest.EyeSightRight = getValue('ScreeningTest_EyeSightRight');
+        screenTest.FlyingExp = getValue('ScreeningTest_FlyingExp');
+        screenTest.DocumentMasterId = getValue('ScreeningTest_DocumentMasterId');
+        screenTest.PassportIssueDateStr = getValue('ScreeningTest_PassportIssueDateStr');
+        screenTest.PassportExpiryDateStr = getValue('ScreeningTest_PassportExpiryDateStr');
+        screenTest.TatooOrScarId = getValue('ScreeningTest_TatooOrScarId');
+        screenTest.Interviewer = getValue('ScreeningTest_Interviewer');
+        screenTest.ReviewDateStr = getValue('ScreeningTest_ReviewDateStr');
+        screenTest.Remark = getValue('ScreeningTest_Remark');
+        // Parameter
+        var screenParameterOp = [];
+        var screenInterViewerOp = [];
+        $('.Communicate').each(function () {
+            var parameterOp = {};
+            var spid = $(this).attr('spid').split('_');
+            parameterOp.ScreeningTestId = getValue('ScreeningTest_Id');
+            parameterOp.Remark = getValue('commnicationRemark_' + spid[0]);
+            parameterOp.ScreeningParameterId = spid[0];
+            parameterOp.Id = spid[1];
+            parameterOp.Good = $('#Good_' + spid[0]).prop('checked');
+            parameterOp.Fair = $('#Fair_' + spid[0]).prop('checked');
+            parameterOp.Poor = $('#Poor_' + spid[0]).prop('checked');
+            screenParameterOp.push(parameterOp);
+        });
+        var j = 1;
+        $(".interview").each(function () {
+            var siid = $(this).attr("siid").split("_");
+            var interViewOP = {};
+            interViewOP.ScreeningTestId = getValue('ScreeningTest_Id');
+            interViewOP.Remark = getValue('interviewRemark_' + (siid[0]));
+            interViewOP.ScreeningInterviewerId = siid[0];
+            interViewOP.Id = siid[1];
+            interViewOP.IsResult = $('#rdbresult_' + siid[0]).prop('checked');
+            screenInterViewerOp.push(interViewOP);
+        });
+        var model = {};
+        model.ScreeningTest = screenTest;
+        model.IsStandBy = $('#chkstandby').prop('checked');
+        model.ParameterOption = screenParameterOp;
+        model.InterviewOption = screenInterViewerOp;
+        model.RegistrationId = getValue('RegistrationId');
+        model.RegId = getValue('RegId');
+        model.BatchId = getValue('ddlBatch');
+        model.Height = getValue('Height');
+        model.Weight = getValue('Weight');
+        model.CreatedDate = $('#SettleDate').val();
+                    $.ajax({
+                cache: false,
+                type: "POST",
+                url: "@(Url.Action("ScreeningTestSubmit", "Registration"))",
+                data: { Model: model},
+                success: function(data) {
+                    if (data != "") {
+                        $('#lblMsg').text(data);
+                        Table.draw(false);
+                        checkMsg();
+                        $("#modal-default .close").click();
+                    }
+                    StopLoading();
+                    $('#SettleDate').val('');
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed!');
+                    StopLoading();
+                }
+            });
+    }
+
+</script>

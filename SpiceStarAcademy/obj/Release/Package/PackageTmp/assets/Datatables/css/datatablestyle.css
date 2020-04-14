@@ -1,0 +1,4 @@
+﻿input[type=search] {
+    height: 30px;
+    -webkit-appearance: searchfield;
+}

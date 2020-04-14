@@ -1,0 +1,169 @@
+﻿@{
+    ViewBag.Title = "Medical";
+}
+<title>View Medical</title>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <input type="hidden" value="@(ViewBag.medicalRemark)" id="hdnMDLInfo" />
+    <section class="content-header">
+        <h1>
+            View Medical
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-dashboard"></i> &nbsp;View Medical</li>
+        </ol>
+    </section>
+    <style>
+        .glyph {
+            position: relative;
+            left: 35px;
+            pointer-events: none;
+        }
+
+        .button {
+            width: 100px;
+            height: 100px;
+            padding-left: 20px;
+        }
+    </style>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- /.box -->
+                <div class="box">
+                    <div class="box-body">
+                        <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <strong id="lblMsg"> @TempData["msg"] @TempData["errorMsg"]  </strong>
+                        </div>
+                        <div class="row col-md-12 table-responsive">
+                            <table id="tblMedical" class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>Reg.No</th>
+                                        <th>Student Name</th>
+                                        <th style="width:100px">Email Id</th>
+                                        <th>Mobile No</th>
+                                        <th>DOB</th>
+                                        <th>Gender</th>
+                                        <th style="width:100px">Fee Deposit</th>
+                                        <th>Course</th>
+                                        <th>Batch Name</th>
+                                        <th>Status</th>
+                                        <th>Remark</th>
+                                        <th>Reg.Date</th>
+                                        <th style="width:225px">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <div class="row" id="divmainactivity" style="display:none">
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header ui-sortable-handle" style="cursor: move;">
+                        <h3 class="box-title">Current Top 3 Activities</h3>
+                    </div>
+                    <div class="box-body" id="divActivity">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+<div id="myModal1" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#dd4b39">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="headerText">Candidate Remarks</h4>
+            </div>
+            <div class="modal-body" id="divRemarkDetail">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        TableCourseFilter = 8;
+        Table = $("#tblMedical").DataTable(medicaltblSetting("tblMedical", "GetRagisterList", "Registration", 0));
+        $.fn.dataTable.ext.errMode = 'throw';
+        $('.buttons-excel').css('display', 'none');
+        $('.dt-buttons').append("<img src='/Images/excel-icon-transparent-18.jpg' height=32px; width=60px; onclick='btnexport();' title='Export' style='border:1px solid;border-color:#f5eeee;cursor: pointer;' />");
+        setTimeout(function () {
+          //  Table.page(1).draw('page');
+        }, 2000);
+        HideShowTableColumn("tblMedical");
+        checkMsg(); 
+        getUserActivities('Medical');
+    });
+
+    function openRemarkModel(Id, obj, regNo) {
+            $('#divRemarkDetail').empty();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.Action("MedicalRemarkOpenModelPopup", "Registration"))",
+                data: { RegNo: regNo, Id: Id,Tag:"Medical" },
+                success: function (data) {
+                    $('#divRemarkDetail').append(data);
+                    $('#myModal1').modal('show');
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed!');
+                }
+            });
+    }
+
+    function printFeeReciept() {
+        var data = $.get("/Templates/FeeReciept1.html", function (html_string) {
+            var name = $('#hdnStudentName').val();
+            var regNo = $('#hdnRegNo').val();
+            var total = $('#txtTotal').text().split(' ')[0];
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            var today = dd + '-' + mm + '-' + yyyy;
+            html_string = html_string.replace("$Reciept", "RC#" + regNo);
+            html_string = html_string.replace("$Name", name);
+            html_string = html_string.replace("$Total", total);
+            html_string = html_string.replace("$Dated", today);
+            html_string = html_string.replace("$MainTotal", total);
+            html_string = html_string.replace("$RsInWords", convertNumberToWords(total));
+            var mod = "CASH";
+            if ($('#hdnMOD').val() != null && $('#hdnMOD').val() != "")
+                mod = $('#hdnMOD').val();
+            html_string =  html_string.replace("$MOD", mod);
+          var mywindow = window.open('', '', '');
+          mywindow.document.write(html_string);
+          mywindow.print();
+        }, 'html');
+    }
+</script>
+
+
+
+

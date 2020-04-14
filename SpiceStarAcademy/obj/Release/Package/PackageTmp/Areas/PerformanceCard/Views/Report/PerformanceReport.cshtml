@@ -1,0 +1,174 @@
+﻿@model SJModel.ReportFilterViewModel
+@{
+    ViewBag.Title = "PerformanceReport";
+    Layout = "~/Areas/PerformanceCard/Views/Shared/_LayoutP.cshtml";
+}
+<style>
+    .select2-container--default .select2-selection--single {
+        border-radius: 5px !important;
+        height: 40px;
+        box-shadow: 2px 2px 5px 0 rgba(0,0,0,0.4) !important;
+        -moz-box-shadow: 2px 2px 5px 0 rgba(0,0,0,0.4) !important;
+        font-size: 16px;
+        border-color: #d2d6de;
+    }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            top: 5px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 34px;
+        }
+
+    .select2-container--default .select2-selection--multiple {
+        background-color: #ffffff;
+        -webkit-border-radius: 2px;
+        cursor: text;
+        height: 35px;
+    }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #170808 !important;
+        }
+
+    .select2-search--inline .select2-search__field {
+        margin-top: 0px !important;
+    }
+
+    #tblperformancereport_info {
+        padding-left: 10px;
+    }
+
+    .pagination {
+        display: inline-flex;
+    }
+    #tblperformancereport_paginate {
+        text-align: center !important;
+    }
+    #tblperformancereport td:nth-child(2) {
+        text-transform: capitalize;
+    }
+</style>
+<section class="content">
+    <!-- Info boxes -->
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-new">
+                <!--<div class="side-red-strip"></div>-->
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="title-header-container"><h5>ALL STUDENTS PERFORMANCE REPORTS</h5></div>
+                    <!------------------------------------------------- Search and display info box------->
+                    <div class="box box-performance box-solid">
+                        <!-- /.box-header -->
+                        <div class="side-red-strip"></div>
+                        <div class="box-body" style="margin-top:25px;">
+                            <div class="col-md-4">
+                                <div class="parameter-box-top-bottm-space ">
+                                    <div class="PA-title-section">BATCH</div>
+                                    <div class="Parameter_control-select">
+                                        @Html.DropDownListFor(m => m.BatchNo, new SelectList(Model.GetBatchList, "Id", "BatchName"), "Select Batch", new { @id = "BatchId", @class = "form-control select2", style = "width:100%", onchange = "GetPerformanceReport();" })
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="col-md-4">
+                                    <div style="margin-top:15px;">
+                                        <div class="PA-title-section">COURSE</div>
+                                        <div class="Parameter_control-select">
+                                                @Html.DropDownListFor(m => m.ReviewId, new SelectList(Model.GetCourseList, "Id", "CourseName"),"All Course", new { @id = "CourseTypeId", @class = "form-control", style = "width:100%" })
+                                        </div>
+                                    </div>
+                                </div>*@
+                            <div class="col-md-4">
+                                <div class="" style="margin-top:15px;">
+                                    <div class="PA-title-section">REVIEW</div>
+                                    <div class="Parameter_control-select">
+                                        @Html.DropDownListFor(m => m.ReviewId, new SelectList(Model.GetReviewList, "Id", "Name"), new { @id = "ReviewTypeId", @class = "form-control", style = "width:100%", onchange = "GetPerformanceReport();" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div>
+                            <div id="batch-details-container">
+                                <table id="tblperformancereport" class="table table-bordered table-hover dataTable">
+                                    <thead id="tableth">
+                                        @*<tr>
+                                            <th>S.NO</th>
+                                            <th>NAME </th>
+                                            @if (Model.GetParameterList.Count() > 0)
+                                            {
+                                                foreach (var i in Model.GetParameterList)
+                                                {
+                                                    <th>@i.SemesterName</th>
+                                                }
+                                            }
+                                            <th>PERCENTAGE</th>
+                                        </tr>*@
+                                    </thead>
+                                    <tbody id="tbodyabc">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+
+    $(document).ready(function () {
+        StopLoading();
+        $('#tblperformancereport').DataTable({
+            "searchDelay": 1000, "pageLength": 25, "filter": !0, "orderMulti": !1
+        });
+    });
+
+    function GetPerformanceReport() {
+        var batchid = $('#BatchId').val() == "" ? 0 : $('#BatchId').val();
+        var reviewid = $('#ReviewTypeId').val() == "" ? 0 : $('#ReviewTypeId').val();
+        $.ajax({
+            url: "/PerformanceCard/Report/GetPerformanceReportByBatch",
+            type: "get",
+            dataType: "JSON",
+            data: { batchid: batchid, reviewid: reviewid },
+            success: function (response) {
+                str = '';
+                var header = '<tr>';
+                if (response != null && response.length > 0) {
+                     header += '<th>S.NO</th><th>NAME </th>';
+                    $.each(response, function (i, item) {
+                        str += '<tr><td>' + (i + 1) + '</td><td style="color:red;width:15%">' + item.Fname + (item.Lname != null ? (" " + item.Lname):"") + '</td>';
+                        if (item.PerformanceData != null && item.PerformanceData.length > 0) {
+                            $.each(item.PerformanceData, function (a, b) {
+                                str += '<td>' + b.Percentage + '</td>';
+                                if (i == 0)
+                                    header += '<th>' + b.ParameterName.toUpperCase() +'</th>';
+                            });
+                        } else {
+                            str += '<td>N/A</td>'
+                        }
+                        str += '<td>' + (item.TotalPercentage == null ? "" : item.TotalPercentage) + '</td></tr>';
+                    });
+                    header += '<th>PERCENTAGE</th>';
+                } 
+                header += '</tr>';
+                $('#tableth').empty().append(header);
+                $('#tbodyabc').empty().append(str);
+
+                $('#tblperformancereport_length').css('display', 'none');
+                $('#tblperformancereport_paginate').parent('div').removeClass('col-sm-7').addClass('col-sm-12');
+                $.fn.dataTable.ext.errMode = 'throw';
+            },
+            error: function (xhr) {
+            }
+        });
+    }
+
+</script>
+
+

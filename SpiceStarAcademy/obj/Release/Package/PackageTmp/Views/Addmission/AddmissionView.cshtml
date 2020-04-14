@@ -1,0 +1,348 @@
+﻿@{
+    ViewBag.Title = "Admission View";
+}
+<style>
+    .round-button {
+        width: 43%;
+        display: inline-block;
+    }
+
+    .round-button-circle {
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #39990F;
+        box-shadow: 0 0 3px gray;
+    }
+
+        .round-button-circle:hover {
+            background: #30588e;
+        }
+
+    .round-button a {
+        display: block;
+        float: left;
+        width: 100%;
+        padding-top: 50%;
+        padding-bottom: 50%;
+        line-height: 1em;
+        margin-top: -0.5em;
+        text-align: center;
+        color: #e2eaf3;
+        font-family: Verdana;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .disabledbutton {
+        pointer-events: none;
+        opacity: 0.4;
+    }
+
+
+    .form-group input[type="checkbox"] {
+        display: none;
+    }
+
+        .form-group input[type="checkbox"] + .btn-group > label span {
+            width: 20px;
+        }
+
+            .form-group input[type="checkbox"] + .btn-group > label span:first-child {
+                display: none;
+            }
+
+            .form-group input[type="checkbox"] + .btn-group > label span:last-child {
+                display: inline-block;
+            }
+
+        .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+            display: inline-block;
+        }
+
+        .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+            display: none;
+        }
+
+</style>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            View Admission
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-dashboard"></i> &nbsp; Admission View</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- /.box -->
+                <div class="box">
+                    <div class="box-body">
+                        <div class="row col-md-12 table-responsive">
+                            <table id="tblAddmissionView" class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="no-sort">Sr.No</th>
+                                        <th>Registration No</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>DOB</th>
+                                        <th>Course</th>
+                                        <th>Batch</th>
+                                        <th>Session</th>
+                                        <th>Valid Passport</th>
+                                        @*<th>Status</th>*@
+                                        <th class="no-sort">Admission Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <div class="row" id="divmainactivity" style="display:none">
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header ui-sortable-handle" style="cursor: move;">
+                        <h3 class="box-title">Current Top 3 Activities</h3>
+                    </div>
+                    <div class="box-body" id="divActivity">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+<div class="container">
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Batch History</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="divHistoryDetail"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="modal fade" id="myModalTR" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="maintitle">Termination</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="divTRdetail"></div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="[ form-group ]" style="text-align:left;display:@(Session["RoleName"].ToString() == "Admin" ? "block" : "none")" id="divforadmin">
+                                <input type="checkbox" name="fancy-checkbox-default" id="fancy-checkbox-default" autocomplete="off" />
+                                <div class="[ btn-group ]">
+                                    <label for="fancy-checkbox-default" class="[ btn btn-default ]">
+                                        <span class="[ glyphicon glyphicon-ok ]"></span>
+                                        <span> </span>
+                                    </label>
+                                    <label for="fancy-checkbox-default" class="[ btn btn-default active ]">
+                                        Closed
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="button" id="btnTRSubmit" class="btn btn-success" onclick="submitTRInfo()" value="Submit" />
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        TableCourseFilter = 5;
+        Table = $("#tblAddmissionView").DataTable(admissionViewtblSetting("tblAddmissionView", "GetAddmissionViewList", "Addmission", 1));
+        $('#tblAddmissionView_length').css("display", "none");
+        $.fn.dataTable.ext.errMode = 'throw';
+        $('.buttons-excel').css('display','none');
+        $('.dt-buttons').append("<img src='/Images/excel-icon-transparent-18.jpg' height=32px; width=60px; onclick='btnexport();' title='Export' style = 'border:1px solid;border-color:#f5eeee;cursor: pointer;' /> ");
+        getUserActivities('Admission');
+        $('.filter').on('change', function () {
+            debugger;
+            table.column($(this).data('columnIndex')).search(this.value).draw();
+        });
+    });
+
+    function openBatchHistory(AdmNo) {
+    $('#divHistoryDetail').empty();
+    $.ajax({
+        cache: false,
+        type: "GET",
+        url: "@(Url.Action("BatchHistoryOpenModelPopup", "Addmission"))",
+        data: { AdmissionNo: AdmNo },
+        success: function (data) {
+            $('#divHistoryDetail').append(data);
+            $('#myModal').modal('show');
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert('Failed!');
+        }
+    });
+    }
+
+    function openTRPopup(obj, Id) {
+        $('#maintitle').text(($(obj).text() == "T" ? "Termination" : "Resignation"));
+        $('#divTRdetail').empty();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.Action("TerminationResignationPopup", "Addmission"))",
+            data: { AdmissionId: Id, ActionName: $('#maintitle').text() },
+            success: function (data) {
+            $('#divTRdetail').append(data);
+            $('#myModalTR').modal('show');
+            $('#lbltrdate').text($('#maintitle').text() + " Date");
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert('Failed!');
+        }
+        });
+    }
+
+    function stringtodate(dateString) {
+        var dateParts = dateString.split("/");
+        var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+        return dateObject;
+    }
+
+    function addTRInfo() {
+        var stage = $('#maintitle').text();
+            var model = {};
+            model.CandidateActionName = $('#maintitle').text();
+        model.CandidateTerminationResignationInfoId = $('#CandidateTerminationResignationInfoId').val();
+        if (stage == "Termination") {
+            model.SchedulingDate = $('#SchedulingDate').val();
+        } else {
+            model.NoticePeriod = $('#NoticePeriod').val();
+        }
+        model.StatusInfo = $('#StatusInfo').val();
+        model.AddmissionMasterId = $('#AddmissionMasterId').val();
+        model.RegNo = $('#RegNo').val();
+        model.TerminationOrResignationDate = $('#TerminationOrResignationDate').val();
+        if ($("#divclosedcomment").css('display') === 'block') {
+            if ($('#fancy-checkbox-default').prop('checked') == true) {
+                model.ClosedComment = $('#ClosedComment').val();
+                model.IsClosed = true;
+            }
+        }
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "@(Url.Action("AddTerminationResignationInfo", "Addmission"))",
+            data: { Model: model},
+            success: function (data) {
+                if (data != "") {
+                    $('#myModalTR').modal('hide');
+                    $("#lblMsg").text(data);
+                    if ($("#lblMsg").text() != "") {
+                        $("#dvMsg").css("display", "block");
+                        setTimeout(function () {
+                            $("#dvMsg").css("display", "none");
+                        }, 8000);
+                    }
+                    Table.draw();
+                }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert('Failed!');
+        }
+        });
+    }
+
+    function submitTRInfo() {
+        var trdate = $('#TerminationOrResignationDate').val();
+        var lwdate = $('#SchedulingDate').val();
+        var noticeperiod = $('#NoticePeriod').val();
+        var description = $('#StatusInfo').val();
+        var stage = $('#maintitle').text();
+        var status = true;
+        if (trdate == "") {
+            $('#TerminationOrResignationDate').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#TerminationOrResignationDate').css("border", "");
+        }
+        if (stage == "Termination") {
+            if (lwdate == "") {
+                $('#SchedulingDate').css("border", "1px solid red");
+                status = false;
+            } else {
+                $('#SchedulingDate').css("border", "");
+            }
+        } else {
+            if (noticeperiod == "") {
+                $('#NoticePeriod').css("border", "1px solid red");
+                status = false;
+            } else {
+                $('#NoticePeriod').css("border", "");
+            }
+        }
+
+        if (description == "") {
+            $('#StatusInfo').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#StatusInfo').css("border", "");
+        }
+        if (status) {
+            var fDate = stringtodate(trdate);
+            var tDate = stringtodate(lwdate);
+            if (stage == "Termination" && fDate > tDate) {
+                $("#lblMsg").text($('#maintitle').text() + ' date can not greater than Last Working date!');
+                $('#TerminationOrResignationDate').val('');
+                $('#SchedulingDate').val('');
+                status = false;
+                if ($("#lblMsg").text() != "") {
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                }
+            } else {
+                addTRInfo();
+            }
+        }
+        return status;
+    }
+</script>

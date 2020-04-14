@@ -1,0 +1,1173 @@
+﻿@model SJModel.AdmissionInfoViewModel
+@{
+    ViewBag.Title = "Student Profile";
+    var ss = Model;
+}
+<style>
+    .alert1 {
+        padding: 0px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    .select2-container--default .select2-selection--single {
+        border-radius: 0px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 34px !important;
+    }
+
+    .fee-stucture-title {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .payment-done {
+        color: green;
+        font-weight: bold;
+    }
+
+    .payment-pending {
+        color: red;
+        font-weight: bold;
+    }
+
+    .done-section {
+        background-color: #b9f9b9;
+        font-weight: bold;
+    }
+
+    .title-fee {
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .fee-heading {
+        background-color: #666 !important;
+        color: #fff;
+    }
+
+    .installment-title {
+        font-weight: bold;
+    }
+</style>
+<link href="~/Plugins/iCheck/square/blue.css" rel="stylesheet" />
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Student Profile
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-dashboard"></i> Student Profile</li>
+            @*<li><a href="#">Examples</a></li>
+                <li class="active">User profile</li>*@
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-3">
+                <!-- Profile Image -->
+                <div class="box box-primary">
+                    <div class="box-body box-profile">
+                        <img class="profile-user-img img-responsive img-circle" src="@(string.IsNullOrEmpty(Model.AdmissionDetail.ImageUrl)?"/Images/profile.jpg":Model.AdmissionDetail.ImageUrl)" id="imgProfile" alt="User profile picture">
+                        <h3 class="profile-username text-center">@(Model.AdmissionDetail.Fname + " " + Model.AdmissionDetail.Lname)</h3>
+                        <p class="text-muted text-center"> @Model.AdmissionDetail.Email </p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="file" id="uploadFile" style="width:100%" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row" style="padding-left:65px;padding-top:15px;">
+                            <div class="col-md-12">
+                                <input type="button" class="btn btn-success" id="btnUpload" value="Upload" />
+                                <input type="button" class="btn btn-danger" id="btnRemove" onclick="removeimage('@(Model.AdmissionDetail.AdmissionId)')" value="Remove" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="alert1 alert-danger alert-dismissible" role="alert" style="background-color:rgb(85, 119, 70) !important">
+                    <marquee><p id="spnNotify" style="font-size: 11pt;margin:0px;"></p></marquee>
+                </div>
+                <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong id="lblMsg">@TempData["msg"]</strong>
+                </div>
+
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#basicDetail" data-toggle="tab">Basic Detail</a></li>
+                        <li><a href="#medicalDetail" data-toggle="tab">Medical Detail</a></li>
+                        <li><a href="#addressDetail" data-toggle="tab">Address Detail</a></li>
+                        <li><a href="#feeDetail" data-toggle="tab">Fee Detail</a></li>
+                        @*<li><a href="#document" data-toggle="tab">Document</a></li>*@
+                    </ul>
+                    <div class="tab-content">
+                        <div class="active tab-pane" id="basicDetail">
+                            <form class="form-horizontal" id="frmBasicDetail" action="/Addmission/UpdateAdmissionAllInfo" method="post">
+                                <div class="form-group col-md-6">
+                                    <label for="inputName" class="col-sm-4 control-label">Registration No</label>
+                                    <div class="col-sm-8">
+                                        @Html.HiddenFor(m => m.AdmissionDetail.Id)
+                                        @Html.TextBoxFor(m => m.AdmissionDetail.RegNo, new { @class = "form-control", @readonly = true })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputName" class="col-sm-4 control-label">Session</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.AdmissionDetail.SessionName, new { @class = "form-control", @readonly = true })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputName" class="col-sm-4 control-label">Course</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.AdmissionDetail.CourseName, new { @class = "form-control", @readonly = true })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">a
+                                    <label for="inputSkills" class="col-sm-4 control-label">Education</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.AdmissionDetail.Education, new { @class = "form-control", @readonly = true })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputName" class="col-sm-4 control-label">First Name</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.AdmissionDetail.Fname, new { @class = "form-control", placeholder = "First Name" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputExperience" class="col-sm-4 control-label">Last Name</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.AdmissionDetail.Lname, new { @class = "form-control", placeholder = "Last Name" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail" class="col-sm-4 control-label">Email</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.AdmissionDetail.Email, new { @class = "form-control", placeholder = "Email" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputSkills" class="col-sm-4 control-label">DOB</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.AdmissionDetail.DateOfBirth, new { @class = "form-control", placeholder = "DOB", autocomplete = "off", onkeydown = "return false;" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputSkills" class="col-sm-4 control-label">Mobile No.</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.AdmissionDetail.MobileNo, new { @class = "form-control", placeholder = "Mobile", onkeypress = "return isNumber(event,this)", @maxlength = "12" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputName" class="col-sm-4 control-label">Register Email</label>
+                                    @*<label for="inputName" class="col-sm-4 control-label">Amity Enroll No</label>*@
+                                    <div class="col-sm-8">
+                                        @Html.HiddenFor(m => m.AdmissionDetail.AmityEnNo)
+                                        @Html.TextBoxFor(m => m.AdmissionDetail.RegisterEmail, new { @class = "form-control", placeholder = "Register email" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputSkills" class="col-sm-4 control-label">Valid Passport</label>
+                                    <div class="col-sm-8">
+                                        @Html.CheckBoxFor(m => m.AdmissionDetail.IsValidPassport, new { @class = "checkbox" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputSkills" class="col-sm-4 control-label">Appeared</label>
+                                    <div class="col-sm-8">
+                                        @Html.CheckBoxFor(m => m.AdmissionDetail.IsAppeared, new { @class = "checkbox" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputSkills" class="col-sm-4 control-label">Batch</label>
+                                    <div class="col-sm-8">
+                                        <input type="hidden" value="@Model.AdmissionDetail.BatchfromId" id="hdnid" />
+                                        @Html.DropDownListFor(m => m.AdmissionDetail.BatchId, new SelectList(Model.BatchList, "Id", "BatchName"), new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputSkills" id="" class="col-sm-4 control-label">Upload Resume</label>
+                                    <div class="col-sm-8">
+                                        <input type="file" id="uploadResume" style="width:100%;" class="form-control" />
+                                        <div class="row" style="padding-top:5px;" id="divachDownloadResume">
+                                            <div class="col-md-6">
+                                                <a id="achDownloadResume" style="width:140px;height:33px;padding-top: 5px;font-size: 14px;" class="btn btn-default btn-xs" href="#">Download resume</a>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input type="button" class="btn btn-danger" onclick="RemoveResume('@(Model.AdmissionDetail.AdmissionId)')" value="Remove" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6" id="divBatchDescription" style="display:none">
+                                    <label for="inputSkills" class="col-sm-4 control-label">Remarks</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextAreaFor(m => m.AdmissionDetail.BatchDescription, new { @class = "form-control", placeholder = "Remarks" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="padding-left:75px;">
+                                    <div class="col-sm-offset-1 col-sm-10">
+                                        <button type="button" onclick="SaveAdmissionDetail();" class="btn btn-success">Update</button>
+                                        <button type="button" onclick="window.location.href = '/Addmission/AddmissionView'" class="btn btn-default">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="medicalDetail">
+                            <!-- The timeline -->
+                            <form class="form-horizontal">
+                                @Html.HiddenFor(m => m.MedicalDetail.Id)
+                                <div class="form-group col-md-6">
+                                    <label for="inputName" class="col-sm-4 control-label">Height</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.MedicalDetail.Height, new { @class = "form-control", placeholder = "Height", onkeypress = "return isDecimalNumber(event,this)", @maxlength = "5", onblur = "calculateBMIValue();" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail" class="col-sm-4 control-label">Weight</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.MedicalDetail.Weight, new { @class = "form-control", placeholder = "Weight", onkeypress = "return isDecimalNumber(event,this)", @maxlength = "5", onblur = "calculateBMIValue();" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputName" class="col-sm-4 control-label">Vision Left</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.MedicalDetail.VisionLeft, new { @class = "form-control", placeholder = "Vision Left" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputExperience" class="col-sm-4 control-label">Vision Right</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.MedicalDetail.VisionRight, new { @class = "form-control", placeholder = "Vision Right" })
+                                    </div>
+                                </div>
+                                <!-- **************************** -->
+
+                                <div class="form-group col-md-6">
+                                    <label class="col-sm-4 control-label">Medical Center</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.MedicalDetail.MedicalCenter, new { @class = "form-control", placeholder = "Medical Center" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label class="col-sm-4 control-label">Medical Status</label>
+                                    <div class="col-sm-8">
+                                        @Html.DropDownListFor(m => m.MedicalDetail.MedicalStatus, new SelectList(Model.MedicalStatusList, "BatchName", "SemesterName"), "Select Medical Status", new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label class="col-sm-4 control-label">Medical Date</label>
+                                    <div class="col-sm-8">
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            @Html.TextBoxFor(m => m.MedicalDetail.MedicalDate, new { @class = "form-control", placeholder = "Medical Date", autocomplete = "off", onkeydown = "return false;" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="col-sm-4 control-label">Fitness Date</label>
+                                    <div class="col-sm-8">
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            @Html.TextBoxFor(m => m.MedicalDetail.FitnessDate, new { @class = "form-control", placeholder = "Fitness Date", autocomplete = "off", onkeydown = "return false;" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="col-sm-4 control-label">Date Of Joinning</label>
+                                    <div class="col-sm-8">
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            @Html.TextBoxFor(m => m.MedicalDetail.JoiningDate, new { @class = "form-control", placeholder = "Date Of Joinning", autocomplete = "off", onkeydown = "return false;" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- **************************** -->
+                                <div class="form-group" style="padding-left:85px;">
+                                    <div class="col-sm-offset-1 col-sm-10">
+                                        <button type="button" onclick="SaveMedicalDetail();" class="btn btn-success">Update</button>
+                                        <button type="button" onclick="window.location.href = '/Addmission/AddmissionView'" class="btn btn-default">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="addressDetail">
+                            <form class="form-horizontal" id="frmAddress">
+                                @Html.HiddenFor(m => m.AddressDetail.Id)
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-3 control-label">Correspondence Address</label>
+                                    <div class="col-sm-9">
+                                        @Html.TextBoxFor(m => m.AddressDetail.CopAddress, new { @class = "form-control", placeholder = "correspondence Address" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-3 control-label">Correspondence State</label>
+                                    <div class="col-sm-9">
+                                        @Html.HiddenFor(m => m.AddressDetail.CopState)
+                                        <select class="form-control select2" id="ddlCorrState" onchange="ddlStateChangeFillCity(this , 'ddlCorrCity')" style="width:100%"></select>
+                                        @*@Html.TextBoxFor(m => m.AddressDetail.CopState, new { @class = "form-control", placeholder = "correspondence State" })*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail" class="col-sm-3 control-label">Correspondence City</label>
+                                    <div class="col-sm-9">
+                                        @Html.HiddenFor(m => m.AddressDetail.CopCity)
+                                        <select class="form-control select2" id="ddlCorrCity" style="width:100%">
+                                            <option value="Select City">Select City</option>
+                                        </select>
+                                        @*@Html.TextBoxFor(m => m.AddressDetail.CopCity, new { @class = "form-control", placeholder = "correspondence City" })*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputExperience" class="col-sm-3 control-label">Correspondence Zip</label>
+                                    <div class="col-sm-9">
+                                        @Html.TextBoxFor(m => m.AddressDetail.CopZip, new { @class = "form-control", placeholder = "correspondence Zip", onkeypress = "return isNumber(event,this)", @maxlength = "6" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <div class="checkbox">
+                                            <label>
+                                                @Html.CheckBox("chkAddres", new { onclick = "fillPermanentAdd(this)" })  Same as correspondence
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-3 control-label">Permanent Address</label>
+                                    <div class="col-sm-9">
+                                        @Html.TextBoxFor(m => m.AddressDetail.PerAddress, new { @class = "form-control", placeholder = "Permanent Address" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-3 control-label">Permanent State</label>
+                                    <div class="col-sm-9">
+                                        @Html.HiddenFor(m => m.AddressDetail.PerState)
+                                        <select class="form-control select2" id="ddlPerState" onchange="ddlStateChangeFillCity(this , 'ddlPerCity')" style="width:100%"></select>
+                                        @*@Html.TextBoxFor(m => m.AddressDetail.PerState, new { @class = "form-control", placeholder = "Permanent State" })*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail" class="col-sm-3 control-label">Permanent City</label>
+                                    <div class="col-sm-9">
+                                        @Html.HiddenFor(m => m.AddressDetail.PerCity)
+                                        <select class="form-control select2" id="ddlPerCity" style="width:100%">
+                                            <option>Select City</option>
+                                        </select>
+                                        @*@Html.TextBoxFor(m => m.AddressDetail.PerCity, new { @class = "form-control", placeholder = "Permanent City" })*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputExperience" class="col-sm-3 control-label">Permanent Zip</label>
+                                    <div class="col-sm-9">
+                                        @Html.TextBoxFor(m => m.AddressDetail.PerZip, new { @class = "form-control", placeholder = "Permanent Zip", onkeypress = "return isNumber(event,this)", @maxlength = "6" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <button type="button" onclick="SaveAddressDetail();" class="btn btn-success">Update</button>
+                                        <button type="button" onclick="window.location.href = '/Addmission/AddmissionView'" class="btn btn-default">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="feeDetail">
+                            <form class="form-horizontal" id="frmAddress">
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-10">
+                                        <table class="table table-striped table-bordered">
+                                            <caption class="fee-stucture-title" style="text-align:center"> Fee Structure </caption>
+                                            <tr><td class="title-fee">Fee Type</td><td> Admission</td></tr>
+                                            <tr>
+                                                <td class="title-fee">Capital Amount</td>
+                                                <td>
+                                                    @Model.AdmissionDetail.FeeCapitalAmount INR.
+                                                </td>
+                                            </tr>
+                                            @if (Model.GetFeeDetailOfCandidate != null && Model.GetFeeDetailOfCandidate.PaymentType != null)
+                                            {
+                                                <tr><td class="title-fee">Payment Type</td><td>@Model.GetFeeDetailOfCandidate.PaymentType</td></tr>
+                                                if (Model.GetFeeDetailOfCandidate.PaymentType == "One-time payment")
+                                                {
+                                                    <tr>
+                                                        <td class="title-fee">Fee Installment</td>
+                                                        <td>
+                                                            <table class="table table-bordered">
+                                                                <tr class="done-section"><td>Single Payment</td><td>@Model.GetFeeDetailOfCandidate.FeeCollection.FirstOrDefault().Amount INR.</td><td> @Model.GetFeeDetailOfCandidate.FeeCollection.FirstOrDefault().EnterDate.Date.ToString("dd/MM/yyyy") </td><td class="payment-done">Done</td></tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td class="title-fee">Fee Installment</td>
+                                                        <td>
+                                                            <table class="table table-bordered">
+                                                                @foreach (var item in Model.GetFeeDetailOfCandidate.FeeCollection)
+                                                                {
+                                                                    <tr class="done-section">
+                                                                        <td>@item.InstallmentName</td>
+                                                                        <td>@item.Amount INR.</td>
+                                                                        <td>
+                                                                            @item.EnterDate.Date.ToString("dd/MM/yyyy")
+                                                                        </td>
+                                                                        <td class="payment-done">Done</td>
+                                                                    </tr>
+                                                                }
+
+                                                                @if (Model.GetFeeDetailOfCandidate.FeeCollection.Count() == 1 && Model.GetFeeDetailOfCandidate.CourseName == "MBA")
+                                                                {
+                                                                    <tr><td class="installment-title">Second Installment</td><td>150000 INR.</td><td>25/07/2019</td><td class="payment-pending">Pending</td></tr>
+                                                                }
+                                                                else if (Model.GetFeeDetailOfCandidate.FeeCollection.Count() == 1 && Model.GetFeeDetailOfCandidate.CourseName == "BBA")
+                                                                {
+                                                                    <tr><td class="installment-title">Second Installment</td><td>100000 INR.</td><td>25/07/2019</td><td class="payment-pending">Pending</td></tr>
+                                                                    <tr><td class="installment-title">Third Installment</td><td>100000 INR.</td><td>25/07/2019</td><td class="payment-pending">Pending</td></tr>
+                                                                }
+                                                                else if (Model.GetFeeDetailOfCandidate.FeeCollection.Count() == 2 && Model.GetFeeDetailOfCandidate.CourseName == "BBA")
+                                                                {
+                                                                    <tr><td class="installment-title">Third Installment</td><td>100000 INR.</td><td>25/07/2019</td><td class="payment-pending">Pending</td></tr>
+                                                                }
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr style="text-align:center">
+                                                    <td colspan="2">
+                                                        Payment Due
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </table>
+                                        <div class="form-group">
+                                            <div class="col-sm-9"></div>
+                                            <div class="col-sm-3">
+                                                <button type="button" onclick="window.location.href = '/Addmission/AddmissionView'" class="btn btn-default pull-right">Back</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                             
+</form>
+                        </div>
+                        @*<div class="tab-pane" id="document">
+
+                            </div>*@
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+                <!-- /.nav-tabs-custom -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<script src="~/Plugins/iCheck/icheck.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $('#AdmissionDetail_DateOfBirth').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy',
+            endDate: getDOB(),
+            startDate: getDOB1()
+        });
+        $('#btnUpload').attr("disabled", "disabled");
+
+        if ($('#AdmissionDetail_AmityEnNo').val() == "")
+            $('#AdmissionDetail_AmityEnNo').css("border", "1px blue solid");
+        else
+            $('#AdmissionDetail_AmityEnNo').css("border", "");
+
+        if ('@Model.AdmissionDetail.ResumeUrl' != '') {
+            $("#divachDownloadResume").css('display', 'block');
+            $("#uploadResume").css('display', 'none');
+            $("#achDownloadResume").attr("href", "/Addmission/DownloadResume?AdmissionId=" + @Model.AdmissionDetail.Id);
+        } else {
+            $("#divachDownloadResume").css('display', 'none');
+            $("#uploadResume").css('display', 'block');
+        }
+        updateNotification();
+        addressSameAsPermanent();
+        $('#MedicalDetail_MedicalDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+        $('#MedicalDetail_FitnessDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+        $('#MedicalDetail_JoiningDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+        fillStateCityList("ddlCorrState", "ddlCorrCity");
+        fillStateCityList("ddlPerState", "ddlPerCity");
+          if ('@Model.AddressDetail.Id' > 0) {
+            if ('@Model.AddressDetail.CopState' != "") {
+                var findstateId = GetStateIdByStateName("@Model.AddressDetail.CopState");
+                $('#ddlCorrState').val(findstateId).trigger('change');
+                if ('@Model.AddressDetail.CopCity' != "") {
+                    var findcityId = GetCityIdByCityName(findstateId, "@Model.AddressDetail.CopCity");
+                    $('#ddlCorrCity').val(findcityId).trigger('change');
+                }
+            }
+            if ('@Model.AddressDetail.PerState' != "") {
+                var findstateId = GetStateIdByStateName("@Model.AddressDetail.PerState");
+                $('#ddlPerState').val(findstateId).trigger('change');
+                if ('@Model.AddressDetail.PerCity' != "") {
+                    var findcityId = GetCityIdByCityName(findstateId, "@Model.AddressDetail.PerCity");
+                    $('#ddlPerCity').val(findcityId).trigger('change');
+                }
+            }
+        }
+        StopLoading();
+    });
+
+    function checkMsg(msg) {
+        if (msg != undefined && msg != null && msg != "") {
+            $('#lblMsg').html(msg);
+            $("#dvMsg").css("display", "block");
+            setTimeout(function () {
+                $("#dvMsg").css("display", "none");
+                $('#lblMsg').html('');
+            }, 8000);
+        }
+    }
+
+    function updateNotification() {
+        $.ajax({
+            url: "/FeeManagement/GetUpdateNotication",
+            type: "GET",
+            async: false,
+            data: { RegistrationNo: $('#AdmissionDetail_RegNo').val() },
+            success: function (response) {
+                if (response != null) {
+                    var txt1 = "";
+                    var txt2 = "";
+                    $('#spnNotify').html('');
+                    txt1 = '1. ' + response.DueAdmissionFee + '&nbsp;&nbsp;&nbsp;&nbsp;';
+                    if (response.Message != undefined && response.Message != null && response.Message != "") {
+                        txt2 = '2. ' + response.Message + '.';
+                    }
+                    $('#spnNotify').html(txt1 + txt2);
+                }
+            },
+            error: function (error) {
+
+            }
+        });
+    }
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imgProfile').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#uploadFile").change(function () {
+        if ($(this).val() == "") {
+            $('#imgProfile').attr('src', '/Images/profile.jpg');
+            $('#btnUpload').attr("disabled", "disabled")
+            return false;
+        }
+        else {
+            var file_size = $(this)[0].files[0].size;
+            var ext = $(this)[0].files[0].name.split('.').pop().toLowerCase();
+            if (file_size > 204800) {
+                $('#lblMsg').html('File size is greater than 200KB!');
+                $(this).val("");
+                if ($('#lblMsg').text() != undefined && $('#lblMsg').text() != null && $('#lblMsg').text() != "") {
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                        $('#lblMsg').html('');
+                    }, 8000);
+                }
+                $('#imgProfile').attr('src', '/Images/profile.jpg');
+                $('#btnUpload').attr("disabled", "disabled")
+                return false;
+            }
+            else if (ext != 'jpg' && ext != 'jpeg' && ext != 'png') {
+                $('#lblMsg').html('File extention should be jpg,jpeg,png!');
+                if ($('#lblMsg').text() != undefined && $('#lblMsg').text() != null && $('#lblMsg').text() != "") {
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                        $('#lblMsg').html('');
+                    }, 8000);
+                }
+                $('#imgProfile').attr('src', '/Images/profile.jpg');
+                $('#btnUpload').attr("disabled", "disabled")
+                return false;
+            }
+        }
+        $('#btnUpload').removeAttr("disabled");
+        readURL(this);
+    });
+
+    $("#uploadResume").change(function () {
+        if ($(this).val() == "") {
+            return false;
+        }
+        else {
+            var file_size = $(this)[0].files[0].size;
+            var ext = $(this)[0].files[0].name.split('.').pop().toLowerCase();
+            if (file_size > 204800) {
+                $(this).val('')
+                $("#lblMsg").text('File size is greater than 200KB');
+                $("#dvMsg").css("display", "block");
+                setTimeout(function () {
+                    $("#dvMsg").css("display", "none");
+                }, 8000);
+                return false;
+            }
+            if (ext.toLowerCase() == 'doc' || ext.toLowerCase() == 'docx' || ext.toLowerCase() == 'pdf') {
+                return true;
+            } else {
+                $(this).val('');
+                $("#lblMsg").text('File extention should be doc, docx and pdf!');
+                $("#dvMsg").css("display", "block");
+                setTimeout(function () {
+                    $("#dvMsg").css("display", "none");
+                }, 8000);
+                return false;
+            }
+        }
+    });
+
+
+    $('#btnUpload').click(function () {
+        var fileUpload = $("#uploadFile").get(0);
+        var files = fileUpload.files;
+        if (files.length > 0) {
+            var fileData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+            fileData.append('regNo', $('#AdmissionDetail_Id').val());
+            $.ajax({
+                url: '/Addmission/UploadFiles',
+                type: "POST",
+                contentType: false,
+                processData: false,
+                data: fileData,
+                success: function (result) {
+                    alert(result);
+                    $('#btnUpload').attr("disabled", "disabled");
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        }
+    });
+
+    function fillPermanentAdd(obj) {
+        var c_adddress = $('#AddressDetail_CopAddress').val();
+        var c_city = $('#ddlCorrCity').val();
+        var c_state = $('#ddlCorrState').val();
+        var c_zip = $('#AddressDetail_CopZip').val();
+        if ($(obj).prop("checked")) {
+            $('#AddressDetail_PerAddress').val(c_adddress);
+            $('#AddressDetail_PerState').val(c_state);
+            $('#AddressDetail_PerCity').val(c_city);
+            $('#ddlPerState').val(c_state).trigger('change');
+            $('#ddlPerCity').val(c_city).trigger('change');
+            $('#AddressDetail_PerZip').val(c_zip);
+        } else {
+            $('#AddressDetail_PerAddress').val('');
+            $('#AddressDetail_PerState').val('');
+            $('#AddressDetail_PerCity').val('');
+            $('#ddlPerState').val('').trigger('change');
+            $('#AddressDetail_PerZip').val('');
+        }
+    }
+
+    function addressSameAsPermanent() {
+        var c_adddress = $('#AddressDetail_CopAddress').val();
+        var c_city = $('#AddressDetail_CopCity').val();
+        var c_state = $('#AddressDetail_CopState').val();
+        var c_zip = $('#AddressDetail_CopZip').val();
+
+        var p_adddress = $('#AddressDetail_PerAddress').val();
+        var p_city = $('#AddressDetail_PerCity').val();
+        var p_state = $('#AddressDetail_PerState').val();
+        var p_zip = $('#AddressDetail_PerZip').val();
+        if (c_adddress == p_adddress && c_city == p_city && c_state == p_state && c_zip == p_zip) {
+            if (c_adddress == "" && c_city == "" && c_state == "" && c_zip == "")
+                $('#chkAddres').prop("checked", false);
+            else
+                $('#chkAddres').prop("checked", true);
+        }
+    }
+
+    function validateEmail(emailField) {
+        var reg = /^([A-Za-z0-9_\-\.])+\@@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if (reg.test($("#" + emailField).val()) == false) {
+            return false;
+        }
+        return true;
+    }
+
+
+    $("#MedicalDetail_Height").blur(function () {
+        var height = $(this).val();
+        if (height == "") {
+            return false;
+        }
+        if (height < 155) {
+            var r = confirm("Height should not be less than 155cm!");
+            if (r == false) {
+                $('#MedicalDetail_Height').val('');
+                $('#MedicalDetail_Height').focus();
+            }
+        }
+    });
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+
+
+    function isDecimalNumber(evt, element) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+
+        if (
+            (charCode != 46 || $(element).val().indexOf('.') != -1) &&
+            (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    $("#MedicalDetail_Weight").blur(function () {
+        var weight = $(this).val();
+        if (weight == "") {
+            return false;
+        }
+        if (weight < 38) {
+            var r = confirm("Weight should not be less than 38kg.!");
+            if (r == false) {
+                $('#MedicalDetail_Weight').val('');
+                $('#MedicalDetail_Weight').focus();
+            }
+        }
+    });
+
+    function validateBasicDetail() {
+        var email = $('#AdmissionDetail_Email').val();
+        var fname = $('#AdmissionDetail_Fname').val();
+        var lname = $('#AdmissionDetail_Lname').val();
+        var dob = $('#AdmissionDetail_DateOfBirth').val();
+        var mobile = $('#AdmissionDetail_MobileNo').val();
+        var passingYr = $('#AdmissionDetail_PassingYear').val();
+        var registerEmail = $('#AdmissionDetail_RegisterEmail').val();
+        var status = true;
+
+        if (fname == "") {
+            $('#AdmissionDetail_Fname').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#AdmissionDetail_Fname').css("border", "");
+        }
+
+        if (email != "" && !validateEmail("AdmissionDetail_Email")) {
+            $('#AdmissionDetail_Email').css("border", "1px solid red");
+            alert("Please fill valid email!");
+            status = false;
+        } else {
+            $('#AdmissionDetail_Email').css("border", "");
+        }
+
+        if (mobile != "" && mobile.length < 10) {
+            $('#AdmissionDetail_MobileNo').css("border", "1px solid red");
+            alert("Please fill valid mobile number!");
+            status = false;
+        } else {
+            $('#AdmissionDetail_MobileNo').css("border", "");
+        }
+
+        if (registerEmail != "" && !validateEmail("AdmissionDetail_RegisterEmail")) {
+            $('#AdmissionDetail_RegisterEmail').css("border", "1px solid red");
+            alert("Please fill valid register email!");
+            status = false;
+        } else {
+            $('#AdmissionDetail_RegisterEmail').css("border", "");
+        }
+
+        //if (lname == "") {
+        //    $('#AdmissionDetail_Lname').css("border", "1px solid red");
+        //    status = false;
+        //} else {
+        //    $('#AdmissionDetail_Lname').css("border", "");
+        //}
+
+        //if (dob == "") {
+        //    $('#AdmissionDetail_DateOfBirth').css("border", "1px solid red");
+        //    status = false;
+        //} else {
+        //    $('#AdmissionDetail_DateOfBirth').css("border", "");
+        //}
+
+        //if (mobile == "") {
+        //    $('#AdmissionDetail_MobileNo').css("border", "1px solid red");
+        //    status = false;
+        //} else {
+        //    $('#AdmissionDetail_MobileNo').css("border", "");
+        //}
+
+        //if ($('#AdmissionDetail_IsAppeared').prop("checked") == false) {
+        //    if (passingYr == "") {
+        //        $('#AdmissionDetail_PassingYear').css("border", "1px solid red");
+        //        status = false;
+        //    } else {
+        //        $('#AdmissionDetail_PassingYear').css("border", "");
+        //    }
+        //}
+        return status;
+    }
+
+    function validateMedicalDetail() {
+        var height = $('#MedicalDetail_Height').val();
+        var weight = $('#MedicalDetail_Weight').val();
+        var leftVision = $('#MedicalDetail_VisionLeft').val();
+        var rightVision = $('#MedicalDetail_VisionRight').val();
+        var status = true;
+        if (height == "") {
+            $('#MedicalDetail_Height').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#MedicalDetail_Height').css("border", "");
+        }
+
+        if (weight == "") {
+            $('#MedicalDetail_Weight').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#MedicalDetail_Weight').css("border", "");
+        }
+
+        if (leftVision == "") {
+            $('#MedicalDetail_VisionLeft').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#MedicalDetail_VisionLeft').css("border", "");
+        }
+
+        if (rightVision == "") {
+            $('#MedicalDetail_VisionRight').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#MedicalDetail_VisionRight').css("border", "");
+        }
+        return status;
+    }
+
+    $('#AdmissionDetail_BatchId').change(function () {
+        var changeId = $(this).val();
+        var id = $("#hdnid").val();
+        if (changeId != id) {
+            $('#divBatchDescription').css("display", "block");
+        } else {
+            $('#AdmissionDetail_BatchDescription').val('');
+            $('#divBatchDescription').css("display", "none");
+        }
+    });
+
+    function validateAddressDetail() {
+        var c_adddress = $('#AddressDetail_CopAddress').val();
+        var c_city = $('#AddressDetail_CopCity').val();
+        var c_state = $('#AddressDetail_CopState').val();
+        var c_zip = $('#AddressDetail_CopZip').val();
+        var p_adddress = $('#AddressDetail_PerAddress').val();
+        var p_city = $('#AddressDetail_PerCity').val();
+        var p_state = $('#AddressDetail_PerState').val();
+        var p_zip = $('#AddressDetail_PerZip').val();
+        var status = true;
+        if (c_adddress == "") {
+            $('#AddressDetail_CopAddress').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#AddressDetail_CopAddress').css("border", "");
+        }
+        if (c_city == "") {
+            $('#AddressDetail_CopCity').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#AddressDetail_CopCity').css("border", "");
+        }
+        if (c_state == "") {
+            $('#AddressDetail_CopState').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#AddressDetail_CopState').css("border", "");
+        }
+        if (c_zip == "") {
+            $('#AddressDetail_CopZip').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#AddressDetail_CopZip').css("border", "");
+        }
+        if (p_adddress == "") {
+            $('#AddressDetail_PerAddress').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#AddressDetail_PerAddress').css("border", "");
+        }
+        if (p_city == "") {
+            $('#AddressDetail_PerCity').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#AddressDetail_PerCity').css("border", "");
+        }
+        if (p_state == "") {
+            $('#AddressDetail_PerState').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#AddressDetail_PerState').css("border", "");
+        }
+        if (p_zip == "") {
+            $('#AddressDetail_PerZip').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#AddressDetail_PerZip').css("border", "");
+        }
+        return status;
+    }
+
+    function removeimage(Id) {
+        $.ajax({
+            url: '/Addmission/RemovePhoto',
+            type: "POST",
+            data: { AdmissionId: Id },
+            success: function (result) {
+                if (result != null && result == "Delete") {
+                    $('#uploadFile').val('');
+                    $('#btnUpload').attr("disabled", "disabled");
+                    $('#imgProfile').attr('src', '/Images/profile.jpg');
+                }
+            },
+            error: function (err) {
+                alert(err.statusText);
+            }
+        });
+    }
+
+    function RemoveResume(Id) {
+        $.ajax({
+            url: '/Addmission/RemoveResume',
+            type: "POST",
+            data: { AdmissionId:Id},
+            success: function (result) {
+                if (result != null && result == "Delete") {
+                    $('#uploadResume').val("");
+                    $("#divachDownloadResume").css('display', 'none');
+                    $("#uploadResume").css('display', 'block');
+                }
+            },
+            error: function (err) {
+                alert(err.statusText);
+            }
+        });
+    }
+
+    function SaveAdmissionDetail() {
+        if (!validateBasicDetail())
+            return false;
+        var frmData = new FormData();
+        var imagefile = document.getElementById("uploadResume").files[0];
+        frmData.append("imageFile", imagefile);
+        frmData.append("Id", $('#AdmissionDetail_Id').val());
+        frmData.append("Email", $('#AdmissionDetail_Email').val());
+        frmData.append("Fname", $('#AdmissionDetail_Fname').val());
+        frmData.append("Lname", $('#AdmissionDetail_Lname').val());
+        frmData.append("DateOfBirth", $('#AdmissionDetail_DateOfBirth').val());
+        frmData.append("MobileNo", $('#AdmissionDetail_MobileNo').val());
+        frmData.append("IsValidPassport", $('#AdmissionDetail_IsValidPassport').prop("checked") == true ? true : false);
+        frmData.append("IsAppeared", $('#AdmissionDetail_IsAppeared').prop("checked") == true ? true : false);
+        frmData.append("BatchId", $('#AdmissionDetail_BatchId').val());
+        frmData.append("AmityEnNo", $('#AdmissionDetail_AmityEnNo').val());
+        frmData.append("BatchfromId", $('#hdnid').val());
+        frmData.append("BatchDescription", $('#AdmissionDetail_BatchDescription').val());
+        frmData.append("RegisterEmail", $('#AdmissionDetail_RegisterEmail').val());
+        $.ajax(
+            {
+                type: "POST",
+                url: "/Addmission/UpdateAdmissionBasicDatail",
+                data: frmData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response != null && response.ResumeUrl != null) {
+                        $("#achDownloadResume").attr("href", "/Addmission/DownloadResume?AdmissionId=" + response.Id);
+                        $("#divachDownloadResume").css('display', 'block');
+                        $("#uploadResume").css('display', 'none');
+                    }
+                    else {
+                        $("#divachDownloadResume").css('display', 'none');
+                        $("#uploadResume").css('display', 'block');
+                    }
+                    $("#lblMsg").text('Student basic detail updated successfully');
+                    $("#dvMsg").css("display", "block");
+                    $('#hdnid').val($('#AdmissionDetail_BatchId').val());
+                    $('#AdmissionDetail_BatchDescription').val('');
+                    $('#divBatchDescription').css('display', 'none');
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                },
+                failure: function (response) {
+                    $("#lblMsg").text(response.responseText);
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                },
+                error: function (response) {
+                    $("#lblMsg").text(response.responseText);
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                }
+            });
+    }
+
+    function SaveMedicalDetail() {
+        //if (!validateMedicalDetail())
+        //    return false;
+        var frmData = {};
+        frmData.Id = $('#MedicalDetail_Id').val();
+        frmData.RegNo = $('#AdmissionDetail_RegNo').val();
+        frmData.Height = $('#MedicalDetail_Height').val();
+        frmData.Weight = $('#MedicalDetail_Weight').val();
+        frmData.VisionLeft = $('#MedicalDetail_VisionLeft').val();
+        frmData.VisionRight = $('#MedicalDetail_VisionRight').val();
+        frmData.MedicalCenter = $('#MedicalDetail_MedicalCenter').val();
+        frmData.MedicalDate = $('#MedicalDetail_MedicalDate').val();
+        frmData.FitnessDate = $('#MedicalDetail_FitnessDate').val();
+        frmData.JoiningDate = $('#MedicalDetail_JoiningDate').val();
+        frmData.MedicalStatus = $('#MedicalDetail_MedicalStatus').val();
+        console.log(frmData);
+        $.ajax(
+            {
+                type: "POST",
+                url: "/Addmission/UpdateMedicalDetail",
+                async: false,
+                data: { model: frmData },
+                success: function (response) {
+                    $("#lblMsg").text('Student medical detail updated successfully');
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                },
+                failure: function (response) {
+                    $("#lblMsg").text(response.responseText);
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                },
+                error: function (response) {
+                    $("#lblMsg").text(response.responseText);
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                }
+            });
+    }
+
+    function SaveAddressDetail() {
+        //if (!validateAddressDetail())
+        //    return false;
+        var corState = $('#ddlCorrState option:selected').text() == "Select State" ? "" : $('#ddlCorrState option:selected').text();
+        var corCity = $('#ddlCorrCity option:selected').text() == "Select City" ? "" : $('#ddlCorrCity option:selected').text();
+        var perState = $('#ddlPerState option:selected').text() == "Select State" ? "" : $('#ddlPerState option:selected').text();
+        var perCity = $('#ddlPerCity option:selected').text() == "Select City" ? "" : $('#ddlPerCity option:selected').text();
+        var frmData = {};
+        frmData.Id = $('#AddressDetail_Id').val();
+        frmData.RegNo = $('#AdmissionDetail_RegNo').val();
+        frmData.CopAddress = $('#AddressDetail_CopAddress').val();
+        frmData.CopState = corState;
+        frmData.CopCity = corCity;
+        frmData.CopZip = $('#AddressDetail_CopZip').val();
+        frmData.PerAddress = $('#AddressDetail_PerAddress').val();
+        frmData.PerState = perState;
+        frmData.PerCity = perCity;
+        frmData.PerZip = $('#AddressDetail_PerZip').val();
+        $.ajax(
+            {
+                type: "POST",
+                url: "/Addmission/UpdateAdressDetail",
+                data: { model: frmData },
+                success: function (response) {
+                    $("#lblMsg").text('Student address detail updated succesfully!');
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                },
+                failure: function (response) {
+                    $("#lblMsg").text(response.responseText);
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                },
+                error: function (response) {
+                    $("#lblMsg").text(response.responseText);
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                }
+            });
+    }
+
+</script>

@@ -1,0 +1,143 @@
+﻿@model SJModel.LoginViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Spice Star Academy | Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link href="~/assets/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="~/assets/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Ionicons -->
+    <link href="~/assets/bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet" />
+    <!-- Theme style -->
+    <link href="~/assets/css/AdminLTE.min.css" rel="stylesheet" />
+    <!-- iCheck -->
+    <link href="~/Plugins/iCheck/square/blue.css" rel="stylesheet" />
+    <link href="~/Content/custom.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <style>
+
+        html, body {
+            min-height: 100%;
+            margin: 0px;
+            padding: 0px;
+            background-color: #f4f4f4;
+        }
+
+        .newCss {
+            background: url(/Images/LoginImage.png) no-repeat center center fixed;
+            background-size: cover;
+            height: auto;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="hold-transition login-page newCss" style="padding-top:10px;">
+    <br />
+    <img style="padding-bottom:100px;" src="https://pilot.spicestaracademy.edu.in/images/home/spice_star_logo.png">
+    @*====================*@
+    <div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="loginright_line"></div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="login-box loginpartDv">
+                    <div class="login-logo" style="height:70px;margin-bottom:0px !important;background-color:#c2c5c4 ;">
+                        <h1 style="padding-top:20px;">User Login</h1>
+                    </div>
+                    <!-- /.login-logo -->
+                    <div class="login-box-body" style="padding-bottom:5px;background-color:#c2c5c4 !important;">
+                        <div class="alert alert-danger text-center" id="errorDiv" style="display:none">
+                            <span id="errorMsg">@TempData["errorMsg"]</span>
+                        </div>
+                        <form action="/PTA/Login/Index" method="post" onsubmit="return validate();">
+                            <div class="form-group has-feedback">
+                                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = "Email" })
+                                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                @Html.PasswordFor(x => x.Password, new { @class = "form-control", placeholder = "Password" })
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div class="checkbox icheck">
+                                        <label>
+                                            @Html.CheckBoxFor(x => x.RememberMe)   @*<input type="checkbox">*@ Remember Me
+                                        </label>
+                                    </div>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-xs-4">
+                                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <br />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*========================*@
+
+
+    <!-- /.login-box -->
+    <!-- jQuery 3 -->
+    <script src="~/assets/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="~/assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script src="~/Plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' /* optional */
+            });
+            if ($('#errorMsg').text() != '') {
+                $('#errorDiv').css("display", "block");
+                setTimeout(function () { $('#errorDiv').css("display", "none"); }, 8000);
+            }
+            if ('@Model.Password' != "")
+                $('#Password').val('@Model.Password');
+        });
+
+        function validate() {
+            var email = $('#Email').val();
+            var pwd = $('#Password').val();
+            var status = true;
+            if (email == "" || email == null) {
+                $('#Email').css("border", "1px solid red");
+                status = false;
+            } else {
+                $('#Email').css("border", "");
+            }
+            if (pwd == "" || pwd == null) {
+                $('#Password').css("border", "1px solid red");
+                status = false;
+            } else {
+                $('#Password').css("border", "");
+            }
+            return status;
+        }
+    </script>
+</body>
+</html>
+
+
+
+

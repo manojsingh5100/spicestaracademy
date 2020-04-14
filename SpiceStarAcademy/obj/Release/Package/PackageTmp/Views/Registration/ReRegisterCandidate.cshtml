@@ -1,0 +1,619 @@
+﻿@model SJModel.RegistrationViewModel
+@{
+    ViewBag.Title = "Registration Master";
+}
+<style>
+    .fa-cc-jcb:before {
+        color: #1e1ec5;
+        font-weight: 600;
+        content: "Paytm" !important;
+    }
+
+    fieldset.scheduler-border {
+        border: 1px groove #ddd !important;
+        padding: 0 1.4em 1.4em 1.4em !important;
+        margin: 0 0 1em 0 !important;
+        -webkit-box-shadow: 0px 0px 0px 0px #000;
+        box-shadow: 0px 0px 0px 0px #000;
+    }
+
+    legend.scheduler-border {
+        font-size: 1em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width: auto;
+        border-bottom: none;
+    }
+
+    .select2-container--default .select2-selection--single {
+        border-radius: 0px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 34px !important;
+    }
+</style>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            @(Model.Id > 0 ? "View Registration" : "New Registration")  <span id="spnSession"></span>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-dashboard"></i> &nbsp; Registration Master</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="box">
+            <div class="box-body" style="pointer-events: all;">
+                <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong id="lblMsg">@TempData["msg"]</strong>
+                    <input type="hidden" id="hdnMop" value="@Model.ModOfPayment" />
+                    <input type="hidden" id="hdnPayStatus" value="@(Model.PaymentStatus? "True" : "False" )" />
+                </div>
+
+                <form action="/Registration/Create" method="post" onsubmit="return validation();">
+                    @Html.HiddenFor(m => m.SessionId)
+                    @Html.HiddenFor(m => m.page)
+                    <div class="row" style="pointer-events: all;">
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="FirstName">Registration Number:</label>
+                                @Html.TextBoxFor(m => m.RegistartionNo, new { @class = "form-control", @readonly = true })
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="AssignJob">Course</label>
+                                @Html.DropDownListFor(m => m.CourseId, new SelectList(Model.CourseList, "id", "CourseName"), new { @class = "form-control" })
+                                @if (Model.Id > 0)
+                                {
+                                    @Html.HiddenFor(m => m.CourseId)
+                                }
+                            </div>
+                        </div>
+
+                        @if (!Model.PaymentStatus)
+                        {
+                            <div class="col-md-5" id="divNonPay">
+                                <div class="row">
+                                    <div class="col-md-4" id="divconsult" style="pointer-events: all;display:@(Model.IsConsultantCandidate ? "block" : (Model.IsHRCandidate?"none":"block"))">
+                                        <div class="form-group" style="pointer-events: all;">
+                                            <label for="AssignJob">Consultant Cand.</label><br />
+                                            @Html.CheckBoxFor(m => m.IsConsultantCandidate)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" id="divHRcandidate" style="pointer-events: all;display:@(Model.IsHRCandidate ? "block" : (Model.IsConsultantCandidate?"none":"block"))">
+                                        <div class="form-group" style="pointer-events: all;">
+                                            <label for="AssignJob">HR Cand.</label><br />
+                                            @Html.CheckBoxFor(m => m.IsHRCandidate)
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4" id="divCashPay" style="pointer-events: all;">
+                                        <div class="form-group" style="pointer-events: all;">
+                                            <label for="AssignJob">Pay By Cash</label><br />
+                                            @Html.CheckBoxFor(m => m.PaymentStatus)
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                        
+                        <div class="col-md-3" id="divPayOL" style="display:@(Model.IsConsultantCandidate ? "none" : "block")">
+                            <div id="divPrint" style="padding-top:21px;display:@(Model.PaymentStatus ? "block" : "none")"><input type="button" class="btn btn-info" onclick="printFeeReciept();" value="Print Reciept" /></div>
+                            <button class="form-control btn btn-success" id="rzp-button1" type="button" style="padding-top:6px;display:none">Payment by&nbsp;&nbsp; &nbsp;<i class="fa fa fa-inr"></i>&nbsp; <i class="fa fa-credit-card custom"></i>&nbsp; <i class="fa fa-cc-jcb" id="iconPaytm"></i> </button>
+                            <button type="button" id="openCashPopup" style="display:none" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+                        </div>
+                    </div>
+
+                    <div class="row" style="pointer-events:all">
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label> Select Session </label>
+                                <select class="form-control" id="ddltempSession"> <option value="0">Select Session</option> </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="">Registration Date:</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.TextBoxFor(m => m.RegisterDate, new { @class = "form-control", placeholder = "Registration Date", autocomplete = "off", onkeydown = "return false;" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divRegFee" class="col-md-3" style="pointer-events: all;display:none">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="AssignJob">Pay Registration Fee:</label>
+                                <input type="text" value="1000 Rs." readonly="readonly" class="form-control" />
+                            </div>
+                        </div>
+                        <div id="divMOPStatus" class="col-md-3" style="pointer-events: all;display:@(Model.PaymentStatus?"block":"none")">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="AssignJob">Mod Of Payment:</label>
+                                <input type="text" value="@Model.ModOfPayment" readonly="readonly" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="row" style="pointer-events: all;">
+                        @Html.HiddenFor(m => m.Id)
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="FirstName">First Name:</label>
+                                @Html.TextBoxFor(m => m.Fname, new { @class = "form-control", placeholder = "First Name" })
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="LastName">Last Name:</label>
+                                @Html.TextBoxFor(m => m.Lname, new { @class = "form-control", placeholder = "Last Name" })
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="Email">Email:</label>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="">Mobile Number:</label>
+                                @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", placeholder = "Mobile", onkeypress = "return isNumber(event,this)", @maxlength = "12" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row" style="pointer-events: all;">
+
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="">DOB:</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "form-control", placeholder = "Date of birth", autocomplete = "off", onkeydown = "return false;" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="Experience">Gender:</label>
+                                @Html.DropDownListFor(m => m.Gender, new SelectList(Model.GenderList, "Value", "Text"), new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="DOB">Height:</label>
+                                @Html.TextBoxFor(m => m.Height, new { @class = "form-control", placeholder = "Height", onkeypress = "return isDecimalNumber(event,this)", @maxlength = "5" })
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="DOB">Weight:</label>
+                                @Html.TextBoxFor(m => m.Width, new { @class = "form-control", placeholder = "Weight", onkeypress = "return isDecimalNumber(event,this)", @maxlength = "5" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="pointer-events: all;">
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="AssignJob">Correspondence Address:</label>
+                                @Html.TextAreaFor(m => m.CorrespondenceAddress, new { @class = "form-control", placeholder = "Correspondence Address" })
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="AssignJob">State:</label>
+                                @Html.HiddenFor(m => m.CorrespondenceState)
+                                <select class="form-control select2" id="ddlCorrState" onchange="ddlStateChangeFillCity(this , 'ddlCorrCity')" style="width:100%"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="AssignJob">City:</label>
+                                @Html.HiddenFor(m => m.CorrespondenceCity)
+                                <select class="form-control select2" id="ddlCorrCity" style="width:100%">
+                                    <option value="Select City">Select City</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="AssignJob">Zip:</label>
+                                @Html.TextBoxFor(m => m.CorrespondenceZip, new { @class = "form-control", placeholder = "Zip", onkeypress = "return isNumber(event,this)", @maxlength = "6" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row" style="pointer-events: all;">
+                        <div class="col-md-6" style="pointer-events: all;">
+                            Same as correspondence address &nbsp; @Html.CheckBox("chkAddres", new { onclick = "fillPermanentAdd(this)" })
+                        </div>
+                    </div>
+                    <div class="row" style="pointer-events: all;padding-top:13px;">
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="AssignJob">Permanent Address:</label>
+                                @Html.TextAreaFor(m => m.PermanentAddress, new { @class = "form-control", placeholder = "Permanent Address" })
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="AssignJob">State:</label>
+                                @Html.HiddenFor(m => m.PermanentState)
+                                <select class="form-control select2" id="ddlPerState" onchange="ddlStateChangeFillCity(this , 'ddlPerCity')" style="width:100%"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="AssignJob">City:</label>
+                                @Html.HiddenFor(m => m.PermanentCity)
+                                <select class="form-control select2" id="ddlPerCity" style="width:100%">
+                                    <option>Select City</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="AssignJob">Zip:</label>
+                                @Html.TextBoxFor(m => m.PermanentZip, new { @class = "form-control", placeholder = "Zip", onkeypress = "return isNumber(event,this)", @maxlength = "6" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="pointer-events: all;">
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="AssignJob">Education</label>
+                                @Html.DropDownListFor(m => m.Education, new SelectList(Model.EducationList, "Value", "Text"), new { @class = "form-control" })
+                                @*@Html.TextBoxFor(m => m.Education, new { @class = "form-control", @readonly = true })*@
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="AssignJob">Appeared:</label><br />
+                                    @Html.CheckBoxFor(m => m.IsAppeared, new { onclick = "isApperedORpass(this)" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="AssignJob">Valid Passport:</label><br />
+                                @Html.CheckBoxFor(m => m.IsPassport)
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row text-center" style="pointer-events: all;">
+                        <div class="col-md-12" style="pointer-events: all;">
+                            <div class="form-group pull-left" style="pointer-events: all;">
+                                <button type="submit" class="btn btn-success"> @(Model.Id > 0 ? "Update" : "Save")  </button>
+                                <a class="btn btn-default" href="/Registration">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#DateOfBirth').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy',
+            endDate: getDOB(),
+            startDate: getDOB1()
+        });
+        var d = $('#RegisterDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+        checkMsg();
+        addressSameAsPermanent();
+        $('#page').val('ReRegister');
+        $('#Education').val('@Model.Education');
+        getSessionName($("#CourseId option:selected").text(), $('#CourseId').val());
+        fillStateCityList("ddlCorrState", "ddlCorrCity");
+        fillStateCityList("ddlPerState", "ddlPerCity");
+        d.datepicker("setDate", 'now');
+                    if ('@Model.CorrespondenceState' != "") {
+                var findstateId = GetStateIdByStateName("@Model.CorrespondenceState");
+                $('#ddlCorrState').val(findstateId).trigger('change');
+                if ('@Model.CorrespondenceCity' != "") {
+                    var findcityId = GetCityIdByCityName(findstateId, "@Model.CorrespondenceCity");
+                    $('#ddlCorrCity').val(findcityId).trigger('change');
+                }
+            }
+            if ('@Model.PermanentState' != "") {
+                var findstateId = GetStateIdByStateName("@Model.PermanentState");
+                $('#ddlPerState').val(findstateId).trigger('change');
+                if ('@Model.PermanentCity' != "") {
+                    var findcityId = GetCityIdByCityName(findstateId, "@Model.PermanentCity");
+                    $('#ddlPerCity').val(findcityId).trigger('change');
+                }
+            }
+        StopLoading();
+    });
+
+    function checkMsg() {
+        if ($("#lblMsg").text() != "") {
+            $("#dvMsg").css("display", "block");
+            setTimeout(function () {
+                $("#dvMsg").css("display", "none");
+            }, 8000);
+        }
+    }
+
+    $('#IsConsultantCandidate').change(function () {
+        var id = '@Model.Id';
+        var payStatus = $('#hdnPayStatus').val();
+        var status = $(this).prop('checked');
+        if (status) {
+            //$('#divMOP').css("display", "none");
+            $('#divCashPay').css("display", "none");
+            $('#divPayOL').css("display", "none");
+            $('#divHRcandidate').css("display", "none");
+        } else {
+            if (id > 0) {
+                if (payStatus == "False") {
+                    //$('#divMOP').css("display", "block");
+                    $('#divCashPay').css("display", "block");
+                    $('#divIsConsultant').css("display", "block");
+                    $('#divHRcandidate').css("display", "block");
+                }
+            }
+            $('#divIsConsultant').css("display", "block");
+            $('#divHRcandidate').css("display", "block");
+            $('#divCashPay').css("display", "block");
+        }
+    });
+
+    $('#IsHRCandidate').change(function () {
+        var id = '@Model.Id';
+        var payStatus = $('#hdnPayStatus').val();
+        var status = $(this).prop('checked');
+        if (status) {
+            //$('#divMOP').css("display", "none");
+            $('#divCashPay').css("display", "none");
+            $('#divPayOL').css("display", "none");
+            $('#divconsult').css("display", "none");
+        } else {
+            if (id > 0) {
+                if (payStatus == "False") {
+                    //$('#divMOP').css("display", "block");
+                    $('#divCashPay').css("display", "block");
+                    $('#divIsConsultant').css("display", "block");
+                    $('#divconsult').css("display", "block");
+                }
+            }
+            $('#divIsConsultant').css("display", "block");
+            $('#divconsult').css("display", "block");
+            $('#divCashPay').css("display", "block");
+        }
+    });
+
+    $('#PaymentStatus').change(function () {
+        var id = '@Model.Id';
+        var payStatus = $('#hdnPayStatus').val();
+        var status = $(this).prop('checked');
+        if (status) {
+            $('#divHRcandidate').css("display", "none");
+            $('#divPayOL').css("display", "none");
+            $('#divconsult').css("display", "none");
+            $('#divRegFee').css("display", "block");
+        } else {
+            if (id > 0) {
+                if (payStatus == "False") {
+                    //$('#divMOP').css("display", "block");
+                    $('#divCashPay').css("display", "block");
+                    $('#divIsConsultant').css("display", "block");
+                    $('#divconsult').css("display", "block");
+                    $('#divHRcandidate').css("display", "block");
+                }
+            }
+            $('#divRegFee').css("display", "none");
+            $('#divIsConsultant').css("display", "block");
+            $('#divconsult').css("display", "block");
+            $('#divCashPay').css("display", "block");
+            $('#divHRcandidate').css("display", "block");
+        }
+    });
+
+    function fillSession(obj) {
+        var str = '<option value="0"> Select Session</option>';
+        if (obj != null && obj.length > 0) {
+            $.each(obj, function (i, item) {
+                str += "<option value=" + item.Id + ">" + item.SemesterName + "</option>";
+            });
+        }
+        $('#ddltempSession').empty().append(str);
+        if ('@Model.Id' > 0)
+            $('#ddltempSession').val($('#SessionId').val());
+    }
+
+    $('#ddltempSession').change(function () {
+        if ($(this).val() > 0)
+            $('#SessionId').val($(this).val())
+        else
+            $('#SessionId').val(0);
+    });
+
+    function getSessionName(courseName,Id) {
+        $.ajax({
+            url: "/Registration/GetSessionNameByCourseIdAndCurrDate",
+            type: "GET",
+            async: false,
+            data: { CourseId: (Id != "" ? Id : 0), RegistrationNo: $('#RegistartionNo').val(), CourseName: courseName },
+            success: function (response) {
+                if (response != null) {
+                  //  $('#spnSession').text(response.Name);
+                    $('#spnSession').text('');
+                    $('#SessionId').val(response.Id);
+                    fillSession(response.SessionListByCId);
+                } else {
+                    $('#SessionId').val(0);
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    $('#CourseId').change(function () {
+        var id = $(this).val();
+        if (id == 1)
+            $('#Education').empty().append('<option value="10+2">10+2</option> <option value = "Graduate" > Graduate</option> <option value="Post-Graduate">Post-Graduate</option>');
+        else
+            $('#Education').empty().append('<option value="Graduate">Graduate</option><option value = "Post-Graduate" > Post - Graduate</option >');
+        getSessionName($("option:selected", this).text(), $(this).val());
+    });
+
+    function fillPermanentAdd(obj) {
+        var c_adddress = $('#CorrespondenceAddress').val();
+        var c_city = $('#ddlCorrCity').val();
+        var c_state = $('#ddlCorrState').val();
+        var c_zip = $('#CorrespondenceZip').val();
+        if ($(obj).prop("checked")) {
+            $('#PermanentAddress').val(c_adddress);
+            $('#PermanentState').val(c_state);
+            $('#PermanentCity').val(c_city);
+            $('#ddlPerState').val(c_state).trigger('change');
+            $('#ddlPerCity').val(c_city).trigger('change');
+            $('#PermanentZip').val(c_zip);
+        } else {
+            $('#PermanentAddress').val('');
+            $('#PermanentState').val('');
+            $('#PermanentCity').val('');
+            $('#ddlPerState').val('').trigger('change');
+            $('#PermanentZip').val('');
+        }
+    }
+
+    function addressSameAsPermanent() {
+        var c_adddress = $('#CorrespondenceAddress').val();
+        var c_city = $('#CorrespondenceCity').val();
+        var c_state = $('#CorrespondenceState').val();
+        var c_zip = $('#CorrespondenceZip').val();
+        var p_adddress = $('#PermanentAddress').val();
+        var p_city = $('#PermanentCity').val();
+        var p_state = $('#PermanentState').val();
+        var p_zip = $('#PermanentZip').val();
+        if (c_adddress == p_adddress && c_city == p_city && c_state == p_state && c_zip == p_zip) {
+            if (c_adddress == "" && c_city == "" && c_state == "" && c_zip == "")
+                $('#chkAddres').prop("checked", false);
+            else
+                $('#chkAddres').prop("checked", true);
+        }
+    }
+
+    function validation() {
+        var fname = $('#Fname').val();
+        var lname = $('#Lname').val();
+        var email = $('#Email').val();
+        var dob = $('#DateOfBirth').val();
+        var mobile = $('#Mobile').val();
+        var isAppear = $('#IsAppeared').prop("checked");
+        var height = $('#Height').val();
+        var weight = $('#Width').val();
+        var session = $('#ddltempSession').val();
+        var ishrcandidate = $('#IsHRCandidate').prop('checked');
+        var isconsultantcandidate = $('#IsConsultantCandidate').prop('checked');
+        var ispaymentcash = $('#PaymentStatus').prop('checked');
+        var status = true;
+        if (fname == "") {
+            $('#Fname').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#Fname').css("border", "");
+        }
+
+        if (session == "0") {
+            $('#ddltempSession').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#ddltempSession').css("border", "");
+        }
+
+        if (email != "" && !validateEmail("Email")) {
+            $('#Email').css("border", "1px solid red");
+            alert("Please fill valid email!");
+            status = false;
+        } else {
+            $('#Email').css("border", "");
+        }
+
+        if (status) {
+            var corState = $('#ddlCorrState option:selected').text() == "Select State" ? "" : $('#ddlCorrState option:selected').text();
+            var corCity = $('#ddlCorrCity option:selected').text() == "Select City" ? "" : $('#ddlCorrCity option:selected').text();
+            var perState = $('#ddlPerState option:selected').text() == "Select State" ? "" : $('#ddlPerState option:selected').text();
+            var perCity = $('#ddlPerCity option:selected').text() == "Select City" ? "" : $('#ddlPerCity option:selected').text();
+            $('#CorrespondenceState').val(corState);
+            $('#CorrespondenceCity').val(corCity);
+            $('#PermanentState').val(perState);
+            $('#PermanentCity').val(perCity);
+        }
+
+        if (status && $('#hdnPayStatus').val()=="False") {
+            if (!ishrcandidate && !isconsultantcandidate && !ispaymentcash) {
+                status = false;
+                $("#lblMsg").text('Please choose type of candidate(Consultant, HR) Or payment by cash!');
+                if ($("#lblMsg").text() != "") {
+                    $("#dvMsg").css("display", "block");
+                    $('html, body').animate({
+                        scrollTop: $("#dvMsg").offset().top
+                    }, 2000);
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                }
+            }
+        }
+        return status;
+    }
+
+    function validateEmail(emailField) {
+        var reg = /^([A-Za-z0-9_\-\.])+\@@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if (reg.test($("#" + emailField).val()) == false) {
+            return false;
+        }
+        return true;
+    }
+
+    $("#Height").blur(function () {
+        var height = $(this).val();
+        if (height == "") {
+            return false;
+        }
+        if (height < 155) {
+            alert("Height should be greater or equal than 155cm!");
+            $('#Height').val('');
+            $('#Height').focus();
+        }
+    });
+
+    $("#Width").blur(function () {
+        var weight = $(this).val();
+        if (weight == "") {
+            return false;
+        }
+        if (weight < 38) {
+            alert("Weight should be greater than or equal to 38kg.!");
+            $('#Width').val('');
+            $('#Width').focus();
+        }
+    });
+</script>

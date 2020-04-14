@@ -1,0 +1,59 @@
+D:\Sandeep\SpiceStarAcademy\SJData\bin\Release\SJData.dll.config
+D:\Sandeep\SpiceStarAcademy\SJData\bin\Release\SJData.dll
+D:\Sandeep\SpiceStarAcademy\SJData\bin\Release\SJData.pdb
+D:\Sandeep\SpiceStarAcademy\SJData\bin\Release\EntityFramework.dll
+D:\Sandeep\SpiceStarAcademy\SJData\bin\Release\EntityFramework.SqlServer.dll
+D:\Sandeep\SpiceStarAcademy\SJData\bin\Release\EntityFramework.xml
+D:\Sandeep\SpiceStarAcademy\SJData\bin\Release\EntityFramework.SqlServer.xml
+D:\Sandeep\SpiceStarAcademy\SJData\obj\Release\SJData.csprojAssemblyReference.cache
+D:\Sandeep\SpiceStarAcademy\SJData\obj\Release\SJData.csproj.CoreCompileInputs.cache
+D:\Sandeep\SpiceStarAcademy\SJData\obj\Release\SJData.csproj.CopyComplete
+D:\Sandeep\SpiceStarAcademy\SJData\obj\Release\SJData.dll
+D:\Sandeep\SpiceStarAcademy\SJData\obj\Release\SJData.pdb
+D:\gitPtojects\SpicestarERP\SJData\bin\Release\SJData.dll.config
+D:\gitPtojects\SpicestarERP\SJData\bin\Release\SJData.dll
+D:\gitPtojects\SpicestarERP\SJData\bin\Release\SJData.pdb
+D:\gitPtojects\SpicestarERP\SJData\bin\Release\EntityFramework.dll
+D:\gitPtojects\SpicestarERP\SJData\bin\Release\EntityFramework.SqlServer.dll
+D:\gitPtojects\SpicestarERP\SJData\bin\Release\EntityFramework.xml
+D:\gitPtojects\SpicestarERP\SJData\bin\Release\EntityFramework.SqlServer.xml
+D:\gitPtojects\SpicestarERP\SJData\obj\Release\SJData.csproj.CoreCompileInputs.cache
+D:\gitPtojects\SpicestarERP\SJData\obj\Release\SJData.csproj.CopyComplete
+D:\gitPtojects\SpicestarERP\SJData\obj\Release\SJData.dll
+D:\gitPtojects\SpicestarERP\SJData\obj\Release\SJData.pdb
+D:\gitPtojects\SpicestarERP\SJData\obj\Release\SJData.csprojAssemblyReference.cache
+E:\Git Projects\7 Oct Project\SpicestarERP\SJData\bin\Release\SJData.dll.config
+E:\Git Projects\7 Oct Project\SpicestarERP\SJData\bin\Release\SJData.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SJData\bin\Release\SJData.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SJData\bin\Release\EntityFramework.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SJData\bin\Release\EntityFramework.SqlServer.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SJData\bin\Release\EntityFramework.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SJData\bin\Release\EntityFramework.SqlServer.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SJData\obj\Release\SJData.csproj.CoreCompileInputs.cache
+E:\Git Projects\7 Oct Project\SpicestarERP\SJData\obj\Release\SJData.csproj.CopyComplete
+E:\Git Projects\7 Oct Project\SpicestarERP\SJData\obj\Release\SJData.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SJData\obj\Release\SJData.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SJData\obj\Release\SJData.csprojAssemblyReference.cache
+D:\Spice Star Project\SpicestarERP\SJData\bin\Release\SJData.dll.config
+D:\Spice Star Project\SpicestarERP\SJData\bin\Release\SJData.dll
+D:\Spice Star Project\SpicestarERP\SJData\bin\Release\SJData.pdb
+D:\Spice Star Project\SpicestarERP\SJData\bin\Release\EntityFramework.dll
+D:\Spice Star Project\SpicestarERP\SJData\bin\Release\EntityFramework.SqlServer.dll
+D:\Spice Star Project\SpicestarERP\SJData\bin\Release\EntityFramework.xml
+D:\Spice Star Project\SpicestarERP\SJData\bin\Release\EntityFramework.SqlServer.xml
+D:\Spice Star Project\SpicestarERP\SJData\obj\Release\SJData.csprojAssemblyReference.cache
+D:\Spice Star Project\SpicestarERP\SJData\obj\Release\SJData.csproj.CoreCompileInputs.cache
+D:\Spice Star Project\SpicestarERP\SJData\obj\Release\SJData.csproj.CopyComplete
+D:\Spice Star Project\SpicestarERP\SJData\obj\Release\SJData.dll
+D:\Spice Star Project\SpicestarERP\SJData\obj\Release\SJData.pdb
+F:\SpicestarERP\SJData\bin\Release\SJData.dll.config
+F:\SpicestarERP\SJData\bin\Release\SJData.dll
+F:\SpicestarERP\SJData\bin\Release\SJData.pdb
+F:\SpicestarERP\SJData\bin\Release\EntityFramework.dll
+F:\SpicestarERP\SJData\bin\Release\EntityFramework.SqlServer.dll
+F:\SpicestarERP\SJData\bin\Release\EntityFramework.xml
+F:\SpicestarERP\SJData\bin\Release\EntityFramework.SqlServer.xml
+F:\SpicestarERP\SJData\obj\Release\SJData.csprojAssemblyReference.cache
+F:\SpicestarERP\SJData\obj\Release\SJData.csproj.CopyComplete
+F:\SpicestarERP\SJData\obj\Release\SJData.dll
+F:\SpicestarERP\SJData\obj\Release\SJData.pdb

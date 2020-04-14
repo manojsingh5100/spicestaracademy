@@ -1,0 +1,53 @@
+﻿@model SJModel.RoleViewModel
+<style>
+    .cl {
+        padding-top: 20px;
+    }
+
+    .modal-content {
+        border-radius: 5px;
+    }
+</style>
+<form class="form-horizontal">
+    <div class="row">
+        @if (Model.Id > 0)
+        {
+            <div class="col-md-12">
+                <label>BatchId</label>
+                @Html.TextBoxFor(m => m.Id, new { @class = "form-control", @disabled = "disabled" })
+            </div>
+        }
+        <div class="col-md-12 @(Model.Id>0?"cl":"")">
+            <label>BatchName</label>
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-12 cl">
+            <label>Batch Start Date</label><br />
+            @Html.TextBoxFor(m => m.BatchStartDateStr, new { @class = "form-control", placeholder = "Batch Start Date", autocomplete = "off", onkeydown = "return false;" })
+        </div>
+
+        <div class="col-md-12 cl">
+            <label>Batch End Date</label><br />
+            @Html.TextBoxFor(m => m.BatchEndDateStr, new { @class = "form-control", placeholder = "Batch End Date", autocomplete = "off", onkeydown = "return false;" })
+        </div>
+
+        <div class="col-md-12 cl">
+            <label>Active</label><br />
+            @Html.CheckBoxFor(m => m.IsActive)
+        </div>
+    </div>
+</form>
+<script>
+    $(document).ready(function () {
+        $('#BatchStartDateStr').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+
+        $('#BatchEndDateStr').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+    });
+</script>

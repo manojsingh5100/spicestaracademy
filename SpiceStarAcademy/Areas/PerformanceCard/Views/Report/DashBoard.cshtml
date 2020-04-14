@@ -1,0 +1,860 @@
+﻿@model SJModel.ReportFilterViewModel
+@{
+    ViewBag.Title = "Desktop";
+    Layout = "~/Areas/PerformanceCard/Views/Shared/_LayoutP.cshtml";
+}
+<link href="~/assets/bower_components/chart.js/any/rangeSlider.min.css" rel="stylesheet" />
+<style>
+    .irs--big {
+        height: 80px !important;
+    }
+
+    .dataTables_filter {
+        display: block !important;
+    }
+
+    input[type=search] {
+        height: 20px;
+    }
+
+    .content-wrapper, .main-footer {
+        -webkit-transition: -webkit-transform .3s ease-in-out, margin .3s ease-in-out;
+        -moz-transition: -moz-transform .3s ease-in-out, margin .3s ease-in-out;
+        -o-transition: -o-transform .3s ease-in-out, margin .3s ease-in-out;
+        transition: transform .3s ease-in-out, margin .3s ease-in-out;
+        margin-left: 120px;
+        z-index: 820;
+    }
+
+    .wrapper {
+        height: 100%;
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+</style>
+<div class="content-wrapper">
+    <section class="content">
+        <!-- Info boxes -->
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-new">
+                    <div class="side-red-strip"></div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <input type="hidden" id="hdnbatchrange" value="1,2,3" />
+                        <div class="col-md-4">
+                            <div class="student-title-section">
+                                <h5><i class=" fa fa-user"></i> TOTAL LEARNERS</h5>
+                                <h4>@Model.TotalStudent</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="student-title-section">
+                                <h5><i class="fa fa-list-ul"></i> TOTAL BATCH </h5>
+                                <h4>@Model.TotalBatch</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="student-title-section" style="border-right:solid 1px transparent">
+                                <h5><i class="fa fa-graduation-cap"></i> TOTAL COURSE </h5>
+                                <h4>@Model.TotalCourse</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-new">
+                    <div class="side-red-strip"></div>
+                    <!-- /.box-red-strip -->
+                    <div class="box-body">
+                        <div class="title-header-container">
+                            <h5>PERFORMANCE AT A GLANCE</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="perf-glace-left-side" style="height:400px;  margin-top:25px; margin-left:20px;">
+                                    <div id="container"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="perf-glace-right-side">
+                                    <h5>SELECT BATCH RANGE</h5>
+                                    <input type="text" class="js-range-slider" name="my_range" value="" />
+                                </div>
+                                <div class="review-container" style="padding-left:12px !important">
+                                    <h5>REVIEW</h5>
+                                    <div>
+                                        @Html.DropDownListFor(m => m.ReviewId, new SelectList(Model.GetReviewList, "Id", "Name"), new { @class = "form-control custom-dropdwn", onchange = "GetPieChartInfo();" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="padding-top:60px;">
+                                <div class="container" style="font-size:25px;font-weight:600" id="divtotaltrainers">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top:40px;">
+                            <div class="col-lg-12" id="divtable123" style="display:none">
+                                <span><u style="font-size:20px;color:blue" id="spngettext"> </u></span>
+                            </div>
+                            <div class="col-lg-12" style="padding-top:10px;">
+                                <div id="divTable">
+                                    <table class="table table-bordered table-striped" id="tblpiechdata">
+                                        <thead class="tbl-header-section">
+                                            <tr id="theaddata"></tr>
+                                        </thead>
+                                        <tbody id="tbodypiedata"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main row -->
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+
+<script src="~/assets/bower_components/chart.js/any/base.min.js"></script>
+<script src="~/assets/bower_components/chart.js/any/ui.min.js"></script>
+<script src="~/assets/bower_components/chart.js/any/exports.min.js"></script>
+<script src="~/assets/bower_components/chart.js/any/jquery.min.js"></script>
+<script src="~/assets/bower_components/chart.js/any/rangeSlider.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        StopLoading();
+        $(".js-range-slider").ionRangeSlider({
+        grid: true,
+        grid_snap: true,
+        type: "double",
+        min: @Model.BatchRangeArray[1],
+        max: @Model.BatchRangeArray[0],
+        from: 1,
+        to: 3,
+        drag_interval: true,
+        min_interval: null,
+        max_interval: null,
+            onFinish: function (data) {
+                var vals = getcommastring(data.from, data.to);
+                $("#hdnbatchrange").val(vals);
+                GetPieChartInfo();
+        }
+        });
+        GetPieChartInfo();
+    });
+
+    function getcommastring(min, max) {
+        var arr = [];
+        for (var i = min; i <= max; i++) {
+            arr.push(i);
+        }
+        return arr.join(',');
+    }
+
+    function GetPieChartInfo() {
+        var rangeArr = $("#hdnbatchrange").val().split(',');
+        var data = {
+            "ReviewId": $('#ReviewId').val() == "" ? 0 : $('#ReviewId').val(),
+            "BatchRangeArray": rangeArr
+        }
+        $.ajax({
+            url: '/PerformanceCard/Report/GetPieChartInfo',
+            dataType: 'json',
+            type: 'post',
+            data: data,
+            success: function (data, textStatus, jQxhr) {
+                ShowDashBoardPieChart(data);
+                $('#divTable').empty();
+                $('#divtable123').css('display', 'none');
+                if (data != null && data.length > 0) {
+                    $('#divtotaltrainers').empty().text("TOTAL LEARNERS: " + (data[0].NoOfStudent + data[1].NoOfStudent + data[2].NoOfStudent));
+                } else {
+                    $('#divtotaltrainers').empty();
+                }
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function ShowDashBoardPieChart(chartData) {
+      $('#container').empty();
+      var json = {
+            "chart": {
+                "zIndex": 0,
+                "enabled": true,
+                "type": "pie-3d",
+                "title": {
+                    "enabled": true,
+                    "fontSize": 16,
+                    "fontFamily": "Verdana, Helvetica, Arial, sans-serif",
+                    "fontColor": "#7c868e",
+                    "fontOpacity": 1,
+                    "fontDecoration": "none",
+                    "fontStyle": "normal",
+                    "fontVariant": "normal",
+                    "fontWeight": "normal",
+                    "letterSpacing": "normal",
+                    "textDirection": "ltr",
+                    "lineHeight": "normal",
+                    "textIndent": 0,
+                    "vAlign": "top",
+                    "hAlign": "center",
+                    "wordWrap": "normal",
+                    "wordBreak": "normal",
+                    "textOverflow": "",
+                    "selectable": false,
+                    "disablePointerEvents": false,
+                    "useHtml": false,
+                    "width": null,
+                    "height": null,
+                    "align": "center",
+                    "text": "",
+                    "margin": {
+                        "left": 0,
+                        "top": -130,
+                        "bottom": 0,
+                        "right": 0
+                    },
+                    "padding": {
+                        "left": 0,
+                        "top": 0,
+                        "bottom": 10,
+                        "right": 0
+                    },
+                    "background": {
+                        "zIndex": 0,
+                        "enabled": false
+                    }
+                },
+                "background": {
+                    "zIndex": 0.5,
+                    "enabled": true
+                },
+                "margin": {
+                    "left": 0,
+                    "top": 0,
+                    "bottom": 0,
+                    "right": 0
+                },
+                "padding": {
+                    "left": 10,
+                    "top": 10,
+                    "bottom": 15,
+                    "right": 20
+                },
+                "a11y": {
+                    "enabled": true,
+                    "mode": "chart-elements"
+                },
+                "autoRedraw": true,
+                "bounds": {},
+                "contextMenu": {
+                    "enabled": true
+                },
+                "credits": {
+                    "text": "AnyChart",
+                    "url": "https://www.anychart.com/?utm_source=registered",
+                    "alt": "AnyChart - JavaScript Charts designed to be embedded and integrated{{anychart-version}}",
+                    "imgAlt": "AnyChart - JavaScript Charts",
+                    "logoSrc": "https://static.anychart.com/logo.png",
+                    "enabled": false
+                },
+                "selectMarqueeFill": {
+                    "color": "#d3d3d3",
+                    "opacity": 0.4
+                },
+                "selectMarqueeStroke": "#d3d3d3",
+                "legend": {
+                    "zIndex": 200,
+                    "enabled": true,
+                    "fontSize": 12,
+                    "fontFamily": "Verdana, Helvetica, Arial, sans-serif",
+                    "fontColor": "#7c868e",
+                    "fontOpacity": 1,
+                    "fontDecoration": "none",
+                    "fontStyle": "normal",
+                    "fontVariant": "normal",
+                    "fontWeight": "normal",
+                    "letterSpacing": "normal",
+                    "textDirection": "ltr",
+                    "lineHeight": "normal",
+                    "textIndent": 0,
+                    "vAlign": "bottom",
+                    "hAlign": "start",
+                    "wordWrap": "normal",
+                    "wordBreak": "normal",
+                    "textOverflow": "...",
+                    "selectable": false,
+                    "disablePointerEvents": false,
+                    "useHtml": false,
+                    "inverted": false,
+                    "itemsLayout": "horizontal",
+                    "iconSize": 15,
+                    "width": null,
+                    "height": null,
+                    "maxWidth": null,
+                    "maxHeight": null,
+                    "position": "bottom",
+                    "positionMode": "outside",
+                    "drag": false,
+                    "itemsFormat": null,
+                    "titleFormat": null,
+                    "itemsSpacing": 3,
+                    "itemsSourceMode": "default",
+                    "hoverCursor": "pointer",
+                    "iconTextSpacing": 5,
+                    "align": "center",
+                    "margin": {
+                        "left": 0,
+                        "top": 0,
+                        "bottom": 0,
+                        "right": 0
+                    },
+                    "padding": {
+                        "left": 10,
+                        "top": 10,
+                        "bottom": 0,
+                        "right": 10
+                    },
+                    "background": {
+                        "enabled": false
+                    },
+                    "title": {
+                        "enabled": false,
+                        "fontSize": 15,
+                        "fontFamily": "Verdana, Helvetica, Arial, sans-serif",
+                        "fontColor": "#7c868e",
+                        "fontOpacity": 1,
+                        "fontDecoration": "none",
+                        "fontStyle": "normal",
+                        "fontVariant": "normal",
+                        "fontWeight": "normal",
+                        "letterSpacing": "normal",
+                        "textDirection": "ltr",
+                        "lineHeight": "normal",
+                        "textIndent": 0,
+                        "vAlign": "top",
+                        "hAlign": "center",
+                        "wordWrap": "normal",
+                        "wordBreak": "normal",
+                        "textOverflow": "",
+                        "selectable": false,
+                        "disablePointerEvents": false,
+                        "useHtml": false,
+                        "width": null,
+                        "height": null,
+                        "align": "center",
+                        "text": "Title text",
+                        "margin": {
+                            "left": 0,
+                            "top": 0,
+                            "bottom": 0,
+                            "right": 0
+                        },
+                        "padding": {
+                            "left": 0,
+                            "top": 0,
+                            "bottom": 0,
+                            "right": 0
+                        },
+                        "background": {
+                            "enabled": false
+                        }
+                    },
+                    "titleSeparator": {
+                        "zIndex": 1,
+                        "enabled": false,
+                        "fill": {
+                            "color": "#CECECE",
+                            "opacity": 0.3
+                        },
+                        "stroke": "none",
+                        "width": "100%",
+                        "height": 1,
+                        "orientation": "top",
+                        "margin": {
+                            "left": 0,
+                            "top": 5,
+                            "bottom": 5,
+                            "right": 0
+                        }
+                    },
+                    "paginator": {
+                        "zIndex": 30,
+                        "enabled": true,
+                        "fontSize": 12,
+                        "fontFamily": "Verdana, Helvetica, Arial, sans-serif",
+                        "fontColor": "#545f69",
+                        "fontOpacity": 1,
+                        "fontDecoration": "none",
+                        "fontStyle": "normal",
+                        "fontVariant": "normal",
+                        "fontWeight": "normal",
+                        "letterSpacing": "normal",
+                        "textDirection": "ltr",
+                        "lineHeight": "normal",
+                        "textIndent": 0,
+                        "vAlign": "top",
+                        "hAlign": "start",
+                        "wordWrap": "normal",
+                        "wordBreak": "normal",
+                        "textOverflow": "",
+                        "selectable": false,
+                        "disablePointerEvents": false,
+                        "useHtml": false,
+                        "orientation": "right",
+                        "layout": "horizontal",
+                        "background": {
+                            "enabled": false
+                        },
+                        "padding": {
+                            "left": 5,
+                            "top": 0,
+                            "bottom": 0,
+                            "right": 0
+                        },
+                        "margin": {
+                            "left": 0,
+                            "top": 0,
+                            "bottom": 0,
+                            "right": 0
+                        }
+                    },
+                },
+                "interactivity": {
+                    "spotRadius": 2,
+                    "multiSelectOnClick": true,
+                    "unselectOnClickOutOfPoint": false,
+                    "hoverMode": "single",
+                    "selectionMode": "multi-select"
+                },
+              "data": [
+                  [
+                      "HIGH PERFORMERS/" + chartData[0].NoOfStudent,
+                      chartData[0].Percentage
+                  ],
+                  [
+                      "MID PERFORMERS/" + chartData[1].NoOfStudent,
+                      chartData[1].Percentage
+                  ],
+
+                  [
+                      "LOW PERFORMERS/" + chartData[2].NoOfStudent,
+                      chartData[2].Percentage
+                  ],
+              ],
+                "palette": {
+                    "type": "distinct",
+                    "items": [
+
+                        "#EF6C00",
+                        "#00796B",
+                        "#C0CA33"
+                    ]
+                },
+                "hatchFillPalette": {
+                    "items": [
+                        {
+                            "type": "backward-diagonal",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "forward-diagonal",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "horizontal",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "vertical",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "dashed-backward-diagonal",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "grid",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "dashed-forward-diagonal",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "dashed-horizontal",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "dashed-vertical",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "diagonal-cross",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "diagonal-brick",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "divot",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "horizontal-brick",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "vertical-brick",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "checker-board",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "confetti",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "plaid",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "solid-diamond",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "zig-zag",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "weave",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "percent-05",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "percent-10",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "percent-20",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "percent-25",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "percent-30",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "percent-40",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "percent-50",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "percent-60",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "percent-70",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "percent-75",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "percent-80",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        },
+                        {
+                            "type": "percent-90",
+                            "color": "black 0.5",
+                            "thickness": 1,
+                            "size": 10
+                        }
+                    ]
+                },
+                "center": {
+                    "stroke": "none",
+                    "fill": "none"
+                },
+                "overlapMode": "no-overlap",
+                "startAngle": 180,
+                "radius": "60%",
+                "innerRadius": 0,
+                "sort": "none",
+                "insideLabelsOffset": "70%",
+                "connectorLength": "15%",
+                "outsideLabelsCriticalAngle": 60,
+                "forceHoverLabels": true,
+                "connectorStroke": "#CECECE",
+                "mode3d": true,
+                "normal": {
+                    "explode": 0,
+                    "stroke": "none",
+                    "hatchFill": "none",
+                    "labels": {
+                        "zIndex": 34,
+                        "enabled": true,
+                        "disablePointerEvents": true
+                    },
+                    "outline": {
+                        "stroke": "none",
+                        "width": 0,
+                        "offset": 0,
+                        "enabled": true
+                    }
+                },
+                "hovered": {
+                    "explode": 0,
+                    "labels": {
+                        "enabled": null
+                    },
+                    "outline": {
+                        "stroke": "none",
+                        "width": 10,
+                        "offset": 0,
+                        "enabled": null
+                    }
+                },
+                "selected": {
+                    "explode": "5%",
+                    "stroke": "none",
+                    "labels": {
+                        "enabled": null
+                    },
+                    "outline": {
+                        "stroke": "none",
+                        "width": 10,
+                        "offset": 0,
+                        "enabled": null
+                    }
+                }
+            }
+        };
+        var chart = anychart.fromJson(json);
+        chart.tooltip().useHtml(true);
+        var tooltip = chart.tooltip();
+        tooltip.titleFormat(function (e) {
+            return e.name.split('/')[0];
+        });
+        tooltip.format(function (e) {
+            return "NO OF LEARNERS: " + (e.name.split('/')[1]) + "<br/>VALUE PERCENTAGE: " + (e.value) + "%";
+        });
+        chart.container('container');
+        chart.draw();
+        chart.listen("pointClick", function (e) {
+            var index = e.iterator.getIndex();
+            var name = e.iterator.f[0];
+            getSelectedTopCandidates(index, name);
+            var aaa = name.split('/');
+            $('#spngettext').text(aaa[0]);
+        });
+    }
+
+    function hideEmptyCols(table) {
+        var numCols = $("thead th", table).length;
+        for (var i = 1; i <= numCols; i++) {
+            var empty = true;
+            $("td:nth-child(" + i + ")", table).each(function (index, el) {
+                if (el.innerText != "N/A") {
+                    empty = false;
+                    return false; 
+                }
+            });
+            if (empty) {
+                $("td:nth-child(" + i + ")", table).hide();
+                $("th:nth-child(" + i + ")", table).hide(); 
+            }
+        }
+    }
+
+    function getSelectedTopCandidates(index, name) {
+        var rangeArr = $("#hdnbatchrange").val().split(',');
+        var data = {
+            "ReviewId": $('#ReviewId').val() == "" ? 3 : $('#ReviewId').val(),
+            "BatchRangeArray": rangeArr,
+            "PieIndex": index,
+            "PieClickPartName": name
+        }
+        $.ajax({
+            url: '/PerformanceCard/Report/GetSelectedTopCandidates',
+            dataType: 'json',
+            type: 'post',
+            data: data,
+            success: function (data, textStatus, jQxhr) {
+                var t = "No data found";
+                if (data != null && data.info != null && data.info.length > 0) {
+                    console.log(data);
+                    $('#divtable123').css('display', 'block');
+                    $('#divTable').empty().append('<table class="table table-bordered table-striped" id="tblpiechdata"><thead class= "tbl-header-section" ><tr id="theaddata"></tr></thead ><tbody id="tbodypiedata"></tbody></table >');
+                    $('#theaddata').empty();
+                    var ss = "<th>S NO.</th><th style='width:20%'>NAME</th>";
+                    $.each(data.TheadTitle, function (f, m) {
+                        ss += '<th>' + m.PName.toUpperCase() + '</th>';
+                    });
+                    ss += "<th>PERCENTAGE</th>";
+                    $('#theaddata').append(ss);
+                    t = "";
+                    var num = 0;
+                    $.each(data.info, function (i, item) {
+                        var k = (item.TotalPercentage != null ? parseFloat(item.TotalPercentage.split(' ')[0]) : 0);
+                        if (name.split('/')[0] == 'HIGH PERFORMERS' && k >= 90.00) {
+                            t += '<tr><td>' + (num + 1) + '</td><td style="width: 30%" class="red-higlight">' + (item.Fname + (item.Lname != null ? (" " + item.Lname) : "")) + '</td>';
+                            $.each(data.TheadTitle, function (f, m) {
+                                var st = false;
+                                $.each(item.PerformanceData, function (j, abc) {
+                                    if (m.PName.toUpperCase() == abc.ParameterName.toUpperCase()) {
+                                        t += '<td>' + (abc.Percentage > 0 ? abc.Percentage:"N/A") + '</td>';
+                                        st = true;
+                                        return false;
+                                    }
+                                });
+                                if (st == false) {
+                                    t += '<td>N/A</td>';
+                                }
+                            });
+                            t += '<td class="red-higlight">' + item.TotalPercentage + '</td></tr>';
+                            num = num + 1;
+                        }
+                        else if (name.split('/')[0] == 'LOW PERFORMERS' && k < 65.00) {
+                            t += '<tr><td>' + (num + 1) + '</td><td style="width: 30%" class="red-higlight">' + (item.Fname + (item.Lname != null ? (" " + item.Lname) : "")) + '</td>';
+                            $.each(data.TheadTitle, function (f, m) {
+                                var st = false;
+                                $.each(item.PerformanceData, function (j, abc) {
+                                    if (m.PName.toUpperCase() == abc.ParameterName.toUpperCase()) {
+                                        t += '<td>' + (abc.Percentage > 0 ? abc.Percentage : "N/A") + '</td>';
+                                        st = true;
+                                        return false;
+                                    }
+                                });
+                                if (st == false) {
+                                    t += '<td>N/A</td>';
+                                }
+                            });
+                            t += '<td class="red-higlight">' + item.TotalPercentage + '</td></tr>';
+                            num = num + 1;
+                        }
+                        else if (name.split('/')[0] == 'MID PERFORMERS' && k < 90.00 && k >= 65.00) {
+                            t += '<tr><td>' + (num + 1) + '</td><td style="width: 30%" class="red-higlight">' + (item.Fname + (item.Lname != null ? (" " + item.Lname) : "")) + '</td>';
+                            $.each(data.TheadTitle, function (f, m) {
+                                var st = false;
+                                $.each(item.PerformanceData, function (j, abc) {
+                                    if (m.PName.toUpperCase() == abc.ParameterName.toUpperCase()) {
+                                        t += '<td>' + (abc.Percentage > 0 ? abc.Percentage : "N/A") + '</td>';
+                                        st = true;
+                                        return false;
+                                    }
+                                });
+                                if (st == false) {
+                                    t += '<td>N/A</td>';
+                                }
+                            });
+                            t += '<td class="red-higlight">' + item.TotalPercentage + '</td></tr>';
+                            num = num + 1;
+                        }
+                    });
+                    $('#tbodypiedata').empty().append(t);
+                    hideEmptyCols("#tblpiechdata");
+                }
+            },
+            complete: function () {
+               // hideEmptyCols("tblpiechdata");
+                // $('#tblpiechdata').DataTable({ "searching": true});
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+</script>
+

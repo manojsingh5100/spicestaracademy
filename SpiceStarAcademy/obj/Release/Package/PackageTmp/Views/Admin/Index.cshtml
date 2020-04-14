@@ -1,0 +1,130 @@
+﻿@{
+    /**/
+
+    ViewBag.Title = "Index";
+}
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Admin Control Panel
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Admin Control Panel</a></li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Batch Control Panel</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" style="width:55px;" onclick="openBatchModel(0);" class="btn btn-success btn-xs">Add</button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="alert alert-success fade in alert-dismissable text-center" id="dvBatchMsg" style="display:none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <strong id="lblBatchMsg"></strong>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="tblBatchAdmin" data-page-length='5' class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>Name</th>
+                                        <th>Active</th>
+                                        <th>Start at</th>
+                                        <th>End at</th>
+                                        <th style="width:50px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Session Control</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="myBatchModel" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width:350px;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="headerText">Add Update Batch</h4>
+            </div>
+            <div class="modal-body" id="divBatchDetail">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="btnBatchSubmit" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/Datatables/js/admincontrolpanal.js"></script>
+<script>
+    function openBatchModel(e) {
+        $("#myBatchModel").modal("show"), $("#divBatchDetail").empty(),
+            $.ajax({
+                cache: !1, type: "GET", url: "/Admin/OpenBatchModelPopup", data: { Id: e }, success: function (e) { $("#divBatchDetail").append(e), $("#myBatchModel").modal("show") }, error: function (e, a, t) { alert("Failed!") }
+            })
+    }
+
+    function BatchModelClear() {
+        $("#Name").val(""), $("#IsActive").prop("checked", !0)
+    }
+
+    $(document).ready(function () { Table = $("#tblBatchAdmin").DataTable(ReportBatchSetting("tblReport")), StopLoading() }),
+
+        $("#btnBatchSubmit").click(function () {
+            var startDate = $('#BatchStartDateStr').val();
+            var endDate = $('#BatchEndDateStr').val();
+            if (startDate != "" && endDate != "") {
+                var sd = startDate.split("/");
+                var ed = endDate.split("/");
+                var sDate = new Date(sd[2], sd[1] - 1, sd[0]);
+                var eDate = new Date(ed[2], ed[1] - 1, ed[0]);
+                if (sDate > eDate) {
+                    alert('Batch end date is not greater than batch start date!');
+                    return false;
+                }
+            }
+            var e = $("#Name").val(); if (null == e || "" == e)
+                return $("#Name").css("border", "1px solid red"), !1; $("#Name").css("border", "");
+            var a = {}; a.Name = e, a.Id = $("#Id").val(), a.IsActive = $("#IsActive").prop("checked"), a.BatchStartDateStr = $('#BatchStartDateStr').val(), a.BatchEndDateStr = $('#BatchEndDateStr').val()
+            $.ajax({
+                cache: !1, type: "POST", url: "/Admin/AddUpdateBatchMaster", data: { Model: a },
+                success: function (e) {
+                    null == e && "" == e || ("Add Successfully!" == e && BatchModelClear(),
+                        $("#lblBatchMsg").text(e), "" != $("#lblBatchMsg").text() && ($("#dvBatchMsg").css("display", "block"),
+                            setTimeout(function () {
+                                $("#dvBatchMsg").css("display", "none"),
+                                    $("#lblBatchMsg").text("")
+                            }, 8e3)), Table.draw(), $("#myBatchModel").modal("hide"))
+                }, error: function (e, a, t) { alert("Failed!") }
+            })
+        });
+</script>
+

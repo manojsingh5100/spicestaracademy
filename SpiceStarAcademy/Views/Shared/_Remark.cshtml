@@ -1,0 +1,101 @@
+﻿@model SJModel.CallCenterRemarkViewModel
+    <style>
+        .modal-dialog {
+            width: 800px; /* New width for default modal */
+        }
+    </style>
+<form class="form-horizontal" id="frmFeeModelPopup">
+    <div class="row">
+        <div class="col-md-3">
+            <label>Registration No:</label>
+        </div>
+        <div class="col-md-9">
+            <input type="text" value="@Model.RegistrationNo" class="form-control" readonly="readonly" />
+            <input type="hidden" value="@Model.RegistrationNo" id="hdnRegno" />
+        </div>
+    </div>
+    <div class="row" style="padding-top:10px;">
+        <div class="col-md-3">
+            <label>Remark:</label>
+        </div>
+        <div class="col-md-9">
+            <textarea id="txtRemarks" class="form-control" placeholder="Remark"> </textarea>
+        </div>
+    </div>
+    <div class="row" style="padding-top:10px;">
+        <div class="col-md-12">
+            <input type="button" value="Add Remark" onclick="saveRemark();" class="btn btn-success pull-right" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="padding-top:30px;">
+            <table id="tblRemark" style="width:100%;font-size:16px;" class="table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <th>Sr.No</th>
+                        <th>Remark</th>
+                        <th>Enter Date</th>
+                        <th>Enter By</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</form>
+<script>
+    var RagisterTabApi;
+    $(document).ready(function () {
+        RagisterTabApi  = $("#tblRemark").DataTable({
+                "searchDelay": 1000,
+                "serverSide": true,
+                "filter": true,
+                "orderMulti": false,
+                "ajax": {
+                    url: '@Url.Action("GetCallCenterRemarks", "CallCenterInfo")',
+                    type: "POST",
+                    datatype: "json",
+                    data: { RegNo: $('#hdnRegno').val() },
+                    error: function (jqXHR, exception) {
+                    }
+                },
+                "columns": [
+                    { "data": "Id"},
+                    { "data": "Remarks" },
+                    { "data": "CreateDate" },
+                    { "data": "EnteredByName" }              
+                ], "order": [[0, 'desc']],
+               "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+               $("td:nth-child(1)", nRow).html(iDisplayIndex + 1);
+               return nRow;
+               }
+            });
+            $.fn.dataTable.ext.errMode = 'throw';
+    });
+    function saveRemark() {
+        var remark = $('#txtRemarks').val().trim();
+        if (remark == "") {
+            $('#txtRemarks').css("border", "1px solid red");
+            return false;
+        } else {
+            $('#txtRemarks').css("border", "");
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "/CallCenterInfo/SaveCallCenterRemarks",
+                data: { RegNo: $('#hdnRegno').val(), Remark: remark },
+                success: function (data) {
+                    if (data) {
+                        RagisterTabApi.draw();
+                        checkMsg('Remark submit successfully!');
+                        $('#myModal').modal('hide');
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed!');
+                }
+            });
+
+        }
+    }
+</script>

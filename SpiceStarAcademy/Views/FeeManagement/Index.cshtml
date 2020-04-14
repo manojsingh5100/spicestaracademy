@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "Fee Management";
+}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Fee Management
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-dashboard"></i> &nbsp; Fee Management</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- /.box -->
+                <div class="box">
+                    <div class="box-body">
+                        <div class="row col-md-12 table-responsive">
+                            <table id="tblAddmissionView" class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>AdmissionId</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>DOB</th>
+                                        <th>Course</th>
+                                        <th>Session</th>
+                                        <th>Valid Passport</th>
+                                        <th>Admission Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<input type="button" class="btn btn-success" />
+<script>
+    $(document).ready(function () {
+        LoadAddmissionViewData();
+        StopLoading();
+    });
+
+
+    var AddmissionViewTabApi;
+        function LoadAddmissionViewData() {
+            AddmissionViewTabApi = $("#tblAddmissionView").DataTable({
+                "searchDelay": 1000,
+                "serverSide": true,
+                "filter": true,
+                "orderMulti": false,
+                "ajax": {
+                    url: '@Url.Action("GetAddmissionViewList", "Addmission")',
+                    type: "POST",
+                    datatype: "json",
+                    error: function (jqXHR, exception) {
+                    }
+                },
+                "columns": [
+
+                    { "data": "Id"},
+                    {
+                         "data": "StudentName",
+                         "render": function (data, type, row) {
+                                return "<a href='/Addmission/StudentProfile?Id="+ row.Id +"'> "+ row.StudentName +"</a>"
+                        }
+                    },
+                    { "data": "Email" },
+                    { "data": "MobileNo" },
+                    { "data": "DateOfBirth" },
+                    { "data": "CourseName" },
+                    { "data": "SessionName" },
+                    {
+                         "data": "IsValidPassport" ,
+                         "render": function (data, type, row) {
+                            if (row.IsValidPassport)
+                                return "<span>Yes</span>"
+                            else
+                                return "<span> No </span>"
+                        }
+                    },
+                    {
+                        "data": "AddmissionDate",
+                        "render": function (data, type, row) {
+                            return DateFormat(row.AddmissionDate);
+                        }
+                    },
+
+                ], "order": [[0, 'asc']],
+
+            });
+            $.fn.dataTable.ext.errMode = 'throw';
+    }
+
+    function DateFormat(jsonDate) {
+        var value = new Date
+            (
+            parseInt(jsonDate.replace(/(^.*\()|([+-].*$)/g, ''))
+            );
+        var dat = value.getDate() +
+            1 +
+            "/" +
+            value.getMonth() +
+            "/" +
+            value.getFullYear();
+        return dat;
+    }
+</script>
+
+
+
+

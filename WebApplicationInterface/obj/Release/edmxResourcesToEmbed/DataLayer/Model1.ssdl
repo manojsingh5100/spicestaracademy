@@ -1,0 +1,796 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SJStarERPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CourseMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CourseName" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="DepartmentMasterId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaAddressDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cor_Country" Type="varchar" MaxLength="250" />
+    <Property Name="Cor_State" Type="varchar" MaxLength="250" />
+    <Property Name="Cor_District" Type="varchar" MaxLength="250" />
+    <Property Name="Cor_City" Type="varchar" MaxLength="250" />
+    <Property Name="Cor_Address1" Type="varchar" MaxLength="500" />
+    <Property Name="Cor_Address2" Type="varchar" MaxLength="500" />
+    <Property Name="Cor_PinCode" Type="varchar" MaxLength="8" />
+    <Property Name="IsPermanent" Type="bit" Nullable="false" />
+    <Property Name="Per_Country" Type="varchar" MaxLength="250" />
+    <Property Name="Per_State" Type="varchar" MaxLength="250" />
+    <Property Name="Per_District" Type="varchar" MaxLength="250" />
+    <Property Name="Per_City" Type="varchar" MaxLength="250" />
+    <Property Name="Per_Address1" Type="varchar" MaxLength="500" />
+    <Property Name="Per_Address2" Type="varchar" MaxLength="500" />
+    <Property Name="Per_PinCode" Type="varchar" MaxLength="8" />
+    <Property Name="ptaRegistrationInfoId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaBoardAndUniversityMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="600" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaDeclaration">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ApplicantName" Type="varchar" MaxLength="250" />
+    <Property Name="ParentName" Type="varchar" MaxLength="250" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="ptaRegistrationInfoId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaEducationDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Class" Type="varchar" MaxLength="100" />
+    <Property Name="NameOfInstitute" Type="varchar" MaxLength="600" />
+    <Property Name="ptaBoardAndUniversityMasterId" Type="int" />
+    <Property Name="ptaUGBoardAndUniversityMasterId" Type="int" />
+    <Property Name="ptaStreamMasterId" Type="int" />
+    <Property Name="ptaDegreeMasterId" Type="int" />
+    <Property Name="YearOfPassing" Type="varchar" MaxLength="10" />
+    <Property Name="ptaEduEvaluationTypeMasterId" Type="int" />
+    <Property Name="PercentageOrCGPA" Type="float" />
+    <Property Name="ptaResultStatusMasterId" Type="int" />
+    <Property Name="ptaRegistrationInfoId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaEducationSubjectMarks">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubjectName" Type="varchar" MaxLength="100" />
+    <Property Name="MaximumMark" Type="float" />
+    <Property Name="ObtainMark" Type="float" />
+    <Property Name="Percentage" Type="float" />
+    <Property Name="ptaEducationDetailId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaEduEvaluationTypeMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="250" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaGenderMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaGuardian">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="250" />
+    <Property Name="Mobile" Type="varchar" MaxLength="250" />
+    <Property Name="Relation" Type="varchar" MaxLength="250" />
+    <Property Name="ptaRegistrationInfoId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaLeadSourceMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="250" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaMedicalStatusMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="250" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaNatioalityMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="250" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaPassport">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PassportNo" Type="varchar" MaxLength="250" />
+    <Property Name="PassportCountry" Type="varchar" MaxLength="250" />
+    <Property Name="PlaceOfIssue" Type="varchar" MaxLength="250" />
+    <Property Name="DateOfIssue" Type="datetime" />
+    <Property Name="DateOfExpiry" Type="datetime" />
+    <Property Name="ptaRegistrationInfoId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaPilotRegistrationMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RegistrationNo" Type="int" Nullable="false" />
+    <Property Name="Fname" Type="varchar" MaxLength="50" />
+    <Property Name="Lname" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="Mobile" Type="varchar" MaxLength="15" />
+    <Property Name="DOB" Type="datetime" />
+    <Property Name="Height" Type="float" />
+    <Property Name="RegistrationDate" Type="datetime" Nullable="false" />
+    <Property Name="CourseId" Type="int" Nullable="false" />
+    <Property Name="SessionId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="SerialNo" Type="varchar" MaxLength="50" />
+    <Property Name="OrderId" Type="varchar" MaxLength="50" />
+    <Property Name="ApplicationNo" Type="varchar" MaxLength="50" />
+    <Property Name="DepartmentMasterId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaRegistrationInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RegistartionNo" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="ptaTitleMasterId" Type="int" Nullable="false" />
+    <Property Name="ptaGenderMasterId" Type="int" Nullable="false" />
+    <Property Name="ptaNatioalityMasterId" Type="int" Nullable="false" />
+    <Property Name="ptaLeadSourceMasterId" Type="int" Nullable="false" />
+    <Property Name="ptaMedicalStatusMasterId" Type="int" Nullable="false" />
+    <Property Name="ptaPilotRegistrationMasterId" Type="int" Nullable="false" />
+    <Property Name="AdmissionId" Type="int" />
+  </EntityType>
+  <EntityType Name="ptaResultStatusMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaScreeningExamFeeInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PTAScreeningInfoId" Type="int" />
+    <Property Name="ScreeningAmountTerm" Type="int" Nullable="false" />
+    <Property Name="ScreeningAmount" Type="int" Nullable="false" />
+    <Property Name="DateOfAmount" Type="datetime" Nullable="false" />
+    <Property Name="PaymentId" Type="varchar" MaxLength="250" />
+    <Property Name="ExamResult" Type="varchar" MaxLength="100" />
+    <Property Name="PTAScreeningTestTypeId" Type="int" />
+    <Property Name="EnteredDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="PTAPilotRegistrationMaterId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaScreeningInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PTAPilotRegistrationMasterId" Type="int" Nullable="false" />
+    <Property Name="PTARegistrationNo" Type="int" Nullable="false" />
+    <Property Name="Remark" Type="varchar" MaxLength="500" />
+    <Property Name="EnteredBy" Type="int" Nullable="false" />
+    <Property Name="EnteredDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaScreeningTestResult">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PTAScreeningInfoId" Type="int" Nullable="false" />
+    <Property Name="PTAScreeningTestTypeId" Type="int" Nullable="false" />
+    <Property Name="ObtainMark" Type="float" Nullable="false" />
+    <Property Name="IsPassed" Type="bit" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaScreeningTestType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="InitialMark" Type="float" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaStreamMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaTitleMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="100" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaUGBoardAndUniversityMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="600" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RegistrationMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RegistartionNo" Type="int" Nullable="false" />
+    <Property Name="Fname" Type="varchar" MaxLength="50" />
+    <Property Name="Lname" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="Mobile" Type="varchar" MaxLength="15" />
+    <Property Name="DOB" Type="datetime" />
+    <Property Name="Gender" Type="char" MaxLength="1" />
+    <Property Name="Height" Type="float" />
+    <Property Name="Width" Type="float" />
+    <Property Name="CorrespondenceAddress" Type="varchar" MaxLength="250" />
+    <Property Name="CorrespondenceCity" Type="varchar" MaxLength="50" />
+    <Property Name="CorrespondenceState" Type="varchar" MaxLength="50" />
+    <Property Name="CorrespondenceZip" Type="varchar" MaxLength="10" />
+    <Property Name="PermanentAddress" Type="varchar" MaxLength="250" />
+    <Property Name="PermanentCity" Type="varchar" MaxLength="50" />
+    <Property Name="PermanentState" Type="varchar" MaxLength="50" />
+    <Property Name="PermanentZip" Type="varchar" MaxLength="10" />
+    <Property Name="IsAppeared" Type="bit" Nullable="false" />
+    <Property Name="PassingYear" Type="varchar" MaxLength="10" />
+    <Property Name="IsPassport" Type="bit" Nullable="false" />
+    <Property Name="PaymentId" Type="varchar" MaxLength="200" />
+    <Property Name="PaymentDate" Type="datetime" />
+    <Property Name="PaymentStatus" Type="bit" Nullable="false" />
+    <Property Name="RegistrationDate" Type="datetime" />
+    <Property Name="IsAddmission" Type="bit" Nullable="false" />
+    <Property Name="IsMedicalClear" Type="bit" />
+    <Property Name="IsScreenningClear" Type="bit" />
+    <Property Name="CourseId" Type="int" />
+    <Property Name="Education" Type="varchar" MaxLength="50" />
+    <Property Name="ModOfPayment" Type="varchar" MaxLength="15" />
+    <Property Name="MedicalRemark" Type="varchar" MaxLength="200" />
+    <Property Name="IsConsultantCandidate" Type="bit" Nullable="false" />
+    <Property Name="SessionId" Type="int" />
+    <Property Name="IsStandBy" Type="bit" Nullable="false" />
+    <Property Name="IsMedicalStandBy" Type="bit" Nullable="false" />
+    <Property Name="IsFeePayStandBy" Type="bit" Nullable="false" />
+    <Property Name="IsHRCandidate" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="SerialNo" Type="varchar" MaxLength="50" />
+    <Property Name="OrderId" Type="varchar" MaxLength="50" />
+    <Property Name="ApplicationNo" Type="varchar" MaxLength="50" />
+    <Property Name="IsReRegister" Type="bit" Nullable="false" />
+    <Property Name="SourceOfCandidate" Type="varchar" MaxLength="100" />
+    <Property Name="AadharCardNo" Type="varchar" MaxLength="150" />
+    <Property Name="IsAadharCard" Type="bit" Nullable="false" />
+    <Property Name="DepartmentMasterId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SessionMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SessionName" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CourseMasterId" Type="int" Nullable="false" />
+    <Property Name="SessionYr" Type="int" />
+  </EntityType>
+  <Association Name="FK__ptaAddres__ptaRe__13F1F5EB">
+    <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="1" />
+    <End Role="ptaAddressDetail" Type="Self.ptaAddressDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaRegistrationInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaAddressDetail">
+        <PropertyRef Name="ptaRegistrationInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaDeclar__ptaRe__14E61A24">
+    <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="1" />
+    <End Role="ptaDeclaration" Type="Self.ptaDeclaration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaRegistrationInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaDeclaration">
+        <PropertyRef Name="ptaRegistrationInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaEducat__ptaBo__1A9EF37A">
+    <End Role="ptaBoardAndUniversityMaster" Type="Self.ptaBoardAndUniversityMaster" Multiplicity="0..1" />
+    <End Role="ptaEducationDetail" Type="Self.ptaEducationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaBoardAndUniversityMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaEducationDetail">
+        <PropertyRef Name="ptaBoardAndUniversityMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaEducat__ptaEd__1B9317B3">
+    <End Role="ptaEduEvaluationTypeMaster" Type="Self.ptaEduEvaluationTypeMaster" Multiplicity="0..1" />
+    <End Role="ptaEducationDetail" Type="Self.ptaEducationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaEduEvaluationTypeMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaEducationDetail">
+        <PropertyRef Name="ptaEduEvaluationTypeMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaEducat__ptaEd__2057CCD0">
+    <End Role="ptaEducationDetail" Type="Self.ptaEducationDetail" Multiplicity="1" />
+    <End Role="ptaEducationSubjectMarks" Type="Self.ptaEducationSubjectMarks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaEducationDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaEducationSubjectMarks">
+        <PropertyRef Name="ptaEducationDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaEducat__ptaRe__1C873BEC">
+    <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="1" />
+    <End Role="ptaEducationDetail" Type="Self.ptaEducationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaRegistrationInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaEducationDetail">
+        <PropertyRef Name="ptaRegistrationInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaEducat__ptaRe__1D7B6025">
+    <End Role="ptaResultStatusMaster" Type="Self.ptaResultStatusMaster" Multiplicity="0..1" />
+    <End Role="ptaEducationDetail" Type="Self.ptaEducationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaResultStatusMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaEducationDetail">
+        <PropertyRef Name="ptaResultStatusMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaEducat__ptaSt__1E6F845E">
+    <End Role="ptaStreamMaster" Type="Self.ptaStreamMaster" Multiplicity="0..1" />
+    <End Role="ptaEducationDetail" Type="Self.ptaEducationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaStreamMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaEducationDetail">
+        <PropertyRef Name="ptaStreamMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaEducat__ptaUG__1F63A897">
+    <End Role="ptaUGBoardAndUniversityMaster" Type="Self.ptaUGBoardAndUniversityMaster" Multiplicity="0..1" />
+    <End Role="ptaEducationDetail" Type="Self.ptaEducationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaUGBoardAndUniversityMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaEducationDetail">
+        <PropertyRef Name="ptaUGBoardAndUniversityMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaGuardi__ptaRe__214BF109">
+    <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="1" />
+    <End Role="ptaGuardian" Type="Self.ptaGuardian" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaRegistrationInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaGuardian">
+        <PropertyRef Name="ptaRegistrationInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaPasspo__ptaRe__22401542">
+    <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="1" />
+    <End Role="ptaPassport" Type="Self.ptaPassport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaRegistrationInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaPassport">
+        <PropertyRef Name="ptaRegistrationInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaPilotR__Cours__2334397B">
+    <End Role="CourseMaster" Type="Self.CourseMaster" Multiplicity="1" />
+    <End Role="ptaPilotRegistrationMaster" Type="Self.ptaPilotRegistrationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaPilotRegistrationMaster">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaPilotR__Sessi__251C81ED">
+    <End Role="SessionMaster" Type="Self.SessionMaster" Multiplicity="1" />
+    <End Role="ptaPilotRegistrationMaster" Type="Self.ptaPilotRegistrationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SessionMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaPilotRegistrationMaster">
+        <PropertyRef Name="SessionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaRegist__ptaGe__2610A626">
+    <End Role="ptaGenderMaster" Type="Self.ptaGenderMaster" Multiplicity="1" />
+    <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaGenderMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaRegistrationInfo">
+        <PropertyRef Name="ptaGenderMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaRegist__ptaLe__2704CA5F">
+    <End Role="ptaLeadSourceMaster" Type="Self.ptaLeadSourceMaster" Multiplicity="1" />
+    <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaLeadSourceMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaRegistrationInfo">
+        <PropertyRef Name="ptaLeadSourceMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaRegist__ptaMe__27F8EE98">
+    <End Role="ptaMedicalStatusMaster" Type="Self.ptaMedicalStatusMaster" Multiplicity="1" />
+    <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaMedicalStatusMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaRegistrationInfo">
+        <PropertyRef Name="ptaMedicalStatusMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaRegist__ptaNa__28ED12D1">
+    <End Role="ptaNatioalityMaster" Type="Self.ptaNatioalityMaster" Multiplicity="1" />
+    <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaNatioalityMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaRegistrationInfo">
+        <PropertyRef Name="ptaNatioalityMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaRegist__ptaPi__29E1370A">
+    <End Role="ptaPilotRegistrationMaster" Type="Self.ptaPilotRegistrationMaster" Multiplicity="1" />
+    <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaPilotRegistrationMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaRegistrationInfo">
+        <PropertyRef Name="ptaPilotRegistrationMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaRegist__ptaTi__2AD55B43">
+    <End Role="ptaTitleMaster" Type="Self.ptaTitleMaster" Multiplicity="1" />
+    <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaTitleMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaRegistrationInfo">
+        <PropertyRef Name="ptaTitleMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaScreen__PTAPi__2EA5EC27">
+    <End Role="ptaPilotRegistrationMaster" Type="Self.ptaPilotRegistrationMaster" Multiplicity="1" />
+    <End Role="ptaScreeningInfo" Type="Self.ptaScreeningInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaPilotRegistrationMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaScreeningInfo">
+        <PropertyRef Name="PTAPilotRegistrationMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaScreen__PTAPi__4E1E9780">
+    <End Role="ptaPilotRegistrationMaster" Type="Self.ptaPilotRegistrationMaster" Multiplicity="1" />
+    <End Role="ptaScreeningExamFeeInfo" Type="Self.ptaScreeningExamFeeInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaPilotRegistrationMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaScreeningExamFeeInfo">
+        <PropertyRef Name="PTAPilotRegistrationMaterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaScreen__PTASc__2BC97F7C">
+    <End Role="ptaScreeningInfo" Type="Self.ptaScreeningInfo" Multiplicity="0..1" />
+    <End Role="ptaScreeningExamFeeInfo" Type="Self.ptaScreeningExamFeeInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaScreeningInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaScreeningExamFeeInfo">
+        <PropertyRef Name="PTAScreeningInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaScreen__PTASc__2CBDA3B5">
+    <End Role="ptaScreeningTestType" Type="Self.ptaScreeningTestType" Multiplicity="0..1" />
+    <End Role="ptaScreeningExamFeeInfo" Type="Self.ptaScreeningExamFeeInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaScreeningTestType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaScreeningExamFeeInfo">
+        <PropertyRef Name="PTAScreeningTestTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaScreen__PTASc__308E3499">
+    <End Role="ptaScreeningInfo" Type="Self.ptaScreeningInfo" Multiplicity="1" />
+    <End Role="ptaScreeningTestResult" Type="Self.ptaScreeningTestResult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaScreeningInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaScreeningTestResult">
+        <PropertyRef Name="PTAScreeningInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaScreen__PTASc__318258D2">
+    <End Role="ptaScreeningTestType" Type="Self.ptaScreeningTestType" Multiplicity="1" />
+    <End Role="ptaScreeningTestResult" Type="Self.ptaScreeningTestResult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaScreeningTestType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaScreeningTestResult">
+        <PropertyRef Name="PTAScreeningTestTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Registrat__Cours__3D2915A8">
+    <End Role="CourseMaster" Type="Self.CourseMaster" Multiplicity="0..1" />
+    <End Role="RegistrationMaster" Type="Self.RegistrationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RegistrationMaster">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Registrat__Sessi__603D47BB">
+    <End Role="SessionMaster" Type="Self.SessionMaster" Multiplicity="0..1" />
+    <End Role="RegistrationMaster" Type="Self.RegistrationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SessionMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RegistrationMaster">
+        <PropertyRef Name="SessionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SessionMa__Cours__59904A2C">
+    <End Role="CourseMaster" Type="Self.CourseMaster" Multiplicity="1" />
+    <End Role="SessionMaster" Type="Self.SessionMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SessionMaster">
+        <PropertyRef Name="CourseMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SJStarERPModelStoreContainer">
+    <EntitySet Name="CourseMaster" EntityType="Self.CourseMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaAddressDetail" EntityType="Self.ptaAddressDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaBoardAndUniversityMaster" EntityType="Self.ptaBoardAndUniversityMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaDeclaration" EntityType="Self.ptaDeclaration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaEducationDetail" EntityType="Self.ptaEducationDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaEducationSubjectMarks" EntityType="Self.ptaEducationSubjectMarks" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaEduEvaluationTypeMaster" EntityType="Self.ptaEduEvaluationTypeMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaGenderMaster" EntityType="Self.ptaGenderMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaGuardian" EntityType="Self.ptaGuardian" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaLeadSourceMaster" EntityType="Self.ptaLeadSourceMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaMedicalStatusMaster" EntityType="Self.ptaMedicalStatusMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaNatioalityMaster" EntityType="Self.ptaNatioalityMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaPassport" EntityType="Self.ptaPassport" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaPilotRegistrationMaster" EntityType="Self.ptaPilotRegistrationMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaRegistrationInfo" EntityType="Self.ptaRegistrationInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaResultStatusMaster" EntityType="Self.ptaResultStatusMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaScreeningExamFeeInfo" EntityType="Self.ptaScreeningExamFeeInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaScreeningInfo" EntityType="Self.ptaScreeningInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaScreeningTestResult" EntityType="Self.ptaScreeningTestResult" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaScreeningTestType" EntityType="Self.ptaScreeningTestType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaStreamMaster" EntityType="Self.ptaStreamMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaTitleMaster" EntityType="Self.ptaTitleMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaUGBoardAndUniversityMaster" EntityType="Self.ptaUGBoardAndUniversityMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RegistrationMaster" EntityType="Self.RegistrationMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SessionMaster" EntityType="Self.SessionMaster" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__ptaAddres__ptaRe__13F1F5EB" Association="Self.FK__ptaAddres__ptaRe__13F1F5EB">
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
+      <End Role="ptaAddressDetail" EntitySet="ptaAddressDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaDeclar__ptaRe__14E61A24" Association="Self.FK__ptaDeclar__ptaRe__14E61A24">
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
+      <End Role="ptaDeclaration" EntitySet="ptaDeclaration" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaEducat__ptaBo__1A9EF37A" Association="Self.FK__ptaEducat__ptaBo__1A9EF37A">
+      <End Role="ptaBoardAndUniversityMaster" EntitySet="ptaBoardAndUniversityMaster" />
+      <End Role="ptaEducationDetail" EntitySet="ptaEducationDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaEducat__ptaEd__1B9317B3" Association="Self.FK__ptaEducat__ptaEd__1B9317B3">
+      <End Role="ptaEduEvaluationTypeMaster" EntitySet="ptaEduEvaluationTypeMaster" />
+      <End Role="ptaEducationDetail" EntitySet="ptaEducationDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaEducat__ptaEd__2057CCD0" Association="Self.FK__ptaEducat__ptaEd__2057CCD0">
+      <End Role="ptaEducationDetail" EntitySet="ptaEducationDetail" />
+      <End Role="ptaEducationSubjectMarks" EntitySet="ptaEducationSubjectMarks" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaEducat__ptaRe__1C873BEC" Association="Self.FK__ptaEducat__ptaRe__1C873BEC">
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
+      <End Role="ptaEducationDetail" EntitySet="ptaEducationDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaEducat__ptaRe__1D7B6025" Association="Self.FK__ptaEducat__ptaRe__1D7B6025">
+      <End Role="ptaResultStatusMaster" EntitySet="ptaResultStatusMaster" />
+      <End Role="ptaEducationDetail" EntitySet="ptaEducationDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaEducat__ptaSt__1E6F845E" Association="Self.FK__ptaEducat__ptaSt__1E6F845E">
+      <End Role="ptaStreamMaster" EntitySet="ptaStreamMaster" />
+      <End Role="ptaEducationDetail" EntitySet="ptaEducationDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaEducat__ptaUG__1F63A897" Association="Self.FK__ptaEducat__ptaUG__1F63A897">
+      <End Role="ptaUGBoardAndUniversityMaster" EntitySet="ptaUGBoardAndUniversityMaster" />
+      <End Role="ptaEducationDetail" EntitySet="ptaEducationDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaGuardi__ptaRe__214BF109" Association="Self.FK__ptaGuardi__ptaRe__214BF109">
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
+      <End Role="ptaGuardian" EntitySet="ptaGuardian" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaPasspo__ptaRe__22401542" Association="Self.FK__ptaPasspo__ptaRe__22401542">
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
+      <End Role="ptaPassport" EntitySet="ptaPassport" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaPilotR__Cours__2334397B" Association="Self.FK__ptaPilotR__Cours__2334397B">
+      <End Role="CourseMaster" EntitySet="CourseMaster" />
+      <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaPilotR__Sessi__251C81ED" Association="Self.FK__ptaPilotR__Sessi__251C81ED">
+      <End Role="SessionMaster" EntitySet="SessionMaster" />
+      <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaRegist__ptaGe__2610A626" Association="Self.FK__ptaRegist__ptaGe__2610A626">
+      <End Role="ptaGenderMaster" EntitySet="ptaGenderMaster" />
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaRegist__ptaLe__2704CA5F" Association="Self.FK__ptaRegist__ptaLe__2704CA5F">
+      <End Role="ptaLeadSourceMaster" EntitySet="ptaLeadSourceMaster" />
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaRegist__ptaMe__27F8EE98" Association="Self.FK__ptaRegist__ptaMe__27F8EE98">
+      <End Role="ptaMedicalStatusMaster" EntitySet="ptaMedicalStatusMaster" />
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaRegist__ptaNa__28ED12D1" Association="Self.FK__ptaRegist__ptaNa__28ED12D1">
+      <End Role="ptaNatioalityMaster" EntitySet="ptaNatioalityMaster" />
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaRegist__ptaPi__29E1370A" Association="Self.FK__ptaRegist__ptaPi__29E1370A">
+      <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMaster" />
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaRegist__ptaTi__2AD55B43" Association="Self.FK__ptaRegist__ptaTi__2AD55B43">
+      <End Role="ptaTitleMaster" EntitySet="ptaTitleMaster" />
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaScreen__PTAPi__2EA5EC27" Association="Self.FK__ptaScreen__PTAPi__2EA5EC27">
+      <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMaster" />
+      <End Role="ptaScreeningInfo" EntitySet="ptaScreeningInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaScreen__PTAPi__4E1E9780" Association="Self.FK__ptaScreen__PTAPi__4E1E9780">
+      <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMaster" />
+      <End Role="ptaScreeningExamFeeInfo" EntitySet="ptaScreeningExamFeeInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaScreen__PTASc__2BC97F7C" Association="Self.FK__ptaScreen__PTASc__2BC97F7C">
+      <End Role="ptaScreeningInfo" EntitySet="ptaScreeningInfo" />
+      <End Role="ptaScreeningExamFeeInfo" EntitySet="ptaScreeningExamFeeInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaScreen__PTASc__2CBDA3B5" Association="Self.FK__ptaScreen__PTASc__2CBDA3B5">
+      <End Role="ptaScreeningTestType" EntitySet="ptaScreeningTestType" />
+      <End Role="ptaScreeningExamFeeInfo" EntitySet="ptaScreeningExamFeeInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaScreen__PTASc__308E3499" Association="Self.FK__ptaScreen__PTASc__308E3499">
+      <End Role="ptaScreeningInfo" EntitySet="ptaScreeningInfo" />
+      <End Role="ptaScreeningTestResult" EntitySet="ptaScreeningTestResult" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaScreen__PTASc__318258D2" Association="Self.FK__ptaScreen__PTASc__318258D2">
+      <End Role="ptaScreeningTestType" EntitySet="ptaScreeningTestType" />
+      <End Role="ptaScreeningTestResult" EntitySet="ptaScreeningTestResult" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Registrat__Cours__3D2915A8" Association="Self.FK__Registrat__Cours__3D2915A8">
+      <End Role="CourseMaster" EntitySet="CourseMaster" />
+      <End Role="RegistrationMaster" EntitySet="RegistrationMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Registrat__Sessi__603D47BB" Association="Self.FK__Registrat__Sessi__603D47BB">
+      <End Role="SessionMaster" EntitySet="SessionMaster" />
+      <End Role="RegistrationMaster" EntitySet="RegistrationMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SessionMa__Cours__59904A2C" Association="Self.FK__SessionMa__Cours__59904A2C">
+      <End Role="CourseMaster" EntitySet="CourseMaster" />
+      <End Role="SessionMaster" EntitySet="SessionMaster" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,246 @@
+﻿@model SJModel.PerformanceModel.PerformanceFilterViewModel
+@{
+    ViewBag.Title = "BatchList";
+    Layout = "~/Areas/PerformanceCard/Views/Shared/_LayoutP.cshtml";
+}
+<style>
+    #tblCandidateList_info {
+        padding-left: 10px;
+    }
+
+    .pagination {
+        display: inline-flex;
+    }
+
+    #tblCandidateList_paginate {
+        text-align: center !important;
+    }
+
+    #tblCandidateList td:nth-child(3) {
+        text-transform: capitalize;
+    }
+</style>
+<link href="~/assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+<section class="content">
+    <!-- Info boxes -->
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-new">
+                <!--<div class="side-red-strip"></div>-->
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="title-header-container"><h5>BATCH LIST</h5></div>
+                    <div class="box box-performance box-solid">
+                        <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <strong id="lblMsg">@TempData["msg"]</strong>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="side-red-strip"></div>
+                        <div class="box-body" style="margin-top:25px;">
+                            <div class="col-md-4">
+                                <div class="performance-box-top-bottm-space date">
+                                    <div class="PA-title-section">FROM DATE</div>
+                                    <div class="PA_control-input"><input type="text" id="fromDate" class="form-control datepicker" placeholder="dd/mm/yyyy" /><i class="fa fa-calendar manage-cal" name="fromDate"></i></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="performance-box-top-bottm-space">
+                                    <div class="PA-title-section">TO DATE</div>
+                                    <div class="PA_control-input"><input type="text" id="toDate" class="form-control datepicker" placeholder="dd/mm/yyyy" /><i class="fa fa-calendar manage-cal" name="toDate"></i></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="performance-btn-top-space">
+                                    <input type="button" id="btndatefilter" value="SEARCH" class=" btn btn-danger" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- /.box-body -->
+                    </div>
+
+                    <!------------------------------------------------- Search and display info box------->
+                    <div class="box box-performance box-solid">
+                        <!-- /.box-header -->
+                        <div class="side-red-strip"></div>
+                        <div class="box-body" style="margin-top:25px;">
+                            <div class="col-md-4">
+                                <div class="performance-box-top-bottm-space">
+                                    <div class="PA_control-input"><input type="text" id="txtSearch" class="form-control" placeholder="Search" /></div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="PA_control-select batch-dropdwn">
+                                    @Html.DropDownList("ddlBatch", new SelectList(Model.BatchList, "Id", "BatchName"), "Select Batch", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="PA_control-select batch-dropdwn">
+                                    @Html.DropDownList("ddlCourse", new SelectList(Model.CouresList, "Id", "CourseName"), "Select Course", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="export-btn">
+                                    <button id="btnExport" class="btn btn-danger exportbtn">EXPORT <i class=" fa fa-download export-icon"></i></button>
+                                    <div id="divexpo">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div id="batch-details-container">
+                                <table id="tblCandidateList" class="table table-bordered table-hover" style="width:100%">
+                                    <thead> <tr><th>#</th><th>REG. NO.</th><th>LEARNER NAME </th><th style="width:13% !important;">EMAIL ID</th><th>MOBILE NO.</th><th>COURSE</th><th>BATCH NO.</th> <th>RELEGATED</th> <th>PERFORMANCE CARD</th><th>REPORTS</th><th style="width:5% !important;">REVIEWCARD</th></tr></thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+
+                    <!-------------------------------------------------END Search and display info box------->
+                </div>
+                <!-- /.box-body -->
+
+            </div>
+            <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <!-- Main row -->
+    <!-- /.row -->
+</section>
+
+<div class="container">
+    <div class="modal fade" id="myReligateModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Relegated Info</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="divReligateDetail"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#fromDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+        $('#toDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+        Table = $("#tblCandidateList").DataTable(candidateListtblSetting("tblCandidateList", "GetCandidateList", "Performance", 1));
+        $("#tblCandidateList").removeClass("dataTable");
+        $.fn.dataTable.ext.errorcode = 'throw';
+        Table.columns(5).search($("#ddlCourse option:selected").text() != "Select Course" ? $("#ddlCourse option:selected").text() : "");
+        Table.columns(6).search($("#ddlBatch option:selected").text() != "Select Batch" ? $("#ddlBatch option:selected").text() : "");
+        Table.search($('#txtSearch').value);
+
+        $('#toDate').val();
+        $('#fromDate').val();
+        Table.draw();
+        chkmsg();
+        StopLoading();
+    });
+
+    function openReliagtePopUp(Id) {
+        $('#divReligateDetail').empty();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "/PerformanceCard/Performance/OpenBatchRegrateModelPopup",
+            data: { RegistrationNo: Id },
+            success: function (data) {
+                $('#divReligateDetail').append(data);
+                $('#myReligateModal').modal('show');
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed!');
+            }
+        });
+    }
+
+    $('.manage-cal').click(function () {
+        $(document.getElementById($(this).attr('name'))).focus();
+    });
+
+    $('#ddlBatch').change(function () {
+        var txt = $("option:selected", this).text() != "Select Batch" ? $("option:selected", this).text() : "";
+        Table.columns(6).search(txt).draw()
+    });
+
+    $('#ddlCourse').change(function () {
+        var txt = $("option:selected", this).text() != "Select Course" ? $("option:selected", this).text() : "";
+        Table.columns(5).search(txt).draw()
+    });
+
+    $('#txtSearch').on('keyup', function () {
+        Table.search(this.value).draw();
+    });
+
+    $('#btnExport').click(function () {
+        $('.buttons-excel').trigger('click');
+    });
+
+    $('#btndatefilter').click(function () {
+        datefilter($('#toDate').val(), $('#fromDate').val());
+    });
+
+    function datefilter(toDate, fromDate) {
+        if (toDate == "" || fromDate == "") {
+            if (toDate == "")
+                document.getElementById("toDate").style.border = "solid 1px red";
+            if (fromDate == "")
+                document.getElementById("fromDate").style.border = "solid 1px red";
+            Table.columns(7).search("");
+            Table.columns(8).search("");
+            Table.draw();
+        } else {
+            document.getElementById("toDate").style.border = "none";
+            document.getElementById("fromDate").style.border = "none";
+            var fromDatePart = fromDate.split("/");
+            var toDatePart = toDate.split("/");
+            var To = new Date(+toDatePart[2], toDatePart[1] - 1, +toDatePart[0]);
+            var from = new Date(+fromDatePart[2], fromDatePart[1] - 1, +fromDatePart[0]);
+            if (To <= from) {
+                Table.columns(7).search("");
+                Table.columns(8).search("");
+                $("#lblMsg").text('From date is not greater than to date!');
+                chkmsg();
+            } else {
+                Table.columns(7).search(toDate);
+                Table.columns(8).search(fromDate);
+                Table.draw();
+            }
+        }
+    }
+
+    function chkmsg() {
+        if ($("#lblMsg").text() != "") {
+            $("#dvMsg").css("display", "block");
+            setTimeout(function () {
+                $("#dvMsg").css("display", "none");
+                $("#lblMsg").text('');
+            }, 8000);
+        }
+    }
+</script>
+

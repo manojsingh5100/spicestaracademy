@@ -1,0 +1,451 @@
+﻿@model SJModel.PTAModel.PilotScreeningViewModel
+<link href="~/Areas/PTA/Design/pilotscreening.css" rel="stylesheet" />
+<div class="modal-dialog" style="width: 100%; pointer-events: all;">
+    <div class="modal-content" style="pointer-events: all;">
+        <div class="modal-header topHeadingtxt" style="pointer-events: all;">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title topHeaderfontsize ">CADET PILOT SCREENING SHEET</h4>
+        </div>
+
+        <div class="modal-body" id="screenModel" style="pointer-events: all;">
+            <link href="/Content/ScreeningModelCss.css" rel="stylesheet">
+            <style type="text/css">
+                h5 {
+                    font-weight: 600;
+                    text-transform: uppercase;
+                }
+
+                .disableCtrl {
+                    pointer-events: none;
+                }
+
+                .dynamic-hiding-control {
+                    pointer-events: none !important;
+                    background-color: #c2c2c2;
+                    box-shadow: 0 2px rgba(0,0,0,0.4);
+                    border-right: solid 2px #fff;
+                }
+            </style>
+
+            <form class="form-horizontal">
+                <div class="box-body">
+                    <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg1" style="display:none;">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <strong id="lblMsg1"></strong>
+                    </div>
+                    <div class="form-group">
+                        <input data-val="true" data-val-number="The field Id must be a number." data-val-required="The Id field is required." id="ScreeningTest_Id" name="ScreeningTest.Id" type="hidden" value="@Model.PilotRegistrationInfo.ScreeningInfoId">
+                        <input data-val="true" data-val-number="The field RegId must be a number." data-val-required="The RegId field is required." id="RegId" name="RegId" type="hidden" value="@Model.PilotRegistrationInfo.RegistartionNo">
+                        <label for="inputEmail3" class="col-sm-2 ">Registration No</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" data-val="true" data-val-number="The field RegistrationId must be a number." data-val-required="The RegistrationId field is required." disabled="disabled" id="RegistrationId" name="RegistrationId" placeholder="Registration No." type="text" value="@Model.PilotRegistrationInfo.PilotRegistartionNo">
+                        </div>
+                        <label for="inputEmail3" class="col-sm-2 ">Course Name</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" disabled="disabled" id="CourseName" name="CourseName" placeholder="Course Name" type="text" value="@Model.PilotRegistrationInfo.CourseName">
+                        </div>
+                        <label for="inputEmail3" class="col-sm-2 ">Session</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" disabled="disabled" id="SessionName" name="SessionName" placeholder="Session Name" type="text" value="@Model.PilotRegistrationInfo.SessionName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 ">First Name</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" disabled="disabled" id="FName" name="FName" placeholder="First Name" type="text" value="@Model.PilotRegistrationInfo.Fname">
+                        </div>
+                        <label for="inputEmail3" class="col-sm-2 ">Last Name</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" disabled="disabled" id="LName" name="LName" placeholder="Last Name" type="text" value="@Model.PilotRegistrationInfo.Lname">
+                        </div>
+                        <label for="inputEmail3" class="col-sm-2 ">Date </label>
+                        <div class="col-sm-2">
+                            <input class="form-control" disabled="disabled" id="ScreeningTest_Date" name="ScreeningTest.Date" placeholder="Date" type="text" value="@DateTime.Now.ToString("dd/MM/yyyy")">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 ">DOB</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" disabled="disabled" id="dob" name="Age" placeholder="Age" type="text" value="@Model.PilotRegistrationInfo.DOBStr">
+                        </div>
+                        <label for="inputEmail3" class="col-sm-2 ">Height </label>
+                        <div class="col-sm-2">
+                            <input class="form-control" data-val="true" data-val-number="The field Height must be a number." disabled="disabled" id="Height" name="Height" placeholder="Height" type="text" value="@Model.PilotRegistrationInfo.Height">
+                        </div>
+                        <label for="inputEmail3" class="col-sm-2 ">Gender</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" data-val="true" data-val-number="The field Height must be a number." disabled="disabled" id="Height" name="Height" placeholder="Height" type="text" value="@Model.PilotRegistrationInfo.Gender">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 ">10th Percentage/CGPA</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" id="10th_percent_cgpa" name="10cgpapercent" placeholder="10th %age/CGPA" type="text" value="@String.Format("{0:0.00}",Model.PilotRegistrationInfo.TenthCGPA)" disabled="">
+                        </div>
+
+                        <label for="inputEmail3" class="col-sm-2 ">12th Percentage/CGPA</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" id="12th_percent_cgpa" name="12cgpapercent" placeholder="12th %age/CGPA" type="text"
+                                   value="@String.Format("{0:0.00}", Model.PilotRegistrationInfo.TwelveCGPA)" disabled>
+                        </div>
+                        <label for="inputEmail3" class="col-sm-2 ">Source</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" id="12th_percent_cgpa" name="12cgpapercent" placeholder="12th %age/CGPA" type="text" value="@Model.PilotRegistrationInfo.SourceOfCandidate" disabled>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        @if (Model.GetPilotTrainingTestTypeList.Count > 0)
+                        {
+                            foreach (var item in Model.GetPilotTrainingTestTypeList)
+                            {
+                                @*<div class="col-md-3 @(item.IsSelected != null?"dynamic-hiding-control":"abc")" name="@item.Name" id="div_@item.Id">*@
+                                <div class="col-md-3 @(item.IsSelected != null?"dynamic-hiding-control":"abc")" exam="@(!string.IsNullOrEmpty(item.AgainExam)?item.AgainExam:"")" name="@item.Name" id="div_@item.Id">
+                                    <h5>@item.Name</h5>
+                                    @if (item.Name.ToUpper() == "INTERVIEW")
+                                    {
+                                        <table class="table table-striped table-responsive " style="width:100%;margin-bottom:5px; border:solid 1px #efefef;">
+                                            <tr>
+                                                <td>
+                                                    <label class="radio">
+                                                        <input type="radio" class="parameter" id="@(item.Name.Split(' ')[0] + "_1")" onchange="controlChange('@item.Id','@item.Name');" testid="@item.Id" name="@item.Name" @(item.IsSelected.HasValue ? (item.IsSelected.Value ? "checked" : "") : "")>
+                                                        <span class="checkround"></span>
+                                                    </label>
+                                                </td>
+                                                <td><label>Selected</label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label class="radio">
+                                                        <input type="radio" class="parameter" id="@(item.Name.Split(' ')[0] + "_2")" onchange="controlChange('@item.Id','@item.Name');" testid="@item.Id" name="@item.Name" @(item.IsSelected.HasValue ? (!item.IsSelected.Value ? "checked" : "") : "")>
+                                                        <span class="checkround"></span>
+                                                    </label>
+                                                </td>
+                                                <td><label>Rejected</label></td>
+                                            </tr>
+                                            <tr><td colspan="2" style=" background-color:#c2c2c2;"><label style="">&nbsp;</label></td></tr>
+                                        </table>
+                                    }
+                                    else
+                                    {
+                                        <table class="table table-striped table-responsive" style="width:100%;margin-bottom:5px; border:solid 1px #efefef;">
+                                            <tr>
+                                                <td>
+                                                    <label class="radio">
+                                                        <input type="radio" class="parameter" onchange="controlChange('@item.Id','@item.Name');" id="@(item.Name.Split(' ')[0] + "_1")" testid="@item.Id" name="@item.Name" @(item.IsSelected.HasValue ? (item.IsSelected.Value ? "checked" : "") : "")>
+                                                        <span class="checkround"></span>
+                                                    </label>
+                                                </td>
+                                                <td><label>Pass</label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label class="radio">
+                                                        <input type="radio" class="parameter" onchange="controlChange('@item.Id','@item.Name');" id="@(item.Name.Split(' ')[0] + "_2")" testid="@item.Id" name="@item.Name" @(item.IsSelected.HasValue ? (!item.IsSelected.Value ? "checked" : "") : "")>
+                                                        <span class="checkround"></span>
+                                                    </label>
+                                                </td>
+                                                <td><label>Fail</label></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <input class="form-control number" id="obtain_@item.Id" onblur="controlChange('@item.Id','@item.Name');" name="compassTestMarks" placeholder="Marks Obtained" type="text" value="@(item.ObtainMark == 0?"":item.ObtainMark.ToString())">
+                                                </td>
+                                                <!-- <td></td>      -->
+                                            </tr>
+                                        </table>
+                                    }
+                                </div>
+                            }
+                        }
+                        <div class="col-md-12">
+                            <div style="margin-top:20px;">
+                                <textarea id="txtcadetPilotScreeningRemark" rows="3" placeholder="Remarks" spellcheck="true">@(Model.Remark)</textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- MODAL Footer -->
+                <div class="modal-footer" style="pointer-events: all;">
+                    <div class="row" style="pointer-events: all;">
+                        <div class="col-md-6 hidectrl" style="pointer-events: all;">
+                            <div style="text-align:left; font-size:22px;font-weight:bold;color:green" id="divtext">
+                                Candidate is cleared.
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="pointer-events: all;">
+                            <div class="row" style="pointer-events: all;">
+                                <div class="col-md-4" style="pointer-events: all;">
+
+                                </div>
+                                <div class="col-md-8" style="pointer-events: all;">
+                                    <button type="button" id="btnSubmitScreenTest" onclick="savepilotscreeningresult();" class="btn btn-success">Save changes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer ends -->
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        initialpilot();
+        var txt = selectedrejectedmeassage();
+        if (txt == 'selected') {
+            $('#divtext').css('color', 'green').text("Candidate is selected.");
+            $('#btnSubmitScreenTest').attr("disabled", "disabled");
+        }
+        else if (txt == 'failed') {
+            $('#divtext').css('color', 'red').text("Candidate is rejected.");
+            $('#btnSubmitScreenTest').attr("disabled", "disabled");
+            $('.abc').each(function () {
+                if ($(this).hasClass('dynamic-hiding-control') == false) {
+                    $(this).addClass('dynamic-hiding-control');
+                }
+            });
+        }
+        else
+            $('#divtext').text('');
+    });
+
+    $('.parameter').change(function () {
+        var txt = selectedrejectedmeassage();
+        if (txt == 'selected')
+            $('#divtext').css('color', 'green').text("Candidate is selected.");
+        else if (txt == 'failed')
+            $('#divtext').css('color', 'red').text("Candidate is rejected.");
+        else
+            $('#divtext').text('');
+    });
+
+    function savepilotscreeningresult() {
+        if (validation() == false) {
+            return false;
+        }
+        var PilotScreeningViewModel = {};
+        PilotScreeningViewModel.PTARegistrationNo = $('#RegId').val();
+        PilotScreeningViewModel.Remark = $('#txtcadetPilotScreeningRemark').val();
+        PilotScreeningViewModel.PilotScreeningInfoId = $('#ScreeningTest_Id').val();
+        PilotScreeningViewModel.GetPilotTrainingTestTypeList = [];
+        if ($("input[name='COMPASS TEST']:checked").val() != undefined) {
+            var testdata = {};
+            var pid = $("input[name='COMPASS TEST']").attr("testid");
+            testdata.IsPassed = $("input[name='COMPASS TEST']").prop("checked");
+            testdata.Id = pid;
+            testdata.ObtainMark = $('#obtain_' + pid).val();
+            PilotScreeningViewModel.GetPilotTrainingTestTypeList.push(testdata);
+        }
+        if ($("input[name='CCT TEST']:checked").val() != undefined) {
+            var testdata = {};
+            var pid = $("input[name='CCT TEST']").attr("testid");
+            testdata.IsPassed = $("input[name='CCT TEST']").prop("checked");
+            testdata.Id = pid;
+            testdata.ObtainMark = $('#obtain_' + pid).val();
+            PilotScreeningViewModel.GetPilotTrainingTestTypeList.push(testdata);
+        }
+        if ($("input[name='PSYCHOMETRIC TEST']:checked").val() != undefined) {
+            var testdata = {};
+            var pid = $("input[name='PSYCHOMETRIC TEST']").attr("testid");
+            testdata.IsPassed = $("input[name='PSYCHOMETRIC TEST']").prop("checked");
+            testdata.Id = pid;
+            testdata.ObtainMark = $('#obtain_' + pid).val();
+            PilotScreeningViewModel.GetPilotTrainingTestTypeList.push(testdata);
+        }
+        if ($("input[name='INTERVIEW']:checked").val() != undefined) {
+            var testdata = {};
+            var pid = $("input[name='INTERVIEW']").attr("testid");
+            testdata.IsPassed = $("input[name='INTERVIEW']").prop("checked");
+            testdata.Id = pid;
+            PilotScreeningViewModel.GetPilotTrainingTestTypeList.push(testdata);
+        }
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "/PTA/Registration/SaveUpdatePilotScreeningInfo",
+            data: { Model: PilotScreeningViewModel },
+            async: false,
+            success: function (response) {
+                if (response != null && response.IsSuccess == true) {
+                    if (response.Message == 'Candidate is selected') {
+                        $('#btn_' + response.RegNo).removeClass('btn-success').removeClass('btn-danger').addClass('btn-info').attr('value', 'Screening');
+                    } else if (response.Message == 'Candidate is selected.') {
+                        $('#btn_' + response.RegNo).removeClass('btn-info').removeClass('btn-danger').addClass('btn-success').attr('value', 'Selected');
+                    } else if (response.Message == 'Candidate is rejected') {
+                        $('#btn_' + response.RegNo).removeClass('btn-info').removeClass('btn-success').addClass('btn-danger').attr('value', 'Rejected');
+                    }
+                    $('#myModal').modal('hide');
+                    $("#lblMsg").text(response.Message);
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                        $("#lblMsg").text('');
+                    }, 8000);
+                }
+            },
+            complete: function (response) {
+                StopLoading();
+                $('#myModal').modal('hide');
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed!');
+            }
+        });
+    }
+
+    function controlChange(id, name) {
+        if (name == "COMPASS TEST") {
+            var txtbox = $('#obtain_' + id).val();
+            var n = name.split(' ')[0];
+            var com1 = $('#' + n + '_1').prop('checked');
+            var com2 = $('#' + n + '_2').prop('checked');
+            if (com1 == false && com2 == false) {
+                return false;
+            }
+            else if (com2 == true && txtbox != "") {
+                $('#div_1').addClass('dynamic-hiding-control');
+                $('#div_2').addClass('dynamic-hiding-control');
+                $('#div_3').addClass('dynamic-hiding-control');
+                $('#div_4').addClass('dynamic-hiding-control');
+            } else if (com1 == true && txtbox != "") {
+                $('#div_1').addClass('dynamic-hiding-control');
+                $('#div_2').removeClass('dynamic-hiding-control');
+                $('#div_3').addClass('dynamic-hiding-control');
+                $('#div_4').addClass('dynamic-hiding-control');
+            }
+        } else if (name == "CCT TEST") {
+            var txtbox = $('#obtain_' + id).val();
+            var n = name.split(' ')[0];
+            var com1 = $('#' + n + '_1').prop('checked');
+            var com2 = $('#' + n + '_2').prop('checked');
+            if (com1 == false && com2 == false) {
+                return false;
+            }
+            else if (com2 == true && txtbox != "") {
+                $('#div_2').addClass('dynamic-hiding-control');
+                $('#div_3').addClass('dynamic-hiding-control');
+                $('#div_4').addClass('dynamic-hiding-control');
+            }
+            else if (com1 == true && txtbox != "") {
+                $('#div_2').addClass('dynamic-hiding-control');
+                $('#div_3').removeClass('dynamic-hiding-control');
+                $('#div_4').addClass('dynamic-hiding-control');
+            }
+        }
+        else if (name == "PSYCHOMETRIC TEST") {
+            var txtbox = $('#obtain_' + id).val();
+            var n = name.split(' ')[0];
+            var com1 = $('#' + n + '_1').prop('checked');
+            var com2 = $('#' + n + '_2').prop('checked');
+            if (com1 == false && com2 == false) {
+                return false;
+            }
+            else if (com2 == true && txtbox != "") {
+                $('#div_3').addClass('dynamic-hiding-control');
+                $('#div_4').addClass('dynamic-hiding-control');
+            } else if (com1 == true && txtbox != "") {
+                $('#div_3').addClass('dynamic-hiding-control');
+                $('#div_4').removeClass('dynamic-hiding-control');
+            }
+        } else if (name == "INTERVIEW") {
+            var n = name.split(' ')[0];
+            var com1 = $('#' + n + '_1').prop('checked');
+            var com2 = $('#' + n + '_2').prop('checked');
+            if (com1 == false && com2 == false) {
+                return false;
+            }
+            else if (com2 == false) {
+                $('#div_4').addClass('dynamic-hiding-control');
+            } else if (com1 == true) {
+                $('#div_4').addClass('dynamic-hiding-control');
+            }
+        }
+    }
+
+    $('.number').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    });
+
+    function validation() {
+        var bool = true;
+        $('.abc').each(function () {
+            if ($(this).hasClass('dynamic-hiding-control') == false) {
+                var id = $(this).attr('id').split('_')[1];
+                var name = $(this).attr('name').split(' ')[0];
+                var cl1 = $('#' + name + '_1').prop('checked');
+                var cl2 = $('#' + name + '_2').prop('checked');
+                if (cl1 == false && cl2 == false) {
+                    alert('Please select test result!');
+                    bool = false;
+                }
+                else if ($('#obtain_' + id).val() == "") {
+                    $('#obtain_' + id).css('border', 'red solid 1px');
+                    bool = false;
+                }
+                return false;
+            }
+        });
+        return bool;
+    }
+
+    function selectedrejectedmeassage() {
+        var isSelected = "";
+        var com = $('#COMPASS_1').prop('checked');
+        var com1 = $('#COMPASS_2').prop('checked');
+        if (com == false && com1 == false) {
+            return false;
+        } else if (com == true) {
+            var cct1 = $('#CCT_1').prop('checked');
+            var cct2 = $('#CCT_2').prop('checked');
+            if (cct1 == false && cct2 == false) {
+                isSelected = 'pending';
+            } else if (cct1 == true) {
+                var ph1 = $('#PSYCHOMETRIC_1').prop('checked');
+                var ph2 = $('#PSYCHOMETRIC_2').prop('checked');
+                if (ph1 == false && ph2 == false) {
+                    isSelected = 'pending';
+                } else if (ph1 == true) {
+                    var in1 = $('#INTERVIEW_1').prop('checked');
+                    var in2 = $('#INTERVIEW_2').prop('checked');
+                    if (in1 == false && in2 == false) {
+                        isSelected = 'pending';
+                    } else if (in1 == true) {
+                        isSelected = 'selected';
+                    } else {
+                        isSelected = 'failed';
+                    }
+                } else {
+                    isSelected = 'failed';
+                }
+            } else {
+                isSelected = 'failed';
+            }
+        } else {
+            isSelected = 'failed';
+        }
+        return isSelected;
+    }
+
+    function initialpilot() {
+        var arr = [];
+        $(".abc").each(function (i, item) {
+            var id = $(this).attr("id");
+            if ($(this).attr("exam") == "")
+                arr.push(id.split("_")[1]);
+        });
+        if (arr.length > 0) {
+            $.each(arr, function (i, item) {
+                if (item > 1)
+                    $('#div_' + item).addClass("dynamic-hiding-control");
+            });
+        }
+    }
+</script>

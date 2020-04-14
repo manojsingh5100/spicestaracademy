@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Admission";
+    Layout = "~/Areas/PTA/Views/Shared/_Layout.cshtml";
+}
+<script src="~/assets/js/ptamatrix/jsmatrix.js"></script>
+<style>
+    hr {
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+    }
+</style>
+<title>Screening</title>
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>Admission</h1>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-body">
+                        <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <strong id="lblMsg"></strong>
+                        </div>
+                        <div class="row col-md-12 table-responsive">
+                            <table id="tblPilotAdmission" class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr.No.</th>
+                                        <th>Reg.No.</th>
+                                        <th>Appl.No.</th>
+                                        <th>Student Name</th>
+                                        <th>Email ID</th>
+                                        <th>Mobile No</th>
+                                        <th>DOB</th>
+                                        <th>Gender</th>
+                                        <th>course</th>
+                                        <th>Payment</th>
+                                        @*<th>Payment Notification</th>*@
+                                        <th>Admission Date</th>
+                                        <th class="no-sort" style="text-align:center">
+                                            Upload Docs
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbpilotadmissiondata"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="modal fade" id="myMedicalModal" role="dialog">
+    <div class="modal-dialog" style="width:60% !important">
+        <div class="modal-content" id="divmedicalmodel">
+            @Html.Partial("_PilotMedical")
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myOtherDocsModal" role="dialog">
+    <div class="modal-dialog" style="width:60% !important">
+        <div class="modal-content" id="divOtherDocsmodel">
+            @Html.Partial("_PilotMedical")
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        getpilotcandidatesadmissionlist();
+    });
+</script>
+

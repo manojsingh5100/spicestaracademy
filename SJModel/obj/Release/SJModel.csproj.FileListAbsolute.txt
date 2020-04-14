@@ -1,0 +1,45 @@
+D:\Sandeep\SpiceStarAcademy\SJModel\bin\Release\SJModel.dll
+D:\Sandeep\SpiceStarAcademy\SJModel\bin\Release\SJModel.pdb
+D:\Sandeep\SpiceStarAcademy\SJModel\obj\Release\SJModel.csprojAssemblyReference.cache
+D:\Sandeep\SpiceStarAcademy\SJModel\obj\Release\SJModel.csproj.CoreCompileInputs.cache
+D:\Sandeep\SpiceStarAcademy\SJModel\obj\Release\SJModel.dll
+D:\Sandeep\SpiceStarAcademy\SJModel\obj\Release\SJModel.pdb
+D:\gitPtojects\SpicestarERP\SJModel\bin\Release\SJModel.dll
+D:\gitPtojects\SpicestarERP\SJModel\bin\Release\SJModel.pdb
+D:\gitPtojects\SpicestarERP\SJModel\bin\Release\Newtonsoft.Json.dll
+D:\gitPtojects\SpicestarERP\SJModel\bin\Release\System.ComponentModel.Annotations.dll
+D:\gitPtojects\SpicestarERP\SJModel\bin\Release\Newtonsoft.Json.xml
+D:\gitPtojects\SpicestarERP\SJModel\obj\Release\SJModel.csprojAssemblyReference.cache
+D:\gitPtojects\SpicestarERP\SJModel\obj\Release\SJModel.csproj.CoreCompileInputs.cache
+D:\gitPtojects\SpicestarERP\SJModel\obj\Release\SJModel.csproj.CopyComplete
+D:\gitPtojects\SpicestarERP\SJModel\obj\Release\SJModel.dll
+D:\gitPtojects\SpicestarERP\SJModel\obj\Release\SJModel.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SJModel\bin\Release\SJModel.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SJModel\bin\Release\SJModel.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SJModel\bin\Release\Newtonsoft.Json.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SJModel\bin\Release\System.ComponentModel.Annotations.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SJModel\bin\Release\Newtonsoft.Json.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SJModel\obj\Release\SJModel.csprojAssemblyReference.cache
+E:\Git Projects\7 Oct Project\SpicestarERP\SJModel\obj\Release\SJModel.csproj.CoreCompileInputs.cache
+E:\Git Projects\7 Oct Project\SpicestarERP\SJModel\obj\Release\SJModel.csproj.CopyComplete
+E:\Git Projects\7 Oct Project\SpicestarERP\SJModel\obj\Release\SJModel.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SJModel\obj\Release\SJModel.pdb
+D:\Spice Star Project\SpicestarERP\SJModel\bin\Release\SJModel.dll
+D:\Spice Star Project\SpicestarERP\SJModel\bin\Release\SJModel.pdb
+D:\Spice Star Project\SpicestarERP\SJModel\bin\Release\Newtonsoft.Json.dll
+D:\Spice Star Project\SpicestarERP\SJModel\bin\Release\System.ComponentModel.Annotations.dll
+D:\Spice Star Project\SpicestarERP\SJModel\bin\Release\Newtonsoft.Json.xml
+D:\Spice Star Project\SpicestarERP\SJModel\obj\Release\SJModel.csprojAssemblyReference.cache
+D:\Spice Star Project\SpicestarERP\SJModel\obj\Release\SJModel.csproj.CoreCompileInputs.cache
+D:\Spice Star Project\SpicestarERP\SJModel\obj\Release\SJModel.csproj.CopyComplete
+D:\Spice Star Project\SpicestarERP\SJModel\obj\Release\SJModel.dll
+D:\Spice Star Project\SpicestarERP\SJModel\obj\Release\SJModel.pdb
+F:\SpicestarERP\SJModel\bin\Release\SJModel.dll
+F:\SpicestarERP\SJModel\bin\Release\SJModel.pdb
+F:\SpicestarERP\SJModel\bin\Release\Newtonsoft.Json.dll
+F:\SpicestarERP\SJModel\bin\Release\System.ComponentModel.Annotations.dll
+F:\SpicestarERP\SJModel\bin\Release\Newtonsoft.Json.xml
+F:\SpicestarERP\SJModel\obj\Release\SJModel.csprojAssemblyReference.cache
+F:\SpicestarERP\SJModel\obj\Release\SJModel.csproj.CopyComplete
+F:\SpicestarERP\SJModel\obj\Release\SJModel.dll
+F:\SpicestarERP\SJModel\obj\Release\SJModel.pdb

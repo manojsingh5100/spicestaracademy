@@ -1,0 +1,98 @@
+﻿@model SJModel.CallCenterRemarkViewModel
+<form class="form-horizontal" id="">
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-control label-default"> <span>Registration No: @Model.RegistrationNo</span></label>
+        </div>
+        <div class="col-md-6">
+            <label class="form-control label-default"> <span>@Model.StudentName</span></label>
+        </div>
+    </div>
+    <input type="hidden" id="hdntag" value="@(Model.Tag)" />
+    <div class="row" style="padding-top:10px;">
+        <div class="col-md-6">
+            @Html.DropDownListFor(m => m.MedicalFitnessStatus, new SelectList(Model.MedicalStatusList, "ActiveStr", "Name"), new { @class = "form-control", onchange = "showtextArea();" })
+        </div>
+        <div class="col-md-6">
+            @Html.DropDownListFor(m => m.Remarks, new SelectList(Model.remarkList, "Id", "Name"), new { @class = "form-control", onchange = "showtextArea();" })
+        </div>
+        <div class="col-md-12" style="padding-top:10px;">
+            <textarea class="form-control" id="txtRemark" style="display:none" placeholder="Candidate remarks..."></textarea>
+        </div>
+    </div>
+
+    <div class="row" style="padding-top:10px;">
+        <div class="col-md-6">
+            <label style="font-size:18px;font-weight:400;display:none" class="pull-left">
+                <input type="checkbox" id="chkstandby" class="flat-red"> Stand-By
+            </label>
+        </div>
+        <div class="col-md-6">
+            <input type="button" value="Add Remark" onclick="saveRemark();" class="btn btn-success pull-right" />
+        </div>
+    </div>
+</form>
+<script>
+
+    $(document).ready(function () {
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'iradio_flat-blue'
+        });
+        if ($('#hdntag').val() != "Medical") {
+            $("#Remarks option[value='1']").remove();
+            $('#MedicalFitnessStatus').attr("disabled","disabled");
+          } else {
+            $('#MedicalFitnessStatus').removeAttr("disabled");
+        }
+            var num = '@Model.MedicalRemarkNum';
+            if (num > 0)
+            $('#Remarks').val(num).trigger('onchange');
+            if (num == 3)
+            $('#txtRemark').val('@Model.Remarks');
+            '@Model.IsMedicalStandBy' == 'True' ? $('#chkstandby').iCheck('check') : $('#chkstandby').iCheck('uncheck');
+        });
+
+       function showtextArea() {
+        if ($('#Remarks').val() == 3) {
+            $('#txtRemark').css('display', 'block');
+        } else {
+            $('#txtRemark').css('display', 'none');
+        }
+    }
+
+    function saveRemark() {
+        var remark = $('#Remarks').val() == 3 ? $('#txtRemark').val().trim() : $('#Remarks').find("option:selected").text();
+        var isStandBy = $('#chkstandby').prop('checked');
+        var regNo = '@Model.RegistrationNo';
+        var Id = '@Model.Id';
+        var medicalStatus = $('#MedicalFitnessStatus option:selected').text();
+        var url = window.location.pathname.split("/");
+        var questions = url[2];
+        var tag = null;
+        if (questions == "WithdrawalCandidates")
+            tag = "WithdrawalCandidates";
+        if (remark == "" && $('#Remarks').val() == 3) {
+            $('#txtRemark').css("border", "1px solid red");
+            return false;
+        } else {
+            $('#txtRemarks').css("border", "");
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "/Registration/UpdateMedicalRemark",
+                data: { RegNo: regNo, Remark: remark, MdlStatus: medicalStatus, Id: Id, IsMedicalStandBy: isStandBy, tag: tag },
+                success: function (data) {
+                    if (data) {
+                        Table.draw(false);
+                        $('#myModal1').modal('hide');
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed!');
+                }
+            });
+        }
+    }
+</script>
+

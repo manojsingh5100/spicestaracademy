@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "WithdrawalCandidates";
+}
+<title>Reject Candidates</title>
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>Withdrawal Candidates</h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-dashboard"></i> &nbsp;Withdrawal Candidates</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-body">
+                        <div class="row col-md-12 table-responsive">
+                            <table id="tblRejectRegistration" class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>Reg.No</th>
+                                        <th>Student Name</th>
+                                        <th>EmailID</th>
+                                        <th>Mobile No</th>
+                                        <th>Course</th>
+                                        <th>Status</th>
+                                        <th>Reg.Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="divmainactivity" style="display:none">
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header ui-sortable-handle" style="cursor: move;">
+                        <h3 class="box-title">Current Top 3 Activities</h3>
+                    </div>
+                    <div class="box-body" id="divActivity">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div id="myModal1" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#dd4b39">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="headerText">Candidate Status</h4>
+            </div>
+            <div class="modal-body" id="divRemarkDetail">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        TableCourseFilter = 6;
+        Table = $("#tblRejectRegistration").DataTable(rejectedtblSetting("tblRejectRegistration", "WithdrawalCandidateList", "Registration", 1));
+        $.fn.dataTable.ext.errMode = 'throw';
+        $('.buttons-excel').css('display', 'none');
+        $('.dt-buttons').append("<img src='/Images/excel-icon-transparent-18.jpg' height=32px; width=60px; onclick='btnexport();' title='Export' style='border:1px solid;border-color:#f5eeee;cursor: pointer;' />");
+        getUserActivities('Withdrawal');
+    });
+
+        function openRemarkModel(Id, obj, regNo) {
+            $('#divRemarkDetail').empty();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.Action("MedicalRemarkOpenModelPopup", "Registration"))",
+                data: { RegNo: regNo, Id: Id  },
+                success: function (data) {
+                    $('#divRemarkDetail').append(data);
+                    $('#myModal1').modal('show');
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed!');
+                }
+            });
+    }
+</script>
+
+
+

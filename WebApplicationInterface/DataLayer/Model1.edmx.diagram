@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9f3a47c7095e48c685e405f1acd3421a" Name="Diagram1" ZoomLevel="73">
+        <EntityTypeShape EntityType="SJStarERPModel.CourseMaster" Width="1.5" PointX="0.75" PointY="18.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaAddressDetail" Width="1.5" PointX="12.75" PointY="32.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaBoardAndUniversityMaster" Width="1.5" PointX="13.5" PointY="17.625" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaDeclaration" Width="1.5" PointX="12.75" PointY="20.875" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaEducationDetail" Width="1.5" PointX="15.75" PointY="25.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaEducationSubjectMark" Width="1.5" PointX="18" PointY="26.5" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaEduEvaluationTypeMaster" Width="1.5" PointX="13.5" PointY="14.75" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaGenderMaster" Width="1.5" PointX="8.25" PointY="19.625" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaGuardian" Width="1.5" PointX="12.75" PointY="23.75" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaLeadSourceMaster" Width="1.5" PointX="8.25" PointY="16.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaMedicalStatusMaster" Width="1.5" PointX="8.25" PointY="33.75" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaNatioalityMaster" Width="1.5" PointX="8.25" PointY="38.875" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaPassport" Width="1.5" PointX="12.75" PointY="37.375" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaPilotRegistrationMaster" Width="1.5" PointX="5.25" PointY="25.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaRegistrationInfo" Width="1.5" PointX="10.5" PointY="25.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaResultStatusMaster" Width="1.5" PointX="13.5" PointY="27.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaStreamMaster" Width="1.5" PointX="13.5" PointY="43.875" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaTitleMaster" Width="1.5" PointX="8.25" PointY="36.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaUGBoardAndUniversityMaster" Width="1.5" PointX="13.5" PointY="41.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.SessionMaster" Width="1.5" PointX="3" PointY="34.625" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaPilotR__Cours__4E1E9780" />
+        <AssociationConnector Association="SJStarERPModel.FK__SessionMa__Cours__59904A2C" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaAddres__ptaRe__3552E9B6" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaEducat__ptaBo__373B3228" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaDeclar__ptaRe__36470DEF" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaEducat__ptaEd__382F5661" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaEducat__ptaEd__3CF40B7E" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaEducat__ptaRe__39237A9A" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaEducat__ptaRe__3A179ED3" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaEducat__ptaSt__3B0BC30C" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaEducat__ptaUG__3BFFE745" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaRegist__ptaGe__3FD07829" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaGuardi__ptaRe__3DE82FB7" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaRegist__ptaLe__40C49C62" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaRegist__ptaMe__41B8C09B" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaRegist__ptaNa__42ACE4D4" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaPasspo__ptaRe__3EDC53F0" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaPilotR__Sessi__4F12BBB9" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaRegist__ptaPi__56B3DD81" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaRegist__ptaTi__43A1090D" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaScreeningInfo" Width="1.5" PointX="7.5" PointY="12.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaScreeningTestType" Width="1.5" PointX="7.5" PointY="8.75" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaScreen__PTAPi__68D28DBC" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaScreeningTestResult" Width="1.5" PointX="9.75" PointY="7.875" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaScreen__PTASc__308E3499" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaScreen__PTASc__318258D2" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaScreeningExamFeeInfo" Width="1.5" PointX="10.75" PointY="15.625" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaScreen__PTAPi__4E1E9780" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaScreen__PTASc__2BC97F7C" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaScreen__PTASc__2CBDA3B5" />
+        <EntityTypeShape EntityType="SJStarERPModel.RegistrationMaster" Width="1.5" PointX="8.25" PointY="22.375" />
+        <AssociationConnector Association="SJStarERPModel.FK__Registrat__Cours__3D2915A8" />
+        <AssociationConnector Association="SJStarERPModel.FK__Registrat__Sessi__603D47BB" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,116 @@
+﻿@model SJModel.PTAModel.PilotMedicalInfoViewModel
+<style>
+    .image-container {
+        display: flex;
+        justify-content: center;
+        padding-top: 20px;
+    }
+</style>
+<section class="content-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+    <h1>Other Upload Documents</h1>
+</section>
+<section class="content">
+    @Html.HiddenFor(m => m.PilotRegistrationNo)
+    @Html.HiddenFor(m=>m.AdmissionId)
+    @Html.HiddenFor(m => m.OptionOfDM)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <input type="file" multiple id="fileUpload1" class="form-control" onchange="readURL(this)">
+                        </div>
+                        <div class="col-md-7">
+                            <button type="button" id="btnSubmitScreenTest" class="btn btn-success">Upload</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="padding-top:10px;" id="divmultiple">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12" style="display:@(Model.Documents.Count>0?"block":"none")">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12" style="padding-top:10px;">
+                            @if (Model != null && Model.Documents.Count > 0)
+                            {
+                                foreach (var item in Model.Documents)
+                                {
+                                    <img src="@(item.DocumentPath)" style="border:1px black solid;width:170px;height:200px;" />
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    function readURL(input) {
+        if (input.files) {
+            var filesAmount = input.files.length;
+            if (filesAmount > 0) {
+                var placeToInsertImagePreview = $('#divmultiple');
+                for (i = 0; i < filesAmount; i++) {
+                    var reader = new FileReader();
+                    reader.onload = function (event) {
+                        $($.parseHTML('<img style="border:1px #00000000 solid;width:170px;height:200px;padding:5px;">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                    }
+                    reader.readAsDataURL(input.files[i]);
+                }
+            } else {
+                $(input).val("");
+                $('#divmultiple').empty();
+            }
+        }
+    }
+
+    $('#btnSubmitScreenTest').click(function () {
+        var data = new FormData();
+        data.append("CandidateId", $('#PilotRegistrationNo').val());
+        data.append("AdmissionId", $('#AdmissionId').val());
+        data.append("DocumentId", $('#OptionOfDM').val());
+        var files = $("#fileUpload1").get(0).files;
+        if (files.length > 0) {
+            for (var j = 0; j < files.length; j++) {
+                data.append("Image" + (j + 1), files[j]);
+            }
+        }
+        $.ajax({
+            url: "/PTA/Registration/SaveOtherFilesUploadData",
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function (response) {
+                $('#myOtherDocsModal').modal('hide');
+                $("#lblMsg").text(response);
+                if ($("#lblMsg").text() != "") {
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#lblMsg").text('');
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                }
+            },
+            error: function (er) {
+                alert(er);
+            }
+        });
+    });
+
+</script>

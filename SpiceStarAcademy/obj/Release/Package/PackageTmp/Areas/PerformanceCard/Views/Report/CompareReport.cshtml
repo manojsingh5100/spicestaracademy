@@ -1,0 +1,274 @@
+﻿@model SJModel.ReportFilterViewModel
+@{
+    ViewBag.Title = "CompareReport";
+    Layout = "~/Areas/PerformanceCard/Views/Shared/_LayoutP.cshtml";
+}
+<style>
+
+    .select2-container--default .select2-selection--single {
+        border-radius: 5px !important;
+        height: 40px;
+        box-shadow: 2px 2px 5px 0 rgba(0,0,0,0.4) !important;
+        -moz-box-shadow: 2px 2px 5px 0 rgba(0,0,0,0.4) !important;
+        font-size: 16px;
+        border-color: #d2d6de;
+    }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            top: 5px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 34px;
+        }
+
+    .select2-container .select2-selection--multiple {
+        border-radius: 5px !important;
+        height: 40px;
+        box-shadow: 2px 2px 5px 0 rgba(0,0,0,0.4) !important;
+        -moz-box-shadow: 2px 2px 5px 0 rgba(0,0,0,0.4) !important;
+        font-size: 16px;
+        border-color: #d2d6de;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        background-color: #ffffff;
+        -webkit-border-radius: 2px;
+        cursor: text;
+        height: 40px;
+    }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #170808 !important;
+        }
+
+    .select2-search--inline .select2-search__field {
+        margin-top: 0px !important;
+    }
+</style>
+
+
+<section class="content">
+
+    <!-- Info boxes -->
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-new">
+                <!--<div class="side-red-strip"></div>-->
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="title-header-container"><h5>ALL BATCH - COMPARATIVE REPORT</h5></div>
+
+
+                    <!------------------------------------------------- Search and display info box------->
+                    <div class="box box-performance box-solid">
+                        <!-- /.box-header -->
+                        <div class="side-red-strip"></div>
+                        <div class="box-body" style="margin-top:25px;">
+                            <!-- <div class="col-md-4">
+                                <div class="parameter-box-top-bottm-space ">
+                                    <div class="PA-title-section">TRAINEE'S NAME</div>
+                                    <div class="Parameter_control-select">
+                                        <select class="form-control">
+                                            <option>Sanjay Kumar</option>
+                                            <option>Shahid Akhter</option>
+                                            <option>Karan Verma</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="col-md-4">
+                                <div style="margin-top:15px;">
+                                    <div class="PA-title-section">BATCH</div>
+                                    <div class="Parameter_control-select">
+                                        @Html.DropDownListFor(m => m.BatchNo, new SelectList(Model.GetBatchList, "Id", "BatchName"), new { @id = "BatchId", @class = "form-control select2 filter", placeholder = "aDa", multiple = "multiple", style = "width:100%" })
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                <div class="" style="margin-top:15px;">
+                                    <div class="PA-title-section">REVIEW</div>
+                                    <div class="Parameter_control-select">
+                                        @Html.DropDownListFor(m => m.ReviewId, new SelectList(Model.GetReviewList, "Id", "Name"), "Select Review", new { @id = "ReviewTypeId", @class = "form-control select2", style = "width:100%" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+
+
+
+
+                    <!-------------------------------------------------END Search and display info box------->
+                    <div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="box box-performance box-solid" id="Graphhide">
+                                    <!-- /.box-header -->
+                                    <div class="side-red-strip"></div>
+                                    <div class="box-body" style="margin-top:25px;">
+                                        <div class="col-md-12">
+                                            <div>
+                                                <div style="font-size:20px;color:#ff0000"></div>
+                                                <div class="chart-container">
+                                                    <div id="divchart">
+                                                        <canvas id="opcanalysis"></canvas>
+                                                        @*<div style="margin-bottom:30px;"></div>*@
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.box-body -->
+
+
+                <div>
+
+
+                </div>
+
+            </div>
+            <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <!-- Main row -->
+    <!-- /.row -->
+</section>
+<script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+<script>
+    $(function () {
+        $('#bacth-info').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        })
+        $("#Graphhide").hide();
+    })
+</script>
+
+<script>
+
+    $("select").on('change', function (e) {
+        if (Object.keys($(this).val()).length > 3) {
+            $('option[value="' + $(this).val().toString().split(',')[3] + '"]').prop('selected', false);
+        }
+    });
+
+    $("#BatchId").change(function () {
+        GetData();
+    });
+
+    $("#ReviewTypeId").change(function () {
+        GetData();
+    });
+
+    function GetData() {
+        var BatchhValue = $("#ReviewTypeId").val();
+        if ($("#ReviewTypeId").val() == '') {
+            var typesId = 0;
+        }
+        else {
+            var typesId = $("#ReviewTypeId").val();
+        }
+        var BatchValue = $("#BatchId").val();
+        var dddddd = BatchValue.toString();
+        var newStr = dddddd.replace(/,/g, 's');
+        $.ajax({
+            url: "/PerformanceCard/Report/GetPerformanceCard",
+            type: "get",
+            dataType: "JSON",
+            data: { batch: newStr, type: typesId },
+            success: function (response) {
+                if (response.datasets == null) {
+                    $("#Graphhide").hide();
+                }
+                else if (response.datasets != null) {
+                    $("#Graphhide").show();
+
+                    if (response.datasets.length > 1) {
+                        response.datasets[1].backgroundColor = "#1cb3ed";
+                    }
+
+                    var barChartData1 = {
+                        labels: response.labels,
+                        labels: response.labels,
+                        datasets: response.datasets
+                    };
+                    $('#divchart').empty().append('<canvas id="opcanalysis"></canvas>');
+                    var ctx1 = document.getElementById("opcanalysis").getContext("2d");
+                    var myBar1 = new Chart(ctx1, {
+                        type: 'bar',
+                        data: barChartData1,
+                        options: {
+                            responsive: true,
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Parameters'
+                                    },
+                                    barPercentage: 0.9,
+                                    maxRotation: 90,
+                                    minRotation: 90,
+                                    categoryPercentage: 0.5 / 10 * barChartData1.datasets[0].data.length
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Percentage(%)'
+                                    },
+                                    ticks: {
+                                        beginAtZero: true,
+                                        min: 0,
+                                        max: 100,
+                                        callback: function (value) {
+                                            return value + "%"
+                                        }
+                                    }
+                                }]
+                            },
+                            tooltips: {
+                                callbacks: {
+                                    label: function (tooltipItem, data) {
+                                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        label += Math.round(tooltipItem.yLabel * 100) / 100;
+                                        return label + " %";
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            },
+            error: function (xhr) {
+            }
+        });
+    }
+</script>
+

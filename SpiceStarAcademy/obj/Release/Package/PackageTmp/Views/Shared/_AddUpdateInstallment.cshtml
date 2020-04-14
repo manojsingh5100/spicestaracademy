@@ -1,0 +1,105 @@
+﻿@model SJModel.SessionInstallmentViewModel
+<section>
+    <div class="row" style="padding:5px;">
+        <input type="hidden" id="hdnfeedetailid" value="@Model.FeeTypeDeatilId" />
+        <div class="col-md-5">
+            Amount
+            <input type="number" class="form-control" id="txtAmount" />
+        </div>
+        <div class="col-md-5">
+            Installment
+            @Html.DropDownList("ddlinstallment", new SelectList(Model.GetInstallmentList, "Id", "BatchName"), "Select", new { @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            <div style="padding-top:18px;"></div>
+            <input type="button" value="Add" onclick="addupdate();" class="btn btn-danger" />
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <table id="tblParameterList" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Sr.No.</th>
+                        <th>InstallmentName</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.InstallmentList.Count() > 0)
+                    {
+                        int i = 1;
+                        foreach (var item in Model.InstallmentList)
+                        {
+                            <tr><td>@i</td><td>@item.InstallmentName</td><td>@item.Amount</td></tr>
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        <tr><td colspan="3" style="text-align:center">No Record Found!</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<script>
+    function validation() {
+        var amount = $('#txtAmount').val();
+        var installment = $('#ddlinstallment').val();
+        var status = true;
+        if (amount == "") {
+            $('#txtAmount').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#txtAmount').css("border", "");
+        }
+
+        if (installment == "") {
+            $('#ddlinstallment').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#ddlinstallment').css("border", "");
+        }
+        return status;
+    }
+
+    function addupdate() {
+        var valid = validation();
+        if (valid == true) {
+            var amount = $('#txtAmount').val();
+            var installment = $('#ddlinstallment').val();
+            var feedetailId = $('#hdnfeedetailid').val();
+            var model = {};
+            model.InstallmentMasterId = installment;
+            model.FeeTypeDetailId = feedetailId;
+            model.Amount = amount;
+            $.ajax({
+            cache: false,
+            type: "POST",
+            url: "@(Url.Action("SaveUpdateInstallment", "FeeManagement"))",
+                data: { Model:model  },
+            success: function (data) {
+                if (data != null && data != "") {
+                    $('#myModal').modal('hide');
+                    $("#lblMsg").text(data);
+                    if ($("#lblMsg").text() != "") {
+                        $("#dvMsg").css("display", "block");
+                        $('html, body').animate({
+                            scrollTop: $("#dvMsg").offset().top
+                        }, 2000);
+                        setTimeout(function () {
+                            $("#dvMsg").css("display", "none");
+                        }, 8000);
+                    }
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed!');
+            }
+           });
+        }
+    }
+</script>

@@ -1,0 +1,136 @@
+﻿@model SJModel.PTAModel.PilotMedicalInfoViewModel
+<style>
+    .image-container {
+        display: flex;
+        justify-content: center;
+        padding-top: 20px;
+    }
+</style>
+<section class="content-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+    <h1>Medical</h1>
+</section>
+<section class="content">
+    @Html.HiddenFor(m => m.PilotRegistrationNo)
+    <div class="row">
+        @if (Model != null && Model.Documents.Count == 2)
+        {
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Class 1 certificate</h3>
+                        <input type="hidden" id="hdndocument1" name="hdndocument1" value="@Model.Documents[0].DocumentMasterId" />
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <input type="file" id="fileUpload1" class="form-control" onchange="readURL(this,'imgcl1')">
+                        </div>
+                        <div class="form-group image-container">
+                            <input type="hidden" name="hdnDoc1IsPrevoiusExist" id="hdnDoc1IsPrevoiusExist" value="@(string.IsNullOrEmpty(Model.Documents[0].DocumentPath)?"":(Model.Documents[0].DocumentPath))" />
+                            <img src="@(string.IsNullOrEmpty(Model.Documents[0].DocumentPath)?"#":(Model.Documents[0].DocumentPath + Model.Documents[0].Extention))" id="imgcl1" style="border:1px black solid;width:170px;height:200px;@(string.IsNullOrEmpty(Model.Documents[0].DocumentPath) ? "display:none":"")" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Class 2 certificate</h3>
+                        <input type="hidden" id="hdndocument2" name="hdndocument2" value="@Model.Documents[1].DocumentMasterId" />
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <input type="file" id="fileUpload2" class="form-control" onchange="readURL(this,'imgcl2')">
+                        </div>
+                        <div class="form-group image-container">
+                            <input type="hidden" name="hdnDoc2IsPrevoiusExist" id="hdnDoc2IsPrevoiusExist" value="@(string.IsNullOrEmpty(Model.Documents[1].DocumentPath)?"":(Model.Documents[1].DocumentPath))" />
+                            <img src="@(string.IsNullOrEmpty(Model.Documents[1].DocumentPath)?"#":(Model.Documents[1].DocumentPath + Model.Documents[1].Extention))" id="imgcl2" style="border:1px black solid;width:170px;height:200px;@(string.IsNullOrEmpty(Model.Documents[1].DocumentPath) ? "display:none":"")" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div style="pointer-events: all;text-align:right">
+        <div class="row" style="pointer-events: all;">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6" style="pointer-events: all;">
+                <div class="row" style="pointer-events: all;">
+                    <div class="col-md-4" style="pointer-events: all;">
+                    </div>
+                    <div class="col-md-8" style="pointer-events: all;">
+                        <button type="button" id="btnSubmitScreenTest" class="btn btn-success">Upload</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    function readURL(input, img) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#' + img).css('display', 'block').attr('src', e.target.result);
+                if ($(input).attr('id') == "fileUpload1")
+                    $('#hdnDoc1IsPrevoiusExist').val("");
+                else if ($(input).attr('id') == "fileUpload2")
+                    $('#hdnDoc2IsPrevoiusExist').val("");
+            }
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            $('#' + img).css('display', 'none').attr('src', '#');
+            if ($(input).attr('id') == "fileUpload1")
+                $('#hdnDoc1IsPrevoiusExist').val("");
+            else if ($(input).attr('id') == "fileUpload2")
+                $('#hdnDoc2IsPrevoiusExist').val("");
+        }
+    }
+
+    $('#btnSubmitScreenTest').click(function () {
+        var data = new FormData();
+        data.append("CandidateId",$('#PilotRegistrationNo').val());
+        //====================================
+        data.append("Document1", $('#hdndocument1').val());
+        data.append("hdnDoc1IsPrevoiusExist", $('#hdnDoc1IsPrevoiusExist').val());
+        var files = $("#fileUpload1").get(0).files;
+        if (files.length > 0) {
+            data.append("ImageF", files[0]);
+        }
+        //====================================
+        data.append("Document2", $('#hdndocument2').val());
+        data.append("hdnDoc2IsPrevoiusExist", $('#hdnDoc2IsPrevoiusExist').val());
+        var files1 = $("#fileUpload2").get(0).files;
+        if (files1.length > 0) {
+            data.append("ImageS", files1[0]);
+        }
+        $.ajax({
+            url: "/PTA/Registration/SaveMedicalUploadData",
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function (response) {
+                $('#myMedicalModal').modal('hide');
+                $("#lblMsg").text(response);
+                if ($("#lblMsg").text() != "") {
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#lblMsg").text('');
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                }
+            },
+            error: function (er) {
+                alert(er);
+            }
+        });
+    });
+
+</script>

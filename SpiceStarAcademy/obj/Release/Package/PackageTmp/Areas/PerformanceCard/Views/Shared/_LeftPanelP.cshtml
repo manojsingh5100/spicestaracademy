@@ -1,0 +1,106 @@
+﻿<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <div class="gap-sidemenu-top"></div>
+        <ul id="menu-section" class="sidebar-menu" data-widget="tree">
+            @if (Session["RoleName"] != null)
+            {
+                <li><a href="/PerformanceCard/Report/DashBoard" class="active" onclick="Loading();"><i class="fa fa-circle-o text-aqua"></i> <span>DASHBOARD</span></a></li>
+                <li><a href="/PerformanceCard/Performance/CandidateList" onclick="Loading();"><i class="fa fa-circle-o text-red"></i> <span>BATCH LIST</span></a></li>
+                <li><a href="/PerformanceCard/PerformanceParameter" onclick="Loading();"><i class="fa fa-circle-o text-aqua"></i> <span>PARAMETER MASTER</span></a></li>
+                @*<li><a href="/PerformanceCard/Report/CompareReport" onclick="Loading();"><i class="fa fa-circle-o text-aqua"></i> <span>COMPARE REPORT</span></a></li>*@
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-edit"></i> <span>REPORTS</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="/PerformanceCard/Report/ConsolidatedReport" onclick="Loading();"><i class="fa fa-circle-o"></i>CONSOLIDATED REPORT</a>
+                            </li>
+                            <li><a href="/PerformanceCard/Report/PerformanceReport" onclick="Loading();"><i class="fa fa-circle-o"></i>PERFORMANCE REPORT</a></li>
+                            <li><a href="/PerformanceCard/Report/CompareReport" onclick="Loading();"><i class="fa fa-circle-o"></i>COMPARATIVE REPORT</a></li>
+                        </ul>
+                    </a>
+                </li>
+            }
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
+<script>
+    $(function () {
+        
+        var url = window.location.href; 
+
+        // passes on every "a" tag 
+        $("#menu-section a").each(function () {
+            // checks if its the same on the address bar
+            if (url == (this.href)) {
+                $(this).closest("li").addClass("active");
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+@*<aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="~/assets/img/user2-160x160.png" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>@Session["UserName"]</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">MAIN NAVIGATION</li>
+                @if (Session["RoleName"] != null)
+                {
+                    <li>
+                        <a href="/PerformanceCard/Performance/CandidateList" onclick="Loading();">
+                            <i class="fa fa-circle-o"></i> <span>Candidate List</span>
+                        </a>
+                    </li>
+
+        <li>
+                        <a href="/PerformanceCard/PerformanceParameter" onclick="Loading();">
+                            <i class="fa fa-superpowers"></i> <span>Parameter Master</span>
+                        </a>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-book"></i>
+                            <span>Report</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="/PerformanceCard/Report" onclick="Loading();"><i class="fa fa-circle-o"></i>Report</a></li>
+                            <li><a href="/PerformanceCard/Report/WeeklyReport" onclick="Loading();"><i class="fa fa-circle-o"></i>Weekly Report</a></li>
+                            <li><a href="/PerformanceCard/Report/CompareReport" onclick="Loading();"><i class="fa fa-circle-o"></i>Compare Report</a></li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>*@
+
+

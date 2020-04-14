@@ -1,0 +1,100 @@
+﻿@model SJModel.TerminationViewModel
+<form class="form-horizontal" id="frmTarget">
+    @Html.HiddenFor(m => m.CandidateTerminationResignationInfoId)
+    @Html.HiddenFor(m => m.AddmissionMasterId)
+    @Html.HiddenFor(m=> m.RegNo)
+    <input type="hidden" id="hdnschdate" value="@(string.IsNullOrEmpty(Model.SchedulingDate)?"":Model.SchedulingDate)" />
+    <input type="hidden" id="hdndescription" value="@(string.IsNullOrEmpty(Model.StatusInfo)?"":Model.StatusInfo)" />
+    <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong id="lblMsg"></strong>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label>Name</label>
+            @Html.TextBoxFor(m => m.StudentName, new { @class = "form-control", @disabled = "disabled" })
+        </div>
+        <div class="col-md-6">
+            <label>Outstanding Fee Amount</label><br />
+            @Html.TextBoxFor(m => m.OutstandingFeeAmount, new { @class = "form-control", @disabled = "disabled" })
+        </div>
+    </div>
+
+    <div class="row" style="padding-top:10px;">
+        <div class="col-md-6">
+            <label id="lbltrdate"></label><br />
+            @Html.TextBoxFor(m => m.TerminationOrResignationDate, new { @class = "form-control", autocomplete = "off", onkeydown = "return false;" })
+        </div>
+
+        <div class="col-md-6" style="display:@(Model.CandidateActionName == "Termination"?"block":"none")">
+            <label>Last Working Date</label><br />
+            @Html.TextBoxFor(m => m.SchedulingDate, new { @class = "form-control", autocomplete = "off", onkeydown = "return false;" })
+        </div>
+
+        <div class="col-md-6" style="display:@(Model.CandidateActionName == "Resignation"?"block":"none")">
+            <label>Notice Period (Days)</label><br />
+            @Html.TextBoxFor(m => m.NoticePeriod, new { @class = "form-control", autocomplete = "off" })
+        </div>
+    </div>
+
+    <div class="row" style="padding-top:10px;">
+        <div class="col-md-12">
+            <label>Comment</label><br />
+            @Html.TextAreaFor(m => m.StatusInfo, new { @class = "form-control", placeholder = "Comment" })
+        </div>
+
+        <div class="col-md-12" id="divclosedcomment" style="display:@(Model.IsClosed == true?"block":"none")">
+            <label>Closed Comment</label><br />
+            @Html.TextAreaFor(m => m.ClosedComment, new { @class = "form-control", placeholder = "Comment" })
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('#SchedulingDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+        $('#TerminationOrResignationDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+
+        if ("@Model.CandidateTerminationResignationIsActive" == "True" && "@Session["RoleName"]" == "Admin") {
+            $("#frmTarget :input").removeProp("disabled", "disabled");
+            $("#btnTRSubmit").removeAttr("disabled");
+        } else if ("@Model.CandidateTerminationResignationIsActive" == "True") {
+            $("#frmTarget :input").prop("disabled", true);
+            $("#btnTRSubmit").attr("disabled", true);
+        } else {
+            $("#frmTarget :input").removeProp("disabled", "disabled");
+            $("#btnTRSubmit").removeAttr("disabled");
+        }
+
+        $('#fancy-checkbox-default').prop('checked', true);
+        if ('@Model.IsClosed' == 'True') {
+            $('#fancy-checkbox-default').prop('checked', true);
+            $('#OutstandingFeeAmount').val("No Due");
+        }
+        else
+            $('#fancy-checkbox-default').prop('checked', false);
+    });
+
+    $("#NoticePeriod").keypress(function (e) {
+        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+            return false;
+        }
+    });
+
+    $('#fancy-checkbox-default').change(function () {
+        var status = $(this).prop('checked');
+        if (status) {
+            $('#divclosedcomment').css('display', 'block');
+        } else {
+            $('#divclosedcomment').css('display', 'none');
+        }
+    });
+</script>
+
+

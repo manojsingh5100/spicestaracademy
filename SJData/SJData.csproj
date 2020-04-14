@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DD84E3AD-F846-436C-9048-6DDA3E15367A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SJData</RootNamespace>
+    <AssemblyName>SJData</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddmissionDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AddmissionMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AddressDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BankAndAmountDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BatchHistoryDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BatchMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CallCenterRemark.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CandidateActionMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CandidateTerminationResignationInfo.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CandidateTRInfo.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CourseChangeHistoryDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CourseMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DepartmentMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DocumentDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DocumentMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExceededFeeAmountOnCourseChange.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FeeCollection.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FeeDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FeeEmailNotifacationLog.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FeePaymentDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FeeSettlementOnCourseChnageLog.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FeeType.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FeeTypeDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FIN_BankDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FIN_FeeReceiptDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FIN_FeeReceiptMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FIN_FeeRefundDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FIN_FeeRefundMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InstallmentMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LocationMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MedicalDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PartWisePayment.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentMode.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentType.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ptaAddressDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaAdmissionMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaBankAndAmountDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaBankDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaBoardAndUniversityMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaCountryCityInfo.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaDeclaration.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaDocumentDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaEducationDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaEducationSubjectMark.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaEduEvaluationTypeMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaFeeCollection.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaFeeDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaFeePaymentDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaFeeType.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaFeeTypeDetail.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaGenderMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaGuardian.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaInstallmentMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaLeadSourceMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaMedicalStatusMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaNatioalityMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaPartWisePayment.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaPassport.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaPaymentMode.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaPaymentType.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaPilotRegistrationMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaRegistrationInfo.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaResultStatusMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaScreeningEmailNotificationLog.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaScreeningExamfailedLog.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaScreeningExamFeeInfo.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaScreeningInfo.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaScreeningTestResult.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaScreeningTestType.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaStreamMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaStudentLogin.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaTitleMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ptaUGBoardAndUniversityMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Query.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RegistrationMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Role.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScheduledStatusLogForTerminateResignation.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScreeningInterviewer.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScreeningInterviewerResult.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScreeningParameter.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScreeningParameterOption.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScreeningTest.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SendingEmailForRejectedCandidate.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SessionInstallmentMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SessionMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SJAcademyDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SJAcademyDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SJAcademyDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SJAcademyDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SJAcademyDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Sp_GetPerformancePWithParamRepots_Result.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TatooOrScar.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblParameterList.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblParameterType.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblPerformanceEntryMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblPerformanceMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblPerformanceParameterResultMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblPerformanceParameterTypeResultMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblPerformancePercentageMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblReviewMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblWeeklyReviewMaster.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserActivityLog.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserLogin.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="packages.config" />
+    <EntityDeploy Include="SJAcademyDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SJAcademyDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="SJAcademyDB.edmx.diagram">
+      <DependentUpon>SJAcademyDB.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SJAcademyDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SJAcademyDB.edmx</DependentUpon>
+      <LastGenOutput>SJAcademyDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="SJAcademyDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SJAcademyDB.edmx</DependentUpon>
+      <LastGenOutput>SJAcademyDB.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

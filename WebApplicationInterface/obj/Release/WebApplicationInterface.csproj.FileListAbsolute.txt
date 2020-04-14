@@ -1,0 +1,214 @@
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\ApplicationInsights.config
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\WebApplicationInterface.dll.config
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\WebApplicationInterface.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\WebApplicationInterface.pdb
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\csc.exe
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\csc.exe.config
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\csc.rsp
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\csi.exe
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\csi.exe.config
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\csi.rsp
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.Managed.Core.targets
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.AppContext.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Collections.Immutable.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Console.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.IO.Compression.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.IO.FileSystem.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.IO.Pipes.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Reflection.Metadata.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Security.AccessControl.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Security.Claims.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Security.Principal.Windows.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.ValueTuple.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Xml.XmlDocument.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Xml.XPath.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\vbc.exe
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\vbc.exe.config
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\vbc.rsp
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\VBCSCompiler.exe
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\roslyn\VBCSCompiler.exe.config
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Antlr3.Runtime.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\EntityFramework.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\EntityFramework.SqlServer.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.Agent.Intercept.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.DependencyCollector.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.PerfCounterCollector.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.ServerTelemetryChannel.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.Web.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.WindowsServer.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.ApplicationInsights.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.AspNet.TelemetryCorrelation.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.Owin.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.Web.Infrastructure.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Newtonsoft.Json.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Owin.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Diagnostics.DiagnosticSource.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Net.Http.Formatting.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.Cors.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.Helpers.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.Http.Cors.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.Http.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.Http.WebHost.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.Mvc.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.Optimization.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.Razor.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.WebPages.Deployment.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.WebPages.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.WebPages.Razor.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\WebGrease.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\EntityFramework.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\EntityFramework.SqlServer.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.Owin.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Net.Http.Formatting.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.Http.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.Http.Cors.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Newtonsoft.Json.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.Helpers.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.Http.WebHost.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.Mvc.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.Optimization.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.Razor.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.WebPages.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.WebPages.Deployment.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Web.WebPages.Razor.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Antlr3.Runtime.pdb
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\System.Diagnostics.DiagnosticSource.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.AspNet.TelemetryCorrelation.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.DependencyCollector.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.WindowsServer.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.Web.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\obj\Release\WebApplicationInterface.csprojAssemblyReference.cache
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\obj\Release\WebApplicationInterface.csproj.CoreCompileInputs.cache
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\obj\Release\WebApplicationInterface.csproj.CopyComplete
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\obj\Release\WebApplicationInterface.dll
+D:\gitPtojects\SpicestarERP\WebApplicationInterface\obj\Release\WebApplicationInterface.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\ApplicationInsights.config
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\WebApplicationInterface.dll.config
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\WebApplicationInterface.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\WebApplicationInterface.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\csc.exe
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\csc.exe.config
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\csc.rsp
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\csi.exe
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\csi.exe.config
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\csi.rsp
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.Managed.Core.targets
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.AppContext.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Collections.Immutable.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Console.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.IO.Compression.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.IO.FileSystem.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.IO.Pipes.AccessControl.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.IO.Pipes.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Reflection.Metadata.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Security.AccessControl.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Security.Claims.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Security.Principal.Windows.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.ValueTuple.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Xml.XmlDocument.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Xml.XPath.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\vbc.exe
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\vbc.exe.config
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\vbc.rsp
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\VBCSCompiler.exe
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\roslyn\VBCSCompiler.exe.config
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Antlr3.Runtime.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\EntityFramework.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\EntityFramework.SqlServer.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.Agent.Intercept.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.DependencyCollector.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.PerfCounterCollector.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.ServerTelemetryChannel.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.Web.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.WindowsServer.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.ApplicationInsights.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.AspNet.TelemetryCorrelation.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.Owin.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.Web.Infrastructure.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Newtonsoft.Json.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Owin.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Diagnostics.DiagnosticSource.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Net.Http.Formatting.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.Cors.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.Helpers.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.Http.Cors.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.Http.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.Http.WebHost.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.Mvc.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.Optimization.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.Razor.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.WebPages.Deployment.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.WebPages.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.WebPages.Razor.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\WebGrease.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\EntityFramework.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\EntityFramework.SqlServer.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.Owin.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Net.Http.Formatting.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.Http.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.Http.Cors.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Newtonsoft.Json.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.Helpers.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.Http.WebHost.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.Mvc.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.Optimization.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.Razor.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.WebPages.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.WebPages.Deployment.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Web.WebPages.Razor.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Antlr3.Runtime.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\System.Diagnostics.DiagnosticSource.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.AspNet.TelemetryCorrelation.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.DependencyCollector.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.WindowsServer.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.AI.Web.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\obj\Release\WebApplicationInterface.csprojAssemblyReference.cache
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\obj\Release\WebApplicationInterface.csproj.CoreCompileInputs.cache
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\obj\Release\WebApplicationInterface.csproj.CopyComplete
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\obj\Release\WebApplicationInterface.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\obj\Release\WebApplicationInterface.pdb

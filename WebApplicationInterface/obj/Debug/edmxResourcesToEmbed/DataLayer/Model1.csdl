@@ -1,0 +1,852 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SJStarERPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="SJStarERPEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CourseMasters" EntityType="SJStarERPModel.CourseMaster" />
+    <EntitySet Name="ptaAddressDetails" EntityType="SJStarERPModel.ptaAddressDetail" />
+    <EntitySet Name="ptaBoardAndUniversityMasters" EntityType="SJStarERPModel.ptaBoardAndUniversityMaster" />
+    <EntitySet Name="ptaDeclarations" EntityType="SJStarERPModel.ptaDeclaration" />
+    <EntitySet Name="ptaEducationDetails" EntityType="SJStarERPModel.ptaEducationDetail" />
+    <EntitySet Name="ptaEducationSubjectMarks" EntityType="SJStarERPModel.ptaEducationSubjectMark" />
+    <EntitySet Name="ptaEduEvaluationTypeMasters" EntityType="SJStarERPModel.ptaEduEvaluationTypeMaster" />
+    <EntitySet Name="ptaGenderMasters" EntityType="SJStarERPModel.ptaGenderMaster" />
+    <EntitySet Name="ptaGuardians" EntityType="SJStarERPModel.ptaGuardian" />
+    <EntitySet Name="ptaLeadSourceMasters" EntityType="SJStarERPModel.ptaLeadSourceMaster" />
+    <EntitySet Name="ptaMedicalStatusMasters" EntityType="SJStarERPModel.ptaMedicalStatusMaster" />
+    <EntitySet Name="ptaNatioalityMasters" EntityType="SJStarERPModel.ptaNatioalityMaster" />
+    <EntitySet Name="ptaPassports" EntityType="SJStarERPModel.ptaPassport" />
+    <EntitySet Name="ptaPilotRegistrationMasters" EntityType="SJStarERPModel.ptaPilotRegistrationMaster" />
+    <EntitySet Name="ptaRegistrationInfoes" EntityType="SJStarERPModel.ptaRegistrationInfo" />
+    <EntitySet Name="ptaResultStatusMasters" EntityType="SJStarERPModel.ptaResultStatusMaster" />
+    <EntitySet Name="ptaStreamMasters" EntityType="SJStarERPModel.ptaStreamMaster" />
+    <EntitySet Name="ptaTitleMasters" EntityType="SJStarERPModel.ptaTitleMaster" />
+    <EntitySet Name="ptaUGBoardAndUniversityMasters" EntityType="SJStarERPModel.ptaUGBoardAndUniversityMaster" />
+    <EntitySet Name="SessionMasters" EntityType="SJStarERPModel.SessionMaster" />
+    <AssociationSet Name="FK__ptaPilotR__Cours__4E1E9780" Association="SJStarERPModel.FK__ptaPilotR__Cours__4E1E9780">
+      <End Role="CourseMaster" EntitySet="CourseMasters" />
+      <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SessionMa__Cours__59904A2C" Association="SJStarERPModel.FK__SessionMa__Cours__59904A2C">
+      <End Role="CourseMaster" EntitySet="CourseMasters" />
+      <End Role="SessionMaster" EntitySet="SessionMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaAddres__ptaRe__3552E9B6" Association="SJStarERPModel.FK__ptaAddres__ptaRe__3552E9B6">
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfoes" />
+      <End Role="ptaAddressDetail" EntitySet="ptaAddressDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaEducat__ptaBo__373B3228" Association="SJStarERPModel.FK__ptaEducat__ptaBo__373B3228">
+      <End Role="ptaBoardAndUniversityMaster" EntitySet="ptaBoardAndUniversityMasters" />
+      <End Role="ptaEducationDetail" EntitySet="ptaEducationDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaDeclar__ptaRe__36470DEF" Association="SJStarERPModel.FK__ptaDeclar__ptaRe__36470DEF">
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfoes" />
+      <End Role="ptaDeclaration" EntitySet="ptaDeclarations" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaEducat__ptaEd__382F5661" Association="SJStarERPModel.FK__ptaEducat__ptaEd__382F5661">
+      <End Role="ptaEduEvaluationTypeMaster" EntitySet="ptaEduEvaluationTypeMasters" />
+      <End Role="ptaEducationDetail" EntitySet="ptaEducationDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaEducat__ptaEd__3CF40B7E" Association="SJStarERPModel.FK__ptaEducat__ptaEd__3CF40B7E">
+      <End Role="ptaEducationDetail" EntitySet="ptaEducationDetails" />
+      <End Role="ptaEducationSubjectMark" EntitySet="ptaEducationSubjectMarks" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaEducat__ptaRe__39237A9A" Association="SJStarERPModel.FK__ptaEducat__ptaRe__39237A9A">
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfoes" />
+      <End Role="ptaEducationDetail" EntitySet="ptaEducationDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaEducat__ptaRe__3A179ED3" Association="SJStarERPModel.FK__ptaEducat__ptaRe__3A179ED3">
+      <End Role="ptaResultStatusMaster" EntitySet="ptaResultStatusMasters" />
+      <End Role="ptaEducationDetail" EntitySet="ptaEducationDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaEducat__ptaSt__3B0BC30C" Association="SJStarERPModel.FK__ptaEducat__ptaSt__3B0BC30C">
+      <End Role="ptaStreamMaster" EntitySet="ptaStreamMasters" />
+      <End Role="ptaEducationDetail" EntitySet="ptaEducationDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaEducat__ptaUG__3BFFE745" Association="SJStarERPModel.FK__ptaEducat__ptaUG__3BFFE745">
+      <End Role="ptaUGBoardAndUniversityMaster" EntitySet="ptaUGBoardAndUniversityMasters" />
+      <End Role="ptaEducationDetail" EntitySet="ptaEducationDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaRegist__ptaGe__3FD07829" Association="SJStarERPModel.FK__ptaRegist__ptaGe__3FD07829">
+      <End Role="ptaGenderMaster" EntitySet="ptaGenderMasters" />
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaGuardi__ptaRe__3DE82FB7" Association="SJStarERPModel.FK__ptaGuardi__ptaRe__3DE82FB7">
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfoes" />
+      <End Role="ptaGuardian" EntitySet="ptaGuardians" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaRegist__ptaLe__40C49C62" Association="SJStarERPModel.FK__ptaRegist__ptaLe__40C49C62">
+      <End Role="ptaLeadSourceMaster" EntitySet="ptaLeadSourceMasters" />
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaRegist__ptaMe__41B8C09B" Association="SJStarERPModel.FK__ptaRegist__ptaMe__41B8C09B">
+      <End Role="ptaMedicalStatusMaster" EntitySet="ptaMedicalStatusMasters" />
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaRegist__ptaNa__42ACE4D4" Association="SJStarERPModel.FK__ptaRegist__ptaNa__42ACE4D4">
+      <End Role="ptaNatioalityMaster" EntitySet="ptaNatioalityMasters" />
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaPasspo__ptaRe__3EDC53F0" Association="SJStarERPModel.FK__ptaPasspo__ptaRe__3EDC53F0">
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfoes" />
+      <End Role="ptaPassport" EntitySet="ptaPassports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaPilotR__Sessi__4F12BBB9" Association="SJStarERPModel.FK__ptaPilotR__Sessi__4F12BBB9">
+      <End Role="SessionMaster" EntitySet="SessionMasters" />
+      <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaRegist__ptaPi__56B3DD81" Association="SJStarERPModel.FK__ptaRegist__ptaPi__56B3DD81">
+      <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMasters" />
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaRegist__ptaTi__43A1090D" Association="SJStarERPModel.FK__ptaRegist__ptaTi__43A1090D">
+      <End Role="ptaTitleMaster" EntitySet="ptaTitleMasters" />
+      <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfoes" />
+    </AssociationSet>
+    <EntitySet Name="ptaScreeningInfoes" EntityType="SJStarERPModel.ptaScreeningInfo" />
+    <EntitySet Name="ptaScreeningTestTypes" EntityType="SJStarERPModel.ptaScreeningTestType" />
+    <AssociationSet Name="FK__ptaScreen__PTAPi__68D28DBC" Association="SJStarERPModel.FK__ptaScreen__PTAPi__68D28DBC">
+      <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMasters" />
+      <End Role="ptaScreeningInfo" EntitySet="ptaScreeningInfoes" />
+    </AssociationSet>
+    <EntitySet Name="ptaScreeningTestResults" EntityType="SJStarERPModel.ptaScreeningTestResult" />
+    <AssociationSet Name="FK__ptaScreen__PTASc__308E3499" Association="SJStarERPModel.FK__ptaScreen__PTASc__308E3499">
+      <End Role="ptaScreeningInfo" EntitySet="ptaScreeningInfoes" />
+      <End Role="ptaScreeningTestResult" EntitySet="ptaScreeningTestResults" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaScreen__PTASc__318258D2" Association="SJStarERPModel.FK__ptaScreen__PTASc__318258D2">
+      <End Role="ptaScreeningTestType" EntitySet="ptaScreeningTestTypes" />
+      <End Role="ptaScreeningTestResult" EntitySet="ptaScreeningTestResults" />
+    </AssociationSet>
+    <EntitySet Name="ptaScreeningExamFeeInfoes" EntityType="SJStarERPModel.ptaScreeningExamFeeInfo" />
+    <AssociationSet Name="FK__ptaScreen__PTAPi__4E1E9780" Association="SJStarERPModel.FK__ptaScreen__PTAPi__4E1E9780">
+      <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMasters" />
+      <End Role="ptaScreeningExamFeeInfo" EntitySet="ptaScreeningExamFeeInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaScreen__PTASc__2BC97F7C" Association="SJStarERPModel.FK__ptaScreen__PTASc__2BC97F7C">
+      <End Role="ptaScreeningInfo" EntitySet="ptaScreeningInfoes" />
+      <End Role="ptaScreeningExamFeeInfo" EntitySet="ptaScreeningExamFeeInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaScreen__PTASc__2CBDA3B5" Association="SJStarERPModel.FK__ptaScreen__PTASc__2CBDA3B5">
+      <End Role="ptaScreeningTestType" EntitySet="ptaScreeningTestTypes" />
+      <End Role="ptaScreeningExamFeeInfo" EntitySet="ptaScreeningExamFeeInfoes" />
+    </AssociationSet>
+    <EntitySet Name="RegistrationMasters" EntityType="SJStarERPModel.RegistrationMaster" />
+    <AssociationSet Name="FK__Registrat__Cours__3D2915A8" Association="SJStarERPModel.FK__Registrat__Cours__3D2915A8">
+      <End Role="CourseMaster" EntitySet="CourseMasters" />
+      <End Role="RegistrationMaster" EntitySet="RegistrationMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Registrat__Sessi__603D47BB" Association="SJStarERPModel.FK__Registrat__Sessi__603D47BB">
+      <End Role="SessionMaster" EntitySet="SessionMasters" />
+      <End Role="RegistrationMaster" EntitySet="RegistrationMasters" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="CourseMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="DepartmentMasterId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ptaPilotRegistrationMasters" Relationship="SJStarERPModel.FK__ptaPilotR__Cours__4E1E9780" FromRole="CourseMaster" ToRole="ptaPilotRegistrationMaster" />
+    <NavigationProperty Name="SessionMasters" Relationship="SJStarERPModel.FK__SessionMa__Cours__59904A2C" FromRole="CourseMaster" ToRole="SessionMaster" />
+    <NavigationProperty Name="RegistrationMasters" Relationship="SJStarERPModel.FK__Registrat__Cours__3D2915A8" FromRole="CourseMaster" ToRole="RegistrationMaster" />
+  </EntityType>
+  <EntityType Name="ptaAddressDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Cor_Country" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Cor_State" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Cor_District" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Cor_City" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Cor_Address1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Cor_Address2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Cor_PinCode" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="IsPermanent" Type="Boolean" Nullable="false" />
+    <Property Name="Per_Country" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Per_State" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Per_District" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Per_City" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Per_Address1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Per_Address2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Per_PinCode" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="ptaRegistrationInfoId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ptaRegistrationInfo" Relationship="SJStarERPModel.FK__ptaAddres__ptaRe__3552E9B6" FromRole="ptaAddressDetail" ToRole="ptaRegistrationInfo" />
+  </EntityType>
+  <EntityType Name="ptaBoardAndUniversityMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="600" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ptaEducationDetails" Relationship="SJStarERPModel.FK__ptaEducat__ptaBo__373B3228" FromRole="ptaBoardAndUniversityMaster" ToRole="ptaEducationDetail" />
+  </EntityType>
+  <EntityType Name="ptaDeclaration">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ApplicantName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="ParentName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="ptaRegistrationInfoId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ptaRegistrationInfo" Relationship="SJStarERPModel.FK__ptaDeclar__ptaRe__36470DEF" FromRole="ptaDeclaration" ToRole="ptaRegistrationInfo" />
+  </EntityType>
+  <EntityType Name="ptaEducationDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Class" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="NameOfInstitute" Type="String" MaxLength="600" FixedLength="false" Unicode="false" />
+    <Property Name="ptaBoardAndUniversityMasterId" Type="Int32" />
+    <Property Name="ptaUGBoardAndUniversityMasterId" Type="Int32" />
+    <Property Name="ptaStreamMasterId" Type="Int32" />
+    <Property Name="ptaDegreeMasterId" Type="Int32" />
+    <Property Name="YearOfPassing" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="ptaEduEvaluationTypeMasterId" Type="Int32" />
+    <Property Name="PercentageOrCGPA" Type="Double" />
+    <Property Name="ptaResultStatusMasterId" Type="Int32" />
+    <Property Name="ptaRegistrationInfoId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ptaBoardAndUniversityMaster" Relationship="SJStarERPModel.FK__ptaEducat__ptaBo__373B3228" FromRole="ptaEducationDetail" ToRole="ptaBoardAndUniversityMaster" />
+    <NavigationProperty Name="ptaEduEvaluationTypeMaster" Relationship="SJStarERPModel.FK__ptaEducat__ptaEd__382F5661" FromRole="ptaEducationDetail" ToRole="ptaEduEvaluationTypeMaster" />
+    <NavigationProperty Name="ptaEducationSubjectMarks" Relationship="SJStarERPModel.FK__ptaEducat__ptaEd__3CF40B7E" FromRole="ptaEducationDetail" ToRole="ptaEducationSubjectMark" />
+    <NavigationProperty Name="ptaRegistrationInfo" Relationship="SJStarERPModel.FK__ptaEducat__ptaRe__39237A9A" FromRole="ptaEducationDetail" ToRole="ptaRegistrationInfo" />
+    <NavigationProperty Name="ptaResultStatusMaster" Relationship="SJStarERPModel.FK__ptaEducat__ptaRe__3A179ED3" FromRole="ptaEducationDetail" ToRole="ptaResultStatusMaster" />
+    <NavigationProperty Name="ptaStreamMaster" Relationship="SJStarERPModel.FK__ptaEducat__ptaSt__3B0BC30C" FromRole="ptaEducationDetail" ToRole="ptaStreamMaster" />
+    <NavigationProperty Name="ptaUGBoardAndUniversityMaster" Relationship="SJStarERPModel.FK__ptaEducat__ptaUG__3BFFE745" FromRole="ptaEducationDetail" ToRole="ptaUGBoardAndUniversityMaster" />
+  </EntityType>
+  <EntityType Name="ptaEducationSubjectMark">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="MaximumMark" Type="Double" />
+    <Property Name="ObtainMark" Type="Double" />
+    <Property Name="Percentage" Type="Double" />
+    <Property Name="ptaEducationDetailId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ptaEducationDetail" Relationship="SJStarERPModel.FK__ptaEducat__ptaEd__3CF40B7E" FromRole="ptaEducationSubjectMark" ToRole="ptaEducationDetail" />
+  </EntityType>
+  <EntityType Name="ptaEduEvaluationTypeMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ptaEducationDetails" Relationship="SJStarERPModel.FK__ptaEducat__ptaEd__382F5661" FromRole="ptaEduEvaluationTypeMaster" ToRole="ptaEducationDetail" />
+  </EntityType>
+  <EntityType Name="ptaGenderMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ptaRegistrationInfoes" Relationship="SJStarERPModel.FK__ptaRegist__ptaGe__3FD07829" FromRole="ptaGenderMaster" ToRole="ptaRegistrationInfo" />
+  </EntityType>
+  <EntityType Name="ptaGuardian">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Mobile" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Relation" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="ptaRegistrationInfoId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ptaRegistrationInfo" Relationship="SJStarERPModel.FK__ptaGuardi__ptaRe__3DE82FB7" FromRole="ptaGuardian" ToRole="ptaRegistrationInfo" />
+  </EntityType>
+  <EntityType Name="ptaLeadSourceMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ptaRegistrationInfoes" Relationship="SJStarERPModel.FK__ptaRegist__ptaLe__40C49C62" FromRole="ptaLeadSourceMaster" ToRole="ptaRegistrationInfo" />
+  </EntityType>
+  <EntityType Name="ptaMedicalStatusMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ptaRegistrationInfoes" Relationship="SJStarERPModel.FK__ptaRegist__ptaMe__41B8C09B" FromRole="ptaMedicalStatusMaster" ToRole="ptaRegistrationInfo" />
+  </EntityType>
+  <EntityType Name="ptaNatioalityMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ptaRegistrationInfoes" Relationship="SJStarERPModel.FK__ptaRegist__ptaNa__42ACE4D4" FromRole="ptaNatioalityMaster" ToRole="ptaRegistrationInfo" />
+  </EntityType>
+  <EntityType Name="ptaPassport">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PassportNo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="PassportCountry" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="PlaceOfIssue" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="DateOfIssue" Type="DateTime" Precision="3" />
+    <Property Name="DateOfExpiry" Type="DateTime" Precision="3" />
+    <Property Name="ptaRegistrationInfoId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ptaRegistrationInfo" Relationship="SJStarERPModel.FK__ptaPasspo__ptaRe__3EDC53F0" FromRole="ptaPassport" ToRole="ptaRegistrationInfo" />
+  </EntityType>
+  <EntityType Name="ptaPilotRegistrationMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RegistrationNo" Type="Int32" Nullable="false" />
+    <Property Name="Fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="DOB" Type="DateTime" Precision="3" />
+    <Property Name="Height" Type="Double" />
+    <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CourseId" Type="Int32" Nullable="false" />
+    <Property Name="SessionId" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="SerialNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="OrderId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ApplicationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DepartmentMasterId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CourseMaster" Relationship="SJStarERPModel.FK__ptaPilotR__Cours__4E1E9780" FromRole="ptaPilotRegistrationMaster" ToRole="CourseMaster" />
+    <NavigationProperty Name="SessionMaster" Relationship="SJStarERPModel.FK__ptaPilotR__Sessi__4F12BBB9" FromRole="ptaPilotRegistrationMaster" ToRole="SessionMaster" />
+    <NavigationProperty Name="ptaRegistrationInfoes" Relationship="SJStarERPModel.FK__ptaRegist__ptaPi__56B3DD81" FromRole="ptaPilotRegistrationMaster" ToRole="ptaRegistrationInfo" />
+    <NavigationProperty Name="ptaScreeningInfoes" Relationship="SJStarERPModel.FK__ptaScreen__PTAPi__68D28DBC" FromRole="ptaPilotRegistrationMaster" ToRole="ptaScreeningInfo" />
+    <NavigationProperty Name="ptaScreeningExamFeeInfoes" Relationship="SJStarERPModel.FK__ptaScreen__PTAPi__4E1E9780" FromRole="ptaPilotRegistrationMaster" ToRole="ptaScreeningExamFeeInfo" />
+  </EntityType>
+  <EntityType Name="ptaRegistrationInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RegistartionNo" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="ptaTitleMasterId" Type="Int32" Nullable="false" />
+    <Property Name="ptaGenderMasterId" Type="Int32" Nullable="false" />
+    <Property Name="ptaNatioalityMasterId" Type="Int32" Nullable="false" />
+    <Property Name="ptaLeadSourceMasterId" Type="Int32" Nullable="false" />
+    <Property Name="ptaMedicalStatusMasterId" Type="Int32" Nullable="false" />
+    <Property Name="ptaPilotRegistrationMasterId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ptaAddressDetails" Relationship="SJStarERPModel.FK__ptaAddres__ptaRe__3552E9B6" FromRole="ptaRegistrationInfo" ToRole="ptaAddressDetail" />
+    <NavigationProperty Name="ptaDeclarations" Relationship="SJStarERPModel.FK__ptaDeclar__ptaRe__36470DEF" FromRole="ptaRegistrationInfo" ToRole="ptaDeclaration" />
+    <NavigationProperty Name="ptaEducationDetails" Relationship="SJStarERPModel.FK__ptaEducat__ptaRe__39237A9A" FromRole="ptaRegistrationInfo" ToRole="ptaEducationDetail" />
+    <NavigationProperty Name="ptaGenderMaster" Relationship="SJStarERPModel.FK__ptaRegist__ptaGe__3FD07829" FromRole="ptaRegistrationInfo" ToRole="ptaGenderMaster" />
+    <NavigationProperty Name="ptaGuardians" Relationship="SJStarERPModel.FK__ptaGuardi__ptaRe__3DE82FB7" FromRole="ptaRegistrationInfo" ToRole="ptaGuardian" />
+    <NavigationProperty Name="ptaLeadSourceMaster" Relationship="SJStarERPModel.FK__ptaRegist__ptaLe__40C49C62" FromRole="ptaRegistrationInfo" ToRole="ptaLeadSourceMaster" />
+    <NavigationProperty Name="ptaMedicalStatusMaster" Relationship="SJStarERPModel.FK__ptaRegist__ptaMe__41B8C09B" FromRole="ptaRegistrationInfo" ToRole="ptaMedicalStatusMaster" />
+    <NavigationProperty Name="ptaNatioalityMaster" Relationship="SJStarERPModel.FK__ptaRegist__ptaNa__42ACE4D4" FromRole="ptaRegistrationInfo" ToRole="ptaNatioalityMaster" />
+    <NavigationProperty Name="ptaPassports" Relationship="SJStarERPModel.FK__ptaPasspo__ptaRe__3EDC53F0" FromRole="ptaRegistrationInfo" ToRole="ptaPassport" />
+    <NavigationProperty Name="ptaPilotRegistrationMaster" Relationship="SJStarERPModel.FK__ptaRegist__ptaPi__56B3DD81" FromRole="ptaRegistrationInfo" ToRole="ptaPilotRegistrationMaster" />
+    <NavigationProperty Name="ptaTitleMaster" Relationship="SJStarERPModel.FK__ptaRegist__ptaTi__43A1090D" FromRole="ptaRegistrationInfo" ToRole="ptaTitleMaster" />
+    <Property Name="AdmissionId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="ptaResultStatusMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ptaEducationDetails" Relationship="SJStarERPModel.FK__ptaEducat__ptaRe__3A179ED3" FromRole="ptaResultStatusMaster" ToRole="ptaEducationDetail" />
+  </EntityType>
+  <EntityType Name="ptaStreamMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ptaEducationDetails" Relationship="SJStarERPModel.FK__ptaEducat__ptaSt__3B0BC30C" FromRole="ptaStreamMaster" ToRole="ptaEducationDetail" />
+  </EntityType>
+  <EntityType Name="ptaTitleMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ptaRegistrationInfoes" Relationship="SJStarERPModel.FK__ptaRegist__ptaTi__43A1090D" FromRole="ptaTitleMaster" ToRole="ptaRegistrationInfo" />
+  </EntityType>
+  <EntityType Name="ptaUGBoardAndUniversityMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="600" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ptaEducationDetails" Relationship="SJStarERPModel.FK__ptaEducat__ptaUG__3BFFE745" FromRole="ptaUGBoardAndUniversityMaster" ToRole="ptaEducationDetail" />
+  </EntityType>
+  <EntityType Name="SessionMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SessionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CourseMasterId" Type="Int32" Nullable="false" />
+    <Property Name="SessionYr" Type="Int32" />
+    <NavigationProperty Name="CourseMaster" Relationship="SJStarERPModel.FK__SessionMa__Cours__59904A2C" FromRole="SessionMaster" ToRole="CourseMaster" />
+    <NavigationProperty Name="ptaPilotRegistrationMasters" Relationship="SJStarERPModel.FK__ptaPilotR__Sessi__4F12BBB9" FromRole="SessionMaster" ToRole="ptaPilotRegistrationMaster" />
+    <NavigationProperty Name="RegistrationMasters" Relationship="SJStarERPModel.FK__Registrat__Sessi__603D47BB" FromRole="SessionMaster" ToRole="RegistrationMaster" />
+  </EntityType>
+  <Association Name="FK__ptaPilotR__Cours__4E1E9780">
+    <End Type="SJStarERPModel.CourseMaster" Role="CourseMaster" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaPilotRegistrationMaster" Role="ptaPilotRegistrationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaPilotRegistrationMaster">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SessionMa__Cours__59904A2C">
+    <End Type="SJStarERPModel.CourseMaster" Role="CourseMaster" Multiplicity="1" />
+    <End Type="SJStarERPModel.SessionMaster" Role="SessionMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SessionMaster">
+        <PropertyRef Name="CourseMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaAddres__ptaRe__3552E9B6">
+    <End Type="SJStarERPModel.ptaRegistrationInfo" Role="ptaRegistrationInfo" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaAddressDetail" Role="ptaAddressDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaRegistrationInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaAddressDetail">
+        <PropertyRef Name="ptaRegistrationInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaEducat__ptaBo__373B3228">
+    <End Type="SJStarERPModel.ptaBoardAndUniversityMaster" Role="ptaBoardAndUniversityMaster" Multiplicity="0..1" />
+    <End Type="SJStarERPModel.ptaEducationDetail" Role="ptaEducationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaBoardAndUniversityMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaEducationDetail">
+        <PropertyRef Name="ptaBoardAndUniversityMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaDeclar__ptaRe__36470DEF">
+    <End Type="SJStarERPModel.ptaRegistrationInfo" Role="ptaRegistrationInfo" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaDeclaration" Role="ptaDeclaration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaRegistrationInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaDeclaration">
+        <PropertyRef Name="ptaRegistrationInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaEducat__ptaEd__382F5661">
+    <End Type="SJStarERPModel.ptaEduEvaluationTypeMaster" Role="ptaEduEvaluationTypeMaster" Multiplicity="0..1" />
+    <End Type="SJStarERPModel.ptaEducationDetail" Role="ptaEducationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaEduEvaluationTypeMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaEducationDetail">
+        <PropertyRef Name="ptaEduEvaluationTypeMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaEducat__ptaEd__3CF40B7E">
+    <End Type="SJStarERPModel.ptaEducationDetail" Role="ptaEducationDetail" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaEducationSubjectMark" Role="ptaEducationSubjectMark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaEducationDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaEducationSubjectMark">
+        <PropertyRef Name="ptaEducationDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaEducat__ptaRe__39237A9A">
+    <End Type="SJStarERPModel.ptaRegistrationInfo" Role="ptaRegistrationInfo" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaEducationDetail" Role="ptaEducationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaRegistrationInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaEducationDetail">
+        <PropertyRef Name="ptaRegistrationInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaEducat__ptaRe__3A179ED3">
+    <End Type="SJStarERPModel.ptaResultStatusMaster" Role="ptaResultStatusMaster" Multiplicity="0..1" />
+    <End Type="SJStarERPModel.ptaEducationDetail" Role="ptaEducationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaResultStatusMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaEducationDetail">
+        <PropertyRef Name="ptaResultStatusMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaEducat__ptaSt__3B0BC30C">
+    <End Type="SJStarERPModel.ptaStreamMaster" Role="ptaStreamMaster" Multiplicity="0..1" />
+    <End Type="SJStarERPModel.ptaEducationDetail" Role="ptaEducationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaStreamMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaEducationDetail">
+        <PropertyRef Name="ptaStreamMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaEducat__ptaUG__3BFFE745">
+    <End Type="SJStarERPModel.ptaUGBoardAndUniversityMaster" Role="ptaUGBoardAndUniversityMaster" Multiplicity="0..1" />
+    <End Type="SJStarERPModel.ptaEducationDetail" Role="ptaEducationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaUGBoardAndUniversityMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaEducationDetail">
+        <PropertyRef Name="ptaUGBoardAndUniversityMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaRegist__ptaGe__3FD07829">
+    <End Type="SJStarERPModel.ptaGenderMaster" Role="ptaGenderMaster" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaRegistrationInfo" Role="ptaRegistrationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaGenderMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaRegistrationInfo">
+        <PropertyRef Name="ptaGenderMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaGuardi__ptaRe__3DE82FB7">
+    <End Type="SJStarERPModel.ptaRegistrationInfo" Role="ptaRegistrationInfo" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaGuardian" Role="ptaGuardian" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaRegistrationInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaGuardian">
+        <PropertyRef Name="ptaRegistrationInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaRegist__ptaLe__40C49C62">
+    <End Type="SJStarERPModel.ptaLeadSourceMaster" Role="ptaLeadSourceMaster" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaRegistrationInfo" Role="ptaRegistrationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaLeadSourceMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaRegistrationInfo">
+        <PropertyRef Name="ptaLeadSourceMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaRegist__ptaMe__41B8C09B">
+    <End Type="SJStarERPModel.ptaMedicalStatusMaster" Role="ptaMedicalStatusMaster" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaRegistrationInfo" Role="ptaRegistrationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaMedicalStatusMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaRegistrationInfo">
+        <PropertyRef Name="ptaMedicalStatusMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaRegist__ptaNa__42ACE4D4">
+    <End Type="SJStarERPModel.ptaNatioalityMaster" Role="ptaNatioalityMaster" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaRegistrationInfo" Role="ptaRegistrationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaNatioalityMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaRegistrationInfo">
+        <PropertyRef Name="ptaNatioalityMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaPasspo__ptaRe__3EDC53F0">
+    <End Type="SJStarERPModel.ptaRegistrationInfo" Role="ptaRegistrationInfo" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaPassport" Role="ptaPassport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaRegistrationInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaPassport">
+        <PropertyRef Name="ptaRegistrationInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaPilotR__Sessi__4F12BBB9">
+    <End Type="SJStarERPModel.SessionMaster" Role="SessionMaster" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaPilotRegistrationMaster" Role="ptaPilotRegistrationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SessionMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaPilotRegistrationMaster">
+        <PropertyRef Name="SessionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaRegist__ptaPi__56B3DD81">
+    <End Type="SJStarERPModel.ptaPilotRegistrationMaster" Role="ptaPilotRegistrationMaster" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaRegistrationInfo" Role="ptaRegistrationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaPilotRegistrationMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaRegistrationInfo">
+        <PropertyRef Name="ptaPilotRegistrationMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaRegist__ptaTi__43A1090D">
+    <End Type="SJStarERPModel.ptaTitleMaster" Role="ptaTitleMaster" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaRegistrationInfo" Role="ptaRegistrationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaTitleMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaRegistrationInfo">
+        <PropertyRef Name="ptaTitleMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ptaScreeningInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PTAPilotRegistrationMasterId" Type="Int32" Nullable="false" />
+    <Property Name="PTARegistrationNo" Type="Int32" Nullable="false" />
+    <Property Name="Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="EnteredBy" Type="Int32" Nullable="false" />
+    <Property Name="EnteredDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ptaPilotRegistrationMaster" Relationship="SJStarERPModel.FK__ptaScreen__PTAPi__68D28DBC" FromRole="ptaScreeningInfo" ToRole="ptaPilotRegistrationMaster" />
+    <NavigationProperty Name="ptaScreeningTestResults" Relationship="SJStarERPModel.FK__ptaScreen__PTASc__308E3499" FromRole="ptaScreeningInfo" ToRole="ptaScreeningTestResult" />
+    <NavigationProperty Name="ptaScreeningExamFeeInfoes" Relationship="SJStarERPModel.FK__ptaScreen__PTASc__2BC97F7C" FromRole="ptaScreeningInfo" ToRole="ptaScreeningExamFeeInfo" />
+  </EntityType>
+  <EntityType Name="ptaScreeningTestType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="InitialMark" Type="Double" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ptaScreeningTestResults" Relationship="SJStarERPModel.FK__ptaScreen__PTASc__318258D2" FromRole="ptaScreeningTestType" ToRole="ptaScreeningTestResult" />
+    <NavigationProperty Name="ptaScreeningExamFeeInfoes" Relationship="SJStarERPModel.FK__ptaScreen__PTASc__2CBDA3B5" FromRole="ptaScreeningTestType" ToRole="ptaScreeningExamFeeInfo" />
+  </EntityType>
+  <Association Name="FK__ptaScreen__PTAPi__68D28DBC">
+    <End Type="SJStarERPModel.ptaPilotRegistrationMaster" Role="ptaPilotRegistrationMaster" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaScreeningInfo" Role="ptaScreeningInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaPilotRegistrationMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaScreeningInfo">
+        <PropertyRef Name="PTAPilotRegistrationMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ptaScreeningTestResult">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PTAScreeningInfoId" Type="Int32" Nullable="false" />
+    <Property Name="PTAScreeningTestTypeId" Type="Int32" Nullable="false" />
+    <Property Name="ObtainMark" Type="Double" Nullable="false" />
+    <Property Name="IsPassed" Type="Boolean" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ptaScreeningInfo" Relationship="SJStarERPModel.FK__ptaScreen__PTASc__308E3499" FromRole="ptaScreeningTestResult" ToRole="ptaScreeningInfo" />
+    <NavigationProperty Name="ptaScreeningTestType" Relationship="SJStarERPModel.FK__ptaScreen__PTASc__318258D2" FromRole="ptaScreeningTestResult" ToRole="ptaScreeningTestType" />
+  </EntityType>
+  <Association Name="FK__ptaScreen__PTASc__308E3499">
+    <End Type="SJStarERPModel.ptaScreeningInfo" Role="ptaScreeningInfo" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaScreeningTestResult" Role="ptaScreeningTestResult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaScreeningInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaScreeningTestResult">
+        <PropertyRef Name="PTAScreeningInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaScreen__PTASc__318258D2">
+    <End Type="SJStarERPModel.ptaScreeningTestType" Role="ptaScreeningTestType" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaScreeningTestResult" Role="ptaScreeningTestResult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaScreeningTestType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaScreeningTestResult">
+        <PropertyRef Name="PTAScreeningTestTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ptaScreeningExamFeeInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PTAScreeningInfoId" Type="Int32" />
+    <Property Name="ScreeningAmountTerm" Type="Int32" Nullable="false" />
+    <Property Name="ScreeningAmount" Type="Int32" Nullable="false" />
+    <Property Name="DateOfAmount" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PaymentId" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="ExamResult" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PTAScreeningTestTypeId" Type="Int32" />
+    <Property Name="EnteredDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="PTAPilotRegistrationMaterId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ptaPilotRegistrationMaster" Relationship="SJStarERPModel.FK__ptaScreen__PTAPi__4E1E9780" FromRole="ptaScreeningExamFeeInfo" ToRole="ptaPilotRegistrationMaster" />
+    <NavigationProperty Name="ptaScreeningInfo" Relationship="SJStarERPModel.FK__ptaScreen__PTASc__2BC97F7C" FromRole="ptaScreeningExamFeeInfo" ToRole="ptaScreeningInfo" />
+    <NavigationProperty Name="ptaScreeningTestType" Relationship="SJStarERPModel.FK__ptaScreen__PTASc__2CBDA3B5" FromRole="ptaScreeningExamFeeInfo" ToRole="ptaScreeningTestType" />
+  </EntityType>
+  <Association Name="FK__ptaScreen__PTAPi__4E1E9780">
+    <End Type="SJStarERPModel.ptaPilotRegistrationMaster" Role="ptaPilotRegistrationMaster" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaScreeningExamFeeInfo" Role="ptaScreeningExamFeeInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaPilotRegistrationMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaScreeningExamFeeInfo">
+        <PropertyRef Name="PTAPilotRegistrationMaterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaScreen__PTASc__2BC97F7C">
+    <End Type="SJStarERPModel.ptaScreeningInfo" Role="ptaScreeningInfo" Multiplicity="0..1" />
+    <End Type="SJStarERPModel.ptaScreeningExamFeeInfo" Role="ptaScreeningExamFeeInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaScreeningInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaScreeningExamFeeInfo">
+        <PropertyRef Name="PTAScreeningInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaScreen__PTASc__2CBDA3B5">
+    <End Type="SJStarERPModel.ptaScreeningTestType" Role="ptaScreeningTestType" Multiplicity="0..1" />
+    <End Type="SJStarERPModel.ptaScreeningExamFeeInfo" Role="ptaScreeningExamFeeInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaScreeningTestType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaScreeningExamFeeInfo">
+        <PropertyRef Name="PTAScreeningTestTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="RegistrationMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RegistartionNo" Type="Int32" Nullable="false" />
+    <Property Name="Fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="DOB" Type="DateTime" Precision="3" />
+    <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Height" Type="Double" />
+    <Property Name="Width" Type="Double" />
+    <Property Name="CorrespondenceAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="CorrespondenceCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CorrespondenceState" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CorrespondenceZip" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="PermanentAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="PermanentCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PermanentState" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PermanentZip" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="IsAppeared" Type="Boolean" Nullable="false" />
+    <Property Name="PassingYear" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="IsPassport" Type="Boolean" Nullable="false" />
+    <Property Name="PaymentId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="PaymentDate" Type="DateTime" Precision="3" />
+    <Property Name="PaymentStatus" Type="Boolean" Nullable="false" />
+    <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
+    <Property Name="IsAddmission" Type="Boolean" Nullable="false" />
+    <Property Name="IsMedicalClear" Type="Boolean" />
+    <Property Name="IsScreenningClear" Type="Boolean" />
+    <Property Name="CourseId" Type="Int32" />
+    <Property Name="Education" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ModOfPayment" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="MedicalRemark" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="IsConsultantCandidate" Type="Boolean" Nullable="false" />
+    <Property Name="SessionId" Type="Int32" />
+    <Property Name="IsStandBy" Type="Boolean" Nullable="false" />
+    <Property Name="IsMedicalStandBy" Type="Boolean" Nullable="false" />
+    <Property Name="IsFeePayStandBy" Type="Boolean" Nullable="false" />
+    <Property Name="IsHRCandidate" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="SerialNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="OrderId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ApplicationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsReRegister" Type="Boolean" Nullable="false" />
+    <Property Name="SourceOfCandidate" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="AadharCardNo" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="IsAadharCard" Type="Boolean" Nullable="false" />
+    <Property Name="DepartmentMasterId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CourseMaster" Relationship="SJStarERPModel.FK__Registrat__Cours__3D2915A8" FromRole="RegistrationMaster" ToRole="CourseMaster" />
+    <NavigationProperty Name="SessionMaster" Relationship="SJStarERPModel.FK__Registrat__Sessi__603D47BB" FromRole="RegistrationMaster" ToRole="SessionMaster" />
+  </EntityType>
+  <Association Name="FK__Registrat__Cours__3D2915A8">
+    <End Type="SJStarERPModel.CourseMaster" Role="CourseMaster" Multiplicity="0..1" />
+    <End Type="SJStarERPModel.RegistrationMaster" Role="RegistrationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RegistrationMaster">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Registrat__Sessi__603D47BB">
+    <End Type="SJStarERPModel.SessionMaster" Role="SessionMaster" Multiplicity="0..1" />
+    <End Type="SJStarERPModel.RegistrationMaster" Role="RegistrationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SessionMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RegistrationMaster">
+        <PropertyRef Name="SessionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

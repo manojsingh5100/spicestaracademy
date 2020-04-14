@@ -1,0 +1,292 @@
+﻿@model SJModel.RegistrationViewModel
+@{
+    ViewBag.Title = "Admission Master";
+}
+<style>
+    hr.style1 {
+        border-top: 1px solid #dcd2d2 !important;
+    }
+</style>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Admission Master
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-dashboard"></i> &nbsp; Admission Master</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="box">
+            <div class="box-body" style="pointer-events: all;">
+                  <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <strong id="lblMsg">@TempData["msg"]</strong>
+                        </div>
+
+                <form action="/Addmission/Addmission" method="post">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.HiddenFor(m=>m.Id)
+                            @Html.HiddenFor(m=>m.IsAddmission)
+                            @Html.HiddenFor(m=>m.SessionId)
+                            @Html.HiddenFor(m=>m.CourseId)
+                            <table class="table-responsive table table-striped" style="width:100%;font-weight:600">
+                                <tr>
+                                    <td style="font-weight:900;width:15%">Registration No:</td>
+                                    <td style="width:10%">@Model.RegistartionNo</td>
+
+                                    <td style="font-weight:900;width:15%">Name:</td>
+                                    <td style="width:15%">@Model.StudentName</td>
+
+                                    <td style="font-weight:900;width:15%">Email:</td>
+                                    <td style="width:10%">@Model.Email</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:900">Mobile:</td>
+                                    <td>@Model.Mobile</td>
+
+                                    <td style="font-weight:900">Date of Birth:</td>
+                                    <td>@(Model.DOB.HasValue ? Model.DOB.Value.ToString("dd/MM/yyyy") : "")</td>
+
+                                    <td style="font-weight:900">Gender:</td>
+                                    <td>@Model.Gender</td>
+
+                             
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:900">Height:</td>
+                                    <td>@Model.Height cm</td>
+
+                                    <td style="font-weight:900">Weight:</td>
+                                    <td>@Model.Width Kg</td>
+
+                                    <td style="font-weight:900">Correspondence Address:</td>
+                                    <td style="width:24%">
+                                        @Model.CorrespondenceAddress
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:900">Correspondence City:</td>
+                                    <td>@Model.CorrespondenceCity</td>
+
+                                    <td style="font-weight:900">Correspondence State:</td>
+                                    <td>@Model.CorrespondenceState</td>
+
+                                    <td style="font-weight:900">Correspondence Zip:</td>
+                                    <td>@Model.CorrespondenceZip</td>
+                                </tr>
+
+                            </table>
+                            <hr class="style1" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-3"><label>Session:</label> </div>
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(m => m.SessionName, new { @class = "form-control", disabled="disabled"})
+                                        @*@Html.DropDownListFor(m => m.SessionId, new SelectList(Model.SessionList, "id", "SessionName"), new { @class = "form-control", disabled = "disabled" })*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-3"><label>Course:</label></div>
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(m => m.CourseName, new { @class = "form-control", disabled = "disabled" })
+                                        @*@Html.DropDownListFor(m => m.CourseId, new SelectList(Model.CourseList, "id", "CourseName"), new { @class = "form-control", disabled = "disabled" })*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-3"><label>Amity Enroll No:</label> </div>
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(m => m.AmityEnNo, new { @class = "form-control", placeholder = "Amity Enroll No." })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="padding-top:30px;">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4" style="text-align:center">
+                                <input type="submit" id="btnSubmit" value="Proceed to Admission" class="btn btn-success" />
+                                <input type="button" id="btnCancel" value="Cancel" onclick="window.location.href = '@Url.Action("")'" class="btn btn-default" />
+                            </div>
+                            <div class="col-md-4" style="color:green;font-weight:600;font-size:18px;"> @(TempData["Message"]!=null? "Admission process has been completed successfully. Your Admission Number is: " + TempData["Message"] : "") </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+
+   $(document).ready(function () {
+       checkMsg();
+       if ($('#IsAddmission').val()=="True")
+           $('#btnSubmit').attr('disabled', 'disabled');
+       StopLoading();
+    });
+        function checkMsg() {
+        if ($("#lblMsg").text() != "") {
+            $("#dvMsg").css("display", "block");
+            setTimeout(function () {
+                $("#dvMsg").css("display", "none");
+            }, 8000);
+        }
+    }
+
+    function fillPermanentAdd(obj) {
+        var c_adddress = $('#CorrespondenceAddress').val();
+        var c_city = $('#CorrespondenceCity').val();
+        var c_state = $('#CorrespondenceState').val();
+        var c_zip = $('#CorrespondenceZip').val();
+        if ($(obj).prop("checked")) {
+            $('#PermanentAddress').val(c_adddress);
+            $('#PermanentState').val(c_state);
+            $('#PermanentCity').val(c_city);
+            $('#PermanentZip').val(c_zip);
+        } else {
+            $('#PermanentAddress').val('');
+            $('#PermanentState').val('');
+            $('#PermanentCity').val('');
+            $('#PermanentZip').val('');
+        }
+    }
+
+    function validation() {
+        var fname = $('#Fname').val();
+        var lname = $('#Lname').val();
+        var email = $('#Email').val();
+        var dob = $('#DOB').val();
+        var mobile = $('#Mobile').val();
+        var isAppear = $('#IsAppeared').prop("checked");
+        var yPassing = $('#PassingYear').val();
+        var status = true;
+
+        if (fname == "") {
+            $('#Fname').css("border", "1px slid red");
+            status = false;
+        } else {
+            $('#Fname').css("border", "");
+        }
+
+        if (lname == "") {
+            $('#Lname').css("border", "1px slid red");
+            status = false;
+        } else {
+            $('#Lname').css("border", "");
+        }
+
+        if (email == "") {
+            $('#Email').css("border", "1px slid red");
+            status = false;
+        } else if (!validateEmail("Email")) {
+            $('#Email').css("border", "1px slid red");
+            status = false;
+            alert("Please fill valid email!");
+            $('#Email').val('');
+        } else {
+            $('#Email').css("border", "");
+        }
+
+        if (dob == "") {
+            $('#DOB').css("border", "1px slid red");
+            status = false;
+        } else {
+            $('#DOB').css("border", "");
+        }
+
+        if (mobile == "") {
+            $('#Mobile').css("border", "1px slid red");
+            status = false;
+        } else {
+            $('#Mobile').css("border", "");
+        }
+
+        if (!isAppear && yPassing == "") {
+            $('#PassingYear').css("border", "1px slid red");
+            status = false;
+        } else {
+            $('#PassingYear').css("border", "");
+        }
+
+        return status;
+    }
+
+    function isApperedORpass(obj) {
+        if ($(obj).prop("checked")) {
+            $('#divPYear').css("display", "none")
+            $('#PassingYear').val('');
+        } else {
+            $('#divPYear').css("display", "block")
+        }
+    }
+
+    function validateEmail(emailField) {
+        var reg = /^([A-Za-z0-9_\-\.])+\@@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if (reg.test($("#" + emailField).val()) == false) {
+            return false;
+        }
+        return true;
+    }
+
+    function validHeight() {
+        var height = $('#Height').val();
+        if (height == "") {
+            return false;
+        }
+        if (height < 155) {
+            alert("Height should be greater or equal than 155cm!");
+            $('#txtHeight').val('');
+            $('#txtHeight').focus();
+        }
+    }
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+
+
+    function isDecimalNumber(evt, element) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+
+        if (
+            (charCode != 46 || $(element).val().indexOf('.') != -1) &&
+            (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+    //$scope.validWeight = function () {
+    //    var height = $scope.reg.Str_Weight;
+    //    if (height == "") {
+    //        return false;
+    //    }
+    //    if (height < 38) {
+    //        alert("Weight should be greater than or equal to 38kg.!");
+    //        $scope.reg.Str_Weight = '';
+    //        $('#txtWeight').focus();
+    //    }
+    //}
+</script>
+
+

@@ -1,0 +1,176 @@
+﻿@model SJModel.PerformanceModel.ParameterListViewModel
+@{
+    ViewBag.Title = "Sub Parameters";
+    Layout = "~/Areas/PerformanceCard/Views/Shared/_LayoutP.cshtml";
+    var data = Model;
+}
+<style>
+    #tblParameterList_info {
+        padding-left: 10px;
+    }
+
+    .pagination {
+        display: inline-flex;
+    }
+
+    #tblParameterList_paginate {
+        text-align: center !important;
+    }
+</style>
+<section class="content">
+    <!-- Info boxes -->
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-new">
+                <!--<div class="side-red-strip"></div>-->
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="title-header-container"><h5> @Model.ParameterTypeName</h5></div>
+                    <!------------------------------------------------- Search and display info box------->
+                    @Html.HiddenFor(m => m.ParameterId)
+                    @Html.HiddenFor(m => m.tblParameterTypeId)
+                    <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <strong id="lblMsg">@TempData["msg"]</strong>
+                    </div>
+                    <div class="box box-performance box-solid">
+                        <!-- /.box-header -->
+                        <div class="side-red-strip"></div>
+                        <div class="box-body" style="margin-top:25px;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="parameter-box-top-bottm-space ">
+                                        <div class="PA-title-section">SUB-PARAMETER CODE</div>
+                                        <div class="PA_control-input">
+                                            @Html.TextBoxFor(m => m.KeyId, new { @class = "form-control", disabled = "disabled" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="parameter-box-top-bottm-space ">
+                                        <div class="PA-title-section">SUB-PARAMETER NAME</div>
+                                        <div class="PA_control-input">
+                                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div style="margin-top:15px;">
+                                        <div class="PA-title-section">FOR GENDER</div>
+                                        <div class="Parameter_control-select">
+                                            <select id="ddlGender" class="form-control">
+                                                <option value="0">All Gender</option>
+                                                <option value="1">Female</option>
+                                                <option value="2">Male</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3" style="display:none">
+                                    <div style="margin-top:15px;">
+                                        <div class="PA-title-section">FOR REVIEW</div>
+                                        <div class="Parameter_control-select">
+                                            <select id="ddlreview" class="form-control">
+                                                <option value="0">All Review</option>
+                                                <option value="2">Mid Term</option>
+                                                <option value="3">End Term</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                @Html.HiddenFor(m => m.IsActive)
+                                <div class="col-md-3">
+                                    <div style="margin-top:15px;">
+                                        <div class="PA-title-section">STATUS</div>
+                                        <div class="Parameter_control-select">
+                                            <select id="ddladdstatus" class="form-control">
+                                                <option value="0">Select Status</option>
+                                                <option value="1">Active</option>
+                                                <option value="2">InActive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="PA_add-parameter">
+                                        <input type="button" id="btnsubparameter" value="ADD PARAMETER" onclick="parameterAddUpdate();" class="btn btn-danger pull-right" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <div id="batch-details-container">
+                                <table id="tblParameterList" class="table table-bordered table-hover dataTable" style="width:100%;padding-top:25px;">
+                                    <thead><tr><th>S.NO</th><th>SUB PARAMETER CODE</th><th>SUB PARAMETER NAME</th> <th>FOR GENDER</th> <th style="display:none">For Review </th> <th>STATUS</th><th>EDIT</th></tr></thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="" style="margin-bottom:80px;"> </div>
+                        <!-- /.box-body -->
+                    </div>
+
+                    <!-------------------------------------------------END Search and display info box------->
+                </div>
+                <!-- /.box-body -->
+
+            </div>
+            <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <!-- Main row -->
+    <!-- /.row -->
+</section>
+<script>
+    $(document).ready(function () {
+        Table = $("#tblParameterList").DataTable(parameterlisttblSetting("tblParameterList", @Model.tblParameterTypeId , "GetParameterList", "PerformanceParameter", 1));
+        $.fn.dataTable.ext.errMode = 'throw';
+        StopLoading();
+    });
+
+    i = 1;
+    function changeImage(el, Id) {
+        if (i == 1) {
+            var s = $(el).parents('tr').find('td');
+            var selectedStatus = s.eq(4).html();
+            var selectedgender = s.eq(3).html();
+            //var selectedreview = s.eq(4).html();
+            s.eq(2).html('<input type="text" class="form-control" id="txteditParameter" value="' + s.eq(2).html() + '" >');
+            s.eq(3).html('<select id="ddpgender" class="form-control" > <option value="0"> All Gender </option><option value="1"> Female </option> <option value="2"> Male </option> </select>');
+            //s.eq(4).html('<select id="ddpreview" class="form-control" > <option value="0"> All Review </option><option value="2"> Mid Term </option> <option value="3"> End Term </option> </select>');
+            s.eq(4).html('<select id="ddpstatus" class="form-control" > <option value="Active"> Active </option><option value="InActive"> InActive </option> </select>');
+            $('#ddpstatus').val(selectedStatus);
+            $("#ddpgender option:contains(" + selectedgender + ")").attr('selected', 'selected');
+            //$("#ddpreview option:contains(" + selectedreview + ")").attr('selected', 'selected');
+            $('#ParameterId').val(Id);
+            el.click = ++i;
+        } else {
+            if ($('#txteditParameter').val() == "") {
+                $('#txteditParameter').css("border", "solid red 1px")
+                return false;
+            }
+            $('#Name').val($('#txteditParameter').val());
+            $('#IsActive').val($('#ddpstatus').val() == "Active" ? $('#IsActive').prop('checked', true) : $('#IsActive').prop('checked', false));
+            $('#ddlGender').val($('#ddpgender').val());
+            $('#ddlreview').val($('#ddpreview').val());
+            parameterAddUpdate();
+            Table.draw();
+            i = 1;
+            $('#ParameterId').val(0);
+            $('#Name').val('');
+        }
+        el.src = ((el.click) % 2 != 0) ? "/Areas/PerformanceCard/Images/edit.png" : "/Areas/PerformanceCard/Images/update.png";
+    }
+
+</script>

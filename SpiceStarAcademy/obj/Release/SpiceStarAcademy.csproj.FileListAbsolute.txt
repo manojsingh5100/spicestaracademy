@@ -1,0 +1,618 @@
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\ApplicationInsights.config
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\SpiceStarAcademy.dll.config
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\SpiceStarAcademy.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\SpiceStarAcademy.pdb
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\csc.exe
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\csc.exe.config
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\csc.rsp
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\csi.exe
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\csi.exe.config
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\csi.rsp
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\Microsoft.Win32.Primitives.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.AppContext.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Collections.Immutable.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Console.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Diagnostics.Process.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.IO.Compression.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.IO.FileSystem.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.IO.Pipes.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Reflection.Metadata.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Security.AccessControl.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Security.Claims.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Security.Principal.Windows.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Threading.Thread.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.ValueTuple.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Xml.XmlDocument.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Xml.XPath.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\vbc.exe
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\vbc.exe.config
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\vbc.rsp
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\VBCSCompiler.exe
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\roslyn\VBCSCompiler.exe.config
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Antlr3.Runtime.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\EntityFramework.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\EntityFramework.SqlServer.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Microsoft.AI.Agent.Intercept.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Microsoft.AI.DependencyCollector.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Microsoft.AI.PerfCounterCollector.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Microsoft.AI.ServerTelemetryChannel.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Microsoft.AI.Web.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Microsoft.AI.WindowsServer.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Microsoft.ApplicationInsights.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Microsoft.AspNet.TelemetryCorrelation.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Microsoft.Web.Infrastructure.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Newtonsoft.Json.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\SJModel.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\SJService.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\System.Diagnostics.DiagnosticSource.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\System.Web.Helpers.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\System.Web.Mvc.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\System.Web.Optimization.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\System.Web.Razor.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\System.Web.WebPages.Deployment.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\System.Web.WebPages.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\System.Web.WebPages.Razor.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\WebGrease.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\SJData.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\SJModel.pdb
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\SJService.pdb
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\SJService.dll.config
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\EntityFramework.xml
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\EntityFramework.SqlServer.xml
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\System.Web.Helpers.xml
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\System.Web.Mvc.xml
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\System.Web.Optimization.xml
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\System.Web.Razor.xml
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\System.Web.WebPages.xml
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\System.Web.WebPages.Deployment.xml
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\System.Web.WebPages.Razor.xml
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Newtonsoft.Json.xml
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Antlr3.Runtime.pdb
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\System.Diagnostics.DiagnosticSource.xml
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Microsoft.AspNet.TelemetryCorrelation.xml
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Microsoft.AI.DependencyCollector.xml
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Microsoft.AI.WindowsServer.xml
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Microsoft.AI.Web.xml
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\SJData.pdb
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\bin\SJData.dll.config
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\obj\Release\SpiceStarAcademy.csprojAssemblyReference.cache
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\obj\Release\SpiceStarAcademy.csproj.CoreCompileInputs.cache
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\obj\Release\SpiceStarAcademy.csproj.CopyComplete
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\obj\Release\SpiceStarAcademy.dll
+D:\Sandeep\SpiceStarAcademy\SpiceStarAcademy\obj\Release\SpiceStarAcademy.pdb
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Collections.Immutable.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Reflection.Metadata.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\VBCSCompiler.exe
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\ApplicationInsights.config
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\SpiceStarAcademy.dll.config
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\SpiceStarAcademy.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\SpiceStarAcademy.pdb
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\csc.exe
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\csc.exe.config
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\csc.rsp
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\csi.exe
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\csi.exe.config
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\csi.rsp
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.Win32.Primitives.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.AppContext.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Console.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Diagnostics.Process.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.Compression.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.FileSystem.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.Pipes.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.AccessControl.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Claims.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Principal.Windows.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Threading.Thread.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.ValueTuple.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Xml.XmlDocument.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Xml.XPath.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\vbc.exe
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\vbc.exe.config
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\vbc.rsp
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\roslyn\VBCSCompiler.exe.config
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Antlr3.Runtime.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.Core.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\EntityFramework.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\EntityFramework.SqlServer.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.Agent.Intercept.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.DependencyCollector.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.PerfCounterCollector.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.ServerTelemetryChannel.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.Web.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.WindowsServer.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Microsoft.ApplicationInsights.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AspNet.TelemetryCorrelation.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Microsoft.Web.Infrastructure.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Newtonsoft.Json.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Quartz.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\SJModel.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\SJService.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Diagnostics.DiagnosticSource.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Net.Http.Formatting.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.Helpers.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.Http.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.Http.WebHost.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.Mvc.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.Optimization.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.Razor.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.Deployment.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.Razor.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\WebGrease.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\SJData.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Razorpay.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\SJModel.pdb
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\SJService.pdb
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\SJService.dll.config
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.pdb
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.Core.pdb
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.Core.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\EntityFramework.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\EntityFramework.SqlServer.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Newtonsoft.Json.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Quartz.pdb
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Quartz.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Net.Http.Formatting.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.Http.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.Http.WebHost.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.Helpers.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.Mvc.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.Optimization.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.Razor.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.Deployment.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.Razor.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Antlr3.Runtime.pdb
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\System.Diagnostics.DiagnosticSource.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AspNet.TelemetryCorrelation.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.DependencyCollector.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.WindowsServer.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.Web.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\SJData.pdb
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\bin\SJData.dll.config
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.csprojAssemblyReference.cache
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.csproj.CoreCompileInputs.cache
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.csproj.CopyComplete
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.dll
+D:\gitPtojects\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\ApplicationInsights.config
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\SpiceStarAcademy.dll.config
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\SpiceStarAcademy.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\SpiceStarAcademy.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\csc.exe
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\csc.exe.config
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\csc.rsp
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\csi.exe
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\csi.exe.config
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\csi.rsp
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.Win32.Primitives.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.AppContext.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Collections.Immutable.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Console.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Diagnostics.Process.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.Compression.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.FileSystem.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.Pipes.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Reflection.Metadata.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.AccessControl.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Claims.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Principal.Windows.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Threading.Thread.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.ValueTuple.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Xml.XmlDocument.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Xml.XPath.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\vbc.exe
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\vbc.exe.config
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\vbc.rsp
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\VBCSCompiler.exe
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\VBCSCompiler.exe.config
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Antlr3.Runtime.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\ClosedXML.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.Core.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\DocumentFormat.OpenXml.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\EntityFramework.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\EntityFramework.SqlServer.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\ExcelNumberFormat.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\FastMember.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.Agent.Intercept.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.DependencyCollector.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.PerfCounterCollector.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.ServerTelemetryChannel.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.Web.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.WindowsServer.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.ApplicationInsights.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AspNet.TelemetryCorrelation.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.Web.Infrastructure.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Newtonsoft.Json.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Quartz.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\SJModel.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\SJService.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Diagnostics.DiagnosticSource.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.IO.FileSystem.Primitives.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.IO.Packaging.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Net.Http.Formatting.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Helpers.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Http.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Http.WebHost.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Mvc.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Optimization.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Razor.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.Deployment.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.Razor.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\WebGrease.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\SJData.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Razorpay.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\SJModel.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\SJService.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\SJService.dll.config
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\ClosedXML.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\ClosedXML.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.Core.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.Core.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\DocumentFormat.OpenXml.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\EntityFramework.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\EntityFramework.SqlServer.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\ExcelNumberFormat.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Newtonsoft.Json.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Quartz.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Quartz.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Net.Http.Formatting.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Http.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Http.WebHost.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Helpers.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Mvc.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Optimization.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Razor.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.Deployment.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.Razor.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Antlr3.Runtime.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\System.Diagnostics.DiagnosticSource.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AspNet.TelemetryCorrelation.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.DependencyCollector.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.WindowsServer.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.Web.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\SJData.pdb
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\bin\SJData.dll.config
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.csprojAssemblyReference.cache
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.csproj.CoreCompileInputs.cache
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.csproj.CopyComplete
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.dll
+E:\Git Projects\7 Oct Project\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.pdb
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\ApplicationInsights.config
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\SpiceStarAcademy.dll.config
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\SpiceStarAcademy.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\SpiceStarAcademy.pdb
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\csc.exe
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\csc.exe.config
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\csc.rsp
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\csi.exe
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\csi.exe.config
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\csi.rsp
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.Win32.Primitives.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.AppContext.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Collections.Immutable.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Console.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Diagnostics.Process.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.Compression.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.FileSystem.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.Pipes.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Reflection.Metadata.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.AccessControl.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Claims.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Principal.Windows.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Threading.Thread.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.ValueTuple.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Xml.XmlDocument.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Xml.XPath.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\vbc.exe
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\vbc.exe.config
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\vbc.rsp
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\VBCSCompiler.exe
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\roslyn\VBCSCompiler.exe.config
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Antlr3.Runtime.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\ClosedXML.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.Core.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\DocumentFormat.OpenXml.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\EntityFramework.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\EntityFramework.SqlServer.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\ExcelNumberFormat.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\FastMember.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.Agent.Intercept.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.DependencyCollector.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.PerfCounterCollector.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.ServerTelemetryChannel.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.Web.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.WindowsServer.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.ApplicationInsights.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AspNet.TelemetryCorrelation.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.Web.Infrastructure.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Newtonsoft.Json.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Quartz.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\SJModel.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\SJService.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Diagnostics.DiagnosticSource.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.IO.FileSystem.Primitives.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.IO.Packaging.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Net.Http.Formatting.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Helpers.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Http.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Http.WebHost.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Mvc.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Optimization.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Razor.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.Deployment.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.Razor.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\WebGrease.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\SJData.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Razorpay.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\SJModel.pdb
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\SJService.pdb
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\SJService.dll.config
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\ClosedXML.pdb
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\ClosedXML.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.pdb
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.Core.pdb
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.Core.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\DocumentFormat.OpenXml.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\EntityFramework.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\EntityFramework.SqlServer.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\ExcelNumberFormat.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Newtonsoft.Json.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Quartz.pdb
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Quartz.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Net.Http.Formatting.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Http.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Http.WebHost.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Helpers.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Mvc.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Optimization.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.Razor.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.Deployment.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.Razor.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Antlr3.Runtime.pdb
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\System.Diagnostics.DiagnosticSource.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AspNet.TelemetryCorrelation.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.DependencyCollector.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.WindowsServer.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.Web.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\SJData.pdb
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\bin\SJData.dll.config
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.csprojAssemblyReference.cache
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.csproj.CoreCompileInputs.cache
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.csproj.CopyComplete
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.dll
+D:\Spice Star Project\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.pdb
+F:\SpicestarERP\SpiceStarAcademy\bin\ApplicationInsights.config
+F:\SpicestarERP\SpiceStarAcademy\bin\SpiceStarAcademy.dll.config
+F:\SpicestarERP\SpiceStarAcademy\bin\SpiceStarAcademy.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\SpiceStarAcademy.pdb
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\csc.exe
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\csc.exe.config
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\csc.rsp
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\csi.exe
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\csi.exe.config
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\csi.rsp
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.CSharp.Core.targets
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.VisualBasic.Core.targets
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\Microsoft.Win32.Primitives.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.AppContext.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Collections.Immutable.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Console.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Diagnostics.Process.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Diagnostics.StackTrace.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.Compression.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.FileSystem.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.FileSystem.Primitives.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.IO.Pipes.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Reflection.Metadata.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.AccessControl.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Claims.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.Encoding.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.Primitives.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Security.Principal.Windows.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Text.Encoding.CodePages.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Threading.Thread.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.ValueTuple.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Xml.ReaderWriter.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Xml.XmlDocument.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Xml.XPath.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\System.Xml.XPath.XDocument.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\vbc.exe
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\vbc.exe.config
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\vbc.rsp
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\VBCSCompiler.exe
+F:\SpicestarERP\SpiceStarAcademy\bin\roslyn\VBCSCompiler.exe.config
+F:\SpicestarERP\SpiceStarAcademy\bin\Antlr3.Runtime.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\ClosedXML.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.Core.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\DocumentFormat.OpenXml.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\EntityFramework.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\EntityFramework.SqlServer.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\ExcelNumberFormat.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\FastMember.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.Agent.Intercept.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.DependencyCollector.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.PerfCounterCollector.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.ServerTelemetryChannel.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.Web.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.WindowsServer.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\Microsoft.ApplicationInsights.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AspNet.TelemetryCorrelation.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\Microsoft.Web.Infrastructure.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\Newtonsoft.Json.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\Quartz.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\SJModel.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\SJService.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Diagnostics.DiagnosticSource.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\System.IO.FileSystem.Primitives.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\System.IO.Packaging.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Net.Http.Formatting.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.Helpers.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.Http.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.Http.WebHost.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.Mvc.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.Optimization.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.Razor.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.Deployment.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.Razor.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\WebGrease.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\SJData.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\Razorpay.dll
+F:\SpicestarERP\SpiceStarAcademy\bin\SJModel.pdb
+F:\SpicestarERP\SpiceStarAcademy\bin\SJService.pdb
+F:\SpicestarERP\SpiceStarAcademy\bin\SJService.dll.config
+F:\SpicestarERP\SpiceStarAcademy\bin\ClosedXML.pdb
+F:\SpicestarERP\SpiceStarAcademy\bin\ClosedXML.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.pdb
+F:\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.Core.pdb
+F:\SpicestarERP\SpiceStarAcademy\bin\Common.Logging.Core.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\DocumentFormat.OpenXml.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\EntityFramework.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\EntityFramework.SqlServer.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\ExcelNumberFormat.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\Newtonsoft.Json.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\Quartz.pdb
+F:\SpicestarERP\SpiceStarAcademy\bin\Quartz.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Net.Http.Formatting.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.Http.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.Http.WebHost.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.Helpers.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.Mvc.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.Optimization.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.Razor.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.Deployment.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Web.WebPages.Razor.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\Antlr3.Runtime.pdb
+F:\SpicestarERP\SpiceStarAcademy\bin\System.Diagnostics.DiagnosticSource.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AspNet.TelemetryCorrelation.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.DependencyCollector.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.WindowsServer.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\Microsoft.AI.Web.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+F:\SpicestarERP\SpiceStarAcademy\bin\SJData.pdb
+F:\SpicestarERP\SpiceStarAcademy\bin\SJData.dll.config
+F:\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.csprojAssemblyReference.cache
+F:\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.csproj.CopyComplete
+F:\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.dll
+F:\SpicestarERP\SpiceStarAcademy\obj\Release\SpiceStarAcademy.pdb

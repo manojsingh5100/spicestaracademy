@@ -1,0 +1,638 @@
+﻿@model SJModel.ReportFilterViewModel
+@{
+    ViewBag.Title = "ConsolidatedReport";
+    Layout = "~/Areas/PerformanceCard/Views/Shared/_LayoutP.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>
+<style>
+    .irs--big {
+        height: 80px !important;
+    }
+</style>
+<section class="content">
+    <!-- Info boxes -->
+    <!-- /.row -->
+    <div class="row">
+        <input type="hidden" id="hdnbatchJson" value="@Model.BatchJson" />
+        <div class="col-md-12">
+            <div class="box-new">
+                <!--<div class="side-red-strip"></div>-->
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="title-header-container"><h5>OVERALL BATCH- CONSOLIDATED REPORT</h5></div>
+                    <!------------------------------------------------- Search and display info box------->
+                    <div class="box box-performance box-solid">
+                        <!-- /.box-header -->
+                        <div class="side-red-strip"></div>
+                        <div class="box-body" style="margin-top:25px;height: 135px;">
+                            <input type="hidden" id="hdnbatchrange" value="1,2,3" />
+                            <input type="hidden" id="hdnBatchName" />
+                            <input type="hidden" id="hdnsubchartinfo" />
+                            <div class="col-md-4">
+                                <div style="margin-top:15px;">
+                                    <div class="PA-title-section">REVIEW</div>
+                                    @Html.DropDownListFor(m => m.ReviewId, new SelectList(Model.GetReviewList, "Id", "Name"), "Select Review", new { @class = "form-control custom-dropdwn", onchange = "GetBatchBarChartInfo();" })
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div>
+                                    <h5>SELECT BATCH RANGE</h5>
+                                    <input type="text" class="js-range-slider" name="my_range" value="" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- /.box-body -->
+                    </div>
+                    <div class="col-md-12" id="divNoData" style="display:none">
+                        <span style="margin-left:44%;font-size:20px;">No data found.</span>
+                    </div>;
+                    <div class="box box-performance box-solid" style="width:70%;display:none" id="divroot">
+                        <!-- /.box-header -->
+                        <div class="side-red-strip"></div>
+                        <div class="box-body" style="margin-top:25px;">
+                            <div class="col-md-12">
+                                <div>
+                                    <div style="font-size:25px;color:#ED1C24;">OVERALL SCORE</div>
+                                    <div class="chart-container" id="divfirst">
+                                        <canvas id="canvasbatch"></canvas>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+
+                    @*===================================================================================*@
+
+                    <div class="box box-performance box-solid" style="width:70%;display:none" id="divonenew">
+                        <!-- /.box-header -->
+                        <div class="side-red-strip"></div>
+                        <div class="box-body" style="margin-top:25px;">
+                            <div class="col-md-12">
+                                <div>
+                                    <div style="font-size:25px;color:#ED1C24;">KEY PERFORMANCE INDICATORS</div>
+                                    <div class="chart-container">
+                                        <canvas id="opcanalysis1"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+
+                    @*===================================================================================*@
+
+                    <div class="box box-performance box-solid" id="divone" style="display:none">
+                        <!-- /.box-header -->
+                        <div class="side-red-strip"></div>
+                        <div class="box-body" style="margin-top:25px;">
+                            <div class="col-md-12">
+                                <div style="font-size:25px;color:#ED1C24;" id="divbatchwiseanalysis">PERFORMANCE AT A GLANCE</div>
+                                <div id="divSecond">
+                                    <canvas id="myChart" style="width:100%;" height="400"></canvas>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+
+                    @*===================================================================================*@
+
+                    <div class="row">
+                        <div class="col-md-7" style="width:70%;display:none" id="divNodeNodeParameter">
+                            <div class="box box-performance box-solid">
+                                <!-- /.box-header -->
+                                <div class="side-red-strip"></div>
+                                <div class="box-body" style="margin-top:25px;">
+                                    <div class="col-md-12">
+                                        <div>
+                                            <div style="font-size:25px;color:#ED1C24; margin-bottom:20px;" id="divstudentchart">Student 1st Performance Analysis</div>
+                                            <div class="chart-container">
+                                                <div id="divNodeParameter">
+                                                    <canvas id="opcanalysis"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                        </div>
+                        <input type="hidden" id="hdnbatchconso" value="0" />
+                        <input type="hidden" id="hdnRegconso" value="0" />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7" style="width:58%;display:none" id="divNodeNode">
+                            <div class="box box-performance box-solid">
+                                <!-- /.box-header -->
+                                <div class="side-red-strip"></div>
+                                <div class="box-body" style="margin-top:25px;">
+                                    <div class="col-md-12">
+                                        <div>
+                                            <div style="font-size:20px;color:#ff0000"><span id="divsubname"></span> </div>
+                                            <div class="chart-container" id="divsubNodeParameter">
+                                                <canvas id="punctualityreport"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-top:15px;display:none" id="divstuinfo">
+                        <div class="col-md-5"></div>
+                        <div class="col-md-2">
+                            <button id="btnexpand" class="btn btn-danger exportbtn">View Score</button>
+                        </div>
+                        <div class="col-md-5"></div>
+                        <div class="col-md-12" id="divtabshow" style="padding-top:10px;display:none">
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#midterm" id="anctrig" onclick="getStudentDataById(2)" data-toggle="tab">Mid Term</a></li>
+                                    <li><a href="#endterm" onclick="getStudentDataById(3)" data-toggle="tab">End Term</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="active tab-pane" id="midterm">
+                                        <table id="tblperformancereportmidterm" class="table table-bordered table-hover dataTable">
+                                            <thead id="theadmidterm">
+
+                                            </thead>
+                                            <tbody id="tbodymid"></tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                    <div class="tab-pane" id="endterm">
+                                        <table id="tblperformancereportendterm" class="table table-bordered table-hover dataTable">
+                                            <thead id="theadendterm">
+
+                                            </thead>
+                                            <tbody id="tbodyend"></tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-------------------------------------------------END Search and display info box------->
+                </div>
+                <!-- /.box-body -->
+
+            </div>
+            <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <!-- Main row -->
+    <!-- /.row -->
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GetBatchBarChartInfo();
+    });
+    $(".js-range-slider").ionRangeSlider({
+        grid: true,
+        grid_snap: true,
+        type: "double",
+        min: @Model.BatchRangeArray[1],
+        max: @Model.BatchRangeArray[0],
+        from: 1,
+        to: 3,
+        drag_interval: true,
+        min_interval: 1,
+        max_interval: 2,
+        onFinish: function (data) {
+             var vals = getcommastring(data.from, data.to);
+            $("#hdnbatchrange").val(vals);
+            GetBatchBarChartInfo();
+        }
+    });
+
+        function getcommastring(min, max) {
+        var arr = [];
+        for (var i = min; i <= max; i++) {
+            arr.push(i);
+        }
+           return arr.join(',');
+        }
+
+    function GetBatchBarChartInfo() {
+        $('#divone').css('display', 'none');
+        $('#divonenew').css('display', 'none');
+        $('#divNodeNodeParameter').css('display', 'none');
+        $('#divNodeNode').css('display', 'none');
+        $('#divstuinfo').css('display', 'none');
+        $('#divfirst').empty().append('<canvas id="canvasbatch"></canvas>');
+        var rangeArr = $("#hdnbatchrange").val().split(',');
+        var data123 = {
+            "ReviewId": $('#ReviewId').val() == "" ? 0 : $('#ReviewId').val(),
+            "BatchRangeArray": rangeArr,
+            "BatchId":null
+        }
+        $.ajax({
+            url: '/PerformanceCard/Report/GetBatchBarChartInfo',
+            dataType: 'json',
+            type: 'post',
+            data: data123,
+            success: function (data, textStatus, jQxhr) {
+                var batchlist = JSON.parse($('#hdnbatchJson').val());
+                var list = $('#hdnbatchrange').val().split(',');
+                var labeles = [];
+                var datalist = [];
+                if (batchlist.length > 0) {
+                    $.each(batchlist, function (i, item) {
+                        if (list[0] == item.SemesterName)
+                            labeles.push(item.BatchName);
+                        else if (list[1] == item.SemesterName)
+                            labeles.push(item.BatchName);
+                        else if (list[2] == item.SemesterName)
+                            labeles.push(item.BatchName);
+                    });
+                }
+                $.each(labeles, function (a, b) {
+                    datalist.push(isExist(data,b))
+                });
+                console.log(datalist);
+                if (datalist[0] == 0 && datalist[1] == 0 && datalist[2] == 0) {
+                    $('#divroot').css('display', 'none');
+                    $('#divNoData').css('display', 'block');
+                    return false;
+                }
+                else {
+                    $('#divNoData').css('display', 'none');
+                    $('#divroot').css('display', 'block');
+                }
+                function isExist(data, label) {
+                    var b = 0;
+                    $.each(data, function (c, d) {
+                        if (d.BatchName == label) {
+                            b = d.Percentage;
+                            return false;
+                        }
+                    });
+                    return b;
+                }
+                var barChartData1 = {
+                    labels: labeles,
+                    datasets: [{
+                        label: 'Batch List',
+                        backgroundColor: "#ffee28",
+                        data: datalist
+                    }],
+                    legend: {
+                        itemclick: function (e) {
+                            alert("Legend item clicked with type : " + e.dataSeries.type);
+                        }
+
+                    }
+                };
+                var ctx1 = document.getElementById("canvasbatch").getContext("2d");
+                var myBar1 = new Chart(ctx1, {
+                    type: 'bar',
+                    data: barChartData1,
+                    options: {
+                        responsive: true,
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Batches'
+                                },
+                                barPercentage: 1,
+                                categoryPercentage: 0.5 / 10 * barChartData1.datasets[0].data.length
+                            }],
+                            yAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Percentage(%)'
+                                },
+                                ticks: {
+                                    beginAtZero: true,
+                                    min: 0,
+                                    max: 100,
+                                    callback: function (value) {
+                                        return value + "%"
+                                    }
+                                }
+                            }]
+                        },
+                        tooltips: {
+                            callbacks: {
+                                label: function (tooltipItem, data) {
+                                    var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += Math.round(tooltipItem.yLabel * 100) / 100;
+                                    return label + " %";
+                                }
+                            }
+                        }
+                    }
+                });
+                document.getElementById("canvasbatch").onclick = function (e) {
+                    var activePoint = myBar1.getElementAtEvent(e)[0];
+                    var data1 = activePoint._chart.data;
+                    var datasetIndex = activePoint._index;
+                        data123.BatchId = data1.labels[datasetIndex];
+                        $('#hdnBatchName').val(data1.labels[datasetIndex]);
+                        $('#divone').css('display', 'block');
+                        $('#divNodeNodeParameter').css('display', 'none');
+                        $('#divNodeNode').css('display', 'none');
+                        $('#divonenew').css('display', 'block');
+                      //  $('#divbatchwiseanalysis').text(data1.labels[datasetIndex] + "'s " + "Performance Analysis");
+                        GetData(data1.labels[datasetIndex].split(' ')[1]);
+                        getcandidatedatabybatch(data123);
+                };
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function getcandidatedatabybatch(obj) {
+        $('#divNodeNodeParameter').css('display', 'none');
+        $('#divNodeNode').css('display', 'none');
+        $('#divstuinfo').css('display', 'none');
+        $('#divSecond').empty().append('<canvas id="myChart" style="width:100%;" height="400"></canvas>');
+        $.ajax({
+            url: '/PerformanceCard/Report/GetBatchCandidateDataByBatch',
+            dataType: 'json',
+            type: 'post',
+            data: obj,
+            success: function (data, textStatus, jQxhr) {
+                var studentName = [];
+                var percentage = [];
+                if (data.length > 0) {
+                    $.each(data, function (i, item) {
+                        studentName.push(item.Fname + (item.Lname != null ? (" " + item.Lname):""));
+                        percentage.push(item.Percentage);
+                    });
+                    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: studentName,
+            datasets: [{
+                label: 'Overall Learners',
+                data: percentage,
+                backgroundColor: [
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F',
+                    '#68DF7F'
+
+                ],
+                borderColor: [
+                    '#2DBFB2',
+                    '#68DF7F'
+
+                ],
+
+                borderWidth: 1,
+
+
+            }]
+        },
+        options: {
+            responsive: false,
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Learners'
+                    },
+                    ticks: {
+                        maxRotation: 90,
+                        minRotation: 90,
+                        barThickness: 0.5,
+                        barPercentage: 0.2,
+
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Percentage(%)'
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0,
+                        max: 100,
+                        callback: function (value) {
+                            return value + "%"
+                        }
+                    }
+                }]
+            },
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += Math.round(tooltipItem.yLabel * 100) / 100;
+                        return label + " %";
+                    }
+                }
+            }
+        }
+    });
+                    document.getElementById("myChart").onclick = function (e) {
+                        var activePoint1 = myChart.getElementAtEvent(e)[0];
+                        var data1 = activePoint1._chart.data;
+                        var datasetIndex = activePoint1._index;
+                        $('#divNodeNodeParameter').css('display', 'block');
+                        $('#divNodeNode').css('display', 'none');
+                        $('#divtabshow').css('display', 'none');
+                        $('#divstudentchart').text((data1.labels[datasetIndex] + "'s ").toUpperCase() + "PERFORMANCE ANALYSIS");
+                        getdatabycandidatename(data1.labels[datasetIndex]);
+                    };
+                }
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function getdatabycandidatename(name) {
+        var BatchId = $('#hdnBatchName').val();
+        var CandidateName = name;
+        var ReviewId = $('#ReviewId').val() == "" ? 0 : $('#ReviewId').val();
+      //  $('#divSecond').empty().append('<canvas id="myChart"></canvas>');
+        $.ajax({
+            url: "/PerformanceCard/Report/Getdatabycandidatename",
+            type: "POST",
+            async: !1,
+            data: { BatchName: BatchId, CandidateName: CandidateName, ReviewId: ReviewId },
+            success: function (response) {
+                if (response != null) {
+                    newbarchart(response);
+                    $('#hdnsubchartinfo').val(response.SubchartString);
+                    $('#hdnRegconso').val(response.RegistraionNo);
+                    $('#divstuinfo').css('display', 'block');
+                }
+            }, error: function (error) {
+            }
+        });
+    }
+
+    $('#btnexpand').click(function () {
+        $('#anctrig').trigger('click');
+        getStudentDataById(2);
+        $('#divtabshow').css('display', 'block');
+    });
+
+    function GetData(batch) {
+        var BatchhValue = $("#ReviewId").val() == '' ? 0 : $("#ReviewId").val();
+        $.ajax({
+            url: "/PerformanceCard/Report/GetPerformanceCardOnConsolidatedReport",
+            type: "get",
+            dataType: "JSON",
+            data: { batch: batch, type: BatchhValue },
+            success: function (response) {
+                if (response.datasets == null) {
+                    $("#Graphhide").hide();
+                }
+                else if (response.datasets != null) {
+                    $("#Graphhide").show();
+                    var barChartData1 = {
+                        labels: response.labels,
+                        labels: response.labels,
+                        datasets: response.datasets
+                    };
+                    var ctx1 = document.getElementById("opcanalysis1").getContext("2d");
+                    var myBar1 = new Chart(ctx1, {
+                        type: 'bar',
+                        data: barChartData1,
+                        options: {
+                            responsive: true,
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Parameters'
+                                    },
+                                    barPercentage: 0.9,
+                                    maxRotation: 90,
+                                    minRotation: 90,
+                                    categoryPercentage: 0.5 / 10 * barChartData1.datasets[0].data.length
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Percentage(%)'
+                                    },
+                                    ticks: {
+                                        beginAtZero: true,
+                                        min: 0,
+                                        max: 100,
+                                        callback: function (value) {
+                                            return value + "%"
+                                        }
+                                    }
+                                }]
+                            },
+                            tooltips: {
+                                callbacks: {
+                                    label: function (tooltipItem, data) {
+                                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        label += Math.round(tooltipItem.yLabel * 100) / 100;
+                                        return label + " %";
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            },
+            error: function (xhr) {
+            }
+        });
+    }
+
+
+    function getStudentDataById(ReviewId) {
+        var BatchId = $('#hdnBatchName').val();
+        var RegistraionNo = $('#hdnRegconso').val();
+        $.ajax({
+            url: "/PerformanceCard/Report/GetStudentDataById",
+            type: "POST",
+            dataType: "JSON",
+            data: { RegistraionNo: RegistraionNo, BatchId: BatchId, ReviewId: ReviewId  },
+            success: function (response) {
+                str = '';
+                if (response != null) {
+                    var thead = '<tr><th>NAME</th>';
+                    var tbody = '<tr><td>' + (response.Fname.toUpperCase() + " " + response.Lname.toUpperCase())  +'</td>';
+                    $.each(response.PerformanceData, function (i, item) {
+                        thead += '<th>' + item.ParameterName.toUpperCase() + '</th>';
+                        tbody += '<td>' + item.Percentage + '</td>';
+                    });
+                    thead += '<th>PERCENTAGE</th></tr>';
+                    tbody += '<td>' + response.TotalPercentage + '</td></tr>';
+                    if (ReviewId == 2) {
+                        $('#theadmidterm').empty().append(thead);
+                        $('#tbodymid').empty().append(tbody);
+                    } else if (ReviewId == 3) {
+                        $('#theadendterm').empty().append(thead);
+                        $('#tbodyend').empty().append(tbody);
+                    }
+                }
+            },
+            error: function (xhr) {
+            }
+        });
+    }
+</script>
+
+
+

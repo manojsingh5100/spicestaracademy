@@ -1,0 +1,257 @@
+﻿@model SJModel.AddmissionMasterViewModel
+@{ int num = 1; }
+<style>
+    td.details-control {
+        background: url('../../Images/details_open.png') no-repeat center center;
+        cursor: pointer;
+    }
+
+    tr.shown td.details-control {
+        background: url('../../Images/details_close.png') no-repeat center center;
+    }
+
+    .table > tfoot > tr > td {
+        border-top: 1px solid #28ac2a;
+    }
+</style>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label> Registartion No. </label>
+                        @Html.TextBoxFor(m => m.RegNo, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+
+                    <div class="form-group">
+                        <label> Email </label>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label> Name </label>
+                        @Html.TextBoxFor(m => m.StudentName, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="form-group">
+                        <label> Mobile </label>
+                        @Html.TextBoxFor(m => m.MobileNo, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label> Course </label>
+                        @Html.TextBoxFor(m => m.CourseName, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label> Session </label>
+                        @Html.TextBoxFor(m => m.SessionName, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <input type="hidden" id="hdnrecord" value="@(Model.PaymentDetailList.Count > 0 ? "Y" : "")" />
+                <table class="table table-condensed" id="tblPaymentDetail" style="width:100%">
+                    @if (Model.PaymentDetailList.Count > 0)
+                    {
+                        <thead>
+                            <tr>
+                                <th class="no-sort">#</th>
+                                <th class="no-sort">Sno</th>
+                                <th>FeeName</th>
+                                <th>PaymentType</th>
+                                <th>Installment</th>
+                                <th>Amount</th>
+                                <th>PaymentMode</th>
+                                <th>DD/RTGS No.</th>
+                                <th class="no-sort">Date</th>
+                                <th class="no-sort">RecieptNo</th>
+                                <th class="no-sort">Action</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PaymentDetailList)
+                            {
+                                <tr>
+                                    <td class="details-control @(item.IsShowPartWisePayment == false ? "single":"")"></td>
+                                    <td>@num</td>
+                                    <td>@item.FeeName</td>
+                                    <td>@item.PaymentType</td>
+                                    <td>@item.InstallmentName</td>
+                                    <td>@item.Amount</td>
+                                    <td>@item.PaymentMode</td>
+                                    <td>@item.DDRTGSNo</td>
+                                    <td>@item.DateStr</td>
+                                    <td>@item.RecieptNo</td>
+                                    <td>
+                                        <button type="button" onclick="printFullFeeReciept('@Model.SessionName','@item.RecieptNo','@Model.StudentName','@item.Amount','@item.PaymentMode','@item.DDRTGSNo')" class="btn btn-primary btn-xs">Print</button>
+                                    </td>
+                                    <td>@item.JsonInfo</td>
+                                </tr>
+                                num = num + 1;
+                            }
+                        </tbody>
+                    }
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var table = $('#tblPaymentDetail').DataTable({
+            "columnDefs": [{
+                "targets": 'no-sort',
+                "orderable": false,
+            }, { 'visible': false, 'targets': [11] }],
+            "bFilter": false,
+            "bLengthChange": false,
+            "bInfo": false
+        });
+
+        $('#tblPaymentDetail tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+            if (row.child.isShown()) {
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                row.child(format(row.data())).show();
+                tr.addClass('shown');
+            }
+        });
+        $('.dataTables_paginate').css('display', 'none');
+        if ($('#hdnrecord').val() == "")
+            $('#tblPaymentDetail thead').css('display', 'none');
+
+        $('.single').each(function () {
+            $(this).removeClass("details-control");
+        });
+    });
+
+    function printFeeReciept(Session, Reciept, Name, total, mod, ddnumber) {
+        var data = $.get("/Templates/FeeReciept1.html", function (html_string) {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            var today = dd + '-' + mm + '-' + yyyy;
+            html_string = html_string.replace("$Session", Session);
+            html_string = html_string.replace("$Reciept", Reciept);
+            html_string = html_string.replace("$Name", Name);
+            html_string = html_string.replace("$Total", total);
+            html_string = html_string.replace("$Dated", today);
+            html_string = html_string.replace("$MainTotal", total);
+            html_string = html_string.replace("$RsInWords", convertNumberToWords(total));
+            html_string = html_string.replace("$MOD", mod);
+            var mywindow = window.open('', '', '');
+            mywindow.document.write(html_string);
+            mywindow.print();
+        }, 'html');
+    }
+
+
+    function printFullFeeReciept(Session, Reciept, Name, total, mod, ddnumber) {
+        $.ajax({
+            url: "/FeeManagement/GetRecieptDetail",
+            type: "POST",
+            async: false,
+            data: { RecieptNo: Reciept },
+            success: function (response) {
+                if (response != null) {
+                    var tblstr = '';
+                    if (response.PartwiseInfo.length > 0) {
+                        $.each(response.PartwiseInfo, function (i, item) {
+                            var today = new Date(parseInt(item.Date.replace('/Date(', '')));
+                            var dd = today.getDate();
+                            var mm = today.getMonth() + 1;
+                            var yyyy = today.getFullYear();
+                            if (dd < 10) {
+                                dd = '0' + dd;
+                            }
+                            if (mm < 10) {
+                                mm = '0' + mm;
+                            }
+                            var paidDate = dd + '-' + mm + '-' + yyyy;
+                            tblstr += '<tr class="border_bottom"><td>' + (i + 1) + '</td><td>' + response.FeeType + '</td><td>' + response.PaymentType + '</td><td>' + (response.InstallementNo > 0 ? response.InstallementNo : '') + '</td><td>' + item.PaymentMode + '</td><td>' + paidDate + '</td><td>' + item.DDRTGSNO + '</td><td> ' + item.Amount + ' </td></tr>';
+                        });
+                        tblstr += '<tr class="border_bottom" ><td colspan="7" style="text-align:right;font-weight:600 !important"> <span style="padding-right:60px;">Total</span></td><td style="font-weight:600 !important">' + response.PaidAmount +'/- </td></tr>';
+                    }
+                    var data = $.get("/Templates/FeeBreakupReciept.html", function (html_string) {
+                        var today = new Date();
+                        var dd = today.getDate();
+                        var mm = today.getMonth() + 1;
+                        var yyyy = today.getFullYear();
+                        if (dd < 10) {
+                            dd = '0' + dd;
+                        }
+                        if (mm < 10) {
+                            mm = '0' + mm;
+                        }
+                        var today = dd + '-' + mm + '-' + yyyy;
+                        html_string = html_string.replace("$Session", Session);
+                        html_string = html_string.replace("$Reciept", Reciept);
+                        html_string = html_string.replace("$Name", Name);
+                        html_string = html_string.replace("$Total", total);
+                        html_string = html_string.replace("$Dated", today);
+                        html_string = html_string.replace("$MainTotal", total);
+                        html_string = html_string.replace("$PartWiseInfo", tblstr)
+                        html_string = html_string.replace("$RsInWords", convertNumberToWords(total));
+                        var mywindow = window.open('', '', '');
+                        mywindow.document.write(html_string);
+                        mywindow.print();
+                    }, 'html');
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+
+    function format(d) {
+        var data = JSON.parse(d[11]);
+        if (data != null && data.length > 0) {
+            var str = '<div style="width:75%;margin-left:50px;"><table cellpadding="5" class="table table-condensed" cellspacing="0" border="0" style="padding-left:50px;"> <caption>Part Wise Payment Info.</caption>';
+            str += '<tr><th>Sr.No.</th><th>Amount</th><th>Payment Mode</th><th>Date</th><th>DD/RTGS No.</th><th>RecieptNo.</th><th></th></tr>';
+            $.each(data, function (i, item) {
+                str += '<tr>';
+                str += '<td>' + (i + 1) + '</td>';
+                str += '<td>' + item.Amount + '</td>';
+                str += '<td>' + item.PaymentMode + '</td>';
+                str += '<td>' + item.DateStr + '</td>';
+                str += '<td>' + item.DDRTGSNo + '</td>';
+                str += '<td>' + item.RecieptNo + '</td>';
+                str += '<td><button type="button" onclick="printFeeReciept(\'' + $('#SessionName').val() + '\',\'' + item.RecieptNo + '\',\'' + $('#StudentName').val() + '\',\'' + item.Amount + '\',\'' + item.PaymentMode + '\',\'' + item.DDRTGSNo + '\')" class="btn btn-primary btn-xs">Print</button></td>';
+                str += '</tr>';
+            })
+            str += '</table></div>';
+            return str;
+        } else {
+            return '<div style="text-align:center">No data found!</div>';
+        }
+    }
+</script>

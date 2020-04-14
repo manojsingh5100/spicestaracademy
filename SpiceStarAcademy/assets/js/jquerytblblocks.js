@@ -1,0 +1,11 @@
+﻿function rejectedtblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, rejectedCol(), orderIndex, tblName, 'desc') }
+function registertblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, registrationlistCol(), orderIndex, tblName, 'desc') }
+function ScreeningblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, screenninglistingCol(), orderIndex, tblName, 'desc') }
+function medicaltblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, medicallistingCol(), orderIndex, tblName, 'desc') }
+function admissiontblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, admissionlistingCol(), orderIndex, tblName, 'desc') }
+function admissionViewtblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, admissionViewListingCol(), orderIndex, tblName, 'desc') }
+function callCentertblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, callCenterListingCol(), orderIndex, tblName, 'desc') }
+function feeCandidatestblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, feeCandidateListingCol(), orderIndex, tblName, 'desc') }
+function feeTypeDetailtblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, feeTypeDetailListingCol(), orderIndex, tblName, 'asc') }
+function ReporttblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, reportListingCol(), orderIndex, tblName, 'desc') }
+function ssaReporttblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, ssaReportListingCol(), orderIndex, tblName, 'asc') }

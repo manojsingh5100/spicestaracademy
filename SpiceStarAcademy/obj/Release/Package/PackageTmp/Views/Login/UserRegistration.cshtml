@@ -1,0 +1,235 @@
+﻿@model SJModel.LoginViewModel
+@{
+    ViewBag.Title = "User Registration";
+}
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+           New User Registration & Role Master
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-dashboard"></i> &nbsp;User Registration</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="box">
+            <div class="box-body" style="pointer-events: all;">
+                <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong id="lblMsg">@TempData["errorMsg"]</strong>
+                </div>
+
+                <form action="/Login/UserRegistration" method="post" onsubmit="return validate();">
+                    <div class="row" style="pointer-events: all;">
+                        <div class="col-md-4" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label for="FirstName">Role:</label>
+                                @Html.DropDownListFor(m => m.RoleId, new SelectList(Model.RoleList, "Id", "Name"), "Select Role", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="pointer-events: all;">
+                            <div class="form-group has-feedback" style="pointer-events: all;">
+                                <label for="LastName">First Name:</label>
+                                @Html.TextBoxFor(m => m.Fname, new { @class = "form-control", placeholder = "First name", autocomplete="off" })
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="pointer-events: all;">
+                            <div class="form-group has-feedback" style="pointer-events: all;">
+                                <label for="Email">Last Name:</label>
+                                @Html.TextBoxFor(m => m.LName, new { @class = "form-control", placeholder = "Last name", autocomplete = "off" })
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="pointer-events: all;">
+                        <div class="col-md-4" style="pointer-events: all;">
+                            <div class="form-group has-feedback" style="pointer-events: all;">
+                                <label for="">Email:</label>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email", autocomplete = "off" })
+                                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="pointer-events: all;">
+                            <div class="form-group has-feedback" style="pointer-events: all;">
+                                <label for="Experience">Password:</label>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password", autocomplete = "off" })
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" style="pointer-events: all;">
+                            <div class="form-group has-feedback" style="pointer-events: all;">
+                                <label for="DOB">Retype Password:</label>
+                                <input type="password" class="form-control" id="retypePassword" placeholder="Retype password"  autocomplete="off">
+                                <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="pointer-events: all;">
+                        <div class="col-md-4" style="pointer-events: all;">
+                            <div class="form-group has-feedback" style="pointer-events: all;">
+                                <label for="AssignJob">Designation:</label>
+                                @Html.TextBoxFor(m => m.Designation, new { @class = "form-control", placeholder = "Designation", autocomplete = "off" })
+                                <span class="glyphicon glyphicon-education form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="pointer-events: all;">
+                            <div class="form-group has-feedback" style="pointer-events: all;">
+                                <label for="AssignJob">Department:</label>
+                                @Html.TextBoxFor(m => m.Department, new { @class = "form-control", placeholder = "Department", autocomplete = "off" })
+                                <span class="glyphicon glyphicon-briefcase form-control-feedback"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row text-center" style="pointer-events: all;">
+                        <div class="col-md-12" style="pointer-events: all;">
+                            <div class="form-group pull-left" style="pointer-events: all;">
+                                <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    $(document).ready(function () {
+        if ($('#errorMsg').text() != '') {
+            $('#errorDiv').css("display", "block");
+            setTimeout(function () { $('#errorDiv').css("display", "none"); }, 8000);
+        }
+        if ($("#lblMsg").text() != "") {
+            checkMsg($("#lblMsg").text());
+        }
+        StopLoading();
+    });
+
+    function checkMsg(msg) {
+            $("#dvMsg").css("display", "block");
+            $("#lblMsg").text(msg);
+            setTimeout(function () {
+                $("#dvMsg").css("display", "none");
+                $("#lblMsg").text('');
+            }, 8000);
+    }
+
+    function validateEmail(emailField) {
+        var reg = /^([A-Za-z0-9_\-\.])+\@@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if (reg.test($("#" + emailField).val()) == false) {
+            return false;
+        }
+        return true;
+    }
+
+    function validate() {
+        var fname = $('#Fname').val();
+        var email = $('#Email').val();
+        var pwd = $('#Password').val();
+        var retypePwd = $('#retypePassword').val();
+        var designation = $('#Designation').val();
+        var department = $('#Department').val();
+        var roleId = $("#RoleId").val();
+        var status = true;
+
+        if (email == "" || email == null) {
+            $('#Email').css("border", "1px solid red");
+            status = false;
+        } else if (!validateEmail("Email")) {
+            $('#Email').css("border", "1px solid red");
+            checkMsg("Please fill valid email!");
+            $('#Email').val('');
+            status = false;
+        } else {
+            $('#Email').css("border", "");
+        }
+
+        if (roleId == "" || roleId == null || roleId == undefined) {
+            $('#RoleId').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#RoleId').css("border", "");
+        }
+
+        if (pwd == "" || pwd == null) {
+            $('#Password').css("border", "1px solid red");
+            status = false;
+        } else {
+            if (pwd.length < 4) {
+                $('#Password').css("border", "1px solid red");
+                $("#dvMsg").css("display", "block");
+                $("#lblMsg").text('Password should be minimum 4 character!');
+                setTimeout(function () {
+                    $("#dvMsg").css("display", "none");
+                    $("#lblMsg").text('');
+                }, 8000);
+                status = false;
+            } else {
+                $('#Password').css("border", "");
+            }
+        }
+
+        if (retypePwd == "" || retypePwd == null) {
+            $('#retypePassword').css("border", "1px solid red");
+            status = false;
+        }
+        else if (retypePwd != pwd) {
+            checkMsg("Retype Password doesn't match!");
+            $('#retypePassword').css("border", "1px solid red");
+            $('#retypePassword').val('');
+            status = false;
+        }
+        else {
+            $('#Password').css("border", "");
+        }
+
+        if (department == "" || department == null) {
+            $('#Department').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#Department').css("border", "");
+        }
+        if (designation == "" || designation == null) {
+            $('#Designation').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#Designation').css("border", "");
+        }
+        if (fname == "" || fname == null) {
+            $('#Fname').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#Fname').css("border", "");
+        }
+
+        if (status) {
+            $.ajax({
+                url: "/Login/IsExistEmail",
+                type: "GET",
+                async: false,
+                data: { Email: email },
+                success: function (response) {
+                    if (response != null) {
+                        if (response) {
+                            $('#Email').css("border", "1px solid red");
+                            $("#dvMsg").css("display", "block");
+                            $("#lblMsg").text('This email already have an Account!');
+                            setTimeout(function () {
+                                $("#dvMsg").css("display", "none");
+                                $("#lblMsg").text('');
+                            }, 8000);
+                            status = false;
+                        } 
+                    }
+                },
+                error: function (error) {
+                }
+            });
+        }
+        return status;
+    }
+</script>

@@ -1,0 +1,248 @@
+﻿@model SJModel.FeeTypeDetailViewModel
+@{
+    ViewBag.Title = "Add Fee Structure";
+}
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Add Fee Structure
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-dashboard"></i> &nbsp;Add Fee Structure</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="box">
+            <div class="box-body" style="pointer-events: all;">
+                <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong id="lblMsg">@TempData["msg"]</strong>
+                </div>
+                <form action="/FeeManagement/AddFeeType" method="post" onsubmit="return validate();">
+                    <div class="row" style="pointer-events: all;">
+                        <div class="col-md-4" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label>Course Name:</label>
+                                @Html.DropDownListFor(m => m.CourseId, new SelectList(Model.CourseList, "Id", "Name"), "Select Course Name", new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" style="pointer-events: all;">
+                            @Html.HiddenFor(m => m.Id)
+                            <div class="form-group has-feedback" style="pointer-events: all;">
+                                <label>Session:</label>
+                                <select name="SessionMasterId" id="SessionMasterId" class="form-control" >
+                                    <option value=""> Select Session </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" style="pointer-events: all;">
+                            <div class="form-group" style="pointer-events: all;">
+                                <label>Fee Name:</label>
+                                @Html.DropDownListFor(m => m.FeeTypeId, new SelectList(Model.FeeTypeList, "Id", "Name"), "Select Fee Type", new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="pointer-events: all;">
+                        <div class="col-md-4" style="pointer-events: all;">
+                            <div class="form-group has-feedback" style="pointer-events: all;">
+                                <label>Amount:</label>
+                                @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", onkeypress = "return isDecimalNumber(event,this)", placeholder = "Amount" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" style="pointer-events: all;">
+                            <div class="form-group has-feedback" style="pointer-events: all;">
+                                <label>Active:</label><br />
+                                @Html.CheckBoxFor(m => m.IsActive)
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="row text-center" style="pointer-events: all;">
+                        <div class="col-md-12" style="pointer-events: all;">
+                            <div class="form-group pull-left" style="pointer-events: all;">
+                                <button type="submit" id="btnSubmit" class="btn btn-success"> Submit  </button> &nbsp;
+                                <a class="btn btn-default" id="btnFormClear" href="JavaScript:Void(0);" >Clear</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <hr style="margin-top: 0px;margin-bottom: 10px;" />
+                <div class="row col-md-12 table-responsive">
+                    <table id="tblFeeDetailTypeList" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th width="3%">Sr.No</th>
+                                <th>Session Name</th>
+                                <th>Course Name</th>
+                                <th>Fee Type</th>
+                                <th>Amount (Rs.)</th>
+                                <th>Active</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Installment</h4>
+            </div>
+            <div class="modal-body" id="divinstallment">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<script>
+    $(document).ready(function () {
+        if ($('#errorMsg').text() != '') {
+            $('#errorDiv').css("display", "block");
+            setTimeout(function () { $('#errorDiv').css("display", "none"); }, 8000);
+        }
+        if ($("#lblMsg").text() != "") {
+            checkMsg($("#lblMsg").text());
+        }
+        Table = $("#tblFeeDetailTypeList").DataTable(feeTypeDetailtblSetting("tblFeeDetailTypeList", "GetFeeTypeDetailsList", "FeeManagement", 0));
+        $.fn.dataTable.ext.errMode = 'throw';
+        $('.dt-buttons').css("display", "none");
+        StopLoading();
+    });
+
+    $('#CourseId').change(function () {
+        jQuery.ajaxSetup({ async: false });
+        jQuery.get('/FeeManagement/GetSessionListByCourseId', { CourseId: $(this).val() != "" ? $(this).val() : 0}, function (response) {
+            var str = '<option value="">Select Session</option>';
+            if (response != null && response.length > 0) {
+                console.log(response);
+                $.each(response, function (i, item) {
+                    str += '<option value=' + item.Id + '>' + item.Name + '</option>';
+                });
+                $('#SessionMasterId').empty().append(str);
+            } else
+                $('#SessionMasterId').empty().append(str);
+        });
+    });
+
+    $('#btnFormClear').click(function () {
+        $('#Id').val(0);
+        $('#SessionMasterId').css('border','').val('');
+        $('#CourseDurationId').css('border', '').val('');
+        $('#CourseId').css('border', '').val('');
+        $('#FeeTypeId').css('border', '').val('');
+        $('#Amount').css('border', '').val('');
+        $('#IsActive').prop('checked', false);
+        $('#CourseId').val('').trigger("change");
+        $('#btnSubmit').text('Submit');
+    });
+
+    function addUpdateInstallment(feeTypeDetailId) {
+        $.ajax({
+            type: "GET",
+            url: "/FeeManagement/GetInstallmetsByFeetypedetailId",
+            data: { FeeTypeDetailId: feeTypeDetailId },
+            async: false,
+            success: function (response) {
+                if (response != null) {
+                    $('#divinstallment').empty().append(response);
+                    $('#myModal').modal('show');
+                }
+            }
+        });
+    }
+
+    function EditFeeTypeDetail(feeTypeDetailId) {
+        $.ajax({
+            type: "GET",
+            url: "/FeeManagement/GetFeeTypeDetailById",
+            data: { FeeTypeDetailId: feeTypeDetailId },
+            async: true,
+            success: function (response) {
+                if (response != undefined || response != null || response != "") {
+                    $('#Id').val(response.Id);
+                    $('#hdnCourseSessionId').val(response.CourseDurationId);
+                    $('#CourseDurationId').val(response.CourseDurationId);
+                    $('#FeeTypeId').val(response.FeeTypeId);
+                    $('#Amount').val(response.Amount);
+                    $('#IsActive').prop('checked', response.IsActive);
+                    $('#CourseId').val(response.CourseId).trigger("change");
+                    $('#btnSubmit').text('Update');
+                    setTimeout(function () {
+                        $('#SessionMasterId').val(response.SessionMasterId);
+                    }, 200)
+                }
+            }
+        });
+     }
+
+    function checkMsg(msg) {
+            $("#dvMsg").css("display", "block");
+            $("#lblMsg").text(msg);
+            setTimeout(function () {
+                $("#dvMsg").css("display", "none");
+                $("#lblMsg").text('');
+            }, 8000);
+    }
+
+    function validate() {
+        var SessionId = $('#SessionMasterId').val();
+        var CourseId = $('#CourseId').val();
+        var CourseSession = $('#CourseDurationId').val();
+        var FeeType = $('#FeeTypeId').val();
+        var Amount = $('#Amount').val(); 
+        var status = true;
+        if (SessionId == "" || SessionId == null || SessionId == undefined) {
+            $('#SessionMasterId').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#SessionMasterId').css("border", "");
+        }
+
+        if (CourseId == "" || CourseId == null || CourseId == undefined) {
+            $('#CourseId').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#CourseId').css("border", "");
+        }
+
+        //if (CourseSession == "" || CourseSession == null || CourseSession == undefined || CourseSession == 0) {
+        //    $('#ddlCourseSessionId').css("border", "1px solid red");
+        //    status = false;
+        //} else {
+        //    $('#ddlCourseSessionId').css("border", "");
+        //}
+
+        if (FeeType == "" || FeeType == null || FeeType == undefined) {
+            $('#FeeTypeId').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#FeeTypeId').css("border", "");
+        }
+
+        if (Amount == "" || Amount == null) {
+            $('#Amount').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#Amount').css("border", "");
+        }
+        return status;
+    }
+</script>
+
+

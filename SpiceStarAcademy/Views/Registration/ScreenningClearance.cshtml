@@ -1,0 +1,408 @@
+﻿@model List<SJModel.SemesterMasterViewModel>
+@{
+    ViewBag.Title = "Screening";
+}
+<title>View Screenning</title>
+<style>
+    .Select_rejectDv {
+        background-color: #efefef;
+        border-radius: 5px;
+        margin-left: 20px;
+        display: table;
+        width: 50%;
+    }
+
+    .Select_rejectDv1 {
+        display: table;
+        width: 40%;
+    }
+
+    .Select_rejectDv label {
+        text-align: left;
+    }
+
+    .dateFilter {
+        position: absolute;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+        .dateFilter .collapse {
+            -webkit-transition: none;
+            transition: none !important;
+        }
+
+        .dateFilter .in {
+            width: 210px;
+            padding: 30px 5px;
+            background-color: rgb(228, 228, 228);
+            border-radius: 0px 4px 4px 4px;
+            height: 170px;
+            position: relative;
+        }
+
+        .dateFilter .collapsing {
+            width: 210px;
+            height: 170px !important;
+            padding: 30px 5px;
+            background-color: #e4e4e4;
+            position: relative;
+            transition-duration: 0s;
+        }
+</style>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            View Screening
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-dashboard"></i> &nbsp;View Screening</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <input type="hidden" id="hdnBtnText" value="" />
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- /.box -->
+                <div class="box">
+                    <div class="box-body">
+                        <div class="row col-md-12 table-responsive">
+                            <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <strong id="lblMsg">@TempData["msg"]</strong>
+                            </div>
+                            <table id="tblScreening" class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>Reg.No</th>
+                                        <th>Student Name</th>
+                                        <th>Email Id</th>
+                                        <th>Mobile No</th>
+                                        <th>DOB</th>
+                                        <th>Gender</th>
+                                        <th>Payment Status</th>
+                                        <th>Course</th>
+                                        <th>Batch Name</th>
+                                        <th>Reg.Date</th>
+                                        <th style="width:130px">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <div class="row" id="divmainactivity" style="display:none">
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header ui-sortable-handle" style="cursor: move;">
+                        <h3 class="box-title">Current Top 3 Activities</h3>
+                    </div>
+                    <div class="box-body" id="divActivity">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+<!-- ================================ ReScreenning History  ====================================== -->
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width:1140px !important">
+        Re Registration
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Re-Registration History</h4>
+            </div>
+            <div class="modal-body">
+                <div id="divHistoryDetail">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================ Screenning Test  ====================================== -->
+<div class="modal fade" id="modal-default" role="dialog">
+    <div class="modal-dialog" style="width:80%;">
+        <div class="modal-content">
+            <div class="modal-header topHeadingtxt">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title topHeaderfontsize ">CABIN CREW INTERVIEW ASSESSMENT SHEET</h4>
+            </div>
+            <div class="modal-body" id="screenModel">
+            </div>
+            <div class="modal-footer">
+                <div class="row hidectrl">
+                    <div class="col-md-9">
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group" style="pointer-events: all;">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" id="SettleDate" class="form-control" placeholder="Change Date" autocomplete="off" onkeydown="return false;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 hidectrl" onclick="return false">
+                        <div class="row">
+                            <div class="col-md-7 Select_rejectDv">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="radio" style="cursor:default">
+                                            Selected
+                                            <input type="radio" id="rdbSelected" name="result">
+                                            <span class="checkround"></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="radio" style="cursor:default">
+                                            Rejected
+                                            <input type="radio" id="rdbRejected" name="result">
+                                            <span class="checkround"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 Select_rejectDv1">
+                                <div class="row">
+                                    <div class="col-md-8" style="padding-top:7px;">
+                                        <label style="font-size:18px;font-weight:400">
+                                            <input type="checkbox" id="chkstandby" onclick="IsScreenningStandBy();" class="flat-red"> Stand-By
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.DropDownList("ddlBatch", new SelectList(Model, "Id", "BatchName"), new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-8">
+                                <button type="button" id="btnSubmitScreenTest" onclick="submitScreenTest();" class="btn btn-success" disabled>Save changes</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<script>
+    $(document).ready(function () {
+        TableCourseFilter = 8;
+        Table = $("#tblScreening").DataTable(ScreeningblSetting("tblScreening", "GetRagisterList", "Registration", 0));
+        $.fn.dataTable.ext.errMode = 'throw';
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'iradio_flat-blue'
+        });
+        $('#SettleDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        }).datepicker("setDate", 'now');
+        $('.dt-buttons').empty().append("<img src='/Images/excel-icon-transparent-18.jpg' height=32px; width=60px; title='Export' onclick='ExportData();' style='border:1px solid;border-color:#f5eeee;cursor: pointer;' />");
+        getUserActivities('Screenning');
+    });
+
+    $('#chkstandby').on('ifClicked', function (event) {
+            $(event.target).trigger('click');
+    });
+
+    function daterangefilterfunc(){
+        var status = true;
+        var fromDate = $('#txtfromDate').val();
+        var toDate = $('#txttoDate').val();
+        if (fromDate == "") {
+            $('#txtfromDate').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#txtfromDate').css("border", "");
+        }
+
+        if (toDate == "") {
+            $('#txttoDate').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#txttoDate').css("border", "");
+        }
+
+        if (status) {
+            var fDate = stringtodate(fromDate);
+            var tDate = stringtodate(toDate);
+            if (fDate > tDate) {
+                $("#lblMsg").text('Fromdate can not greater than todate!');
+                Table.columns(5).search('');
+                Table.columns(6).search('');
+                Table.draw();
+                if ($("#lblMsg").text() != "") {
+                    $("#dvMsg").css("display", "block");
+                    $('html, body').animate({
+                        scrollTop: $("#dvMsg").offset().top
+                    }, 2000);
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                }
+            } else {
+                Table.columns(5).search(fromDate);
+                Table.columns(6).search(toDate);
+                $('#demo').collapse('hide');
+                Table.draw();
+            }
+        } else {
+            Table.columns(5).search('');
+            Table.columns(6).search('');
+            Table.draw();
+        }
+    }
+
+    function stringtodate(dateString) {
+        var dateParts = dateString.split("/");
+        var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+        return dateObject;
+    }
+
+    function IsScreenningStandBy() {
+        $.ajax({
+            url: "/Registration/IsScreeningStandBy",
+            type: "GET",
+            async: false,
+            data: { IsStandBy: $('#chkstandby').prop('checked') , RegNo: $('#RegistrationId').val() },
+            success: function (response) {
+                if (response != null) {
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+        function OpenReregistrationHistory(Email, Mobile) {
+        Email = (Email == "null" ? null : Email);
+        Mobile = (Mobile == "null" ? null : Mobile);
+            $('#divHistoryDetail').empty();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.Action("ReResistrationOpenModelPopup", "Registration"))",
+                data: { Email: Email, Mobile: Mobile  },
+                success: function (data) {
+                    $('#divHistoryDetail').append(data);
+                    $('#myModal').modal('show');
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed!');
+                }
+            });
+        }
+
+    function openScreenPopUpModel(regNo, obj) {
+            $('#screenModel').empty();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.Action("ScreeningTestOpenModelPopup", "Registration"))",
+                data: { RegNo: regNo},
+                success: function (data) {
+                    $('#hdnBtnText').val($(obj).text());
+                    $('#screenModel').append(data);
+                    $('#modal-default').modal('show');
+                    CandidateSelectedRejected();
+                    $('.form-group').removeClass('disableCtrl');
+                    $('.hidectrl').removeClass('disableCtrl');
+                    $('#btnSubmitScreenTest').show();
+                    $('.Select_rejectDv1').show();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed!');
+                }
+            });
+    }
+
+            function openScreenPopUpModelToShow(regNo, obj) {
+            $('#screenModel').empty();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.Action("ScreeningTestOpenModelPopupShow", "Registration"))",
+                data: { RegNo: regNo},
+                success: function (data) {
+                    $('#hdnBtnText').val($(obj).text());
+                    $('#screenModel').append(data);
+                    $('#modal-default').modal('show');
+                    CandidateSelectedRejected();
+                    $('.form-group').addClass('disableCtrl');
+                    $('.hidectrl').addClass('disableCtrl');
+                    $('#btnSubmitScreenTest').hide();
+                    $('.Select_rejectDv1').hide();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed!');
+                }
+            });
+    }
+
+    function dateClear() {
+        $('#txtfromDate').val('');
+        $('#txttoDate').val('');
+        $('#txtfromDate').css("border", "");
+        $('#txttoDate').css("border", "");
+        $('#demo').collapse('hide');
+        Table.columns(5).search("");
+        Table.columns(6).search("");
+        Table.draw();
+    }
+
+    function ExportData() {
+        var model = {
+            "IsSelected": ($('#ddlstatusfilter').val() != '' ? $('#ddlstatusfilter').val():''),
+            "CourseId": $('#ddlcoursefilter').val() != '' ? $('#ddlcoursefilter').val():'',
+            "BatchId": ($('#ddlbatchfilter').val() != '' ? $('#ddlbatchfilter').val():0) ,
+            "Search": Table.search(),
+            "PageName": "Screenning"
+        };
+        $.ajax({
+            url: "/Registration/Export",
+            type: "POST",
+            async: false,
+            data: { Model: model},
+            success: function (data) {
+                window.location = '/Registration/Download?filename=' + data;
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>
+
+

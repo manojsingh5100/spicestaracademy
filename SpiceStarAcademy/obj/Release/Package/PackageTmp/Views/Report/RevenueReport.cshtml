@@ -1,0 +1,178 @@
+﻿@model SJModel.ReportFilterViewModel
+@{
+    ViewBag.Title = "Revenue Report";
+}
+<style>
+    .select2-container--default .select2-selection--single {
+        border-radius: 0px !important;
+    }
+    .select2-container .select2-selection--single {
+        height: 34px !important;
+    }
+    .select2-container--default .select2-selection--multiple {
+        background-color: #ffffff;
+        -webkit-border-radius: 2px;
+        cursor: text;
+        height: 35px;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #170808 !important;
+    }
+    .select2-search--inline .select2-search__field {
+        margin-top: 0px !important;
+    }
+</style>
+<title>Revenue Report</title>
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>Revenue Report</h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-dashboard"></i> &nbsp;Revenue Report</li>
+        </ol>
+    </section>
+    <section class="content" style="padding-bottom:0px !important;">
+        <input type="hidden" id="hdnbarcharjsondata" value="" />
+        <input type="hidden" id="hdndonutcharjsondata" value="" />
+        <input type="hidden" id="hdnlinecharjsondata" value="" />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Filter</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" id="btnFilterColapse" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Filter By Year</label>
+                                    @Html.DropDownList("ddlReportYears", new SelectList(Model.YearList, "Id", "Name"), "Select Year", new { @class = "form-control select2 filter", style = "width:100%" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Filter By Month</label>
+                                    <select class="form-control select2 filter" id="ddlReportMonth" style="width:100%">
+                                        <option value="">Select Month</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Filter By State</label>
+                                    <select class="form-control select2 filter" id="ddlState" onchange="ddlStateChangeFillCity(this , 'ddlCity')" style="width:100%"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-3" id="divCity">
+                                <div class="form-group">
+                                    <label>Filter By City</label>
+                                    <select class="form-control select2 filter" id="ddlCity" style="width:100%"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Filter By Course</label>
+                                    @Html.DropDownList("ddlReportCourse", new SelectList(Model.GetCourseList, "Id", "CourseName"), "Select Course", new { @class = "form-control select2 filter", multiple = "multiple", style = "width:100%" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Filter By Batch</label>
+                                    @Html.DropDownList("ddlReportBatch", new SelectList(Model.GetBatchList, "Id", "BatchName"), "Select Batch", new { @class = "form-control select2 filter", placeholder = "aDa", multiple = "multiple", style = "width:100%" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Fee Analysis (INR Currency / Time)</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-default btn-sm" name="barchart"> <span class="glyphicon glyphicon-export"></span></button>
+                        </div>
+                    </div>
+                    <div class="box-body" id="divBarChart">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Donut Chart</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" name="donutchart" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-export"></span></button>
+                        </div>
+                    </div>
+                    <div class="box-body chart-responsive">
+                        <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Line Chart &nbsp;&nbsp;&nbsp;(BBA&nbsp;<i class="fa fa-square" style="color:rgba(220,220,220,1)"></i> &nbsp;&nbsp; MBA&nbsp;<i class="fa fa-square" style="color:rgba(60,141,188,1)"></i> &nbsp;&nbsp; PHT&nbsp;<i class="fa fa-square" style="color:rgb(237, 239, 112)"></i>)</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" name="linechart" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-export"></span></button>
+                        </div>
+                    </div>
+                    <div class="box-body chart-responsive" id="divLine">
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#ddlReportBatch").attr(
+            "data-placeholder", "Select Batch"
+        );
+        $("#ddlReportCourse").attr(
+            "data-placeholder", "Select Course"
+        );
+        fillStateCityList("ddlState", "ddlCity");
+        $('#btnFilterColapse').trigger('click');
+        setTimeout(function () { showChart(); }, 300);
+        $('button').click(function () {
+            var data = '';
+            var subtext = ExportFileName();
+            if ($(this).attr('name') == "barchart") {
+                var label = 'Financial_Report_Chart_Info';
+                if (subtext.bercharttext != "")
+                    label += "_" + subtext.bercharttext;
+                data = $('#hdnbarcharjsondata').val();
+                JSONToCSVConvertor(data, label, true);
+            } else if ($(this).attr('name') == "donutchart") {
+                var label = 'No_Of_Candidates_Report';
+                if (subtext.othertext != "")
+                    label += "_" + subtext.othertext;
+                data = $('#hdndonutcharjsondata').val();
+                JSONToCSVConvertor(data, label, true);
+            } else if ($(this).attr('name') == "linechart") {
+                var label = 'No_Of_Admission_Report';
+                if (subtext.othertext != "")
+                    label += "_" + subtext.othertext;
+                data = $('#hdnlinecharjsondata').val();
+                JSONToCSVConvertor(data, label, true);
+            }
+            if (data == '')
+                return;
+        });
+        StopLoading();
+    });
+</script>
+
+
+
+

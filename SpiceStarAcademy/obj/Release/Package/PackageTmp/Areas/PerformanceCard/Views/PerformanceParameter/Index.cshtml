@@ -1,0 +1,220 @@
+﻿@model SJModel.PerformanceModel.ParameterTypeViewModel
+@{
+    ViewBag.Title = "ParameterMaster";
+    Layout = "~/Areas/PerformanceCard/Views/Shared/_LayoutP.cshtml";
+}
+<style>
+    #tblParameterType_info {
+        padding-left: 10px;
+    }
+
+    .pagination {
+        display: inline-flex;
+    }
+
+    #tblParameterType_paginate {
+        text-align: center !important;
+    }
+</style>
+<section class="content">
+    <!-- Info boxes -->
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-new">
+                <!--<div class="side-red-strip"></div>-->
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="title-header-container"><h5>PARAMETER MASTER</h5></div>
+                    @Html.HiddenFor(m => m.Id)
+                    @Html.HiddenFor(m => m.IsActive)
+                    <!------------------------------------------------- Search and display info box------->
+                    <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <strong id="lblMsg">@TempData["msg"]</strong>
+                    </div>
+                    <div class="box box-performance box-solid">
+                        <!-- /.box-header -->
+                        <div class="side-red-strip"></div>
+                        <div class="box-body" style="margin-top:25px;">
+                            <div class="col-md-4">
+                                <div class="parameter-box-top-bottm-space ">
+                                    <div class="PA-title-section">PARAMETER</div>
+                                    <div class="PA_control-input">
+                                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Parameter Name" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div style="margin-top:15px;">
+                                    <div class="PA-title-section">STATUS</div>
+                                    <div class="Parameter_control-select">
+                                        <select id="ddladdstatus" class="form-control">
+                                            <option value="0">Select Status</option>
+                                            <option value="1">Active</option>
+                                            <option value="2">InActive</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="PA_add-parameter">
+                                    <input type="button" id="btnaddparameter" value="ADD PARAMETER" onclick="AddUpadteParameterType();" class="btn btn-danger" />
+                                </div>
+                            </div>
+                            @*<div class="col-md-2">
+                                <div class="export-btn parameter-export-topmargin">
+                                    <input type="button" id="btnexport" value="EXPORT" class="btn btn-danger" /><i class=" fa fa-download export-icon"></i>
+                                </div>
+                            </div>*@
+                        </div>
+
+                        <div>
+                            <div id="batch-details-container">
+                                <table id="tblParameterType" class="table table-bordered  table-hover dataTable" style="width:100%">
+                                    <thead><tr><th>S.NO</th><th>PARAMETER NAME </th><th>STATUS</th><th>ADD SUB PARAMETER</th><th>EDIT</th></tr></thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="" style="margin-bottom:80px;"> </div>
+                        <!-- /.box-body -->
+                    </div>
+
+                    <!-------------------------------------------------END Search and display info box------->
+                </div>
+                <!-- /.box-body -->
+
+            </div>
+            <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <!-- Main row -->
+    <!-- /.row -->
+</section>
+<script type="text/javascript">
+    i = 1;
+    function changeImage(el,Id) {
+        if (i == 1) {
+            var s = $(el).parents('tr').find('td');
+            var selectedStatus = s.eq(2).html();
+            s.eq(1).html('<input type="text" class="form-control" id="txteditParameter" value="' + s.eq(1).html() + '" >');
+            s.eq(2).html('<select id="ddpstatus" class="form-control" > <option value="Active"> Active </option><option  value="InActive"> InActive </option> </select>');
+            $('#ddpstatus').val(selectedStatus);
+            $('#Id').val(Id);
+            el.click = ++i;
+        } else {
+            if ($('#txteditParameter').val() == "") {
+                $('#txteditParameter').css("border", "solid red 1px")
+                return false;
+            }
+            $('#Name').val($('#txteditParameter').val());
+            $('#IsActive').val($('#ddpstatus').val() == "Active" ? $('#IsActive').prop('checked',true) : $('#IsActive').prop('checked',false));
+            AddUpadteParameterType();
+            Table.draw();
+            i = 1;
+            $('#Id').val(0);
+            $('#Name').val('');
+        }
+        el.src = ((el.click) % 2 != 0) ? "/Areas/PerformanceCard/Images/edit.png" : "/Areas/PerformanceCard/Images/update.png";
+    }
+
+    $(function () {
+        Table = $("#tblParameterType").DataTable(parametertypetblSetting("tblParameterType", "GetParameterTypeList", "PerformanceParameter", 0));
+        $.fn.dataTable.ext.errMode = 'throw';
+        StopLoading();
+    });
+</script>
+
+
+
+@*@model SJModel.PerformanceModel.ParameterTypeViewModel
+    @{
+                    /**/
+
+                    ViewBag.Title = "Parameter";
+                    Layout = "~/Areas/PerformanceCard/Views/Shared/_LayoutP.cshtml";
+    }
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Parameters
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i>Parameters</a></li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box" style="margin-bottom: 5px;">
+                        <div class="box-body">
+                            <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <strong id="lblMsg">@TempData["msg"]</strong>
+                            </div>
+                            <div class="row" style="pointer-events: all;">
+                                @Html.HiddenFor(m => m.Id)
+                                <div class="col-md-3" style="pointer-events: all;">
+                                    <div class="form-group" style="pointer-events: all;">
+                                        <label>Parameter Name</label>
+                                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group" style="pointer-events: all;">
+                                        <label>Active</label><br />
+                                        @Html.CheckBoxFor(m => m.IsActive)
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="padding-top:23px;">
+                                    <button type="button" class="btn btn-default" onclick="clearAddParameterTypeCtrl();"> Clear </button>&nbsp;&nbsp;&nbsp;
+                                    <button type="button" id="btnaddparameter" class="btn btn-success" onclick="AddUpadteParameterType();"> Add Parameter </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Parameter List</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <strong id="lblMsg"></strong>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="tblParameterType" class="table table-bordered table-striped" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th width="10%;">Sno</th>
+                                            <th width="50%">Parameter Name</th>
+                                            <th width="20%">Active</th>
+                                            <th width="20%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        $(function () {
+            Table = $("#tblParameterType").DataTable(parametertypetblSetting("tblParameterType", "GetParameterTypeList", "PerformanceParameter", 0));
+            $.fn.dataTable.ext.errMode = 'throw';
+            StopLoading();
+        });
+    </script>*@

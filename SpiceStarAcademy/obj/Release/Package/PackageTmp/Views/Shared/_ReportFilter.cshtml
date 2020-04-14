@@ -1,0 +1,172 @@
+﻿@model SJModel.ReportFilterViewModel
+<style>
+    .select2-container--default .select2-selection--multiple {
+        background-color: #ffffff;
+        -webkit-border-radius: 2px;
+        cursor: text;
+        height: 35px;
+    }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #170808 !important;
+        }
+
+    .select2-search--inline .select2-search__field {
+        margin-top: 0px !important;
+    }
+</style>
+<div class="box-body">
+    <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong id="lblMsg">@TempData["msg"]</strong>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Filter By Year</label>
+                @Html.DropDownList("ddlReportYears", new SelectList(Model.YearList, "Id", "Name"), "Select Year", new { @class = "form-control select2 filter", style = "width:100%" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Filter By Month</label>
+                <select class="form-control select2 filter" id="ddlReportMonth" style="width:100%">
+                    <option value="">Select Month</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3" id="divPayment">
+            <div class="form-group">
+                <label>Filter By Payment Status</label>
+                <select class="form-control select2 filter" id="ddlReportPaymentStatus" style="width:100%">
+                    <option value="">Select Payment Status</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Deposited">Deposited</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Filter By Course</label>
+                @Html.DropDownList("ddlReportCourse", new SelectList(Model.GetCourseList, "Id", "CourseName"), "Select Course", new { @class = "form-control select2 filter", multiple = "multiple", style = "width:100%" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Filter By State</label>
+                <select class="form-control select2 filter" id="ddlState" onchange="ddlStateChangeFillCity(this , 'ddlCity')" style="width:100%"></select>
+            </div>
+        </div>
+        <div class="col-md-3" id="divCity">
+            <div class="form-group">
+                <label>Filter By City</label>
+                <select class="form-control select2 filter" id="ddlCity" style="width:100%"></select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Filter By Batch</label>
+                @Html.DropDownList("ddlReportBatch", new SelectList(Model.GetBatchList, "Id", "BatchName"), "Select Batch", new { @class = "form-control select2 filter", placeholder = "aDa", multiple = "multiple", style = "width:100%" })
+            </div>
+        </div>
+    </div>
+    <hr style="margin-top:5px;margin-bottom:5px;" />
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>From Date</label>
+                <input type="text" class="form-control" onkeydown="return false" id="txtfromDate" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label> To Date</label>
+                <input type="text" class="form-control" onkeydown="return false" id="txttoDate" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group" style="padding-top:24px;">
+                <input type="button" value="Filter" onclick="daterangefilterfunc();" class="btn btn-success" />
+                <input type="button" value="Clear" id="btnclear" onclick="clear();" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#ddlReportBatch").attr(
+            "data-placeholder", "Select Batch"
+        );
+        $("#ddlReportCourse").attr(
+            "data-placeholder", "Select Course"
+        );
+        fillStateCityList("ddlState", "ddlCity");
+        $('#txtfromDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+        $('#txttoDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+    });
+
+    $('#btnclear').click(function () {
+        $('#txtfromDate').val('');
+        $('#txttoDate').val('');
+        Table.columns(2).search('');
+        Table.columns(3).search('');
+        Table.draw();
+    });
+
+    function daterangefilterfunc() {
+        var status = true;
+        var fromDate = $('#txtfromDate').val();
+        var toDate = $('#txttoDate').val();
+        if (fromDate == "") {
+            $('#txtfromDate').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#txtfromDate').css("border", "");
+        }
+        if (toDate == "") {
+            $('#txttoDate').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#txttoDate').css("border", "");
+        }
+        if (status) {
+            var fDate = stringtodate(fromDate);
+            var tDate = stringtodate(toDate);
+            if (fDate > tDate) {
+                $("#lblMsg").text('Fromdate can not greater than todate!');
+                Table.columns(2).search('');
+                Table.columns(3).search('');
+                Table.draw();
+                if ($("#lblMsg").text() != "") {
+                    $("#dvMsg").css("display", "block");
+                    $('html, body').animate({
+                        scrollTop: $("#dvMsg").offset().top
+                    }, 2000);
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                }
+            } else {
+                Table.columns(2).search(fromDate);
+                Table.columns(3).search(toDate);
+                Table.draw();
+            }
+        } else {
+            Table.columns(2).search('');
+            Table.columns(3).search('');
+            Table.draw();
+        }
+    }
+
+    function stringtodate(dateString) {
+        var dateParts = dateString.split("/");
+        var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+        return dateObject;
+    }
+</script>

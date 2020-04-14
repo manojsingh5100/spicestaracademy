@@ -1,0 +1,160 @@
+﻿@model SJModel.ReportFilterViewModel
+@{
+    ViewBag.Title = "Candidate Report";
+    Layout = "~/Areas/PerformanceCard/Views/Shared/_LayoutP.cshtml";
+}
+<style>
+    .select2-container--default .select2-selection--single {
+        border-radius: 0px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 34px !important;
+    }
+
+    #container {
+        width: 455px;
+        height: 390px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .error {
+        border: 1px solid red !important;
+    }
+</style>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <input type="hidden" id="hdnRegNo" value="@Model.RegNo" />
+            <input type="hidden" id="hdnBatchId" value="@Model.BatchId" />
+            <input type="hidden" id="hdnsubchartinfo" />
+            <div class="box-new">
+                <!--<div class="side-red-strip"></div>-->
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="title-header-container"><h5>REPORTS</h5></div>
+                    <!------------------------------------------------- Search and display info box------->
+                    <div class="box box-performance box-solid">
+                        <!-- /.box-header -->
+                        <div class="side-red-strip"></div>
+                        <div class="box-body" style="margin-top:25px;">
+                            <div class="col-md-4">
+                                <div class="parameter-box-top-bottm-space ">
+                                    <div class="PA-title-section">TRAINEE'S NAME</div>
+                                    <div class="Parameter_control-select">
+                                        <select id="ddlReportCandidate" class="form-control select2" style="width:100%;text-transform:capitalize"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div style="margin-top:15px;">
+                                    <div class="PA-title-section">BATCH</div>
+                                    <div class="Parameter_control-select">
+                                        @Html.DropDownListFor(m => m.BatchNo, new SelectList(Model.GetBatchList, "Id", "BatchName"), new { @class = "form-control select2", style = "width:100%" })
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                <div class="" style="margin-top:15px;">
+                                    <div class="PA-title-section">REVIEW</div>
+                                    <div class="Parameter_control-select">
+                                        @Html.DropDownList("ReviewId", new SelectList(Model.GetReviewList, "Id", "Name"), new { @class = "form-control select2 refreshchart", style = "width:100%" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-------------------------------------------------END Search and display info box------->
+                    <div>
+                        <div class="row">
+                            <div class="col-md-7" style="width:70%;display:none" id="divNodeNodeParameter">
+                                <div class="box box-performance box-solid">
+                                    <!-- /.box-header -->
+                                    <div class="side-red-strip"></div>
+                                    <div class="box-body" style="margin-top:25px;">
+                                        <div class="col-md-12">
+                                            <div>
+                                                <div style="font-size:20px;color:#ff0000">OVERALL PERFORMANCE CARD ANALYSIS</div>
+                                                <div class="chart-container">
+                                                    <div id="divNodeParameter">
+                                                        <canvas id="opcanalysis"></canvas>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7" style="width:58%;display:none" id="divNodeNode">
+                                <div class="box box-performance box-solid">
+                                    <!-- /.box-header -->
+                                    <div class="side-red-strip"></div>
+                                    <div class="box-body" style="margin-top:25px;">
+                                        <div class="col-md-12">
+                                            <div>
+                                                <div style="font-size:20px;color:#ff0000"><span id="divsubname"></span> </div>
+                                                <div class="chart-container" id="divsubNodeParameter">
+                                                    <canvas id="punctualityreport"></canvas>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+                <div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+<script>
+    $(document).ready(function () {
+        initialfuncexecution();
+        $('#BatchNo').prepend($('<option>', {
+            value: "",
+            text: 'Select Batch',
+            selected: true
+        }), $('<option>', {
+            value: 0,
+            text: 'All Batch'
+        }));
+        $('#ddlReportCandidate').prepend($('<option>', {
+            value: "",
+            text: 'Select Trainee',
+            selected: true
+        }));
+        $('#ReviewId').prepend($('<option>', {
+            value: "",
+            text: 'Select Review',
+            selected: true
+        }), $('<option>', {
+            value: 0,
+            text: 'All Review'
+        }));
+
+        if ('@Model.RegNo' > 0) {
+            $('#BatchNo').val('@Model.BatchId').trigger('change').attr('disabled','disabled');
+            $('#ddlReportCandidate').val('@Model.RegNo').trigger('change').attr('disabled', 'disabled');
+            $('#ReviewId').val(0).trigger('change');
+        }
+    });
+
+    $('#BatchNo').change(function () {
+        atonchange();
+    });
+
+</script>

@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SJStarERPModelStoreContainer" CdmEntityContainer="SJStarERPEntities">
+    <EntitySetMapping Name="CourseMasters">
+      <EntityTypeMapping TypeName="SJStarERPModel.CourseMaster">
+        <MappingFragment StoreEntitySet="CourseMaster">
+          <ScalarProperty Name="DepartmentMasterId" ColumnName="DepartmentMasterId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaAddressDetails">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaAddressDetail">
+        <MappingFragment StoreEntitySet="ptaAddressDetail">
+          <ScalarProperty Name="ptaRegistrationInfoId" ColumnName="ptaRegistrationInfoId" />
+          <ScalarProperty Name="Per_PinCode" ColumnName="Per_PinCode" />
+          <ScalarProperty Name="Per_Address2" ColumnName="Per_Address2" />
+          <ScalarProperty Name="Per_Address1" ColumnName="Per_Address1" />
+          <ScalarProperty Name="Per_City" ColumnName="Per_City" />
+          <ScalarProperty Name="Per_District" ColumnName="Per_District" />
+          <ScalarProperty Name="Per_State" ColumnName="Per_State" />
+          <ScalarProperty Name="Per_Country" ColumnName="Per_Country" />
+          <ScalarProperty Name="IsPermanent" ColumnName="IsPermanent" />
+          <ScalarProperty Name="Cor_PinCode" ColumnName="Cor_PinCode" />
+          <ScalarProperty Name="Cor_Address2" ColumnName="Cor_Address2" />
+          <ScalarProperty Name="Cor_Address1" ColumnName="Cor_Address1" />
+          <ScalarProperty Name="Cor_City" ColumnName="Cor_City" />
+          <ScalarProperty Name="Cor_District" ColumnName="Cor_District" />
+          <ScalarProperty Name="Cor_State" ColumnName="Cor_State" />
+          <ScalarProperty Name="Cor_Country" ColumnName="Cor_Country" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaBoardAndUniversityMasters">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaBoardAndUniversityMaster">
+        <MappingFragment StoreEntitySet="ptaBoardAndUniversityMaster">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaDeclarations">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaDeclaration">
+        <MappingFragment StoreEntitySet="ptaDeclaration">
+          <ScalarProperty Name="ptaRegistrationInfoId" ColumnName="ptaRegistrationInfoId" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+          <ScalarProperty Name="ApplicantName" ColumnName="ApplicantName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaEducationDetails">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaEducationDetail">
+        <MappingFragment StoreEntitySet="ptaEducationDetail">
+          <ScalarProperty Name="ptaRegistrationInfoId" ColumnName="ptaRegistrationInfoId" />
+          <ScalarProperty Name="ptaResultStatusMasterId" ColumnName="ptaResultStatusMasterId" />
+          <ScalarProperty Name="PercentageOrCGPA" ColumnName="PercentageOrCGPA" />
+          <ScalarProperty Name="ptaEduEvaluationTypeMasterId" ColumnName="ptaEduEvaluationTypeMasterId" />
+          <ScalarProperty Name="YearOfPassing" ColumnName="YearOfPassing" />
+          <ScalarProperty Name="ptaDegreeMasterId" ColumnName="ptaDegreeMasterId" />
+          <ScalarProperty Name="ptaStreamMasterId" ColumnName="ptaStreamMasterId" />
+          <ScalarProperty Name="ptaUGBoardAndUniversityMasterId" ColumnName="ptaUGBoardAndUniversityMasterId" />
+          <ScalarProperty Name="ptaBoardAndUniversityMasterId" ColumnName="ptaBoardAndUniversityMasterId" />
+          <ScalarProperty Name="NameOfInstitute" ColumnName="NameOfInstitute" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaEducationSubjectMarks">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaEducationSubjectMark">
+        <MappingFragment StoreEntitySet="ptaEducationSubjectMarks">
+          <ScalarProperty Name="ptaEducationDetailId" ColumnName="ptaEducationDetailId" />
+          <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+          <ScalarProperty Name="ObtainMark" ColumnName="ObtainMark" />
+          <ScalarProperty Name="MaximumMark" ColumnName="MaximumMark" />
+          <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaEduEvaluationTypeMasters">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaEduEvaluationTypeMaster">
+        <MappingFragment StoreEntitySet="ptaEduEvaluationTypeMaster">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaGenderMasters">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaGenderMaster">
+        <MappingFragment StoreEntitySet="ptaGenderMaster">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaGuardians">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaGuardian">
+        <MappingFragment StoreEntitySet="ptaGuardian">
+          <ScalarProperty Name="ptaRegistrationInfoId" ColumnName="ptaRegistrationInfoId" />
+          <ScalarProperty Name="Relation" ColumnName="Relation" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaLeadSourceMasters">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaLeadSourceMaster">
+        <MappingFragment StoreEntitySet="ptaLeadSourceMaster">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaMedicalStatusMasters">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaMedicalStatusMaster">
+        <MappingFragment StoreEntitySet="ptaMedicalStatusMaster">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaNatioalityMasters">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaNatioalityMaster">
+        <MappingFragment StoreEntitySet="ptaNatioalityMaster">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaPassports">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaPassport">
+        <MappingFragment StoreEntitySet="ptaPassport">
+          <ScalarProperty Name="ptaRegistrationInfoId" ColumnName="ptaRegistrationInfoId" />
+          <ScalarProperty Name="DateOfExpiry" ColumnName="DateOfExpiry" />
+          <ScalarProperty Name="DateOfIssue" ColumnName="DateOfIssue" />
+          <ScalarProperty Name="PlaceOfIssue" ColumnName="PlaceOfIssue" />
+          <ScalarProperty Name="PassportCountry" ColumnName="PassportCountry" />
+          <ScalarProperty Name="PassportNo" ColumnName="PassportNo" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaPilotRegistrationMasters">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaPilotRegistrationMaster">
+        <MappingFragment StoreEntitySet="ptaPilotRegistrationMaster">
+          <ScalarProperty Name="DepartmentMasterId" ColumnName="DepartmentMasterId" />
+          <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+          <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Lname" ColumnName="Lname" />
+          <ScalarProperty Name="Fname" ColumnName="Fname" />
+          <ScalarProperty Name="RegistrationNo" ColumnName="RegistrationNo" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaRegistrationInfoes">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaRegistrationInfo">
+        <MappingFragment StoreEntitySet="ptaRegistrationInfo">
+          <ScalarProperty Name="AdmissionId" ColumnName="AdmissionId" />
+          <ScalarProperty Name="ptaPilotRegistrationMasterId" ColumnName="ptaPilotRegistrationMasterId" />
+          <ScalarProperty Name="ptaMedicalStatusMasterId" ColumnName="ptaMedicalStatusMasterId" />
+          <ScalarProperty Name="ptaLeadSourceMasterId" ColumnName="ptaLeadSourceMasterId" />
+          <ScalarProperty Name="ptaNatioalityMasterId" ColumnName="ptaNatioalityMasterId" />
+          <ScalarProperty Name="ptaGenderMasterId" ColumnName="ptaGenderMasterId" />
+          <ScalarProperty Name="ptaTitleMasterId" ColumnName="ptaTitleMasterId" />
+          <ScalarProperty Name="RegistartionNo" ColumnName="RegistartionNo" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaResultStatusMasters">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaResultStatusMaster">
+        <MappingFragment StoreEntitySet="ptaResultStatusMaster">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaStreamMasters">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaStreamMaster">
+        <MappingFragment StoreEntitySet="ptaStreamMaster">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaTitleMasters">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaTitleMaster">
+        <MappingFragment StoreEntitySet="ptaTitleMaster">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaUGBoardAndUniversityMasters">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaUGBoardAndUniversityMaster">
+        <MappingFragment StoreEntitySet="ptaUGBoardAndUniversityMaster">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SessionMasters">
+      <EntityTypeMapping TypeName="SJStarERPModel.SessionMaster">
+        <MappingFragment StoreEntitySet="SessionMaster">
+          <ScalarProperty Name="SessionYr" ColumnName="SessionYr" />
+          <ScalarProperty Name="CourseMasterId" ColumnName="CourseMasterId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SessionName" ColumnName="SessionName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaScreeningInfoes">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaScreeningInfo">
+        <MappingFragment StoreEntitySet="ptaScreeningInfo">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="EnteredDate" ColumnName="EnteredDate" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="PTARegistrationNo" ColumnName="PTARegistrationNo" />
+          <ScalarProperty Name="PTAPilotRegistrationMasterId" ColumnName="PTAPilotRegistrationMasterId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaScreeningTestTypes">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaScreeningTestType">
+        <MappingFragment StoreEntitySet="ptaScreeningTestType">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="InitialMark" ColumnName="InitialMark" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaScreeningTestResults">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaScreeningTestResult">
+        <MappingFragment StoreEntitySet="ptaScreeningTestResult">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsPassed" ColumnName="IsPassed" />
+          <ScalarProperty Name="ObtainMark" ColumnName="ObtainMark" />
+          <ScalarProperty Name="PTAScreeningTestTypeId" ColumnName="PTAScreeningTestTypeId" />
+          <ScalarProperty Name="PTAScreeningInfoId" ColumnName="PTAScreeningInfoId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaScreeningExamFeeInfoes">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaScreeningExamFeeInfo">
+        <MappingFragment StoreEntitySet="ptaScreeningExamFeeInfo">
+          <ScalarProperty Name="PTAPilotRegistrationMaterId" ColumnName="PTAPilotRegistrationMaterId" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="EnteredDate" ColumnName="EnteredDate" />
+          <ScalarProperty Name="PTAScreeningTestTypeId" ColumnName="PTAScreeningTestTypeId" />
+          <ScalarProperty Name="ExamResult" ColumnName="ExamResult" />
+          <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+          <ScalarProperty Name="DateOfAmount" ColumnName="DateOfAmount" />
+          <ScalarProperty Name="ScreeningAmount" ColumnName="ScreeningAmount" />
+          <ScalarProperty Name="ScreeningAmountTerm" ColumnName="ScreeningAmountTerm" />
+          <ScalarProperty Name="PTAScreeningInfoId" ColumnName="PTAScreeningInfoId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RegistrationMasters">
+      <EntityTypeMapping TypeName="SJStarERPModel.RegistrationMaster">
+        <MappingFragment StoreEntitySet="RegistrationMaster">
+          <ScalarProperty Name="DepartmentMasterId" ColumnName="DepartmentMasterId" />
+          <ScalarProperty Name="IsAadharCard" ColumnName="IsAadharCard" />
+          <ScalarProperty Name="AadharCardNo" ColumnName="AadharCardNo" />
+          <ScalarProperty Name="SourceOfCandidate" ColumnName="SourceOfCandidate" />
+          <ScalarProperty Name="IsReRegister" ColumnName="IsReRegister" />
+          <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsHRCandidate" ColumnName="IsHRCandidate" />
+          <ScalarProperty Name="IsFeePayStandBy" ColumnName="IsFeePayStandBy" />
+          <ScalarProperty Name="IsMedicalStandBy" ColumnName="IsMedicalStandBy" />
+          <ScalarProperty Name="IsStandBy" ColumnName="IsStandBy" />
+          <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+          <ScalarProperty Name="IsConsultantCandidate" ColumnName="IsConsultantCandidate" />
+          <ScalarProperty Name="MedicalRemark" ColumnName="MedicalRemark" />
+          <ScalarProperty Name="ModOfPayment" ColumnName="ModOfPayment" />
+          <ScalarProperty Name="Education" ColumnName="Education" />
+          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+          <ScalarProperty Name="IsScreenningClear" ColumnName="IsScreenningClear" />
+          <ScalarProperty Name="IsMedicalClear" ColumnName="IsMedicalClear" />
+          <ScalarProperty Name="IsAddmission" ColumnName="IsAddmission" />
+          <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+          <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+          <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+          <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+          <ScalarProperty Name="IsPassport" ColumnName="IsPassport" />
+          <ScalarProperty Name="PassingYear" ColumnName="PassingYear" />
+          <ScalarProperty Name="IsAppeared" ColumnName="IsAppeared" />
+          <ScalarProperty Name="PermanentZip" ColumnName="PermanentZip" />
+          <ScalarProperty Name="PermanentState" ColumnName="PermanentState" />
+          <ScalarProperty Name="PermanentCity" ColumnName="PermanentCity" />
+          <ScalarProperty Name="PermanentAddress" ColumnName="PermanentAddress" />
+          <ScalarProperty Name="CorrespondenceZip" ColumnName="CorrespondenceZip" />
+          <ScalarProperty Name="CorrespondenceState" ColumnName="CorrespondenceState" />
+          <ScalarProperty Name="CorrespondenceCity" ColumnName="CorrespondenceCity" />
+          <ScalarProperty Name="CorrespondenceAddress" ColumnName="CorrespondenceAddress" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Lname" ColumnName="Lname" />
+          <ScalarProperty Name="Fname" ColumnName="Fname" />
+          <ScalarProperty Name="RegistartionNo" ColumnName="RegistartionNo" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

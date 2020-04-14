@@ -1,0 +1,3 @@
+﻿function parametertypetblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, parameterTypeListingCol(), orderIndex, tblName, 'asc') }
+function parameterlisttblSetting(tblName, parmeterTypeId, action, controller, orderIndex) { return tblSetting1(exportOpt(), "/" + controller + "/" + action, parameterListingCol(), orderIndex, tblName, 'asc', parmeterTypeId) }
+function candidateListtblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, candidateListingCol(), orderIndex, tblName, 'asc') }

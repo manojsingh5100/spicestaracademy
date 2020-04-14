@@ -1,0 +1,892 @@
+﻿@model SJModel.FeePaymentDetailViewModel
+@{
+    ViewBag.Title = "Fee Collection";
+    Layout = "~/Areas/PTA/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .addfeedisplaytbl {
+        width: 100%;
+        font-size: 16px;
+        border: solid 1px #efefef;
+        padding: 10px;
+    }
+
+        .addfeedisplaytbl td {
+            border-left: solid 1px #efefef;
+        }
+
+        .addfeedisplaytbl th {
+            border-left: solid 1px #efefef;
+        }
+
+    .installmentDV {
+        border: solid 1px #efefef;
+        border-radius: 5px;
+        display: table;
+        margin-left: 10px;
+        padding: 10px;
+        width: 50%;
+    }
+
+    .alert-info1 {
+        color: #31708f;
+        background-color: #d9edf7;
+        border-color: #bce8f1;
+    }
+</style>
+<link href="~/Plugins/iCheck/square/blue.css" rel="stylesheet" />
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Fee Collection
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-dashboard"></i> &nbsp;Fee Collection</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="box">
+            <form class="form-horizontal">
+                <div class="box-body" style="pointer-events: all;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <strong id="lblMsg">@TempData["errorMsg"]</strong>
+                            </div>
+                        </div>
+                    </div>
+                    @Html.HiddenFor(m => m.FeePaymentDetailId)
+                    @Html.HiddenFor(m => m.BankDetail.Id)
+                    @Html.HiddenFor(m => m.FeeDetail.Id)
+                    @Html.HiddenFor(m => m.RegistrationInfo.Id)
+
+                    @Html.HiddenFor(m => m.RegistrationInfo.RegistartionNo)
+
+                    @Html.HiddenFor(m=>m.RegistrationInfo.AddMissionId)
+
+                    @Html.HiddenFor(m => m.RegistrationInfo.SessionId)
+                    @Html.HiddenFor(m => m.RegistrationInfo.CourseId)
+                    <input type="hidden" value="@Model.PT" id="hdnPageType" />
+                    <input type="hidden" id="hdnIsAddForAdm" value="@(Model.GetNotification.IsAddAdmFee?"True":"False")" />
+                    <input type="hidden" value="0" id="hdnPayAmount" />
+                    <input type="hidden" id="hdninstallment" value="" />
+                    <input type="hidden" id="hdnPartWisePay" value="" />
+                    <div class="form-group">
+                        <label class="col-sm-1 ">Reciept No :</label>
+                        <div class="col-sm-2">
+                            @Html.TextBoxFor(m => m.RecieptNo, new { @class = "form-control", placeholder = "Reciept No", disabled = "disabled" })
+                        </div>
+                        <label class="col-sm-1 ">Registration No :</label>
+                        <div class="col-sm-2">
+                            @Html.TextBoxFor(m => m.RegistrationInfo.RegistrationNoStr, new { @class = "form-control", placeholder = "Registraion No", disabled = "disabled" })
+                        </div>
+                        <label class="col-sm-1 ">Admission No :</label>
+                        <div class="col-sm-2">
+                            @Html.TextBoxFor(m => m.RegistrationInfo.AddMissionId, new { @class = "form-control", placeholder = "Admission No", disabled = "disabled" })
+                        </div>
+                        <label class="col-sm-1 ">Date :</label>
+                        <div class="col-sm-2">
+                            @Html.TextBoxFor(m => m.CurrentDate, new { @class = "form-control", placeholder = "Date", disabled = "disabled" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 ">First Name :</label>
+                        <div class="col-sm-2">
+                            @Html.TextBoxFor(m => m.RegistrationInfo.Fname, new { @class = "form-control", placeholder = "First Name", disabled = "disabled" })
+                        </div>
+                        <label class="col-sm-1 ">Last Name :</label>
+                        <div class="col-sm-2">
+                            @Html.TextBoxFor(m => m.RegistrationInfo.Lname, new { @class = "form-control", placeholder = "Last Name", disabled = "disabled" })
+                        </div>
+                        <label class="col-sm-1 ">Email :</label>
+                        <div class="col-sm-5">
+                            @Html.TextBoxFor(m => m.RegistrationInfo.Email, new { @class = "form-control", placeholder = "Email", disabled = "disabled" })
+                        </div>
+                    </div>
+                    <div class="form-group" style="padding-top:10px;">
+                        <label class="col-sm-1 ">Course :</label>
+                        <div class="col-sm-2">
+                            @Html.TextBoxFor(m => m.RegistrationInfo.CourseName, new { @class = "form-control", placeholder = "Course Name", disabled = "disabled" })
+                        </div>
+                        <label class="col-sm-1 ">Session :</label>
+                        <div class="col-sm-2">
+                            @Html.TextBoxFor(m => m.RegistrationInfo.SessionName, new { @class = "form-control", placeholder = "Session Name", disabled = "disabled" })
+                        </div>
+                        <label class="col-sm-1 ">Amity Enroll No :</label>
+                        <div class="col-sm-2">
+                            @Html.TextBoxFor(m => m.RegistrationInfo.AmityEnNo, new { @class = "form-control", placeholder = "Amity Enroll No", disabled = "disabled" })
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="button" class="btn btn-info" data-toggle="modal" onclick="GetFeeList();" data-target="#modal-default">
+                                Candidate Fee Collection
+                            </button>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label class="col-sm-1 ">Fee Name :</label>
+                        <div class="col-sm-2">
+                            @Html.DropDownListFor(m => m.FeeTypeDetailId, new SelectList(Model.FeeTypeDetailList, "Id", "Name"), "Select FeeType", new { @class = "form-control" })
+                        </div>
+                        <label class="col-sm-1 ">Fee Amount :</label>
+                        <div class="col-sm-2">
+                            @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", placeholder = "Amount", disabled = "disabled" })
+                        </div>
+                        <label class="col-sm-1 ">Payment Type :</label>
+                        <div class="col-sm-2">
+                            @Html.DropDownListFor(m => m.PaymentTypeId, new SelectList(Model.PaymentTypeList, "Id", "Name"), "Select PaymentType", new { @class = "form-control" })
+                        </div>
+                        <label class="col-sm-1 ">Payment Mode :</label>
+                        <div class="col-sm-2">
+                            @Html.DropDownListFor(m => m.PaymentModeId, new SelectList(Model.PaymentModeList, "Id", "Name"), "Select PaymentMode", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 ">Part-Wise:</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="ddlPartWise">
+                                <option value="No">
+                                    No
+                                </option>
+                                <option value="Yes">
+                                    Yes
+                                </option>
+                            </select>
+                        </div>
+
+                        <label class="col-sm-1 ">Payment Date :</label>
+                        <div class="col-sm-2">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input id="EnteredDate" class="form-control" placeholder="Payment Date" autocomplete="off" onkeydown="return false;" />
+                            </div>
+                        </div>
+                    </div>
+                    <hr id="hrInstallment" style="display:none" />
+                    <div class="form-group" id="divInstallment" style="display:none">
+                    </div>
+                    <hr />
+
+                    <div class="row" id="divBankDetail1" style="display:none">
+                        <div class="col-md-6">
+                            <label id="lblbankLabel"> Enter DD No:</label>
+                            @Html.TextBoxFor(m => m.BankDetail.DDRTGSNo, new { @class = "form-control", placeholder = "DD/RTGS No" })
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-top:15px;">
+                        <input type="hidden" id="hdnFeeCollectionId" value="" />
+                        <div class="col-md-6">
+                            <div style="border-color:black;display:none" id="tblFeePay">
+                                <table class="table table-striped addfeedisplaytbl" id="tblPay1">
+                                    <thead><tr><th width="5%">Sno.</th><th>Amount to be paid</th><th>Pan Number</th></tr></thead>
+                                    <tbody id="tblTbodytd"></tbody>
+                                </table>
+
+                                <table class="table table-striped addfeedisplaytbl" id="tblPay2" style="display:none;">
+                                    <thead><tr><td style="background-color:burlywood;"></td><td style="text-align:center;background-color:burlywood;width:100%;" id="tdCapitalAmt"> SCapital Amount : 0 INR  </td></tr></thead>
+                                    <tbody id="tblTbodyPartwisetd">
+                                        <tr>
+                                            <td id="tdInsertNum">1.</td>
+                                            <td><input type="text" id="txtPartWisePay" onkeypress="return isNumber(event,this)" class="form-control partwisePay" placeholder="Enter PartWise Amount" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <button id="rzp-button1" type="button" style="display:none"></button>
+                            <input type="button" id="btnSubmit" onclick="submitData();" class="btn btn-success" value="Submit" disabled />
+                            <input type="button" class="btn btn-default" value="Cancel" />
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog" style="width:1050px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Candidate Fee Detail</h4>
+            </div>
+            <div class="modal-body" id="divFeeList">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<script src="~/Plugins/iCheck/icheck.min.js"></script>
+<script src="~/assets/js/considerationoffeeamount.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#BankDetail_StrIssueDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy',
+            //"setDate": new Date(),
+            changeMonth: true,
+            changeYear: true
+        });//.datepicker("setDate", 'now');
+        $('#chkBank').iCheck('check');
+        var feeType = '@Model.FeeTypeId';
+        if (feeType != null && feeType != '' && feeType != undefined)
+            $('#FeeTypeDetailId').val(feeType).trigger("change");
+        else {
+            feeType = $('#FeeTypeDetailId > option:contains("Admission")').val()
+            if (feeType != null && feeType != '' && feeType != undefined)
+                $('#FeeTypeDetailId').val(feeType).trigger("change");
+        }
+        //updateNotification();
+        checkMsg();
+        StopLoading();
+        setTimeout(function () {
+            IsPieceAndCapitalBalance();
+        }, 1000)
+
+        $('#EnteredDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        }).datepicker('setDate','now');
+    });
+
+    $('#ddlPartWise').change(function () {
+        if ($('#RegistrationInfo_CourseName').val() !== 'PHT')
+            $('#tdCapitalAmt').text("Capital Amount : " + ($('#txtFeeCollectionInsertAmt').val() == undefined ? 0.00 : $('#txtFeeCollectionInsertAmt').val()) + " INR");
+
+        if ($(this).val() == "Yes") {
+            $('#tblPay1').css('display', 'none');
+            $('#tblPay2').css('display', 'block');
+        } else {
+            $('#tblPay1').css('display', 'block');
+            $('#tblPay2').css('display', 'none');
+        }
+    });
+
+    function clearBankDetail() {
+        $('#BankDetail_Amount').val('');
+        $('#BankDetail_DDRTGSNo').val('');
+    }
+
+    $('#chkBank').on('ifClicked', function () {
+        $('#BankDetail_Amount').val('');
+        $('#BankDetail_DDRTGSNo').val('');
+        if ($(this).prop('checked')) {
+            $('#lblBank').css('display', 'block')
+            $('#divBank').css('display', 'block')
+        } else {
+            $('#lblBank').css('display', 'none')
+            $('#divBank').css('display', 'none')
+        }
+    });
+
+    function GetFeeList() {
+        $.ajax({
+            url: "/FeeManagement/GetFeeDetailList",
+            type: "GET",
+            async: false,
+            data: { RegNo: $('#RegistrationInfo_RegistartionNo').val() },
+            success: function (response) {
+                if (response != null) {
+                    $('#divFeeList').empty();
+                    $('#divFeeList').append(response);
+                    $('#myModal').modal('show');
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function rootRedirectToAction() {
+        var result = $('#hdnPageType').val();
+        if (result == null || result == "")
+            window.location.href = "/FeeManagement/FeeCandidatesList";
+        else
+            window.location.href = "/Registration/MedicalClearance";
+    }
+
+    function checkMsg() {
+        if ($("#lblMsg").text() != "") {
+            $("#dvMsg").css("display", "block");
+            setTimeout(function () {
+                $("#dvMsg").css("display", "none");
+            }, 8000);
+        }
+    }
+
+    $('#PaymentTypeId').change(function () {
+        $('#hdninstallment').val('');
+        $('#divInstallment').css('display', 'none');
+        $('#hrInstallment').css('display', 'none');
+        if ($(this).val() != "" && $('#FeeTypeDetailId option:selected').text() == "Admission") {
+            if ($(this).val() == '1') {
+                $('#divInstallment').css('display', 'block');
+                $('#hrInstallment').css('display', 'block');
+                addInstallMentSection();
+            } else if ($(this).val() == '2') {
+                admissionFeePay($('#hdnPayAmount').val(), $(this).val(), $('#RegistrationInfo_CourseName').val());
+            }
+        } else {
+            if ($(this).val() == "") {
+                $('#tblTbodytd').empty();
+                $('#tdCapitalAmt').text("BCapital Amount : 0 INR");
+            }
+        }
+    });
+
+    function validation() {
+        var status = true;
+        var feeTypeDetail = $('#FeeTypeDetailId').val();
+        var feeAmount = $('#Amount').val();
+        var paymentType = $('#PaymentTypeId').val();
+        var PaymentMode = $('#PaymentModeId').val();
+        var PaymentModeText = $('#PaymentModeId option:selected').text();
+        var feeCollectionAmount = $('#txtFeeCollectionInsertAmt').val();
+        var feeCollectionPanNumber = $('#txtInsertPanNumber').val();
+        var IsPartWise = $('#ddlPartWise').val();
+
+        if (feeTypeDetail == "" || feeTypeDetail == 0) {
+            $('#FeeTypeDetailId').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#FeeTypeDetailId').css("border", "");
+        }
+        if (feeAmount == "" || feeAmount <= 0) {
+            $('#Amount').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#Amount').css("border", "");
+        }
+        if (paymentType == "" || paymentType == 0) {
+            $('#PaymentTypeId').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#PaymentTypeId').css("border", "");
+        }
+        if (PaymentMode == "" || PaymentMode == 0) {
+            $('#PaymentModeId').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#PaymentModeId').css("border", "");
+        }
+
+        if (IsPartWise == "No" && feeCollectionPanNumber != "" && feeCollectionPanNumber.length != 10) {
+            MsgProper("Please fill valid PAN-card no!");
+            $('#txtInsertPanNumber').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#txtInsertPanNumber').css("border", "");
+        }
+
+        if (PaymentModeText == "DD" || PaymentModeText == "RTGS") {
+            if ($('#BankDetail_DDRTGSNo').val() == "" && $('#BankDetail_DDRTGSNo').length < 4) {
+                $('#BankDetail_DDRTGSNo').css("border", "1px solid red");
+                status = false;
+            } else {
+                $('#BankDetail_DDRTGSNo').css("border", "");
+            }
+        }
+
+        if (IsPartWise == "Yes") {
+            if ($('#txtPartWisePay').val() == "" || $('#txtPartWisePay') == null) {
+                $('#txtPartWisePay').css("border", "1px solid red");
+                status = false;
+            } else {
+                $('#txtPartWisePay').css("border", "");
+            }
+        }
+
+        if (status) {
+            if (feeCollectionAmount == "") {
+                $('#txtFeeCollectionInsertAmt').css("border", "1px solid red");
+                status = false;
+            } else {
+                $('#txtFeeCollectionInsertAmt').css("border", "");
+            }
+            var ptype = $('#PaymentModeId option:selected').text();
+            if (ptype == 'Cash') {
+                if (feeCollectionAmount > 49000 && feeCollectionAmount < 198999) {
+                    if (feeCollectionPanNumber == "") {
+                        MsgProper("Please fill PAN-card no. because amount exceeds Rs.49000 Cash!");
+                        $('#txtInsertPanNumber').css("border", "1px solid red");
+                        status = false;
+                    }
+                }
+                else if (feeCollectionAmount >= 199000) {
+                    MsgProper("A maximum total of 1.99 Lacs cash payment would be taken from candidate!");
+                    $('html, body').animate({
+                        scrollTop: $("#dvMsg").offset().top
+                    }, 2000);
+                    status = false;
+                }
+                else {
+                    $('#txtInsertPanNumber').css("border", "");
+                }
+            }
+        }
+
+        if (status && IsPartWise == "Yes") {
+            payAmount = 0;
+            $('.partwisePay').each(function (i, obj) {
+                payAmount += $(this).val() == '' ? 0 : parseInt($(this).val());
+            });
+            var capitalPay = parseInt($('#hdnPartWisePay').val() == '' ? 0 : $('#hdnPartWisePay').val());
+            if (payAmount > capitalPay) {
+                $('#txtPartWisePay').css("border", "1px solid red");
+                MsgProper("Entered amount should not exceed from capital amount!");
+                $('html, body').animate({
+                    scrollTop: $("#dvMsg").offset().top
+                }, 2000);
+                status = false;
+            } else {
+                $('#txtPartWisePay').css("border", "");
+            }
+        }
+        return status;
+    }
+
+    function IsPieceAndCapitalBalance() {
+        var regNo = $('#RegistrationInfo_RegistartionNo').val();
+        var PaymentTypeId = $('#PaymentTypeId').val();
+        var installmentId = PaymentTypeId == 1 ? parseInt($('#hdninstallment').val()) : null;
+        var FeeName = $('#FeeTypeDetailId option:selected').text();
+        var model = {};
+        model.RegNo = parseInt(regNo);
+        model.PaymentTypeId = parseInt(PaymentTypeId);
+        model.FeeTypeDeatilId = parseInt($('#FeeTypeDetailId').val());
+        model.InstallmentId = installmentId
+        if (FeeName == 'Admission' && PaymentTypeId != undefined && PaymentTypeId!=null && PaymentTypeId != "") {
+            $.ajax({
+                url: "/FeeManagement/CapitalAndPiecePaymentBalance",
+                type: "POST",
+                async: false,
+                data: { Model: model },
+                success: function (response) {
+                    if (response != null) {
+                        console.log(response);
+                        if (!response.BalanceStatus) {
+                            $('#ddlPartWise').val('Yes').trigger('change').attr('disabled', 'disabled');
+                            $('#txtPartWisePay').val((response.RemainderPartWiseAmount == 0 ? '' : response.RemainderPartWiseAmount));
+                            var srNo = 1;
+                            if (response.PartWisePaymentList.length > 0) {
+                                var str = '';
+                                $.each(response.PartWisePaymentList, function (index, item) {
+                                    str += '<tr><td>' + srNo + '</td><td><input type="text" class="form-control partwisePay" value=' + item.Amount + ' disabled/></td></tr>';
+                                    srNo++;
+                                });
+                                $('#tblTbodyPartwisetd').prepend(str);
+                                $('#hdnFeeCollectionId').val(response.PartWisePaymentList[0].FeeCollectionId);
+                            }
+                            $('#tdInsertNum').text(srNo);
+                            $('#btnSubmit').attr('disabled', false);
+                        }
+                        if ($('#hdnPartWisePay').val() == '' && response.PaidAmount > 0) {
+                            $('#hdnPartWisePay').val(response.PaidAmount);
+                            $('#tdCapitalAmt').text("CCapital Amount : " + response.PaidAmount +" INR");
+                        }
+                    }
+                },
+                error: function (error) {
+                }
+            });
+        }
+    }
+
+    function saveFeeCollectionData(obj) {
+        var FeeDetail = {};
+        FeeDetail.Id = $('#FeeDetail_Id').val();
+        FeeDetail.PaymentTypeId = $('#PaymentTypeId').val() != "" ? $('#PaymentTypeId').val() : 0;
+        FeeDetail.FeeTypeDetailId = $('#FeeTypeDetailId').val() != "" ? $('#FeeTypeDetailId').val() : 0;
+        FeeDetail.RegistrationMasterId = $('#RegistrationInfo_Id').val();
+        FeeDetail.RegistrationNo = $('#RegistrationInfo_RegistartionNo').val();
+
+        var FeeCollection = {};
+        FeeCollection.Amount = $('#txtFeeCollectionInsertAmt').val() != "" ? $('#txtFeeCollectionInsertAmt').val() : 0;
+        FeeCollection.PanNumber = $('#txtInsertPanNumber').val();
+        FeeCollection.Installment = $('#hdninstallment').val() == "" ? 0 : parseInt($('#hdninstallment').val());
+
+        var BankDetail = {};
+        BankDetail.DDRTGSNo = $('#BankDetail_DDRTGSNo').val();
+        BankDetail.Amount = $('#txtPartWisePay').val() != '' ? parseInt($('#txtPartWisePay').val()) : FeeCollection.Amount;
+
+        var Model = {};
+        Model.Id = $('#FeePaymentDetailId').val();
+        Model.FeeDetailId = $('#FeeDetail_Id').val();
+        Model.PaymentModeId = $('#PaymentModeId').val();
+        Model.CourseId = $('#RegistrationInfo_CourseId').val();
+        Model.RecieptNo = $('#RecieptNo').val();
+        Model.FeePayModeName = $('#PaymentModeId option:selected').text();
+        if (obj != null && obj != undefined && obj != "")
+            Model.TransectionId = obj;
+        Model.FeeDetail = FeeDetail;
+        Model.FeeCollection = FeeCollection;
+        Model.BankDetail = BankDetail;
+        Model.PT = $('#hdnPageType').val();
+        Model.FeeName = $('#FeeTypeDetailId option:selected').text();
+        Model.SettleDate = $('#EnteredDate').val();
+        Model.hdnFeeDetailId = $('#hdnFeeCollectionId').val() == '' ? 0 : parseInt($('#hdnFeeCollectionId').val());
+        Model.SettleDate = $('#EnteredDate').val();
+        jQuery.ajaxSetup({ async: false });
+        jQuery.post('/FeeManagement/SaveFeeCollectionAndPayment', { Model: Model }, function (response) {
+            if (response) {
+                //var id = $('#RegistrationInfo_RegistartionNo').val();
+                //var url = '/FeeManagement/AddFeeCollection?Id=' + id;
+                //debugger;
+                //if ($('#hdnPageType').val() != null && $('#hdnPageType').val() != "")
+                //    url = url + '&PT=1';
+                var result = $('#hdnPageType').val();
+                if (result == null || result == "")
+                    window.location.href = "/FeeManagement/FeeCandidatesList";
+                else
+                    window.location.href = "/Registration/MedicalClearance";
+              //  window.location.href = url;
+            }
+            else {
+                MsgProper("Error");
+            }
+        });
+    }
+
+    function submitData() {
+        FeePayModeName = $('#PaymentModeId option:selected').text();
+        if (!validation())
+            return false;
+
+        if (ChkFeeBalance('Submit') == false)
+            return false;
+
+        if (FeePayModeName == "Online")
+            $('#rzp-button1').trigger("click");
+        else
+            saveFeeCollectionData(null);
+
+        updateNotification();
+    }
+
+    function MsgProper(msg) {
+        $("#dvMsg").css("display", "block");
+        $("#lblMsg").text(msg);
+        setTimeout(function () {
+            $("#dvMsg").css("display", "none");
+            $("#lblMsg").text('');
+        }, 8000);
+    }
+
+    $('#FeeTypeDetailId').change(function () {
+        $('#hdninstallment').val('');
+        $('#tblTbodytd').empty();
+        var Amount = 0;
+        $.ajax({
+            url: "/PTA/FeeCollection/GetAmountByFeeType",
+            type: "GET",
+            async: false,
+            data: { FeeTypeDeatilId: $(this).val() != "" ? $(this).val() : 0 },
+            success: function (response) {
+                if (response != null) {
+                    $('#Amount').val(response);
+                    Amount = response;
+                    if ($('#FeeTypeDetailId option:selected').text() != "Admission" && $('#FeeTypeDetailId').val() != "") {
+                        $('#PaymentTypeId').val(2).trigger('change');
+                        $('#PaymentTypeId').attr('disabled', 'disabled');
+                    }
+                    else if ($('#FeeTypeDetailId option:selected').text() == "Admission" && $('#RegistrationInfo_CourseName').val() == "PHT") {
+                        $('#PaymentTypeId').val(2).trigger('change');
+                        $('#PaymentTypeId').attr('disabled', 'disabled');
+                    }
+                    else {
+                        $.ajax({
+                            url: "/PTA/FeeCollection/IsAdmissionFeePay",
+                            type: "GET",
+                            data: { AdmissionId: $('#RegistrationInfo_AddMissionId').val(), FeeTypeDetailId: $('#FeeTypeDetailId').val() != "" ? $('#FeeTypeDetailId').val() : 0, SessionMasterId: $('#RegistrationInfo_SessionId').val(), CourseId: $('#RegistrationInfo_CourseId').val() },
+                            success: function (response) {
+                                if (response.FeeInfoDetail != null) {
+                                    if (response.FeeInfoDetail.IsAdmissionFeePay) {
+                                        $('#PaymentTypeId').attr('disabled', 'disabled');
+                                        $('#PaymentTypeId').val(response.FeeInfoDetail.PaymentTypeId).trigger('change');
+                                    } else {
+                                        $('#PaymentTypeId').val('').trigger('change');
+                                        $('#PaymentTypeId').attr('disabled', false);
+                                    }
+                                } else {
+                                    $('#PaymentTypeId').val('').trigger('change');
+                                    $('#PaymentTypeId').attr('disabled', false);
+                                }
+                            },
+                            error: function (error) {
+
+                            }
+                        });
+                    }
+                }
+            },
+            error: function (error) {
+
+            }
+        });
+        $('#PaymentTypeId').trigger('change');
+        showvalidateFeeTbl($('#FeeTypeDetailId option:selected').text(), Amount);
+    });
+
+    function IsDisableEnableRadio() {
+        $('.clinstall').each(function () {
+            if ($(this).attr('status') == 'false') {
+                if ($('#hdnIsAddForAdm').val() == 'False' && $('#FeeTypeDetailId option:selected').text() == "Admission") {
+                    $('#btnSubmit').attr('disabled', 'disabled');
+                } else {
+                    $(this).removeAttr('disabled');
+                    $('.icheckbox_square-blue').removeClass('disabled');
+                    $('#hdninstallment').val(($(this).attr('id').split('_')[1]));
+                    $(this).iCheck('check');
+                }
+                return false;
+            }
+            else {
+                $(this).prop('checked', true);
+                $('.icheckbox_square-blue').removeClass('disabled');
+                $('#hdninstallment').val(($(this).attr('id').split('_')[1]));
+            }
+        });
+    }
+
+    function addInstallMentSection() {
+        var paymentTypeDetailid = $('#FeeTypeDetailId').val() != '' ? parseInt($('#FeeTypeDetailId').val()) : 0;
+        var Amount = $('#Amount').val() != '' ? $('#Amount').val() : 0;
+        var paymentTypeId = $('#PaymentTypeId').val() != '' ? parseInt($('#PaymentTypeId').val()) : 0;
+        var recieptNo = $('#RecieptNo').val();
+        if (paymentTypeId > 0 && Amount > 0 && paymentTypeId == 1) {
+            $('#divInstallment').css('display', 'block');
+            $('#hrInstallment').css('display', 'block');
+            if (recieptNo != '') {
+                $.ajax({
+                    url: "/PTA/FeeCollection/GetFeeCollectionRecordByRecieptNo",
+                    type: "GET",
+                    async: false,
+                    data: { RecieptNo: recieptNo },
+                    success: function (response) {
+                        $('#divInstallment').empty();
+                        if (response != null && response.length > 0) {
+                            if ($('#RegistrationInfo_CourseName').val() == "MBA")
+                               response.pop(-1, 1);
+                            var str = '<div class="row"><div class="col-md-12"><div class="installmentDV">';
+                            var counter = true;
+                            $.each(response, function (i, item) {
+                                str += '<div class="col-sm-4"><div class="checkbox icheck" style="padding-top: 0px !important;"><label><input class="clinstall" status="' + item.IsFeeCollection + '" name="chkName" type="checkbox" id="rdbInstallment_' + item.Id + '" ' + (item.IsFeeCollection == true ? 'checked' : '') + ' ' + (counter == true ? 'disabled' : '') + '  /><span style="font-weight:600">&nbsp;' + item.Name + '</span></label></div></div>';
+
+                                if (item.IsFeeCollection) {
+                                    if (i == 0 && response[1].IsFeeCollection == true)
+                                        counter = true;
+                                    else if (i == 1 && response[2].IsFeeCollection == true && response.length == 3)
+                                        counter = true;
+                                    else
+                                        counter = false;
+                                }
+                                else
+                                    counter = true;
+                            });
+                            str += '</div></div></div>';
+                            $('#divInstallment').append(str);
+                            $('#divInstallment').css('display', 'block');
+                            $('input').iCheck({
+                                checkboxClass: 'icheckbox_square-blue',
+                                radioClass: 'iradio_square-blue',
+                                increaseArea: '20%'
+                            });
+                            $('.clinstall').on('ifChanged', function () {
+                                if ($(this).prop('checked')) {
+                                    if ($('#FeeTypeDetailId option:selected').text() == "Admission" && $('#PaymentTypeId').val() != '') {
+                                        admissionFeePay($('#hdnPayAmount').val(), $('#PaymentTypeId').val(), $('#RegistrationInfo_CourseName').val());
+                                        $('#btnSubmit').attr('disabled', false);
+                                    }
+                                    $('#hdninstallment').val(($(this).attr('id').split('_')[1]));
+                                }
+                                else {
+                                    $('#tblTbodytd tr:last').remove();
+                                    $('#btnSubmit').attr('disabled', 'disabled');
+                                    $('#hdninstallment').val('');
+                                }
+                            });
+                        }
+                    },
+                    error: function (error) {
+                    }
+                });
+                setTimeout(function () {
+                    IsDisableEnableRadio();
+                }, 500);
+            }
+        } else {
+            $('#divInstallment').css('display', 'none');
+            $('#hrInstallment').css('display', 'none');
+        }
+    }
+
+
+    function clearBankDetail() {
+        $('#BankDetail_AccountNumber').val('');
+        $('#BankDetail_AccountType').val('');
+        $('#BankDetail_BankName').val('');
+        $('#BankDetail_BeneficiaryName').val('');
+        $('#BankDetail_IssueDate').val('');
+        $('#BankDetail_IFSC_Code').val('');
+        $('#BankDetail_BranchAddress').val('');
+    }
+
+    $('#PaymentModeId').change(function () {
+        var pType = $('#PaymentModeId option:selected').text();
+        //clearBankDetail();
+        $('#BankDetail_Amount').val('');
+        $('#BankDetail_DDRTGSNo').val('');
+        if (pType == "Cash" || pType == "Online") {
+            $('#divBankDetail1').css('display', 'none');
+            //$('#divBankDetail2').css('display', 'none');
+        } else {
+            if ($(this).val() == "") {
+                $('#divBankDetail1').css('display', 'none');
+                //$('#divBankDetail2').css('display', 'none');
+                return false;
+            }
+            $('#lbldd').text($("option:selected", this).text() + " No:");
+            $('#divBankDetail1').css('display', 'block');
+            $('#lblbankLabel').text("Enter " + pType + " No:");
+            //$('#divBankDetail2').css('display', 'block');
+        }
+    });
+
+    function ChkFeeBalance(obj) {
+        var ExactBalance = $('#Amount').val();
+        var TotalBalance = 0;
+        $('.clPaidAmount').each(function () {
+            TotalBalance = TotalBalance + parseFloat($(this).val());
+        });
+        if (ExactBalance == TotalBalance) {
+            $('#btnSubmit').attr('disabled', 'disabled');
+            $('#trMain').remove();
+        }
+        if (obj == 'Submit') {
+            var currentPay = $('#txtFeeCollectionInsertAmt').val() != "" ? parseInt($('#txtFeeCollectionInsertAmt').val()) : 0;
+            TotalBalance = TotalBalance + currentPay;
+            if (TotalBalance > ExactBalance) {
+                MsgProper('Please fill fee with the balance of exact amonut!');
+                return false;
+            }
+        }
+    }
+
+    function showvalidateFeeTbl(FeeTypeName, CapitalAmount) {
+        var payType = $('#PaymentTypeId').val();
+        var feeType = $('#FeeTypeDetailId').val();
+        var feeTypeName = $('#FeeTypeDetailId option:selected').text();
+        var feeAmount = $('#Amount').val();
+        $('#tblTbodytd').empty();
+        $('#tblFeePay').css('display', 'none');
+        var num = 1;
+        var tblRow = '';
+        var payFeeAmonut = 0;
+        if (feeType != "") {
+            $('#tblFeePay').css('display', 'block');
+            $.ajax({
+                url: "/PTA/FeeCollection/GetDepositFeeByCourseId",
+                type: "GET",
+                async: false,
+                data: { AdmissionId: $('#RegistrationInfo_AddMissionId').val(), FeeTypeDetailId: $('#FeeTypeDetailId').val() != "" ? $('#FeeTypeDetailId').val() : 0, SessionMasterId: $('#RegistrationInfo_SessionId').val(), CourseId: $('#RegistrationInfo_CourseId').val() },
+                success: function (response) {
+                    if (response != null && response.length > 0) {
+                        for (var i = 0; i < response.length; i++) {
+                            tblRow += '<tr><td>' + num + ' </td><td><input type="text" class="form-control clPaidAmount" value="' + response[i].Amount + '" disabled/></td><td><input type="text" class="form-control" value="' + (response[i].PanNumber != null ? response[i].PanNumber.toUpperCase():'') + '" disabled /></td></tr>';
+                            num = num + 1;
+                            payFeeAmonut += response[i].Amount;
+                        }
+                    }
+                    $('#tblTbodytd').append(tblRow);
+                },
+                error: function (error) {
+                }
+            });
+        }
+        if (payFeeAmonut < CapitalAmount) {
+            if (feeTypeName != 'Admission' && feeType != '') {
+                $('#tblTbodytd').append('<tr id="trMain"><td> </td><td><input type="text" id="txtFeeCollectionInsertAmt" value="' + CapitalAmount + '" class="form-control" disabled /></td><td><input type="text" id="txtInsertPanNumber" maxlength="10" style="text-transform: uppercase"  class="form-control" /></td></tr>');
+            } else if (feeType != '' && feeTypeName == 'Admission' && $('#RegistrationInfo_CourseName').val() == 'PHT') {
+                $('#tblTbodytd').append('<tr id="trMain"><td> </td><td><input type="text" id="txtFeeCollectionInsertAmt" value="' + CapitalAmount + '" class="form-control" disabled /></td><td><input type="text" id="txtInsertPanNumber" maxlength="10" style="text-transform: uppercase"  class="form-control" /></td></tr>');
+            } else {
+                $('#hdnPayAmount').val(payFeeAmonut);
+            }
+            $('#btnSubmit').attr('disabled', false);
+        } else {
+            $('#btnSubmit').attr('disabled', 'disabled');
+        }
+    }
+
+    function admissionFeePay(payFeeAmonut, payTypeVal, courseName) {
+        var AmountToPay = '';
+        var num = 1;
+        if (payTypeVal === '1') {
+            if (courseName == 'BBA') {
+                if (payFeeAmonut == 0)
+                    AmountToPay = 'InstallMent1';
+                else if (payFeeAmonut == 175000) {
+                    AmountToPay = 'InstallMent2';
+                    num = 2;
+                }
+                else if (payFeeAmonut == 275000) {
+                    num = 3;
+                    AmountToPay = 'InstallMent3';
+                }
+            } else if (courseName == 'MBA') {
+                if (payFeeAmonut == 0)
+                    AmountToPay = 'InstallMent1';
+                else if (payFeeAmonut == 150000) {
+                    AmountToPay = 'InstallMent2';
+                    num = 2;
+                }
+            }
+            if (AmountToPay != '') {
+                //$('#tblTbodytd tr:last').remove();
+                $('#tblTbodytd').append('<tr id="trMain"><td>'+ num +'</td><td><input type="text" id="txtFeeCollectionInsertAmt" value="' + GetAmountByCourseId(AmountToPay, courseName) + '" class="form-control" disabled /></td><td><input type="text" id="txtInsertPanNumber" maxlength="10" style="text-transform: uppercase" class="form-control" /></td></tr>');
+                $('#tdCapitalAmt').text("DCapital Amount : " + GetAmountByCourseId(AmountToPay, courseName) + " INR");
+                $('#hdnPartWisePay').val(GetAmountByCourseId(AmountToPay, courseName));
+            }
+        }// else if (payTypeVal === '2' && payFeeAmonut != '0') {
+        else if (payTypeVal === '2') {
+            $('#tblTbodytd tr:last').remove();
+            $('#tblTbodytd').append('<tr id="trMain"><td> </td><td><input type="text" id="txtFeeCollectionInsertAmt" value="' + admissionOnetimepay(courseName) + '" class="form-control" disabled /></td><td><input type="text" id="txtInsertPanNumber" maxlength="10" style="text-transform: uppercase" class="form-control" /></td></tr>');
+            $('#tdCapitalAmt').text("ECapital Amount : " + admissionOnetimepay(courseName) + " INR");
+            $('#hdnPartWisePay').val(admissionOnetimepay(courseName));
+        }
+    }
+
+    function AddlastRow(payAmount, capitalAmount) {
+        var feeType = $('#FeeTypeDetailId option:selected').text();
+        var feeTypeId = $('#FeeTypeDetailId').val();
+        if (feeTypeId != "") {
+            if (feeType == "Admission") {
+            } else {
+                if (payAmount < capitalAmount) {
+                    $('#tblTbodytd').append('<tr id="trMain"><td> </td><td><input type="text" id="txtFeeCollectionInsertAmt" class="form-control"/></td><td><input type="text" id="txtInsertPanNumber" maxlength="10" style="text-transform: uppercase" class="form-control" /></td></tr>');
+                    $('#btnSubmit').attr('disabled', false);
+                } else {
+                    $('#btnSubmit').attr('disabled', 'disabled');
+                }
+            }
+        } else {
+            $('#btnSubmit').attr('disabled', 'disabled');
+        }
+    }
+  
+</script>

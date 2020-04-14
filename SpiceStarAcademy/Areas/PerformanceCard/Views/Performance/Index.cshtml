@@ -1,0 +1,414 @@
+﻿@model SJModel.PerformanceModel.PerformanceCardViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/PerformanceCard/Views/Shared/_LayoutP.cshtml";
+}
+<style>
+    input[type="text"] {
+        width: 100%;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    .overlay {
+        /*position: absolute;*/
+        height: 100%;
+        opacity: 0.8;
+        pointer-events: none;
+        z-index: 999999999;
+        display: table;
+    }
+
+    textarea {
+        resize: none;
+    }
+
+    .checkbox-pointer-hide-view {
+        position: relative;
+        height: 25px;
+        z-index: 99;
+        top: 22px;
+    }
+
+    .manage-input-checkbox input {
+        position: relative;
+    }
+</style>
+<link href="~/assets/js/Performance/Css/font-awesome.min.css" rel="stylesheet" />
+<section class="content">
+    <!-- Info boxes -->
+    <!-- /.row -->
+    <input type="hidden" id="hdndivkeepvalues" />
+    <div class="row disabledbutton">
+        <div class="col-md-12">
+            <div class="box-new">
+                <!--<div class="side-red-strip"></div>-->
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <strong id="lblMsg"></strong>
+                    </div>
+                    <div class="title-header-container"><h5>PERFORMANCE CARD</h5></div>
+                    <input type="hidden" id="hdnpercentageInfo" value="@Model.PercentageCritiriaJsonInfo" />
+                    @Html.HiddenFor(m => m.ReviewArr)
+                    @Html.HiddenFor(m => m.WeeklyArr)
+                    @Html.HiddenFor(m => m.GetRatingData)
+                    @Html.HiddenFor(m => m.RegNo)
+                    @Html.HiddenFor(m => m.AdmissionId)
+                    <!------------------------------------------------- Search and display info box------->
+                    <div class="box box-performance box-solid">
+                        <!-- /.box-header -->
+                        <div class="side-red-strip-long"></div>
+                        <div class="box-body" style="margin-top:25px;">
+                            <div class="col-md-3">
+                                <div class="profile-upload-section">
+                                    <div class="preview text-center">
+                                        <img class="preview-img" src="@Url.Content(Model.PhotoPath!=null?Model.PhotoPath:"~/Areas/PerformanceCard/Images/default-avtar.jpg")" alt="Preview Image" width="175" height="175" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div>BATCH</div>
+                                    <div class="performance-card-input">
+                                        <input type="hidden" value="@(Model.BatchId.HasValue?Model.BatchId.ToString():"")" id="hdnBatchId" />
+                                        @Html.TextBoxFor(m => m.BatchName, new { @class = "form-control", disabled = "disabled" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div>NAME</div>
+                                    <div class="performance-card-input">
+                                        @Html.TextBoxFor(m => m.StudentName, new { @class = "form-control", disabled = "disabled" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div>CONTACT NO</div>
+                                    <div class="performance-card-input">
+                                        @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", disabled = "disabled" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div>UIN</div>
+                                    <div class="performance-card-input">
+                                        <input type="text" class="form-control" value="@Model.UIN" disabled="disabled" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div>EMAIL ID</div>
+                                    <div class="performance-card-input">
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", disabled = "disabled" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div>REVIEW</div>
+                                    <div class="performance-card-input">
+                                        @Html.DropDownListFor(m => m.ReviewId, new SelectList(Model.ReviewList, "Id", "Name"), "Select Review", new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="divWeekly" style="display:none">
+                                    <div>WEEKLY TERM TYPE</div>
+                                    <div class="performance-card-input">
+                                        <select class="form-control" id="WeeklyTypeList"> </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <div id="secOverlay">
+                        @if (Model.ParmeterTypeList.Count > 0)
+                        {
+                            foreach (var item in Model.ParmeterTypeList)
+                            {
+                                <div class="box box-performance box-solid">
+                                    <!-- /.box-header -->
+                                    <div class="side-red-strip-long"></div>
+                                    <div class="box-body newone" style="margin-top:25px;">
+                                        <div style=" font-size:22px; color:#626262; padding-left:20px;">@item.Name</div>
+                                        <div class="performance-card-details-container" style=" padding:20px;">
+                                            <table id="performance-info" class="table table-bordered tbheaderbg table-hover dataTable">
+                                                <tr><th style="width:15%">CODE</th><th style="width:35%">SUB PARAMETER</th><th style="width:15%">RATING</th><th style="width:5%">N/A</th><th style="width:30%">REMARKS</th></tr>
+                                                @if (item.ParameterList.Count > 0)
+                                                {
+                                                    foreach (var obj in item.ParameterList)
+                                                    {
+                                                        <tr class="clparametertype">
+                                                            <td>@obj.KeyId</td>
+                                                            <td>@obj.Name</td>
+                                                            @if (obj.IsApplicable == true)
+                                                            {
+                                                                <td>
+                                                                    <input type="hidden" id="hdn@(obj.ParameterId)" class="@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", "")) hdncl" value="@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-@(obj.ParameterId)" />
+                                                                    <div class="stars table-responsive divstars" id="div@(item.Id)-@(obj.ParameterId)" ptypeId="@(item.Id)">
+                                                                        <input class="star star-@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-3-@(obj.ParameterId) @(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-@(item.Id)-@(obj.ParameterId)" onchange="getratingentity(this);" id="star-@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-3-@(obj.ParameterId)" identity="@(item.Id)-@(obj.ParameterId)" type="radio" name="@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-@(obj.ParameterId)" />
+                                                                        <label class="star star-@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-3-@(obj.ParameterId)" for="star-@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-3-@(obj.ParameterId)"></label>
+                                                                        <input class="star star-@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-2-@(obj.ParameterId) @(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-@(item.Id)-@(obj.ParameterId)" onchange="getratingentity(this);" id="star-@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-2-@(obj.ParameterId)" identity="@(item.Id)-@(obj.ParameterId)" type="radio" name="@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-@(obj.ParameterId)" />
+                                                                        <label class="star star-@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-2-@(obj.ParameterId)" for="star-@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-2-@(obj.ParameterId)"></label>
+                                                                        <input class="star star-@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-1-@(obj.ParameterId) @(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-@(item.Id)-@(obj.ParameterId)" onchange="getratingentity(this);" id="star-@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-1-@(obj.ParameterId)" identity="@(item.Id)-@(obj.ParameterId)" type="radio" name="@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-@(obj.ParameterId)" />
+                                                                        <label class="star star-@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-1-@(obj.ParameterId)" for="star-@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))-1-@(obj.ParameterId)"></label>
+                                                                    </div>
+                                                                    <div id="dicna@(item.Id)-@(obj.ParameterId)" style="font-size:18px;color:red;display:none">
+                                                                        <h4>Not Applicable</h4>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div style="text-align:center">
+                                                                        <input class="chkcl" id="chk_@(item.Id)-@(obj.ParameterId)" mark="@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))" type="checkbox" @(Model.ReviewId > 0 ? "disabled" : "") />
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <textarea placeholder="Review" class="form-control" id="txtreview@(item.Id)-@(obj.ParameterId)" style="z-index:999999"></textarea>
+                                                                </td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td colspan="2" style="color:red;font-size:18px;">
+                                                                    <h4> Not Applicable </h4>
+                                                                    <div class="starwars table-responsive" style="display:none" identity="@(item.Id)-@(obj.ParameterId)" id="div@(item.Id)-@(obj.ParameterId)" ptypeId="@(item.Id)"> </div>
+                                                                </td>
+                                                                <td style="display:none">
+                                                                    <div style="text-align:center">
+                                                                        <input class="chkcl" id="chk_@(item.Id)-@(obj.ParameterId)" mark="@(System.Text.RegularExpressions.Regex.Replace(item.Name, @"\s", ""))" type="checkbox" @(Model.ReviewId > 0 ? "disabled" : "") checked />
+                                                                    </div>
+                                                                </td>
+                                                                <td style="display:none">
+                                                                    <textarea placeholder="Review" class="form-control" id="txtreview@(item.Id)-@(obj.ParameterId)" style="z-index:999999"></textarea>
+                                                                </td>
+                                                            }
+                                                        </tr>
+                                                    }
+                                                    <tr>
+                                                        <td colspan="5">
+                                                            <span class="pull-right ">
+                                                                <b class="red-text"> PERFORMANCE:</b> <label style="color:#DE2027;" id="lblperformance@(item.Id)" class="clperform">
+                                                                </label>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="4" style="text-align:center"> No Data Found </td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="box box-performance box-solid">
+                        <!-- /.ASSESSMENTS ---box -->
+                        <div class="side-red-strip-short"></div>
+                        <div class="box-body" style="margin-top:25px;">
+                            <div style=" font-size:22px; color:#626262; padding-left:20px;">
+                                <span class="red-text">OVERALL PERFORMANCE:</span>
+                                <span id="spnpercentage" style="color:#ab4a4a;"></span> &nbsp;
+                                <span id="lblperformanceResult">
+                                </span>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+
+                    <div class="box box-performance box-solid">
+                        <!-- /.ASSESSMENTS ---box -->
+                        <div class="side-red-strip-short"></div>
+                        <div class="box-body" style="margin-top:25px;">
+                            <div style=" font-size:22px; color:#626262; padding-left:38px;">
+                                <div class="row">
+                                    <table style="padding-left:10px;">
+                                        <tr>
+                                            <td width="10%;"><span class="red-text" style="">REMARKS: </span></td>
+                                            <td width="80%"><textarea class="form-control" placeholder="Review" id="txtReview" style="width:97%; z-index:9999999"> @Model.PerformanceReview </textarea></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+
+                    <div class="performance-btn-top-space text-center">
+                        <input type="button" id="btncardsub" value="SUBMIT" onclick="savePerformanceCard();" class="btn btn-danger" disabled="disabled" />
+                        <input type="button" id="btncardsubsave" value="SAVE" onclick="saveperformancecarddetailp();" class="btn btn-success" />
+                    </div>
+
+                    <div class="margin-bottom"> </div>
+                    <!-------------------------------------------------END Search and display info box------->
+                </div>
+                <!-- /.box-body -->
+
+            </div>
+            <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <!-- Main row -->
+    <!-- /.row -->
+    <input type="hidden" id="hdntest" />
+</section>
+<!-- /.content -->
+<script>
+    $(document).ready(function () {
+        if ('@Model.ReviewId' != 0) {
+            FillWeeklyTermList('@Model.ReviewId');
+            if ('@Model.WeeklyTermId' != 0) {
+                $('#divWeekly').css('display', 'block');
+                setTimeout(function () {
+                    $('#WeeklyTypeList').val('@Model.WeeklyTermId').trigger();
+                }, 100)
+                $('#WeeklyTypeList').prop('disabled', 'disabled');
+            }
+            $('#ReviewId').prop('disabled', 'disabled');
+        }
+        disableReviewOption();
+        rendercardvalue();
+        StopLoading();
+        $('#hdndivkeepvalues').val($('#secOverlay').html());
+    });
+
+    $('#ReviewId').change(function () {
+        FillWeeklyTermList($(this).val());
+        $("#secOverlay").empty().append($('#hdndivkeepvalues').val());
+        //====================================================
+        $(".chkcl").change(function () {
+            var id = $(this).attr('id').split('_')[1];
+            var subid = id.split('-')[0];
+            var type = $(this).attr('mark');
+            var subtype = type + '_' + subid;
+            $('#star-' + type + '-3-' + id.split('-')[1]).prop('checked', true).prop('checked', false).trigger('change');
+            if ($(this).prop('checked')) {
+                $('#div' + id).css('display', 'none');
+                $('#txtreview' + id).css('display', 'none');
+                $('#dicna' + id).css('display', 'block');
+                $('#div' + id).removeClass('divstars').addClass('divstars123');
+                $('#hdn' + id.split('-')[1]).removeClass(type).addClass(subtype);
+            } else {
+                $('#div' + id).css('display', 'block');
+                $('#txtreview' + id).css('display', 'block');
+                $('#dicna' + id).css('display', 'none');
+                $('#div' + id).removeClass('divstars123').addClass('divstars');
+                $('#hdn' + id.split('-')[1]).removeClass(subtype).addClass(type);
+            }
+            valuemaintanance(type, id.split('-')[0]);
+            overAllPerformanceResult();
+        });
+        //==================================================================
+        if ($(this).val() != "") {
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "/PerformanceCard/Performance/UpdatePercentageCritiria",
+                data: { BatchId: $('#hdnBatchId').val(), ReviewId: $(this).val() },
+                success: function (data) {
+                    if (data != null && data.length > 0) {
+                        $('#hdnpercentageInfo').val(JSON.stringify(data));
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed!');
+                }
+            });
+        }
+    });
+
+    function saveperformancecarddetailp() {
+ var parameterTypeInfoList = [];
+        $('.stars').each(function () {
+            var parameterTypeInfo = {};
+            parameterTypeInfo.PerformanceMasterId = performanceIndicator.properties[getResultIndicator($('#lblperformance' + $(this).attr('ptypeId')).text())].value;
+            parameterTypeInfo.ParameterTypeId = $(this).attr('ptypeId');
+            var parameterinfolist = [];
+            $(this).children('input').each(function (index) {
+                var parameterInfo = {};
+                var identity = $(this).attr('identity').split('-');
+                parameterTypeInfo.PtId = identity[1];
+                parameterTypeInfo.IsApplicable = ($('#chk_' + $(this).attr('identity')).prop('checked') ? false : true);
+                if ($(this).prop('checked')) {
+                    parameterInfo.TblParameterId = identity[1];
+                    parameterInfo.Rating = getRate(index);
+                    parameterInfo.Remarks = $('#txtreview' + $(this).attr('identity')).val();
+                    parameterinfolist.push(parameterInfo);
+                }
+            });
+            parameterTypeInfo.ParameterInfoList = parameterinfolist;
+            parameterTypeInfoList.push(parameterTypeInfo)
+        });
+        $('.starwars').each(function () {
+            var parameterTypeInfo = {};
+            parameterTypeInfo.PerformanceMasterId = performanceIndicator.properties[getResultIndicator($('#lblperformance' + $(this).attr('ptypeId')).text())].value;
+            parameterTypeInfo.ParameterTypeId = $(this).attr('ptypeId');
+            var parameterinfolist = [];
+            var parameterInfo = {};
+            var identity = $(this).attr('identity').split('-');
+            parameterTypeInfo.PtId = identity[1];
+            parameterTypeInfo.IsApplicable = false;
+            parameterinfolist.push(parameterInfo);
+            parameterTypeInfo.ParameterInfoList = parameterinfolist;
+            parameterTypeInfoList.push(parameterTypeInfo)
+        });
+        var allratingstatus = !0;
+        $.each(parameterTypeInfoList, function (index, item) {
+            if (item.ParameterInfoList.length == 0 && item.IsApplicable) { allratingstatus = !1; return !1 }
+        });
+        if (!allratingstatus) {
+            alert('fillin is required!');
+        } else {
+            alert('ready for save');
+        }
+    }
+
+    $(".chkcl").change(function () {
+        var id = $(this).attr('id').split('_')[1];
+        var subid = id.split('-')[0];
+        var type = $(this).attr('mark');
+        var subtype = type + '_' + subid;
+        $('#star-' + type + '-3-' + id.split('-')[1]).prop('checked', true).prop('checked', false).trigger('change');
+        if ($(this).prop('checked')) {
+            $('#div' + id).css('display', 'none');
+            $('#txtreview' + id).css('display', 'none');
+            $('#dicna' + id).css('display', 'block');
+            $('#div' + id).removeClass('divstars').addClass('divstars123');
+            $('#hdn' + id.split('-')[1]).removeClass(type).addClass(subtype);
+        } else {
+            $('#div' + id).css('display', 'block');
+            $('#txtreview' + id).css('display', 'block');
+            $('#dicna' + id).css('display', 'none');
+            $('#div' + id).removeClass('divstars123').addClass('divstars');
+            $('#hdn' + id.split('-')[1]).removeClass(subtype).addClass(type);
+        }
+        valuemaintanance(type, id.split('-')[0]);
+        overAllPerformanceResult();
+    });
+
+    function valuemaintanance(cl,id) {
+        var length = $("." + cl).length;
+        var rate = 0;
+        $.each($("." + cl), function (index) {
+            $.each($("input[name=" + $(this).val() + "]"), function (index) {
+                if ($(this).prop('checked')) {
+                    rate = rate + getRate(index)
+                }
+            })
+        })
+        if (rate > 0) {
+            var indicator = getindicator(rate, length); $('#lblperformance' + id).text(performanceIndicator.properties[indicator].name); $('#lblperformance' + id).css('color', performanceIndicator.properties[indicator].color);
+        } else
+            $('#lblperformance' + id).text('');
+    }
+</script>
