@@ -43,3 +43,13 @@ F:\SpicestarERP\SJModel\obj\Release\SJModel.csprojAssemblyReference.cache
 F:\SpicestarERP\SJModel\obj\Release\SJModel.csproj.CopyComplete
 F:\SpicestarERP\SJModel\obj\Release\SJModel.dll
 F:\SpicestarERP\SJModel\obj\Release\SJModel.pdb
+F:\GitHub\SpiceAcademy\SJModel\bin\Release\SJModel.dll
+F:\GitHub\SpiceAcademy\SJModel\bin\Release\SJModel.pdb
+F:\GitHub\SpiceAcademy\SJModel\bin\Release\Newtonsoft.Json.dll
+F:\GitHub\SpiceAcademy\SJModel\bin\Release\System.ComponentModel.Annotations.dll
+F:\GitHub\SpiceAcademy\SJModel\bin\Release\Newtonsoft.Json.xml
+F:\GitHub\SpiceAcademy\SJModel\obj\Release\SJModel.csprojAssemblyReference.cache
+F:\GitHub\SpiceAcademy\SJModel\obj\Release\SJModel.csproj.CoreCompileInputs.cache
+F:\GitHub\SpiceAcademy\SJModel\obj\Release\SJModel.csproj.CopyComplete
+F:\GitHub\SpiceAcademy\SJModel\obj\Release\SJModel.dll
+F:\GitHub\SpiceAcademy\SJModel\obj\Release\SJModel.pdb

@@ -33,3 +33,13 @@ F:\SpicestarERP\SJModel\obj\Debug\SJModel.csprojAssemblyReference.cache
 F:\SpicestarERP\SJModel\obj\Debug\SJModel.csproj.CopyComplete
 F:\SpicestarERP\SJModel\obj\Debug\SJModel.dll
 F:\SpicestarERP\SJModel\obj\Debug\SJModel.pdb
+F:\GitHub\SpiceAcademy\SJModel\bin\Debug\SJModel.dll
+F:\GitHub\SpiceAcademy\SJModel\bin\Debug\SJModel.pdb
+F:\GitHub\SpiceAcademy\SJModel\bin\Debug\Newtonsoft.Json.dll
+F:\GitHub\SpiceAcademy\SJModel\bin\Debug\System.ComponentModel.Annotations.dll
+F:\GitHub\SpiceAcademy\SJModel\bin\Debug\Newtonsoft.Json.xml
+F:\GitHub\SpiceAcademy\SJModel\obj\Debug\SJModel.csprojAssemblyReference.cache
+F:\GitHub\SpiceAcademy\SJModel\obj\Debug\SJModel.csproj.CoreCompileInputs.cache
+F:\GitHub\SpiceAcademy\SJModel\obj\Debug\SJModel.csproj.CopyComplete
+F:\GitHub\SpiceAcademy\SJModel\obj\Debug\SJModel.dll
+F:\GitHub\SpiceAcademy\SJModel\obj\Debug\SJModel.pdb

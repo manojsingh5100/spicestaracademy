@@ -11,6 +11,7 @@ using System.Text;
 using System.IO;
 using SJModel;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace SpiceStarAcademy.Models
 {
@@ -148,7 +149,8 @@ namespace SpiceStarAcademy.Models
         public ReverseResponse GetResult(string Email, Int64 ApplicationNo, string ScreeningStatus, string MedicalStatus)
         {
             string url = "https://api.nopaperforms.com/post-application/344/1713";
-            string data = "{\"secret_key\":\"8944bacfb52da67bac5a1ba3e5a20d94\", \"form_id\":\"1713\",\"email\":\"" + Email + "\",\"application_no\":\"" + ApplicationNo + "\",\"enrolled_campus\":\"" + MedicalStatus + "\",\"application_stage\":\"Enrolled\",\"enrolled_department\":\"" + ScreeningStatus + "\",\"mode\":\"update\"}";
+            string DOJ = DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            string data = "{\"secret_key\":\"8944bacfb52da67bac5a1ba3e5a20d94\", \"form_id\":\"1713\",\"email\":\"" + Email + "\",\"application_no\":\"" + ApplicationNo + "\",\"enrolled_campus\":\"" + MedicalStatus + "\",\"application_stage\":\"Enrolled\",\"enrolled_department\":\"" + ScreeningStatus + "\",\"mode\":\"update\",\"field_190095\":\"" + DOJ + "\"}";
             WebRequest myReq = WebRequest.Create(url);
             myReq.Method = "POST";
             myReq.ContentLength = data.Length;

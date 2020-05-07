@@ -169,6 +169,7 @@
             if (data == '')
                 return;
         });
+        setTimeout(function () { $('#ddlReportYears').val(('@Session["CurrentYear"]' != "0" ? "@Session["CurrentYear"]" : "")).trigger('change'); }, 500);
         StopLoading();
     });
 </script>

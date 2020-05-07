@@ -72,6 +72,9 @@ namespace SJService
                 BatchId = model.AddmissionMasters.Count > 0 ? model.AddmissionMasters.FirstOrDefault().AddmissionDetails.FirstOrDefault().BatchId.Value : 0
             }).AsNoTracking().AsEnumerable();
 
+            if (Tag != null && (Tag == "Screen" || Tag == "Medical"))
+                info = info.Where(d => d.BatchId != 19);
+
             if (!string.IsNullOrWhiteSpace(filter.columns[7].search.value) && filter.columns[7].search.value != "")
             {
                 int batch = Convert.ToInt32(filter.columns[7].search.value);
@@ -609,7 +612,9 @@ namespace SJService
             {
                 T_registration = T_registration.Where(r => (r.RegistrationDate.Value.Year == SessionYr) || r.SessionMaster.SessionYr == SessionYr);
 
-                AdmissionCount = _context.AddmissionMasters.Where(a => a.IsActive && a.AddmissionDetails.FirstOrDefault().BatchMaster.IsActive && a.AddmissionDetails.FirstOrDefault().BatchId != 19 && a.RegistrationMaster.IsActive && a.RegistrationMaster.IsScreenningClear.HasValue && a.RegistrationMaster.IsScreenningClear.Value && a.RegistrationMaster.IsMedicalClear.HasValue && a.RegistrationMaster.IsMedicalClear.Value && (a.AddmissionDate.Value.Year == SessionYr || a.AddmissionDetails.FirstOrDefault().SessionMaster.SessionYr == SessionYr)).Count();
+                //AdmissionCount = _context.AddmissionMasters.Where(a => a.IsActive && a.AddmissionDetails.FirstOrDefault().BatchMaster.IsActive && a.AddmissionDetails.FirstOrDefault().BatchId != 19 && a.RegistrationMaster.IsActive && a.RegistrationMaster.IsScreenningClear.HasValue && a.RegistrationMaster.IsScreenningClear.Value && a.RegistrationMaster.IsMedicalClear.HasValue && a.RegistrationMaster.IsMedicalClear.Value && (a.AddmissionDate.Value.Year == SessionYr || a.AddmissionDetails.FirstOrDefault().SessionMaster.SessionYr == SessionYr)).Count();
+                AdmissionCount = _context.AddmissionMasters.Where(a => a.IsActive && (!a.RegistrationMaster.IsMedicalClear.HasValue || a.RegistrationMaster.IsMedicalClear.Value) && a.AddmissionDetails.FirstOrDefault().BatchMaster.IsActive && a.AddmissionDetails.FirstOrDefault().BatchMaster.Name != "Batch 0" && a.AddmissionDetails.FirstOrDefault().SessionMaster.SessionYr == SessionYr).Count();
+
                 //=====================
                 T_screenning = T_screenning.Where(s => s.AddmissionDetails.FirstOrDefault().SessionMaster.SessionYr == SessionYr || s.AddmissionDate.Value.Year == SessionYr);
                 T_medical = T_medical.Where(a => a.AddmissionDetails.FirstOrDefault().SessionMaster.SessionYr == SessionYr || a.AddmissionDate.Value.Year == SessionYr);
@@ -619,7 +624,8 @@ namespace SJService
             }
             else
             {
-                AdmissionCount = _context.AddmissionMasters.Where(a => a.IsActive && a.AddmissionDetails.FirstOrDefault().BatchMaster.IsActive && a.AddmissionDetails.FirstOrDefault().BatchId != 19 && a.RegistrationMaster.IsActive && a.RegistrationMaster.IsScreenningClear.HasValue && a.RegistrationMaster.IsScreenningClear.Value && a.RegistrationMaster.IsMedicalClear.HasValue && a.RegistrationMaster.IsMedicalClear.Value).Count();
+                //AdmissionCount = _context.AddmissionMasters.Where(a => a.IsActive && a.AddmissionDetails.FirstOrDefault().BatchMaster.IsActive && a.AddmissionDetails.FirstOrDefault().BatchId != 19 && a.RegistrationMaster.IsActive && a.RegistrationMaster.IsScreenningClear.HasValue && a.RegistrationMaster.IsScreenningClear.Value && a.RegistrationMaster.IsMedicalClear.HasValue && a.RegistrationMaster.IsMedicalClear.Value).Count();
+                AdmissionCount = _context.AddmissionMasters.Where(a => a.IsActive && (!a.RegistrationMaster.IsMedicalClear.HasValue || a.RegistrationMaster.IsMedicalClear.Value) && a.AddmissionDetails.FirstOrDefault().BatchMaster.IsActive && a.AddmissionDetails.FirstOrDefault().BatchMaster.Name != "Batch 0").Count();
                 T_mapList = T_mapList.Where(r => r.RegistrationDate.Value.Year == today.Year && r.RegistrationDate.Value.Month == today.Month);
             }
 

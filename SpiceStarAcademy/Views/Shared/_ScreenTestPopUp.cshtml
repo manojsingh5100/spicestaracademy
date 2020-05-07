@@ -193,7 +193,9 @@
 
         if ('@Model.IsAnyCourseFeePay' == 'True')
             $('#CourseId').attr("disabled", "disabled");*@
-
+        $("#ddlBatch").children("option[value^=19]").remove();
+        document.getElementById("ddlBatch").insertBefore(new Option('Select Batch', ''), document.getElementById("ddlBatch").firstChild);
+        $("#ddlBatch").val("").change()
     });
 
     $('#ScreeningTest_Date').datepicker({
@@ -352,7 +354,7 @@
             setTimeout(function () {
                 $("#dvMsg1").css("display", "none");
             }, 8000);
-            $('#modal-default').animate({
+            $('.form-horizontal').animate({
                 scrollTop: $("#dvMsg1").offset().top
             }, 2000);
             return false;
@@ -375,6 +377,7 @@
         // Parameter
         var screenParameterOp = [];
         var screenInterViewerOp = [];
+        var status = true;
         $('.Communicate').each(function () {
             var parameterOp = {};
             var spid = $(this).attr('spid').split('_');
@@ -386,6 +389,9 @@
             parameterOp.Fair = $('#Fair_' + spid[0]).prop('checked');
             parameterOp.Poor = $('#Poor_' + spid[0]).prop('checked');
             screenParameterOp.push(parameterOp);
+            status = ($('#Good_' + spid[0]).prop('checked') == true ? true : ($('#Fair_' + spid[0]).prop('checked') == true ? true : ($('#Poor_' + spid[0]).prop('checked') == true ? true : false)));
+            if (status == false)
+                return false;
         });
         var j = 1;
         $(".interview").each(function () {
@@ -399,13 +405,36 @@
             screenInterViewerOp.push(interViewOP);
         });
         var model = {};
+        model.BatchId = getValue('ddlBatch');
+        if (status == false) {
+            StopLoading();
+            $('#lblMsg1').text('Please fill all interview parameter options properly!');
+            if ($("#lblMsg1").text() != "") {
+                $("#dvMsg1").css("display", "block");
+                $('html, body').animate({
+                    scrollTop: $("#dvMsg").offset().top
+                }, 2000);
+                setTimeout(function () {
+                    $("#dvMsg1").css("display", "none");
+                }, 8000);
+            }
+            return false;
+        }
+
+        if (getValue('ddlBatch') == null || getValue('ddlBatch') == '') {
+            StopLoading();
+            $('#ddlBatch').css('border', '1px solid red');
+            return false;
+        } else {
+            $('#ddlBatch').css('border', '');
+        }
+
         model.ScreeningTest = screenTest;
         model.IsStandBy = $('#chkstandby').prop('checked');
         model.ParameterOption = screenParameterOp;
         model.InterviewOption = screenInterViewerOp;
         model.RegistrationId = getValue('RegistrationId');
         model.RegId = getValue('RegId');
-        model.BatchId = getValue('ddlBatch');
         model.Height = getValue('Height');
         model.Weight = getValue('Weight');
         model.CreatedDate = $('#SettleDate').val();

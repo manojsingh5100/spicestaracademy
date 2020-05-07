@@ -1516,6 +1516,11 @@ namespace SJService
             return Status;
         }
 
+        public string GetCourseNameByCourseId(int CourseId)
+        {
+            return _context.CourseMasters.Where(w => w.IsActive && w.Id == CourseId).FirstOrDefault().CourseName;
+        }
+
         public dynamic GetRecieptDetail(string RecieptNo)
         {
             var data = _context.FeeCollections.Where(f => f.FeePaymentDetail.FeeDetail.IsActive && f.RecieptNo == RecieptNo && f.IsActive).Select(item => new

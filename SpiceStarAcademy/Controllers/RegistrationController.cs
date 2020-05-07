@@ -520,6 +520,17 @@ namespace SpiceStarAcademy.Controllers
         {
             FeeManagementService _feeService = new FeeManagementService();
             int UserId = Session["UserId"] != null ? Convert.ToInt32(Session["UserId"]) : 0;
+            string ChangeCourseWith = _feeService.GetCourseNameByCourseId(CourseId);
+            LogActivityViewModel log = new LogActivityViewModel();
+            log.EnteredBy = UserId;
+            log.EnteredDate = DateTime.Now;
+            log.ActioName = "SaveCourseChange";
+            log.ModuleName = "Screenning";
+            log.ControllerName = "Registration";
+            log.Activity = "Change Course";
+            log.ActivityMessage = "Course changed from " + OldCourse + " to " + ChangeCourseWith + " regarded registration No. " + RegNo;
+            LogActivityService logActivityService = new LogActivityService();
+            logActivityService.CreateLogActivity(log);
             return Json(_feeService.SaveCourseChange(CourseId, SessionYr, RegNo, UserId, 0, OldCourse, null), JsonRequestBehavior.AllowGet);
         }
     }

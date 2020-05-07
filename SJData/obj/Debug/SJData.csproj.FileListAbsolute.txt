@@ -45,3 +45,15 @@ F:\SpicestarERP\SJData\obj\Debug\SJData.csprojAssemblyReference.cache
 F:\SpicestarERP\SJData\obj\Debug\SJData.csproj.CopyComplete
 F:\SpicestarERP\SJData\obj\Debug\SJData.dll
 F:\SpicestarERP\SJData\obj\Debug\SJData.pdb
+F:\GitHub\SpiceAcademy\SJData\bin\Debug\SJData.dll.config
+F:\GitHub\SpiceAcademy\SJData\bin\Debug\SJData.dll
+F:\GitHub\SpiceAcademy\SJData\bin\Debug\SJData.pdb
+F:\GitHub\SpiceAcademy\SJData\bin\Debug\EntityFramework.dll
+F:\GitHub\SpiceAcademy\SJData\bin\Debug\EntityFramework.SqlServer.dll
+F:\GitHub\SpiceAcademy\SJData\bin\Debug\EntityFramework.xml
+F:\GitHub\SpiceAcademy\SJData\bin\Debug\EntityFramework.SqlServer.xml
+F:\GitHub\SpiceAcademy\SJData\obj\Debug\SJData.csprojAssemblyReference.cache
+F:\GitHub\SpiceAcademy\SJData\obj\Debug\SJData.csproj.CoreCompileInputs.cache
+F:\GitHub\SpiceAcademy\SJData\obj\Debug\SJData.csproj.CopyComplete
+F:\GitHub\SpiceAcademy\SJData\obj\Debug\SJData.dll
+F:\GitHub\SpiceAcademy\SJData\obj\Debug\SJData.pdb

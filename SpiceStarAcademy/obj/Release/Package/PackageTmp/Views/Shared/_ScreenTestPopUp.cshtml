@@ -193,7 +193,7 @@
 
         if ('@Model.IsAnyCourseFeePay' == 'True')
             $('#CourseId').attr("disabled", "disabled");*@
-
+        $("#ddlBatch").children("option[value^=19]").remove()
     });
 
     $('#ScreeningTest_Date').datepicker({

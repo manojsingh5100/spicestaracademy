@@ -247,6 +247,17 @@ namespace SpiceStarAcademy.ControllersAddFeeType
         public ActionResult SaveCourseChange(int CourseId, int SessionYr, int RegNo, int FeeDetailId, string OldCourse, string Remark)
         {
             int UserId = Session["UserId"] != null ? Convert.ToInt32(Session["UserId"]) : 0;
+            string ChangeCourseWith = feeManegementService.GetCourseNameByCourseId(CourseId);
+            LogActivityViewModel log = new LogActivityViewModel();
+            log.EnteredBy = UserId;
+            log.EnteredDate = DateTime.Now;
+            log.ActioName = "SaveCourseChange";
+            log.ModuleName = "FeeCollection";
+            log.ControllerName = "FeeManagement";
+            log.Activity = "Change Course";
+            log.ActivityMessage = "Course changed from " + OldCourse + " to " + ChangeCourseWith + " regarded registration No. " + RegNo;
+            LogActivityService logActivityService = new LogActivityService();
+            logActivityService.CreateLogActivity(log);
             string msg = feeManegementService.SaveCourseChange(CourseId, SessionYr, RegNo, UserId, FeeDetailId, OldCourse, Remark);
             if (msg != "")
                 TempData["errorMsg"] = msg;

@@ -36,11 +36,34 @@ function tblSetting(exportBtn, url, cols, orderByIndex, tblName, orderBy) {
             else if (tblName === "tblReport") {
                 TableFilter(tblName, TableCourseFilter);
             }
+            var data = Table.ajax.params();
             if (tblName == "tblScreening" || tblName == "tblMedical" || tblName == "tblAddmissionView") {
                 addbatchOption('ddlbatchfilter');
                 $("#ddlbatchfilter option[value='19']").remove();
+                if (tblName == "tblScreening") {
+                    $('#ddlbatchfilter').val(data.columns[7].search.value);
+                    $('#ddlstatusfilter').val(data.columns[10].search.value);
+                    $('#ddlcoursefilter').val(data.columns[8].search.value);
+                } else if (tblName == "tblMedical") {
+                    $('#ddlbatchfilter').val(data.columns[7].search.value);
+                    $('#ddlcoursefilter').val(data.columns[8].search.value);
+                } else {
+                    $('#ddlbatchfilter').val(data.columns[7].search.value);
+                    $('#ddlcoursefilter').val(data.columns[5].search.value);
+                    $('#ddltrfilter').val(data.columns[3].search.value);
+                }
             } else if (tblName == "tblFeeCandidatesList") {
                 addbatchOption('ddlbatchfilter');
+                $('#ddlbatchfilter').val(data.columns[7].search.value);
+                $('#ddlcoursefilter').val(data.columns[8].search.value);
+                $('#ddlfeestatus').val(data.columns[11].search.value);
+            } else {
+                if (tblName == "tblRegistration") {
+                    $('#ddlcoursefilter').val(data.columns[8].search.value);
+                } else if (tblName == "tblRejectRegistration") {
+                    $('#ddlwithdrawal').val(data.columns[7].search.value);
+                    $('#ddlcoursefilter').val(data.columns[6].search.value);
+                } 
             }
         }
     };
