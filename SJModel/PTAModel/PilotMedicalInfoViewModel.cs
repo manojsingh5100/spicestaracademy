@@ -26,5 +26,9 @@ namespace SJModel.PTAModel
         public string DocumentName { get; set; }
         public string IsPreviousExist { get; set; }
         public int PilotAdmissionId { get; set; }
+        public string ApplicationNo { get; set; }
+        public int ptaPilotRegistrationMasterId { get; set; }
+        public int EnteredStudentBy { get; set; }
+        public int UpdatedStudentBy { get; set; }
     }
 }

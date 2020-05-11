@@ -98,10 +98,15 @@
     <Compile Include="PerformanceModel\ResultViewModel.cs" />
     <Compile Include="PerformanceModel\ReviewMasterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PTAModel\CityCountryInfoViewModel.cs" />
+    <Compile Include="PTAModel\GetDDListInfoViewModel.cs" />
     <Compile Include="PTAModel\PilotMedicalInfoViewModel.cs" />
     <Compile Include="PTAModel\PilotRegistrationViewModel.cs" />
     <Compile Include="PTAModel\PilotScreeningViewModel.cs" />
     <Compile Include="PTAModel\PTAExamLogViewModel.cs" />
+    <Compile Include="PTAModel\PTAFeePaymentViewModel.cs" />
+    <Compile Include="PTAModel\ptaFeeTypeInfoViewModel.cs" />
+    <Compile Include="PTAModel\StudentInfoViewModel.cs" />
     <Compile Include="RegistrationViewModel.cs" />
     <Compile Include="ReportFilterViewModel.cs" />
     <Compile Include="RevenueReportViewModel.cs" />

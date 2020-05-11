@@ -1,5 +1,6 @@
 ﻿using SJData;
 using SJModel;
+using SJModel.PTAModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,6 +79,20 @@ namespace SJService.PTA
             var dataFilter = data.Skip(filter.start).Take(filter.length).ToList();
             filter.data = dataFilter;
             return filter;
+        }
+
+        public PTAFeePaymentViewModel GetFeeDetails(string AppNo)
+        {
+            var Data = _context.ptaPilotRegistrationMasters.Where(a => a.ApplicationNo == AppNo && a.IsActive == true).FirstOrDefault();
+            PTAFeePaymentViewModel model = new PTAFeePaymentViewModel();
+            model.ApplicationNo = Data.ApplicationNo;
+            model.SessionName = Data.SessionMaster.SessionName;
+            model.CourseName = Data.CourseMaster.CourseName;
+            model.Email = Data.Email;
+            model.RecieptNo = "RC#" + Data.RegistrationNo;
+            model.Gender = Data.ptaRegistrationInfoes.FirstOrDefault().ptaGenderMaster.Name;
+
+            return model;
         }
 
         public IEnumerable<RoleViewModel> GetSessionListByCourseId(int CourseId)

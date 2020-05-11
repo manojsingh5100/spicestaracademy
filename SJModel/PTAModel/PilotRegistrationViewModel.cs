@@ -22,6 +22,7 @@ namespace SJModel.PTAModel
         public string Email { get; set; }
         public string Mobile { get; set; }
         public Nullable<System.DateTime> DOB { get; set; }
+        //public string DOBStr { get; set; }
         public string DOBStr
         {
             get
@@ -79,12 +80,29 @@ namespace SJModel.PTAModel
         public string ApplicationNo { get; set; }
         public int ScreeningExamFeeNo { get; set; }
         public int PilotRegistrationId { get; set; }
-        public int IsScrreningExamFeeEmailNotificationNo { get; set; } 
+        public int IsScrreningExamFeeEmailNotificationNo { get; set; }
         public int ExamAmount { get; set; }
         public int ExamTerm { get; set; }
         public bool IsSendEmail { get; set; }
         public bool LastExamFailedStatus { get; set; }
         public int ScreeningTestResultCount { get; set; }
         public int MedicalImagesCount { get; set; }
+        public int ScreeningAmountTerm { get; set; }
+        public List<PTAScreeningExamFeeInfo> ptaScreeningExamFeeInfo { get; set; }
+    }
+
+    public class PTAScreeningExamFeeInfo
+    {
+        public int Id { get; set; }
+        public int ptaScreeningInfoID { get; set; }
+        public int ScreeningAmountTerm { get; set; }
+        public int ScreeningAmount { get; set; }
+        public DateTime DateOfAmount { get; set; }
+        public string PaymentId { get; set; }
+        public string ExamResult { get; set; }
+        public int PtaScreeningTestTypeId { get; set; }
+        public DateTime EnterendDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
+        public int PTAPilotRegistrationMaterId { get; set; }
     }
 }

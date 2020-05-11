@@ -69,7 +69,10 @@
     <Compile Include="PTA\DashBoardService.cs" />
     <Compile Include="PTA\FeeCollectionService.cs" />
     <Compile Include="PTA\LoginService.cs" />
+    <Compile Include="PTA\NotificationService.cs" />
     <Compile Include="PTA\RegistrationService.cs" />
+    <Compile Include="PTA\StudentLoginService.cs" />
+    <Compile Include="PTA\StudentProfileService.cs" />
     <Compile Include="RazorServices.cs" />
     <Compile Include="RegistrationService.cs" />
     <Compile Include="ReportService.cs" />

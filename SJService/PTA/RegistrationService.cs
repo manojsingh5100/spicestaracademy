@@ -196,7 +196,7 @@ namespace SJService.PTA
             return result;
         }
 
-        public PilotMedicalInfoViewModel InitialOtherUploadDocsInfo(int Id,int AdmissionId)
+        public PilotMedicalInfoViewModel InitialOtherUploadDocsInfo(int Id, int AdmissionId)
         {
             PilotMedicalInfoViewModel result = new PilotMedicalInfoViewModel();
             result.PilotRegistrationNo = Id;
@@ -211,6 +211,7 @@ namespace SJService.PTA
             result.Documents = data;
             return result;
         }
+
 
         public MessageForSucccessful SaveUpdatePilotScreeningInfo(PilotScreeningViewModel Model)
         {

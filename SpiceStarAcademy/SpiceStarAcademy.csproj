@@ -204,7 +204,10 @@
     <Compile Include="Areas\PTA\Controllers\DashBoardController.cs" />
     <Compile Include="Areas\PTA\Controllers\FeeCollectionController.cs" />
     <Compile Include="Areas\PTA\Controllers\LoginController.cs" />
+    <Compile Include="Areas\PTA\Controllers\NotificationController.cs" />
     <Compile Include="Areas\PTA\Controllers\RegistrationController.cs" />
+    <Compile Include="Areas\PTA\Controllers\StudentLoginController.cs" />
+    <Compile Include="Areas\PTA\Controllers\StudentProfileController.cs" />
     <Compile Include="Areas\PTA\PTAAreaRegistration.cs" />
     <Compile Include="Controllers\AddmissionController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -7352,6 +7355,10 @@
     <Content Include="Areas\PTA\Views\FeeCollection\Index.cshtml" />
     <Content Include="Areas\PTA\Views\FeeCollection\CreateFee.cshtml" />
     <Content Include="Areas\PerformanceCard\Views\Shared\_ReligatedInfoPopUp.cshtml" />
+    <Content Include="Areas\PTA\Views\Shared\_PayFeeModelPopUp.cshtml" />
+    <Content Include="Areas\PTA\Views\StudentLogin\Index.cshtml" />
+    <Content Include="Areas\PTA\Views\StudentProfile\Index.cshtml" />
+    <Content Include="Areas\PTA\Views\Notification\Index.cshtml" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>

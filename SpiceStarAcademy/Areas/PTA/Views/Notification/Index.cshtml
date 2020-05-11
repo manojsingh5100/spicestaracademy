@@ -1,0 +1,189 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/PTA/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Notification
+        </h1>
+    </section>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            </div>
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#feeReminder" data-toggle="tab">Fee Reminder</a></li>
+                    <li><a href="#interViewCall" data-toggle="tab">Interview Call</a></li>
+                    <li><a href="#inductionMeeting" data-toggle="tab">Indeuction Meeting</a></li>
+                    <li><a href="#visaApplication" data-toggle="tab">Visa Application</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="active tab-content" id="feeReminder">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="screeningradio" onclick="radioScreeing()" name="feeReminder">
+                            <label class="custom-control-label">Screening</label>
+
+                            <input type="radio" class="custom-control-input" id="admissionradio" onclick="radioAdmission()" name="feeReminder">
+                            <label class="custom-control-label">Admission Fee</label>
+                        </div>
+                    </div>
+
+                    <div class="row" id="screeningtbl">
+                        <div>
+                            <label for="inputName" style="margin-left:20px">Payment term</label>
+                            <select class="browser-default custom-select custom-select-lg mb-3">
+                                <option value="1">Screening</option>
+                                <option value="2">ReAppear1</option>
+                                <option value="3">ReAppear2</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-body">
+                                    <div class="row col-md-14 table-responsive">
+                                        <table id="tblPilotScreeningRegistration" class="table table-bordered table-striped" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="no-sort">Sr.No.</th>
+                                                    <th>Select Reg.</th>
+                                                    <th>Reg.No.</th>
+                                                    <th>Appl.No.</th>
+                                                    <th>Candidate Name</th>
+                                                    <th>Email ID</th>
+                                                    <th>Mobile No</th>
+                                                    <th>DOB</th>
+                                                    <th>Gender</th>
+                                                    <th>Exam Status</th>
+                                                    <th>Course</th>
+                                                    <th>Reg.Date</th>
+                                                    <th>Scr. Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tblScreeningRegistrationList"></tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="admissiontbl">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-body">
+                                    <div class="row col-md-12 table-responsive">
+                                        <table id="tblPilotAdmissions" class="table table-bordered table-striped" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr.No.</th>
+                                                    <th>Reg.No.</th>
+                                                    <th>Appl.No.</th>
+                                                    <th>Student Name</th>
+                                                    <th>Email ID</th>
+                                                    <th>Mobile No</th>
+                                                    <th>DOB</th>
+                                                    <th>Gender</th>
+                                                    <th>course</th>
+                                                    <th>Admission Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbpilotadmissionList"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /.tab-content -->
+<script>
+    $(document).ready(function () {
+        StopLoading();
+        $("#tblPilotAdmissions").hide();
+        $("#tblPilotScreeningRegistration").hide();
+        $('#screeningtbl').hide();
+        $('#admissiontbl').hide();
+    })
+
+    function radioScreeing() {
+        $("#tblPilotAdmissions").hide();
+        $("#tblPilotScreeningRegistration").show();
+        $('#screeningtbl').show();
+        $('#admissiontbl').hide();
+        $.ajax({
+            cache: false,
+            type: "Get",
+            url: "/PTA/Notification/GetPilotCandidateScreeningList",
+            async: false,
+            success: function (response) {
+                console.log(response);
+                if (response != null && response.length > 0) {
+                    $('#tblScreeningRegistrationList').empty();
+                    var tblbody = '';
+                    $.each(response, function (i, item) {
+                        tblbody += '<tr>';
+                        tblbody += '<td>' + (i + 1) + '</td><td> <input type="checkbox">'  +'</td><td>' + item.PilotRegistartionNo + '</td><td>' + (item.ApplicationNo != null ? item.ApplicationNo : "") + '</td><td>' + item.StudentName + '</td> <td>' + item.Email + '</td> <td>' + item.Mobile + '</td> <td>' + item.DOBStr + '</td> <td>' + item.Gender + '</td><td>' + (item.CreatedBy == 4 ? "Selected" : (item.IsActive ? "Rejected" : "Pending")) + '</td><td>' + item.CourseName + '</td><td>' + item.RegisterDate + '</td><td>' + item.ScreeningAmountTerm +'</td>'
+                        tblbody += '</tr>';
+                    });
+
+                    $('#tblScreeningRegistrationList').append(tblbody);
+                }
+            },
+
+            complete: function () {
+                $("#tblPilotScreeningRegistration").DataTable();
+                StopLoading();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed!');
+            }
+        });
+    };
+
+
+    function radioAdmission() {
+        $("#tblPilotAdmissions").show();
+        $("#tblPilotScreeningRegistration").hide();
+        $('#screeningtbl').hide();
+        $('#admissiontbl').show();
+        $.ajax({
+            cache: false,
+            type: "Get",
+            url: "/PTA/Notification/GetPilotAdmissionDetails",
+            async: false,
+            success: function (response) {
+                if (response != null && response.length > 0) {
+                    $('#tbpilotadmissionList').empty();
+                    var tblbody = '';
+                    $.each(response, function (i, item) {
+                        tblbody += '<tr>';
+                        tblbody += '<td>' + (i + 1) + '</td> <td>' + item.PilotRegistartionNo + '</td><td>' + (item.ApplicationNo != null ? item.ApplicationNo : "") + '</td> <td>' + item.StudentName + '</td> <td>' + item.Email + '</td> <td>' + item.Mobile + '</td> <td>' + item.DOBStr + '</td> <td>' + item.Gender + '</td><td>' + item.CourseName + '</td>  <td>' + item.RegisterDate + '</td>'
+                        tblbody += '</tr>';
+                    });
+                    $('#tbpilotadmissionList').append(tblbody);
+                }
+            },
+            complete: function () {
+                $("#tblPilotAdmissions").DataTable();
+                StopLoading();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed!');
+            }
+        });
+    };
+
+
+</script>
