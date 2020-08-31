@@ -32,6 +32,7 @@ namespace SJModel
             //};
         }
         public BarChartViewModel BarChartData { get; set; }
+        public BarChartViewModel BarChartRegistrationData { get; set; }
         public int[] DonutChartData { get; set; }
         public LineChartViewModel LineChartData { get; set; }
     }

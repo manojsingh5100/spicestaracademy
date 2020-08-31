@@ -17,6 +17,7 @@ namespace SJModel
     public enum MedicalStatus
     {
         FIT,
+        UnFit,
         Withdrawn,
         TMU,
         SBY

@@ -40,6 +40,7 @@ namespace SJData
             this.FIN_FeeReceiptMaster1 = new HashSet<FIN_FeeReceiptMaster>();
             this.FIN_FeeRefundMaster = new HashSet<FIN_FeeRefundMaster>();
             this.FIN_FeeRefundMaster1 = new HashSet<FIN_FeeRefundMaster>();
+            this.MedicalDetails = new HashSet<MedicalDetail>();
             this.PartWisePayments = new HashSet<PartWisePayment>();
             this.ptaAdmissionMasters = new HashSet<ptaAdmissionMaster>();
             this.ptaDocumentDetails = new HashSet<ptaDocumentDetail>();
@@ -60,6 +61,7 @@ namespace SJData
             this.tblPerformancePercentageMasters = new HashSet<tblPerformancePercentageMaster>();
             this.tblPerformancePercentageMasters1 = new HashSet<tblPerformancePercentageMaster>();
             this.UserActivityLogs = new HashSet<UserActivityLog>();
+            this.RefundInformations = new HashSet<RefundInformation>();
         }
     
         public int Id { get; set; }
@@ -120,6 +122,8 @@ namespace SJData
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FIN_FeeRefundMaster> FIN_FeeRefundMaster1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MedicalDetail> MedicalDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PartWisePayment> PartWisePayments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ptaAdmissionMaster> ptaAdmissionMasters { get; set; }
@@ -160,5 +164,7 @@ namespace SJData
         public virtual ICollection<tblPerformancePercentageMaster> tblPerformancePercentageMasters1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserActivityLog> UserActivityLogs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RefundInformation> RefundInformations { get; set; }
     }
 }

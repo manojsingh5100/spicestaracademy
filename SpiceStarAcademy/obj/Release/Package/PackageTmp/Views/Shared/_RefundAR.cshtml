@@ -1,0 +1,91 @@
+﻿@model SJModel.RefundInformationViewModel
+<form class="form-horizontal" id="frmFeeModelPopup">
+    @Html.HiddenFor(m => m.Status)
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m=>m.TotalAmount)
+    <div class="row" style="padding-top:10px;">
+        <div class="col-md-6">
+            <label class="form-control"> Exceed Amount is @Model.ExeedAmount INR. </label>
+        </div>
+        <div class="col-md-6">
+            <input type="text" id="CurrDate" class="form-control" value="@Model.CurrentDate" placeholder = "Enter Date" autocomplete = "off" onkeydown = "return false;" />
+            @*@Html.TextBoxFor(m => m.CurrentDate, new { @class = "form-control",   })*@
+        </div>
+    </div>
+    <div class="row" style="padding-top:10px;">
+        <div class="col-md-12">
+            @Html.TextAreaFor(m => m.StatusRemark, new { rows = "5", @class = "form-control", placeholder = "Remark" })
+        </div>
+    </div>
+    <div class="row" style="padding-top:10px;">
+        <div class="col-md-6">
+            @Html.TextBoxFor(m => m.RefundAmount, new { @class = "form-control", placeholder = "Amount", onkeypress = "return isNumber(event,this)" })
+        </div>
+        <div class="col-md-6" id="chkbutton" style="padding-top:5px;display:none">
+            @Html.CheckBoxFor(m => m.CaseClosed) Case Closed
+        </div>
+    </div>
+    <div class="row" style="padding-top:10px;">
+        <div class="col-md-12">
+            <input type="button" id="btnapr" value="Approved" onclick="SaveApprovedAndReject(this);" class="btn btn-primary pull-right" />
+        </div>
+    </div>
+</form>
+
+<script>
+
+    $(document).ready(function () {
+        if ($('#RefundAmount').val() == 0)
+            $('#RefundAmount').val('');
+        var d = $('#CurrDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+        if ('@Model.Id' == '0') 
+            d.datepicker("setDate", 'now');
+    });
+
+    function SaveApprovedAndReject(obj) {
+        var TotalAmount = $('#TotalAmount').val();
+        var Amount = $('#RefundAmount').val();
+        if (Amount == "")
+            alert('Please fill refundable amount!');
+        else if (parseInt(Amount) > parseInt(TotalAmount)) {
+            alert('Amount is exeeded from paid amount');
+            return false;
+        }
+        var Model = {};
+        Model.Id = $('#Id').val();
+        Model.StatusRemark = $('#StatusRemark').val();
+        Model.RefundAmount = $('#RefundAmount').val();
+        Model.Header = $('#btnapr').attr("value");
+        Model.CurrentDate = $('#CurrDate').val();
+        Model.AdmissionId = '@Model.AdmissionId';
+        if ($(obj).text() != "Refund")
+            Model.CaseClosed = true;
+        if (Model.Id >= 0) {
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "@(Url.Action("SaveApprovedAndReject", "FeeManagement"))",
+                data: { Model: Model },
+                success: function (data) {
+                    if (data != null && data == true) {
+                        $('#myrefund').modal('hide');
+                        if ($(obj).text() != "Refund") {
+                            $('.btnrefund').attr('disabled', 'disabled');
+                            $('#myModal').modal('hide');
+                            Table.draw();
+                        }
+                        else {
+                            $('#btnrefund123').attr('disabled', 'disabled');
+                        }
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed!');
+                }
+            });
+        }
+    }
+</script>

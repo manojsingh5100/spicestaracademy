@@ -34,8 +34,10 @@ namespace SJData
         public Nullable<int> DocumentMasterId { get; set; }
         public System.DateTime ScreeningDate { get; set; }
         public string Remark { get; set; }
+        public int RegistrationMasterId { get; set; }
     
         public virtual DocumentMaster DocumentMaster { get; set; }
+        public virtual RegistrationMaster RegistrationMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ScreeningInterviewerResult> ScreeningInterviewerResults { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

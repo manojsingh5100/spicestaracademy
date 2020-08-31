@@ -1,0 +1,141 @@
+﻿@model List<SJModel.LogActivityViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int i = 1;
+}
+<title>Reject Candidates</title>
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>User Activities</h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-dashboard"></i> &nbsp;User Activities</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-body">
+                        <div class="row col-md-12 table-responsive">
+                            <table id="tblActivites" class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>Action On</th>
+                                        <th>Action Done</th>
+                                        <th>Done By</th>
+                                        <th>Date</th>
+                                        <th>Page Reference</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Count() > 0)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@i</td>
+                                                <td>@item.RegistrationNo</td>
+                                                <td>@item.Activity</td>
+                                                <td>@item.ByActivity</td>
+                                                <td>@item.ActivityDate</td>
+                                                <td>@item.ModuleName</td>
+                                                <td>@item.ActivityMessage</td>
+                                            </tr>
+                                            i++;
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#tblActivites").DataTable();
+        $('#tblActivites_filter').prepend('<input type="text" style="height:30px" id="txtfromDate" value="" placeholder="From Date">&nbsp;&nbsp;<input type="text" style="height:30px" id="txttoDate" placeholder="To Date">&nbsp;&nbsp;');
+        $('#txtfromDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+        $('#txttoDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+
+        $(document).on('change', '#txtfromDate, #txttoDate', function () {
+            $('#tblActivites').dataTable().DataTable().draw();
+        });
+
+        $.fn.dataTableExt.afnFiltering.push(
+
+            function (oSettings, aData, iDataIndex) {
+                if (($('#txtfromDate').length > 0 && $('#txtfromDate').val() !== '') || ($('#txttoDate').length > 0 && $('#txttoDate').val() !== '')) {
+                    var today = new Date();
+                    var dd = today.getDate();
+                    var mm = today.getMonth();
+                    var yyyy = today.getFullYear();
+                    console.log(today + "-- " + dd + " --" + mm + " --" + yyyy);
+                    if (dd < 10) dd = '0' + dd;
+
+                    if (mm < 10) mm = '0' + mm;
+
+                    today = mm + '/' + dd + '/' + yyyy;
+                    var minVal = $('#txtfromDate').val();
+                    var maxVal = $('#txttoDate').val();
+                    //alert(minVal+"   ----   "+maxVal);
+                    if (minVal !== '' || maxVal !== '') {
+                        var iMin_temp = minVal;
+                        if (iMin_temp === '') {
+                            iMin_temp = '01/01/1980';
+                        }
+
+                        var iMax_temp = maxVal;
+                        var arr_min = iMin_temp.split("/");
+
+                        var arr_date = aData[4].split(" ")[0].split("/");
+                        //console.log(arr_min[2]+"-- "+arr_min[0]+" --"+arr_min[1]);
+                        var iMin = new Date(arr_min[2], arr_min[0] - 1, arr_min[1]);
+                        //  console.log(iMin);
+                        // console.log(" --"+yyy);
+
+
+                        var iMax = '';
+                        if (iMax_temp != '') {
+                            var arr_max = iMax_temp.split("/");
+                            iMax = new Date(arr_max[2], arr_max[0] - 1, arr_max[1], 0, 0, 0, 0);
+                        }
+
+
+
+
+                        var iDate = new Date(arr_date[2], arr_date[0] - 1, arr_date[1], 0, 0, 0, 0);
+                        //alert(iMin+" -- "+iMax);
+                        //  console.log("Test data "+iMin+" -- "+iMax+"-- "+iDate+" --"+(iMin <= iDate && iDate <= iMax));
+                        if (iMin === "" && iMax === "") {
+                            return true;
+                        } else if (iMin === "" && iDate < iMax) {
+                            // alert("inside max values"+iDate);
+                            return true;
+                        } else if (iMax === "" && iDate >= iMin) {
+                            // alert("inside max value is null"+iDate);                    
+                            return true;
+                        } else if (iMin <= iDate && iDate <= iMax) {
+                            //  alert("inside both values"+iDate);
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+                return true;
+            });
+        StopLoading();
+    });
+</script>

@@ -50,6 +50,7 @@
     <EntitySet Name="ptaEducationDetails" EntityType="SJStarERPModel.ptaEducationDetail" />
     <EntitySet Name="ptaEducationSubjectMarks" EntityType="SJStarERPModel.ptaEducationSubjectMark" />
     <EntitySet Name="ptaEduEvaluationTypeMasters" EntityType="SJStarERPModel.ptaEduEvaluationTypeMaster" />
+    <EntitySet Name="ptaEmailNotificationSentContents" EntityType="SJStarERPModel.ptaEmailNotificationSentContent" />
     <EntitySet Name="ptaFeeCollections" EntityType="SJStarERPModel.ptaFeeCollection" />
     <EntitySet Name="ptaFeeDetails" EntityType="SJStarERPModel.ptaFeeDetail" />
     <EntitySet Name="ptaFeePaymentDetails" EntityType="SJStarERPModel.ptaFeePaymentDetail" />
@@ -91,6 +92,7 @@
     <EntitySet Name="SessionMasters" EntityType="SJStarERPModel.SessionMaster" />
     <EntitySet Name="sysdiagrams" EntityType="SJStarERPModel.sysdiagram" />
     <EntitySet Name="TatooOrScars" EntityType="SJStarERPModel.TatooOrScar" />
+    <EntitySet Name="tblGetTermAcceptancyByCandidates" EntityType="SJStarERPModel.tblGetTermAcceptancyByCandidate" />
     <EntitySet Name="tblParameterLists" EntityType="SJStarERPModel.tblParameterList" />
     <EntitySet Name="tblParameterTypes" EntityType="SJStarERPModel.tblParameterType" />
     <EntitySet Name="tblPerformanceEntryMasters" EntityType="SJStarERPModel.tblPerformanceEntryMaster" />
@@ -100,6 +102,7 @@
     <EntitySet Name="tblPerformancePercentageMasters" EntityType="SJStarERPModel.tblPerformancePercentageMaster" />
     <EntitySet Name="tblReviewMasters" EntityType="SJStarERPModel.tblReviewMaster" />
     <EntitySet Name="tblWeeklyReviewMasters" EntityType="SJStarERPModel.tblWeeklyReviewMaster" />
+    <EntitySet Name="UserActivityLogs" EntityType="SJStarERPModel.UserActivityLog" />
     <EntitySet Name="UserLogins" EntityType="SJStarERPModel.UserLogin" />
     <EntitySet Name="Queries" EntityType="SJStarERPModel.Query" />
     <AssociationSet Name="FK__Addmissio__Addmi__71D1E811" Association="SJStarERPModel.FK__Addmissio__Addmi__71D1E811">
@@ -198,13 +201,13 @@
       <End Role="UserLogin" EntitySet="UserLogins" />
       <End Role="BatchHistoryDetail" EntitySet="BatchHistoryDetails" />
     </AssociationSet>
+    <AssociationSet Name="FK__tblPerfor__Batch__53A266AC" Association="SJStarERPModel.FK__tblPerfor__Batch__53A266AC">
+      <End Role="BatchMaster" EntitySet="BatchMasters" />
+      <End Role="tblPerformancePercentageMaster" EntitySet="tblPerformancePercentageMasters" />
+    </AssociationSet>
     <AssociationSet Name="FK__tblPerfor__Batch__5D95E53A" Association="SJStarERPModel.FK__tblPerfor__Batch__5D95E53A">
       <End Role="BatchMaster" EntitySet="BatchMasters" />
       <End Role="tblPerformanceEntryMaster" EntitySet="tblPerformanceEntryMasters" />
-    </AssociationSet>
-    <AssociationSet Name="FK__tblPerfor__Batch__66B53B20" Association="SJStarERPModel.FK__tblPerfor__Batch__66B53B20">
-      <End Role="BatchMaster" EntitySet="BatchMasters" />
-      <End Role="tblPerformancePercentageMaster" EntitySet="tblPerformancePercentageMasters" />
     </AssociationSet>
     <AssociationSet Name="FK__CallCente__Enter__7B5B524B" Association="SJStarERPModel.FK__CallCente__Enter__7B5B524B">
       <End Role="UserLogin" EntitySet="UserLogins" />
@@ -214,15 +217,15 @@
       <End Role="CandidateActionMaster" EntitySet="CandidateActionMasters" />
       <End Role="CandidateTerminationResignationInfo" EntitySet="CandidateTerminationResignationInfoes" />
     </AssociationSet>
-    <AssociationSet Name="FK__Candidate__Candi__50C5FA01" Association="SJStarERPModel.FK__Candidate__Candi__50C5FA01">
+    <AssociationSet Name="FK__Candidate__Candi__4FD1D5C8" Association="SJStarERPModel.FK__Candidate__Candi__4FD1D5C8">
       <End Role="CandidateTerminationResignationInfo" EntitySet="CandidateTerminationResignationInfoes" />
       <End Role="CandidateTRInfo" EntitySet="CandidateTRInfoes" />
     </AssociationSet>
-    <AssociationSet Name="FK__Candidate__Enter__52AE4273" Association="SJStarERPModel.FK__Candidate__Enter__52AE4273">
+    <AssociationSet Name="FK__Candidate__Enter__50C5FA01" Association="SJStarERPModel.FK__Candidate__Enter__50C5FA01">
       <End Role="UserLogin" EntitySet="UserLogins" />
       <End Role="CandidateTRInfo" EntitySet="CandidateTRInfoes" />
     </AssociationSet>
-    <AssociationSet Name="FK__Scheduled__Candi__5772F790" Association="SJStarERPModel.FK__Scheduled__Candi__5772F790">
+    <AssociationSet Name="FK__Scheduled__Candi__5A4F643B" Association="SJStarERPModel.FK__Scheduled__Candi__5A4F643B">
       <End Role="CandidateTRInfo" EntitySet="CandidateTRInfoes" />
       <End Role="ScheduledStatusLogForTerminateResignation" EntitySet="ScheduledStatusLogForTerminateResignations" />
     </AssociationSet>
@@ -302,7 +305,7 @@
       <End Role="UserLogin" EntitySet="UserLogins" />
       <End Role="DocumentDetail" EntitySet="DocumentDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaDocume__Docum__57A801BA" Association="SJStarERPModel.FK__ptaDocume__Docum__57A801BA">
+    <AssociationSet Name="FK__ptaDocume__Docum__6C6E1476" Association="SJStarERPModel.FK__ptaDocume__Docum__6C6E1476">
       <End Role="DocumentMaster" EntitySet="DocumentMasters" />
       <End Role="ptaDocumentDetail" EntitySet="ptaDocumentDetails" />
     </AssociationSet>
@@ -450,6 +453,10 @@
       <End Role="InstallmentMaster" EntitySet="InstallmentMasters" />
       <End Role="SessionInstallmentMaster" EntitySet="SessionInstallmentMasters" />
     </AssociationSet>
+    <AssociationSet Name="FK__MedicalDe__Enter__689D8392" Association="SJStarERPModel.FK__MedicalDe__Enter__689D8392">
+      <End Role="UserLogin" EntitySet="UserLogins" />
+      <End Role="MedicalDetail" EntitySet="MedicalDetails" />
+    </AssociationSet>
     <AssociationSet Name="FK__PartWiseP__Enter__3E1D39E1" Association="SJStarERPModel.FK__PartWiseP__Enter__3E1D39E1">
       <End Role="UserLogin" EntitySet="UserLogins" />
       <End Role="PartWisePayment" EntitySet="PartWisePayments" />
@@ -470,7 +477,7 @@
       <End Role="SessionMaster" EntitySet="SessionMasters" />
       <End Role="ptaAdmissionMaster" EntitySet="ptaAdmissionMasters" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaDocume__ptaAd__5E54FF49" Association="SJStarERPModel.FK__ptaDocume__ptaAd__5E54FF49">
+    <AssociationSet Name="FK__ptaDocume__ptaAd__6F4A8121" Association="SJStarERPModel.FK__ptaDocume__ptaAd__6F4A8121">
       <End Role="ptaAdmissionMaster" EntitySet="ptaAdmissionMasters" />
       <End Role="ptaDocumentDetail" EntitySet="ptaDocumentDetails" />
     </AssociationSet>
@@ -494,23 +501,23 @@
       <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfoes" />
       <End Role="ptaDeclaration" EntitySet="ptaDeclarations" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaDocume__Enter__09FE775D" Association="SJStarERPModel.FK__ptaDocume__Enter__09FE775D">
+    <AssociationSet Name="FK__ptaDocume__Enter__6D6238AF" Association="SJStarERPModel.FK__ptaDocume__Enter__6D6238AF">
       <End Role="ptaStudentLogin" EntitySet="ptaStudentLogins" />
       <End Role="ptaDocumentDetail" EntitySet="ptaDocumentDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaDocume__Enter__59904A2C" Association="SJStarERPModel.FK__ptaDocume__Enter__59904A2C">
+    <AssociationSet Name="FK__ptaDocume__Enter__6E565CE8" Association="SJStarERPModel.FK__ptaDocume__Enter__6E565CE8">
       <End Role="UserLogin" EntitySet="UserLogins" />
       <End Role="ptaDocumentDetail" EntitySet="ptaDocumentDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaDocume__ptaPi__5D60DB10" Association="SJStarERPModel.FK__ptaDocume__ptaPi__5D60DB10">
+    <AssociationSet Name="FK__ptaDocume__ptaPi__703EA55A" Association="SJStarERPModel.FK__ptaDocume__ptaPi__703EA55A">
       <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMasters" />
       <End Role="ptaDocumentDetail" EntitySet="ptaDocumentDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaDocume__Updat__0AF29B96" Association="SJStarERPModel.FK__ptaDocume__Updat__0AF29B96">
+    <AssociationSet Name="FK__ptaDocume__Updat__7132C993" Association="SJStarERPModel.FK__ptaDocume__Updat__7132C993">
       <End Role="ptaStudentLogin" EntitySet="ptaStudentLogins" />
       <End Role="ptaDocumentDetail" EntitySet="ptaDocumentDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaDocume__Updat__5A846E65" Association="SJStarERPModel.FK__ptaDocume__Updat__5A846E65">
+    <AssociationSet Name="FK__ptaDocume__Updat__7226EDCC" Association="SJStarERPModel.FK__ptaDocume__Updat__7226EDCC">
       <End Role="UserLogin" EntitySet="UserLogins" />
       <End Role="ptaDocumentDetail" EntitySet="ptaDocumentDetails" />
     </AssociationSet>
@@ -537,6 +544,10 @@
     <AssociationSet Name="FK__ptaEducat__ptaUG__2AD55B43" Association="SJStarERPModel.FK__ptaEducat__ptaUG__2AD55B43">
       <End Role="ptaUGBoardAndUniversityMaster" EntitySet="ptaUGBoardAndUniversityMasters" />
       <End Role="ptaEducationDetail" EntitySet="ptaEducationDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaEmailN__ptaSc__297722B6" Association="SJStarERPModel.FK__ptaEmailN__ptaSc__297722B6">
+      <End Role="ptaScreeningEmailNotificationLog" EntitySet="ptaScreeningEmailNotificationLogs" />
+      <End Role="ptaEmailNotificationSentContent" EntitySet="ptaEmailNotificationSentContents" />
     </AssociationSet>
     <AssociationSet Name="FK__ptaFeeCol__Enter__12C8C788" Association="SJStarERPModel.FK__ptaFeeCol__Enter__12C8C788">
       <End Role="UserLogin" EntitySet="UserLogins" />
@@ -646,7 +657,7 @@
       <End Role="ptaTitleMaster" EntitySet="ptaTitleMasters" />
       <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfoes" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaStuden__ptaRe__090A5324" Association="SJStarERPModel.FK__ptaStuden__ptaRe__090A5324">
+    <AssociationSet Name="FK__ptaStuden__ptaRe__66B53B20" Association="SJStarERPModel.FK__ptaStuden__ptaRe__66B53B20">
       <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfoes" />
       <End Role="ptaStudentLogin" EntitySet="ptaStudentLogins" />
     </AssociationSet>
@@ -690,17 +701,21 @@
       <End Role="ptaScreeningTestType" EntitySet="ptaScreeningTestTypes" />
       <End Role="ptaScreeningTestResult" EntitySet="ptaScreeningTestResults" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaStuden__Enter__5C37ACAD" Association="SJStarERPModel.FK__ptaStuden__Enter__5C37ACAD">
+    <AssociationSet Name="FK__ptaStuden__Enter__65C116E7" Association="SJStarERPModel.FK__ptaStuden__Enter__65C116E7">
       <End Role="UserLogin" EntitySet="UserLogins" />
       <End Role="ptaStudentLogin" EntitySet="ptaStudentLogins" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaStuden__RoleI__5D2BD0E6" Association="SJStarERPModel.FK__ptaStuden__RoleI__5D2BD0E6">
+    <AssociationSet Name="FK__ptaStuden__RoleI__67A95F59" Association="SJStarERPModel.FK__ptaStuden__RoleI__67A95F59">
       <End Role="Role" EntitySet="Roles" />
       <End Role="ptaStudentLogin" EntitySet="ptaStudentLogins" />
     </AssociationSet>
     <AssociationSet Name="FK__Registrat__Sessi__603D47BB" Association="SJStarERPModel.FK__Registrat__Sessi__603D47BB">
       <End Role="SessionMaster" EntitySet="SessionMasters" />
       <End Role="RegistrationMaster" EntitySet="RegistrationMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Screening__Regis__5F141958" Association="SJStarERPModel.FK__Screening__Regis__5F141958">
+      <End Role="RegistrationMaster" EntitySet="RegistrationMasters" />
+      <End Role="ScreeningTest" EntitySet="ScreeningTests" />
     </AssociationSet>
     <AssociationSet Name="FK__UserLogin__RoleI__1273C1CD" Association="SJStarERPModel.FK__UserLogin__RoleI__1273C1CD">
       <End Role="Role" EntitySet="Roles" />
@@ -733,6 +748,10 @@
     <AssociationSet Name="FK__SessionIn__Updat__3DB3258D" Association="SJStarERPModel.FK__SessionIn__Updat__3DB3258D">
       <End Role="UserLogin" EntitySet="UserLogins" />
       <End Role="SessionInstallmentMaster" EntitySet="SessionInstallmentMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblGetTer__tblPe__75035A77" Association="SJStarERPModel.FK__tblGetTer__tblPe__75035A77">
+      <End Role="tblPerformanceEntryMaster" EntitySet="tblPerformanceEntryMasters" />
+      <End Role="tblGetTermAcceptancyByCandidate" EntitySet="tblGetTermAcceptancyByCandidates" />
     </AssociationSet>
     <AssociationSet Name="FK__tblParame__Revie__41B8C09B" Association="SJStarERPModel.FK__tblParame__Revie__41B8C09B">
       <End Role="tblReviewMaster" EntitySet="tblReviewMasters" />
@@ -774,13 +793,13 @@
       <End Role="tblWeeklyReviewMaster" EntitySet="tblWeeklyReviewMasters" />
       <End Role="tblPerformanceEntryMaster" EntitySet="tblPerformanceEntryMasters" />
     </AssociationSet>
+    <AssociationSet Name="FK__tblPerfor__tblPe__54968AE5" Association="SJStarERPModel.FK__tblPerfor__tblPe__54968AE5">
+      <End Role="tblPerformanceMaster" EntitySet="tblPerformanceMasters" />
+      <End Role="tblPerformancePercentageMaster" EntitySet="tblPerformancePercentageMasters" />
+    </AssociationSet>
     <AssociationSet Name="FK__tblPerfor__tblPe__55009F39" Association="SJStarERPModel.FK__tblPerfor__tblPe__55009F39">
       <End Role="tblPerformanceMaster" EntitySet="tblPerformanceMasters" />
       <End Role="tblPerformanceParameterTypeResultMaster" EntitySet="tblPerformanceParameterTypeResultMasters" />
-    </AssociationSet>
-    <AssociationSet Name="FK__tblPerfor__tblPe__67A95F59" Association="SJStarERPModel.FK__tblPerfor__tblPe__67A95F59">
-      <End Role="tblPerformanceMaster" EntitySet="tblPerformanceMasters" />
-      <End Role="tblPerformancePercentageMaster" EntitySet="tblPerformancePercentageMasters" />
     </AssociationSet>
     <AssociationSet Name="FK__tblPerfor__Enter__5AB9788F" Association="SJStarERPModel.FK__tblPerfor__Enter__5AB9788F">
       <End Role="UserLogin" EntitySet="UserLogins" />
@@ -794,15 +813,15 @@
       <End Role="UserLogin" EntitySet="UserLogins" />
       <End Role="tblPerformanceParameterTypeResultMaster" EntitySet="tblPerformanceParameterTypeResultMasters" />
     </AssociationSet>
-    <AssociationSet Name="FK__tblPerfor__Enter__6991A7CB" Association="SJStarERPModel.FK__tblPerfor__Enter__6991A7CB">
+    <AssociationSet Name="FK__tblPerfor__Enter__567ED357" Association="SJStarERPModel.FK__tblPerfor__Enter__567ED357">
       <End Role="UserLogin" EntitySet="UserLogins" />
       <End Role="tblPerformancePercentageMaster" EntitySet="tblPerformancePercentageMasters" />
     </AssociationSet>
-    <AssociationSet Name="FK__tblPerfor__tblRe__689D8392" Association="SJStarERPModel.FK__tblPerfor__tblRe__689D8392">
+    <AssociationSet Name="FK__tblPerfor__tblRe__558AAF1E" Association="SJStarERPModel.FK__tblPerfor__tblRe__558AAF1E">
       <End Role="tblReviewMaster" EntitySet="tblReviewMasters" />
       <End Role="tblPerformancePercentageMaster" EntitySet="tblPerformancePercentageMasters" />
     </AssociationSet>
-    <AssociationSet Name="FK__tblPerfor__Updat__6A85CC04" Association="SJStarERPModel.FK__tblPerfor__Updat__6A85CC04">
+    <AssociationSet Name="FK__tblPerfor__Updat__5772F790" Association="SJStarERPModel.FK__tblPerfor__Updat__5772F790">
       <End Role="UserLogin" EntitySet="UserLogins" />
       <End Role="tblPerformancePercentageMaster" EntitySet="tblPerformancePercentageMasters" />
     </AssociationSet>
@@ -810,10 +829,22 @@
       <End Role="tblReviewMaster" EntitySet="tblReviewMasters" />
       <End Role="tblWeeklyReviewMaster" EntitySet="tblWeeklyReviewMasters" />
     </AssociationSet>
-    <EntitySet Name="UserActivityLogs" EntityType="SJStarERPModel.UserActivityLog" />
-    <AssociationSet Name="FK__UserActiv__Enter__2A6B46EF" Association="SJStarERPModel.FK__UserActiv__Enter__2A6B46EF">
+    <AssociationSet Name="FK__UserActiv__Enter__5E1FF51F" Association="SJStarERPModel.FK__UserActiv__Enter__5E1FF51F">
       <End Role="UserLogin" EntitySet="UserLogins" />
       <End Role="UserActivityLog" EntitySet="UserActivityLogs" />
+    </AssociationSet>
+    <EntitySet Name="RefundInformations" EntityType="SJStarERPModel.RefundInformation" />
+    <AssociationSet Name="FK__RefundInf__Addmi__15702A09" Association="SJStarERPModel.FK__RefundInf__Addmi__15702A09">
+      <End Role="AddmissionMaster" EntitySet="AddmissionMasters" />
+      <End Role="RefundInformation" EntitySet="RefundInformations" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RefundInf__Excee__7CA47C3F" Association="SJStarERPModel.FK__RefundInf__Excee__7CA47C3F">
+      <End Role="ExceededFeeAmountOnCourseChange" EntitySet="ExceededFeeAmountOnCourseChanges" />
+      <End Role="RefundInformation" EntitySet="RefundInformations" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RefundInf__Enter__7BB05806" Association="SJStarERPModel.FK__RefundInf__Enter__7BB05806">
+      <End Role="UserLogin" EntitySet="UserLogins" />
+      <End Role="RefundInformation" EntitySet="RefundInformations" />
     </AssociationSet>
   </EntityContainer>
   <ComplexType Name="Sp_GetPerformancePWithParamRepots_Result">
@@ -880,6 +911,7 @@
     <NavigationProperty Name="FIN_FeeRefundMaster" Relationship="SJStarERPModel.FK__FIN_FeeRe__Admis__0C85DE4D" FromRole="AddmissionMaster" ToRole="FIN_FeeRefundMaster" />
     <NavigationProperty Name="MedicalDetails" Relationship="SJStarERPModel.FK__MedicalDe__Addmi__34C8D9D1" FromRole="AddmissionMaster" ToRole="MedicalDetail" />
     <NavigationProperty Name="tblPerformanceEntryMasters" Relationship="SJStarERPModel.FK__tblPerfor__Addmi__345EC57D" FromRole="AddmissionMaster" ToRole="tblPerformanceEntryMaster" />
+    <NavigationProperty Name="RefundInformations" Relationship="SJStarERPModel.FK__RefundInf__Addmi__15702A09" FromRole="AddmissionMaster" ToRole="RefundInformation" />
   </EntityType>
   <EntityType Name="AddressDetail">
     <Key>
@@ -937,8 +969,8 @@
     <NavigationProperty Name="AddmissionDetails" Relationship="SJStarERPModel.FK__Addmissio__Batch__72C60C4A" FromRole="BatchMaster" ToRole="AddmissionDetail" />
     <NavigationProperty Name="BatchHistoryDetails" Relationship="SJStarERPModel.FK__BatchHist__Batch__625A9A57" FromRole="BatchMaster" ToRole="BatchHistoryDetail" />
     <NavigationProperty Name="BatchHistoryDetails1" Relationship="SJStarERPModel.FK__BatchHist__Batch__634EBE90" FromRole="BatchMaster" ToRole="BatchHistoryDetail" />
+    <NavigationProperty Name="tblPerformancePercentageMasters" Relationship="SJStarERPModel.FK__tblPerfor__Batch__53A266AC" FromRole="BatchMaster" ToRole="tblPerformancePercentageMaster" />
     <NavigationProperty Name="tblPerformanceEntryMasters" Relationship="SJStarERPModel.FK__tblPerfor__Batch__5D95E53A" FromRole="BatchMaster" ToRole="tblPerformanceEntryMaster" />
-    <NavigationProperty Name="tblPerformancePercentageMasters" Relationship="SJStarERPModel.FK__tblPerfor__Batch__66B53B20" FromRole="BatchMaster" ToRole="tblPerformancePercentageMaster" />
   </EntityType>
   <EntityType Name="CallCenterRemark">
     <Key>
@@ -970,7 +1002,7 @@
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="AddmissionMaster" Relationship="SJStarERPModel.FK__Candidate__Addmi__4A18FC72" FromRole="CandidateTerminationResignationInfo" ToRole="AddmissionMaster" />
     <NavigationProperty Name="CandidateActionMaster" Relationship="SJStarERPModel.FK__Candidate__Candi__4B0D20AB" FromRole="CandidateTerminationResignationInfo" ToRole="CandidateActionMaster" />
-    <NavigationProperty Name="CandidateTRInfoes" Relationship="SJStarERPModel.FK__Candidate__Candi__50C5FA01" FromRole="CandidateTerminationResignationInfo" ToRole="CandidateTRInfo" />
+    <NavigationProperty Name="CandidateTRInfoes" Relationship="SJStarERPModel.FK__Candidate__Candi__4FD1D5C8" FromRole="CandidateTerminationResignationInfo" ToRole="CandidateTRInfo" />
   </EntityType>
   <EntityType Name="CandidateTRInfo">
     <Key>
@@ -988,9 +1020,9 @@
     <Property Name="ResignNoticePeriod" Type="Int32" />
     <Property Name="IsClosed" Type="Boolean" Nullable="false" />
     <Property Name="ClosedComment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="CandidateTerminationResignationInfo" Relationship="SJStarERPModel.FK__Candidate__Candi__50C5FA01" FromRole="CandidateTRInfo" ToRole="CandidateTerminationResignationInfo" />
-    <NavigationProperty Name="UserLogin" Relationship="SJStarERPModel.FK__Candidate__Enter__52AE4273" FromRole="CandidateTRInfo" ToRole="UserLogin" />
-    <NavigationProperty Name="ScheduledStatusLogForTerminateResignations" Relationship="SJStarERPModel.FK__Scheduled__Candi__5772F790" FromRole="CandidateTRInfo" ToRole="ScheduledStatusLogForTerminateResignation" />
+    <NavigationProperty Name="CandidateTerminationResignationInfo" Relationship="SJStarERPModel.FK__Candidate__Candi__4FD1D5C8" FromRole="CandidateTRInfo" ToRole="CandidateTerminationResignationInfo" />
+    <NavigationProperty Name="UserLogin" Relationship="SJStarERPModel.FK__Candidate__Enter__50C5FA01" FromRole="CandidateTRInfo" ToRole="UserLogin" />
+    <NavigationProperty Name="ScheduledStatusLogForTerminateResignations" Relationship="SJStarERPModel.FK__Scheduled__Candi__5A4F643B" FromRole="CandidateTRInfo" ToRole="ScheduledStatusLogForTerminateResignation" />
   </EntityType>
   <EntityType Name="CourseChangeHistoryDetail">
     <Key>
@@ -1071,7 +1103,7 @@
     <Property Name="DepartmentMasterId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="DepartmentMaster" Relationship="SJStarERPModel.FK__DocumentM__Depar__54CB950F" FromRole="DocumentMaster" ToRole="DepartmentMaster" />
     <NavigationProperty Name="DocumentDetails" Relationship="SJStarERPModel.FK__DocumentD__Docum__7E37BEF6" FromRole="DocumentMaster" ToRole="DocumentDetail" />
-    <NavigationProperty Name="ptaDocumentDetails" Relationship="SJStarERPModel.FK__ptaDocume__Docum__57A801BA" FromRole="DocumentMaster" ToRole="ptaDocumentDetail" />
+    <NavigationProperty Name="ptaDocumentDetails" Relationship="SJStarERPModel.FK__ptaDocume__Docum__6C6E1476" FromRole="DocumentMaster" ToRole="ptaDocumentDetail" />
     <NavigationProperty Name="ScreeningTests" Relationship="SJStarERPModel.FK__Screening__Docum__02C769E9" FromRole="DocumentMaster" ToRole="ScreeningTest" />
   </EntityType>
   <EntityType Name="ExceededFeeAmountOnCourseChange">
@@ -1090,6 +1122,7 @@
     <NavigationProperty Name="UserLogin" Relationship="SJStarERPModel.FK__ExceededF__Enter__370627FE" FromRole="ExceededFeeAmountOnCourseChange" ToRole="UserLogin" />
     <NavigationProperty Name="FeeDetail" Relationship="SJStarERPModel.FK__ExceededF__FeeDe__361203C5" FromRole="ExceededFeeAmountOnCourseChange" ToRole="FeeDetail" />
     <NavigationProperty Name="FeeDetail1" Relationship="SJStarERPModel.FK__ExceededF__OldFe__351DDF8C" FromRole="ExceededFeeAmountOnCourseChange" ToRole="FeeDetail" />
+    <NavigationProperty Name="RefundInformations" Relationship="SJStarERPModel.FK__RefundInf__Excee__7CA47C3F" FromRole="ExceededFeeAmountOnCourseChange" ToRole="RefundInformation" />
   </EntityType>
   <EntityType Name="FeeCollection">
     <Key>
@@ -1343,7 +1376,10 @@
     <Property Name="FitnessDate" Type="DateTime" Precision="3" />
     <Property Name="MedicalStatus" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="DateOfJoining" Type="DateTime" Precision="3" />
+    <Property Name="DateOfWithdrawn" Type="DateTime" Precision="3" />
+    <Property Name="EnteredBy" Type="Int32" />
     <NavigationProperty Name="AddmissionMaster" Relationship="SJStarERPModel.FK__MedicalDe__Addmi__34C8D9D1" FromRole="MedicalDetail" ToRole="AddmissionMaster" />
+    <NavigationProperty Name="UserLogin" Relationship="SJStarERPModel.FK__MedicalDe__Enter__689D8392" FromRole="MedicalDetail" ToRole="UserLogin" />
   </EntityType>
   <EntityType Name="PartWisePayment">
     <Key>
@@ -1425,7 +1461,7 @@
     <NavigationProperty Name="CourseMaster" Relationship="SJStarERPModel.FK__ptaAdmiss__Cours__640DD89F" FromRole="ptaAdmissionMaster" ToRole="CourseMaster" />
     <NavigationProperty Name="UserLogin" Relationship="SJStarERPModel.FK__ptaAdmiss__Admis__65F62111" FromRole="ptaAdmissionMaster" ToRole="UserLogin" />
     <NavigationProperty Name="SessionMaster" Relationship="SJStarERPModel.FK__ptaAdmiss__Sessi__6501FCD8" FromRole="ptaAdmissionMaster" ToRole="SessionMaster" />
-    <NavigationProperty Name="ptaDocumentDetails" Relationship="SJStarERPModel.FK__ptaDocume__ptaAd__5E54FF49" FromRole="ptaAdmissionMaster" ToRole="ptaDocumentDetail" />
+    <NavigationProperty Name="ptaDocumentDetails" Relationship="SJStarERPModel.FK__ptaDocume__ptaAd__6F4A8121" FromRole="ptaAdmissionMaster" ToRole="ptaDocumentDetail" />
     <NavigationProperty Name="ptaFeeDetails" Relationship="SJStarERPModel.FK__ptaFeeDet__PTAAd__084B3915" FromRole="ptaAdmissionMaster" ToRole="ptaFeeDetail" />
     <NavigationProperty Name="ptaRegistrationInfoes" Relationship="SJStarERPModel.FK__ptaRegist__Admis__67DE6983" FromRole="ptaAdmissionMaster" ToRole="ptaRegistrationInfo" />
   </EntityType>
@@ -1501,13 +1537,13 @@
     <Property Name="ptaAdmissionMasterId" Type="Int32" />
     <Property Name="EnteredStudentBy" Type="Int32" />
     <Property Name="UpdatedStudentBy" Type="Int32" />
-    <NavigationProperty Name="DocumentMaster" Relationship="SJStarERPModel.FK__ptaDocume__Docum__57A801BA" FromRole="ptaDocumentDetail" ToRole="DocumentMaster" />
-    <NavigationProperty Name="ptaAdmissionMaster" Relationship="SJStarERPModel.FK__ptaDocume__ptaAd__5E54FF49" FromRole="ptaDocumentDetail" ToRole="ptaAdmissionMaster" />
-    <NavigationProperty Name="ptaStudentLogin" Relationship="SJStarERPModel.FK__ptaDocume__Enter__09FE775D" FromRole="ptaDocumentDetail" ToRole="ptaStudentLogin" />
-    <NavigationProperty Name="UserLogin" Relationship="SJStarERPModel.FK__ptaDocume__Enter__59904A2C" FromRole="ptaDocumentDetail" ToRole="UserLogin" />
-    <NavigationProperty Name="ptaPilotRegistrationMaster" Relationship="SJStarERPModel.FK__ptaDocume__ptaPi__5D60DB10" FromRole="ptaDocumentDetail" ToRole="ptaPilotRegistrationMaster" />
-    <NavigationProperty Name="ptaStudentLogin1" Relationship="SJStarERPModel.FK__ptaDocume__Updat__0AF29B96" FromRole="ptaDocumentDetail" ToRole="ptaStudentLogin" />
-    <NavigationProperty Name="UserLogin1" Relationship="SJStarERPModel.FK__ptaDocume__Updat__5A846E65" FromRole="ptaDocumentDetail" ToRole="UserLogin" />
+    <NavigationProperty Name="DocumentMaster" Relationship="SJStarERPModel.FK__ptaDocume__Docum__6C6E1476" FromRole="ptaDocumentDetail" ToRole="DocumentMaster" />
+    <NavigationProperty Name="ptaAdmissionMaster" Relationship="SJStarERPModel.FK__ptaDocume__ptaAd__6F4A8121" FromRole="ptaDocumentDetail" ToRole="ptaAdmissionMaster" />
+    <NavigationProperty Name="ptaStudentLogin" Relationship="SJStarERPModel.FK__ptaDocume__Enter__6D6238AF" FromRole="ptaDocumentDetail" ToRole="ptaStudentLogin" />
+    <NavigationProperty Name="UserLogin" Relationship="SJStarERPModel.FK__ptaDocume__Enter__6E565CE8" FromRole="ptaDocumentDetail" ToRole="UserLogin" />
+    <NavigationProperty Name="ptaPilotRegistrationMaster" Relationship="SJStarERPModel.FK__ptaDocume__ptaPi__703EA55A" FromRole="ptaDocumentDetail" ToRole="ptaPilotRegistrationMaster" />
+    <NavigationProperty Name="ptaStudentLogin1" Relationship="SJStarERPModel.FK__ptaDocume__Updat__7132C993" FromRole="ptaDocumentDetail" ToRole="ptaStudentLogin" />
+    <NavigationProperty Name="UserLogin1" Relationship="SJStarERPModel.FK__ptaDocume__Updat__7226EDCC" FromRole="ptaDocumentDetail" ToRole="UserLogin" />
   </EntityType>
   <EntityType Name="ptaEducationDetail">
     <Key>
@@ -1553,6 +1589,15 @@
     <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="ptaEducationDetails" Relationship="SJStarERPModel.FK__ptaEducat__ptaEd__2704CA5F" FromRole="ptaEduEvaluationTypeMaster" ToRole="ptaEducationDetail" />
+  </EntityType>
+  <EntityType Name="ptaEmailNotificationSentContent">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ptaScreeningEmailNotificationID" Type="Int32" Nullable="false" />
+    <Property Name="EmailNotificationcontent" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ptaScreeningEmailNotificationLog" Relationship="SJStarERPModel.FK__ptaEmailN__ptaSc__297722B6" FromRole="ptaEmailNotificationSentContent" ToRole="ptaScreeningEmailNotificationLog" />
   </EntityType>
   <EntityType Name="ptaFeeCollection">
     <Key>
@@ -1764,7 +1809,7 @@
     <Property Name="DepartmentMasterId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="CourseMaster" Relationship="SJStarERPModel.FK__ptaPilotR__Cours__3A179ED3" FromRole="ptaPilotRegistrationMaster" ToRole="CourseMaster" />
     <NavigationProperty Name="DepartmentMaster" Relationship="SJStarERPModel.FK__ptaPilotR__Depar__3DE82FB7" FromRole="ptaPilotRegistrationMaster" ToRole="DepartmentMaster" />
-    <NavigationProperty Name="ptaDocumentDetails" Relationship="SJStarERPModel.FK__ptaDocume__ptaPi__5D60DB10" FromRole="ptaPilotRegistrationMaster" ToRole="ptaDocumentDetail" />
+    <NavigationProperty Name="ptaDocumentDetails" Relationship="SJStarERPModel.FK__ptaDocume__ptaPi__703EA55A" FromRole="ptaPilotRegistrationMaster" ToRole="ptaDocumentDetail" />
     <NavigationProperty Name="SessionMaster" Relationship="SJStarERPModel.FK__ptaPilotR__Sessi__3B0BC30C" FromRole="ptaPilotRegistrationMaster" ToRole="SessionMaster" />
     <NavigationProperty Name="ptaRegistrationInfoes" Relationship="SJStarERPModel.FK__ptaRegist__ptaPi__3EDC53F0" FromRole="ptaPilotRegistrationMaster" ToRole="ptaRegistrationInfo" />
     <NavigationProperty Name="ptaScreeningInfoes" Relationship="SJStarERPModel.FK__ptaScreen__PTAPi__4A4E069C" FromRole="ptaPilotRegistrationMaster" ToRole="ptaScreeningInfo" />
@@ -1797,7 +1842,7 @@
     <NavigationProperty Name="ptaPassports" Relationship="SJStarERPModel.FK__ptaPasspo__ptaRe__2DB1C7EE" FromRole="ptaRegistrationInfo" ToRole="ptaPassport" />
     <NavigationProperty Name="ptaPilotRegistrationMaster" Relationship="SJStarERPModel.FK__ptaRegist__ptaPi__3EDC53F0" FromRole="ptaRegistrationInfo" ToRole="ptaPilotRegistrationMaster" />
     <NavigationProperty Name="ptaTitleMaster" Relationship="SJStarERPModel.FK__ptaRegist__ptaTi__32767D0B" FromRole="ptaRegistrationInfo" ToRole="ptaTitleMaster" />
-    <NavigationProperty Name="ptaStudentLogins" Relationship="SJStarERPModel.FK__ptaStuden__ptaRe__090A5324" FromRole="ptaRegistrationInfo" ToRole="ptaStudentLogin" />
+    <NavigationProperty Name="ptaStudentLogins" Relationship="SJStarERPModel.FK__ptaStuden__ptaRe__66B53B20" FromRole="ptaRegistrationInfo" ToRole="ptaStudentLogin" />
   </EntityType>
   <EntityType Name="ptaResultStatusMaster">
     <Key>
@@ -1822,6 +1867,7 @@
     <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="CourseName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ptaEmailNotificationSentContents" Relationship="SJStarERPModel.FK__ptaEmailN__ptaSc__297722B6" FromRole="ptaScreeningEmailNotificationLog" ToRole="ptaEmailNotificationSentContent" />
     <NavigationProperty Name="ptaPilotRegistrationMaster" Relationship="SJStarERPModel.FK__ptaScreen__PTAPi__7167D3BD" FromRole="ptaScreeningEmailNotificationLog" ToRole="ptaPilotRegistrationMaster" />
   </EntityType>
   <EntityType Name="ptaScreeningExamfailedLog">
@@ -1932,11 +1978,11 @@
     <Property Name="EnteredDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ApplicationNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="ptaRegistrationInfoId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="ptaDocumentDetails" Relationship="SJStarERPModel.FK__ptaDocume__Enter__09FE775D" FromRole="ptaStudentLogin" ToRole="ptaDocumentDetail" />
-    <NavigationProperty Name="ptaDocumentDetails1" Relationship="SJStarERPModel.FK__ptaDocume__Updat__0AF29B96" FromRole="ptaStudentLogin" ToRole="ptaDocumentDetail" />
-    <NavigationProperty Name="ptaRegistrationInfo" Relationship="SJStarERPModel.FK__ptaStuden__ptaRe__090A5324" FromRole="ptaStudentLogin" ToRole="ptaRegistrationInfo" />
-    <NavigationProperty Name="UserLogin" Relationship="SJStarERPModel.FK__ptaStuden__Enter__5C37ACAD" FromRole="ptaStudentLogin" ToRole="UserLogin" />
-    <NavigationProperty Name="Role" Relationship="SJStarERPModel.FK__ptaStuden__RoleI__5D2BD0E6" FromRole="ptaStudentLogin" ToRole="Role" />
+    <NavigationProperty Name="ptaDocumentDetails" Relationship="SJStarERPModel.FK__ptaDocume__Enter__6D6238AF" FromRole="ptaStudentLogin" ToRole="ptaDocumentDetail" />
+    <NavigationProperty Name="ptaDocumentDetails1" Relationship="SJStarERPModel.FK__ptaDocume__Updat__7132C993" FromRole="ptaStudentLogin" ToRole="ptaDocumentDetail" />
+    <NavigationProperty Name="ptaRegistrationInfo" Relationship="SJStarERPModel.FK__ptaStuden__ptaRe__66B53B20" FromRole="ptaStudentLogin" ToRole="ptaRegistrationInfo" />
+    <NavigationProperty Name="UserLogin" Relationship="SJStarERPModel.FK__ptaStuden__Enter__65C116E7" FromRole="ptaStudentLogin" ToRole="UserLogin" />
+    <NavigationProperty Name="Role" Relationship="SJStarERPModel.FK__ptaStuden__RoleI__67A95F59" FromRole="ptaStudentLogin" ToRole="Role" />
   </EntityType>
   <EntityType Name="ptaTitleMaster">
     <Key>
@@ -2012,6 +2058,7 @@
     <NavigationProperty Name="DepartmentMaster" Relationship="SJStarERPModel.FK__Registrat__Depar__40C49C62" FromRole="RegistrationMaster" ToRole="DepartmentMaster" />
     <NavigationProperty Name="FeeDetails" Relationship="SJStarERPModel.FK__FeeDetail__Regis__318258D2" FromRole="RegistrationMaster" ToRole="FeeDetail" />
     <NavigationProperty Name="SessionMaster" Relationship="SJStarERPModel.FK__Registrat__Sessi__603D47BB" FromRole="RegistrationMaster" ToRole="SessionMaster" />
+    <NavigationProperty Name="ScreeningTests" Relationship="SJStarERPModel.FK__Screening__Regis__5F141958" FromRole="RegistrationMaster" ToRole="ScreeningTest" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -2022,7 +2069,7 @@
     <Property Name="EnteredDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
     <Property Name="IsPerformanceDept" Type="Boolean" />
-    <NavigationProperty Name="ptaStudentLogins" Relationship="SJStarERPModel.FK__ptaStuden__RoleI__5D2BD0E6" FromRole="Role" ToRole="ptaStudentLogin" />
+    <NavigationProperty Name="ptaStudentLogins" Relationship="SJStarERPModel.FK__ptaStuden__RoleI__67A95F59" FromRole="Role" ToRole="ptaStudentLogin" />
     <NavigationProperty Name="UserLogins" Relationship="SJStarERPModel.FK__UserLogin__RoleI__1273C1CD" FromRole="Role" ToRole="UserLogin" />
   </EntityType>
   <EntityType Name="ScheduledStatusLogForTerminateResignation">
@@ -2032,7 +2079,7 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CandidateTRInfoId" Type="Int32" Nullable="false" />
     <Property Name="EnteredDate" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="CandidateTRInfo" Relationship="SJStarERPModel.FK__Scheduled__Candi__5772F790" FromRole="ScheduledStatusLogForTerminateResignation" ToRole="CandidateTRInfo" />
+    <NavigationProperty Name="CandidateTRInfo" Relationship="SJStarERPModel.FK__Scheduled__Candi__5A4F643B" FromRole="ScheduledStatusLogForTerminateResignation" ToRole="CandidateTRInfo" />
   </EntityType>
   <EntityType Name="ScreeningInterviewer">
     <Key>
@@ -2075,6 +2122,7 @@
     <Property Name="Poor" Type="Boolean" Nullable="false" />
     <Property Name="Remark" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
     <Property Name="ScreeningTestId" Type="Int32" Nullable="false" />
+    <Property Name="InterViewerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="ScreeningParameter" Relationship="SJStarERPModel.FK__Screening__Scree__22751F6C" FromRole="ScreeningParameterOption" ToRole="ScreeningParameter" />
     <NavigationProperty Name="ScreeningTest" Relationship="SJStarERPModel.FK__Screening__Scree__00DF2177" FromRole="ScreeningParameterOption" ToRole="ScreeningTest" />
   </EntityType>
@@ -2095,7 +2143,9 @@
     <Property Name="DocumentMasterId" Type="Int32" />
     <Property Name="ScreeningDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="RegistrationMasterId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="DocumentMaster" Relationship="SJStarERPModel.FK__Screening__Docum__02C769E9" FromRole="ScreeningTest" ToRole="DocumentMaster" />
+    <NavigationProperty Name="RegistrationMaster" Relationship="SJStarERPModel.FK__Screening__Regis__5F141958" FromRole="ScreeningTest" ToRole="RegistrationMaster" />
     <NavigationProperty Name="ScreeningInterviewerResults" Relationship="SJStarERPModel.FK__Screening__Scree__01D345B0" FromRole="ScreeningTest" ToRole="ScreeningInterviewerResult" />
     <NavigationProperty Name="ScreeningParameterOptions" Relationship="SJStarERPModel.FK__Screening__Scree__00DF2177" FromRole="ScreeningTest" ToRole="ScreeningParameterOption" />
     <NavigationProperty Name="TatooOrScar" Relationship="SJStarERPModel.FK__Screening__Tatoo__7FEAFD3E" FromRole="ScreeningTest" ToRole="TatooOrScar" />
@@ -2166,6 +2216,16 @@
     <Property Name="IsActive" Type="Boolean" />
     <NavigationProperty Name="ScreeningTests" Relationship="SJStarERPModel.FK__Screening__Tatoo__7FEAFD3E" FromRole="TatooOrScar" ToRole="ScreeningTest" />
   </EntityType>
+  <EntityType Name="tblGetTermAcceptancyByCandidate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tblPerformanceEntryMasterId" Type="Int32" Nullable="false" />
+    <Property Name="Accept" Type="Boolean" />
+    <Property Name="DateOfAction" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="tblPerformanceEntryMaster" Relationship="SJStarERPModel.FK__tblGetTer__tblPe__75035A77" FromRole="tblGetTermAcceptancyByCandidate" ToRole="tblPerformanceEntryMaster" />
+  </EntityType>
   <EntityType Name="tblParameterList">
     <Key>
       <PropertyRef Name="Id" />
@@ -2209,6 +2269,7 @@
     <Property Name="PerformanceReview" Type="String" MaxLength="700" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="AddmissionMaster" Relationship="SJStarERPModel.FK__tblPerfor__Addmi__345EC57D" FromRole="tblPerformanceEntryMaster" ToRole="AddmissionMaster" />
     <NavigationProperty Name="BatchMaster" Relationship="SJStarERPModel.FK__tblPerfor__Batch__5D95E53A" FromRole="tblPerformanceEntryMaster" ToRole="BatchMaster" />
+    <NavigationProperty Name="tblGetTermAcceptancyByCandidates" Relationship="SJStarERPModel.FK__tblGetTer__tblPe__75035A77" FromRole="tblPerformanceEntryMaster" ToRole="tblGetTermAcceptancyByCandidate" />
     <NavigationProperty Name="UserLogin" Relationship="SJStarERPModel.FK__tblPerfor__Enter__503BEA1C" FromRole="tblPerformanceEntryMaster" ToRole="UserLogin" />
     <NavigationProperty Name="tblReviewMaster" Relationship="SJStarERPModel.FK__tblPerfor__Revie__4E53A1AA" FromRole="tblPerformanceEntryMaster" ToRole="tblReviewMaster" />
     <NavigationProperty Name="tblPerformanceMaster" Relationship="SJStarERPModel.FK__tblPerfor__tblPe__51300E55" FromRole="tblPerformanceEntryMaster" ToRole="tblPerformanceMaster" />
@@ -2224,8 +2285,8 @@
     <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="tblPerformanceEntryMasters" Relationship="SJStarERPModel.FK__tblPerfor__tblPe__51300E55" FromRole="tblPerformanceMaster" ToRole="tblPerformanceEntryMaster" />
+    <NavigationProperty Name="tblPerformancePercentageMasters" Relationship="SJStarERPModel.FK__tblPerfor__tblPe__54968AE5" FromRole="tblPerformanceMaster" ToRole="tblPerformancePercentageMaster" />
     <NavigationProperty Name="tblPerformanceParameterTypeResultMasters" Relationship="SJStarERPModel.FK__tblPerfor__tblPe__55009F39" FromRole="tblPerformanceMaster" ToRole="tblPerformanceParameterTypeResultMaster" />
-    <NavigationProperty Name="tblPerformancePercentageMasters" Relationship="SJStarERPModel.FK__tblPerfor__tblPe__67A95F59" FromRole="tblPerformanceMaster" ToRole="tblPerformancePercentageMaster" />
   </EntityType>
   <EntityType Name="tblPerformanceParameterResultMaster">
     <Key>
@@ -2273,11 +2334,11 @@
     <Property Name="EnteredDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="UpdatedBy" Type="Int32" />
     <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="BatchMaster" Relationship="SJStarERPModel.FK__tblPerfor__Batch__66B53B20" FromRole="tblPerformancePercentageMaster" ToRole="BatchMaster" />
-    <NavigationProperty Name="tblPerformanceMaster" Relationship="SJStarERPModel.FK__tblPerfor__tblPe__67A95F59" FromRole="tblPerformancePercentageMaster" ToRole="tblPerformanceMaster" />
-    <NavigationProperty Name="UserLogin" Relationship="SJStarERPModel.FK__tblPerfor__Enter__6991A7CB" FromRole="tblPerformancePercentageMaster" ToRole="UserLogin" />
-    <NavigationProperty Name="tblReviewMaster" Relationship="SJStarERPModel.FK__tblPerfor__tblRe__689D8392" FromRole="tblPerformancePercentageMaster" ToRole="tblReviewMaster" />
-    <NavigationProperty Name="UserLogin1" Relationship="SJStarERPModel.FK__tblPerfor__Updat__6A85CC04" FromRole="tblPerformancePercentageMaster" ToRole="UserLogin" />
+    <NavigationProperty Name="BatchMaster" Relationship="SJStarERPModel.FK__tblPerfor__Batch__53A266AC" FromRole="tblPerformancePercentageMaster" ToRole="BatchMaster" />
+    <NavigationProperty Name="tblPerformanceMaster" Relationship="SJStarERPModel.FK__tblPerfor__tblPe__54968AE5" FromRole="tblPerformancePercentageMaster" ToRole="tblPerformanceMaster" />
+    <NavigationProperty Name="UserLogin" Relationship="SJStarERPModel.FK__tblPerfor__Enter__567ED357" FromRole="tblPerformancePercentageMaster" ToRole="UserLogin" />
+    <NavigationProperty Name="tblReviewMaster" Relationship="SJStarERPModel.FK__tblPerfor__tblRe__558AAF1E" FromRole="tblPerformancePercentageMaster" ToRole="tblReviewMaster" />
+    <NavigationProperty Name="UserLogin1" Relationship="SJStarERPModel.FK__tblPerfor__Updat__5772F790" FromRole="tblPerformancePercentageMaster" ToRole="UserLogin" />
   </EntityType>
   <EntityType Name="tblReviewMaster">
     <Key>
@@ -2288,7 +2349,7 @@
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="tblParameterLists" Relationship="SJStarERPModel.FK__tblParame__Revie__41B8C09B" FromRole="tblReviewMaster" ToRole="tblParameterList" />
     <NavigationProperty Name="tblPerformanceEntryMasters" Relationship="SJStarERPModel.FK__tblPerfor__Revie__4E53A1AA" FromRole="tblReviewMaster" ToRole="tblPerformanceEntryMaster" />
-    <NavigationProperty Name="tblPerformancePercentageMasters" Relationship="SJStarERPModel.FK__tblPerfor__tblRe__689D8392" FromRole="tblReviewMaster" ToRole="tblPerformancePercentageMaster" />
+    <NavigationProperty Name="tblPerformancePercentageMasters" Relationship="SJStarERPModel.FK__tblPerfor__tblRe__558AAF1E" FromRole="tblReviewMaster" ToRole="tblPerformancePercentageMaster" />
     <NavigationProperty Name="tblWeeklyReviewMasters" Relationship="SJStarERPModel.FK__tblWeekly__tblRe__46B27FE2" FromRole="tblReviewMaster" ToRole="tblWeeklyReviewMaster" />
   </EntityType>
   <EntityType Name="tblWeeklyReviewMaster">
@@ -2302,6 +2363,21 @@
     <NavigationProperty Name="tblPerformanceEntryMasters" Relationship="SJStarERPModel.FK__tblPerfor__tblWe__4F47C5E3" FromRole="tblWeeklyReviewMaster" ToRole="tblPerformanceEntryMaster" />
     <NavigationProperty Name="tblPerformanceEntryMasters1" Relationship="SJStarERPModel.FK__tblPerfor__tblWe__5BAD9CC8" FromRole="tblWeeklyReviewMaster" ToRole="tblPerformanceEntryMaster" />
     <NavigationProperty Name="tblReviewMaster" Relationship="SJStarERPModel.FK__tblWeekly__tblRe__46B27FE2" FromRole="tblWeeklyReviewMaster" ToRole="tblReviewMaster" />
+  </EntityType>
+  <EntityType Name="UserActivityLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ModuleName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Activity" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ActivityMessage" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ActioName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ControllerName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="EnteredBy" Type="Int32" Nullable="false" />
+    <Property Name="EnteredDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="RegistrationNo" Type="Int32" />
+    <NavigationProperty Name="UserLogin" Relationship="SJStarERPModel.FK__UserActiv__Enter__5E1FF51F" FromRole="UserActivityLog" ToRole="UserLogin" />
   </EntityType>
   <EntityType Name="UserLogin">
     <Key>
@@ -2324,7 +2400,7 @@
     <NavigationProperty Name="BankAndAmountDetails" Relationship="SJStarERPModel.FK__BankAndAm__Enter__3C34F16F" FromRole="UserLogin" ToRole="BankAndAmountDetail" />
     <NavigationProperty Name="BatchHistoryDetails" Relationship="SJStarERPModel.FK__BatchHist__Enter__6442E2C9" FromRole="UserLogin" ToRole="BatchHistoryDetail" />
     <NavigationProperty Name="CallCenterRemarks" Relationship="SJStarERPModel.FK__CallCente__Enter__7B5B524B" FromRole="UserLogin" ToRole="CallCenterRemark" />
-    <NavigationProperty Name="CandidateTRInfoes" Relationship="SJStarERPModel.FK__Candidate__Enter__52AE4273" FromRole="UserLogin" ToRole="CandidateTRInfo" />
+    <NavigationProperty Name="CandidateTRInfoes" Relationship="SJStarERPModel.FK__Candidate__Enter__50C5FA01" FromRole="UserLogin" ToRole="CandidateTRInfo" />
     <NavigationProperty Name="CourseChangeHistoryDetails" Relationship="SJStarERPModel.FK__CourseCha__Enter__2022C2A6" FromRole="UserLogin" ToRole="CourseChangeHistoryDetail" />
     <NavigationProperty Name="DocumentDetails" Relationship="SJStarERPModel.FK__DocumentD__Creat__403A8C7D" FromRole="UserLogin" ToRole="DocumentDetail" />
     <NavigationProperty Name="DocumentDetails1" Relationship="SJStarERPModel.FK__DocumentD__Updat__412EB0B6" FromRole="UserLogin" ToRole="DocumentDetail" />
@@ -2340,10 +2416,11 @@
     <NavigationProperty Name="FIN_FeeReceiptMaster1" Relationship="SJStarERPModel.FK__FIN_FeeRe__Modif__151B244E" FromRole="UserLogin" ToRole="FIN_FeeReceiptMaster" />
     <NavigationProperty Name="FIN_FeeRefundMaster" Relationship="SJStarERPModel.FK__FIN_FeeRe__Creat__18EBB532" FromRole="UserLogin" ToRole="FIN_FeeRefundMaster" />
     <NavigationProperty Name="FIN_FeeRefundMaster1" Relationship="SJStarERPModel.FK__FIN_FeeRe__Modif__1AD3FDA4" FromRole="UserLogin" ToRole="FIN_FeeRefundMaster" />
+    <NavigationProperty Name="MedicalDetails" Relationship="SJStarERPModel.FK__MedicalDe__Enter__689D8392" FromRole="UserLogin" ToRole="MedicalDetail" />
     <NavigationProperty Name="PartWisePayments" Relationship="SJStarERPModel.FK__PartWiseP__Enter__3E1D39E1" FromRole="UserLogin" ToRole="PartWisePayment" />
     <NavigationProperty Name="ptaAdmissionMasters" Relationship="SJStarERPModel.FK__ptaAdmiss__Admis__65F62111" FromRole="UserLogin" ToRole="ptaAdmissionMaster" />
-    <NavigationProperty Name="ptaDocumentDetails" Relationship="SJStarERPModel.FK__ptaDocume__Enter__59904A2C" FromRole="UserLogin" ToRole="ptaDocumentDetail" />
-    <NavigationProperty Name="ptaDocumentDetails1" Relationship="SJStarERPModel.FK__ptaDocume__Updat__5A846E65" FromRole="UserLogin" ToRole="ptaDocumentDetail" />
+    <NavigationProperty Name="ptaDocumentDetails" Relationship="SJStarERPModel.FK__ptaDocume__Enter__6E565CE8" FromRole="UserLogin" ToRole="ptaDocumentDetail" />
+    <NavigationProperty Name="ptaDocumentDetails1" Relationship="SJStarERPModel.FK__ptaDocume__Updat__7226EDCC" FromRole="UserLogin" ToRole="ptaDocumentDetail" />
     <NavigationProperty Name="ptaFeeCollections" Relationship="SJStarERPModel.FK__ptaFeeCol__Enter__12C8C788" FromRole="UserLogin" ToRole="ptaFeeCollection" />
     <NavigationProperty Name="ptaFeeCollections1" Relationship="SJStarERPModel.FK__ptaFeeCol__Updat__13BCEBC1" FromRole="UserLogin" ToRole="ptaFeeCollection" />
     <NavigationProperty Name="ptaFeePaymentDetails" Relationship="SJStarERPModel.FK__ptaFeePay__Enter__0E04126B" FromRole="UserLogin" ToRole="ptaFeePaymentDetail" />
@@ -2351,16 +2428,17 @@
     <NavigationProperty Name="ptaScreeningExamfailedLogs" Relationship="SJStarERPModel.FK__ptaScreen__Enter__6ABAD62E" FromRole="UserLogin" ToRole="ptaScreeningExamfailedLog" />
     <NavigationProperty Name="ptaScreeningInfoes" Relationship="SJStarERPModel.FK__ptaScreen__Enter__4B422AD5" FromRole="UserLogin" ToRole="ptaScreeningInfo" />
     <NavigationProperty Name="ptaScreeningInfoes1" Relationship="SJStarERPModel.FK__ptaScreen__Updat__4C364F0E" FromRole="UserLogin" ToRole="ptaScreeningInfo" />
-    <NavigationProperty Name="ptaStudentLogins" Relationship="SJStarERPModel.FK__ptaStuden__Enter__5C37ACAD" FromRole="UserLogin" ToRole="ptaStudentLogin" />
+    <NavigationProperty Name="ptaStudentLogins" Relationship="SJStarERPModel.FK__ptaStuden__Enter__65C116E7" FromRole="UserLogin" ToRole="ptaStudentLogin" />
     <NavigationProperty Name="Role" Relationship="SJStarERPModel.FK__UserLogin__RoleI__1273C1CD" FromRole="UserLogin" ToRole="Role" />
     <NavigationProperty Name="SessionInstallmentMasters" Relationship="SJStarERPModel.FK__SessionIn__Enter__3CBF0154" FromRole="UserLogin" ToRole="SessionInstallmentMaster" />
     <NavigationProperty Name="SessionInstallmentMasters1" Relationship="SJStarERPModel.FK__SessionIn__Updat__3DB3258D" FromRole="UserLogin" ToRole="SessionInstallmentMaster" />
     <NavigationProperty Name="tblPerformanceEntryMasters" Relationship="SJStarERPModel.FK__tblPerfor__Enter__503BEA1C" FromRole="UserLogin" ToRole="tblPerformanceEntryMaster" />
     <NavigationProperty Name="tblPerformanceParameterResultMasters" Relationship="SJStarERPModel.FK__tblPerfor__Enter__5AB9788F" FromRole="UserLogin" ToRole="tblPerformanceParameterResultMaster" />
     <NavigationProperty Name="tblPerformanceParameterTypeResultMasters" Relationship="SJStarERPModel.FK__tblPerfor__Enter__55F4C372" FromRole="UserLogin" ToRole="tblPerformanceParameterTypeResultMaster" />
-    <NavigationProperty Name="tblPerformancePercentageMasters" Relationship="SJStarERPModel.FK__tblPerfor__Enter__6991A7CB" FromRole="UserLogin" ToRole="tblPerformancePercentageMaster" />
-    <NavigationProperty Name="tblPerformancePercentageMasters1" Relationship="SJStarERPModel.FK__tblPerfor__Updat__6A85CC04" FromRole="UserLogin" ToRole="tblPerformancePercentageMaster" />
-    <NavigationProperty Name="UserActivityLogs" Relationship="SJStarERPModel.FK__UserActiv__Enter__2A6B46EF" FromRole="UserLogin" ToRole="UserActivityLog" />
+    <NavigationProperty Name="tblPerformancePercentageMasters" Relationship="SJStarERPModel.FK__tblPerfor__Enter__567ED357" FromRole="UserLogin" ToRole="tblPerformancePercentageMaster" />
+    <NavigationProperty Name="tblPerformancePercentageMasters1" Relationship="SJStarERPModel.FK__tblPerfor__Updat__5772F790" FromRole="UserLogin" ToRole="tblPerformancePercentageMaster" />
+    <NavigationProperty Name="UserActivityLogs" Relationship="SJStarERPModel.FK__UserActiv__Enter__5E1FF51F" FromRole="UserLogin" ToRole="UserActivityLog" />
+    <NavigationProperty Name="RefundInformations" Relationship="SJStarERPModel.FK__RefundInf__Enter__7BB05806" FromRole="UserLogin" ToRole="RefundInformation" />
   </EntityType>
   <EntityType Name="Query">
     <Key>
@@ -2716,6 +2794,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__tblPerfor__Batch__53A266AC">
+    <End Type="SJStarERPModel.BatchMaster" Role="BatchMaster" Multiplicity="1" />
+    <End Type="SJStarERPModel.tblPerformancePercentageMaster" Role="tblPerformancePercentageMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BatchMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblPerformancePercentageMaster">
+        <PropertyRef Name="BatchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__tblPerfor__Batch__5D95E53A">
     <End Type="SJStarERPModel.BatchMaster" Role="BatchMaster" Multiplicity="0..1" />
     <End Type="SJStarERPModel.tblPerformanceEntryMaster" Role="tblPerformanceEntryMaster" Multiplicity="*" />
@@ -2724,18 +2814,6 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="tblPerformanceEntryMaster">
-        <PropertyRef Name="BatchId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__tblPerfor__Batch__66B53B20">
-    <End Type="SJStarERPModel.BatchMaster" Role="BatchMaster" Multiplicity="1" />
-    <End Type="SJStarERPModel.tblPerformancePercentageMaster" Role="tblPerformancePercentageMaster" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="BatchMaster">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="tblPerformancePercentageMaster">
         <PropertyRef Name="BatchId" />
       </Dependent>
     </ReferentialConstraint>
@@ -2764,7 +2842,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Candidate__Candi__50C5FA01">
+  <Association Name="FK__Candidate__Candi__4FD1D5C8">
     <End Type="SJStarERPModel.CandidateTerminationResignationInfo" Role="CandidateTerminationResignationInfo" Multiplicity="1" />
     <End Type="SJStarERPModel.CandidateTRInfo" Role="CandidateTRInfo" Multiplicity="*" />
     <ReferentialConstraint>
@@ -2776,7 +2854,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Candidate__Enter__52AE4273">
+  <Association Name="FK__Candidate__Enter__50C5FA01">
     <End Type="SJStarERPModel.UserLogin" Role="UserLogin" Multiplicity="1" />
     <End Type="SJStarERPModel.CandidateTRInfo" Role="CandidateTRInfo" Multiplicity="*" />
     <ReferentialConstraint>
@@ -2788,7 +2866,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Scheduled__Candi__5772F790">
+  <Association Name="FK__Scheduled__Candi__5A4F643B">
     <End Type="SJStarERPModel.CandidateTRInfo" Role="CandidateTRInfo" Multiplicity="1" />
     <End Type="SJStarERPModel.ScheduledStatusLogForTerminateResignation" Role="ScheduledStatusLogForTerminateResignation" Multiplicity="*" />
     <ReferentialConstraint>
@@ -3028,7 +3106,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaDocume__Docum__57A801BA">
+  <Association Name="FK__ptaDocume__Docum__6C6E1476">
     <End Type="SJStarERPModel.DocumentMaster" Role="DocumentMaster" Multiplicity="1" />
     <End Type="SJStarERPModel.ptaDocumentDetail" Role="ptaDocumentDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -3472,6 +3550,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__MedicalDe__Enter__689D8392">
+    <End Type="SJStarERPModel.UserLogin" Role="UserLogin" Multiplicity="0..1" />
+    <End Type="SJStarERPModel.MedicalDetail" Role="MedicalDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MedicalDetail">
+        <PropertyRef Name="EnteredBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__PartWiseP__Enter__3E1D39E1">
     <End Type="SJStarERPModel.UserLogin" Role="UserLogin" Multiplicity="1" />
     <End Type="SJStarERPModel.PartWisePayment" Role="PartWisePayment" Multiplicity="*" />
@@ -3532,7 +3622,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaDocume__ptaAd__5E54FF49">
+  <Association Name="FK__ptaDocume__ptaAd__6F4A8121">
     <End Type="SJStarERPModel.ptaAdmissionMaster" Role="ptaAdmissionMaster" Multiplicity="0..1" />
     <End Type="SJStarERPModel.ptaDocumentDetail" Role="ptaDocumentDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -3604,7 +3694,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaDocume__Enter__09FE775D">
+  <Association Name="FK__ptaDocume__Enter__6D6238AF">
     <End Type="SJStarERPModel.ptaStudentLogin" Role="ptaStudentLogin" Multiplicity="0..1" />
     <End Type="SJStarERPModel.ptaDocumentDetail" Role="ptaDocumentDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -3616,7 +3706,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaDocume__Enter__59904A2C">
+  <Association Name="FK__ptaDocume__Enter__6E565CE8">
     <End Type="SJStarERPModel.UserLogin" Role="UserLogin" Multiplicity="0..1" />
     <End Type="SJStarERPModel.ptaDocumentDetail" Role="ptaDocumentDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -3628,7 +3718,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaDocume__ptaPi__5D60DB10">
+  <Association Name="FK__ptaDocume__ptaPi__703EA55A">
     <End Type="SJStarERPModel.ptaPilotRegistrationMaster" Role="ptaPilotRegistrationMaster" Multiplicity="1" />
     <End Type="SJStarERPModel.ptaDocumentDetail" Role="ptaDocumentDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -3640,7 +3730,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaDocume__Updat__0AF29B96">
+  <Association Name="FK__ptaDocume__Updat__7132C993">
     <End Type="SJStarERPModel.ptaStudentLogin" Role="ptaStudentLogin" Multiplicity="0..1" />
     <End Type="SJStarERPModel.ptaDocumentDetail" Role="ptaDocumentDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -3652,7 +3742,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaDocume__Updat__5A846E65">
+  <Association Name="FK__ptaDocume__Updat__7226EDCC">
     <End Type="SJStarERPModel.UserLogin" Role="UserLogin" Multiplicity="0..1" />
     <End Type="SJStarERPModel.ptaDocumentDetail" Role="ptaDocumentDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -3733,6 +3823,18 @@
       </Principal>
       <Dependent Role="ptaEducationDetail">
         <PropertyRef Name="ptaUGBoardAndUniversityMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaEmailN__ptaSc__297722B6">
+    <End Type="SJStarERPModel.ptaScreeningEmailNotificationLog" Role="ptaScreeningEmailNotificationLog" Multiplicity="1" />
+    <End Type="SJStarERPModel.ptaEmailNotificationSentContent" Role="ptaEmailNotificationSentContent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaScreeningEmailNotificationLog">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaEmailNotificationSentContent">
+        <PropertyRef Name="ptaScreeningEmailNotificationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4060,7 +4162,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaStuden__ptaRe__090A5324">
+  <Association Name="FK__ptaStuden__ptaRe__66B53B20">
     <End Type="SJStarERPModel.ptaRegistrationInfo" Role="ptaRegistrationInfo" Multiplicity="1" />
     <End Type="SJStarERPModel.ptaStudentLogin" Role="ptaStudentLogin" Multiplicity="*" />
     <ReferentialConstraint>
@@ -4192,7 +4294,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaStuden__Enter__5C37ACAD">
+  <Association Name="FK__ptaStuden__Enter__65C116E7">
     <End Type="SJStarERPModel.UserLogin" Role="UserLogin" Multiplicity="1" />
     <End Type="SJStarERPModel.ptaStudentLogin" Role="ptaStudentLogin" Multiplicity="*" />
     <ReferentialConstraint>
@@ -4204,7 +4306,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaStuden__RoleI__5D2BD0E6">
+  <Association Name="FK__ptaStuden__RoleI__67A95F59">
     <End Type="SJStarERPModel.Role" Role="Role" Multiplicity="1" />
     <End Type="SJStarERPModel.ptaStudentLogin" Role="ptaStudentLogin" Multiplicity="*" />
     <ReferentialConstraint>
@@ -4225,6 +4327,18 @@
       </Principal>
       <Dependent Role="RegistrationMaster">
         <PropertyRef Name="SessionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Screening__Regis__5F141958">
+    <End Type="SJStarERPModel.RegistrationMaster" Role="RegistrationMaster" Multiplicity="1" />
+    <End Type="SJStarERPModel.ScreeningTest" Role="ScreeningTest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RegistrationMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ScreeningTest">
+        <PropertyRef Name="RegistrationMasterId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4321,6 +4435,18 @@
       </Principal>
       <Dependent Role="SessionInstallmentMaster">
         <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblGetTer__tblPe__75035A77">
+    <End Type="SJStarERPModel.tblPerformanceEntryMaster" Role="tblPerformanceEntryMaster" Multiplicity="1" />
+    <End Type="SJStarERPModel.tblGetTermAcceptancyByCandidate" Role="tblGetTermAcceptancyByCandidate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPerformanceEntryMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblGetTermAcceptancyByCandidate">
+        <PropertyRef Name="tblPerformanceEntryMasterId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4444,6 +4570,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__tblPerfor__tblPe__54968AE5">
+    <End Type="SJStarERPModel.tblPerformanceMaster" Role="tblPerformanceMaster" Multiplicity="1" />
+    <End Type="SJStarERPModel.tblPerformancePercentageMaster" Role="tblPerformancePercentageMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPerformanceMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblPerformancePercentageMaster">
+        <PropertyRef Name="tblPerformanceMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__tblPerfor__tblPe__55009F39">
     <End Type="SJStarERPModel.tblPerformanceMaster" Role="tblPerformanceMaster" Multiplicity="1" />
     <End Type="SJStarERPModel.tblPerformanceParameterTypeResultMaster" Role="tblPerformanceParameterTypeResultMaster" Multiplicity="*" />
@@ -4452,18 +4590,6 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="tblPerformanceParameterTypeResultMaster">
-        <PropertyRef Name="tblPerformanceMasterId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__tblPerfor__tblPe__67A95F59">
-    <End Type="SJStarERPModel.tblPerformanceMaster" Role="tblPerformanceMaster" Multiplicity="1" />
-    <End Type="SJStarERPModel.tblPerformancePercentageMaster" Role="tblPerformancePercentageMaster" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tblPerformanceMaster">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="tblPerformancePercentageMaster">
         <PropertyRef Name="tblPerformanceMasterId" />
       </Dependent>
     </ReferentialConstraint>
@@ -4504,7 +4630,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__tblPerfor__Enter__6991A7CB">
+  <Association Name="FK__tblPerfor__Enter__567ED357">
     <End Type="SJStarERPModel.UserLogin" Role="UserLogin" Multiplicity="1" />
     <End Type="SJStarERPModel.tblPerformancePercentageMaster" Role="tblPerformancePercentageMaster" Multiplicity="*" />
     <ReferentialConstraint>
@@ -4516,7 +4642,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__tblPerfor__tblRe__689D8392">
+  <Association Name="FK__tblPerfor__tblRe__558AAF1E">
     <End Type="SJStarERPModel.tblReviewMaster" Role="tblReviewMaster" Multiplicity="1" />
     <End Type="SJStarERPModel.tblPerformancePercentageMaster" Role="tblPerformancePercentageMaster" Multiplicity="*" />
     <ReferentialConstraint>
@@ -4528,7 +4654,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__tblPerfor__Updat__6A85CC04">
+  <Association Name="FK__tblPerfor__Updat__5772F790">
     <End Type="SJStarERPModel.UserLogin" Role="UserLogin" Multiplicity="0..1" />
     <End Type="SJStarERPModel.tblPerformancePercentageMaster" Role="tblPerformancePercentageMaster" Multiplicity="*" />
     <ReferentialConstraint>
@@ -4552,21 +4678,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="UserActivityLog">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ModuleName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-    <Property Name="Activity" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="ActivityMessage" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="ActioName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="ControllerName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="EnteredBy" Type="Int32" Nullable="false" />
-    <Property Name="EnteredDate" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="UserLogin" Relationship="SJStarERPModel.FK__UserActiv__Enter__2A6B46EF" FromRole="UserActivityLog" ToRole="UserLogin" />
-  </EntityType>
-  <Association Name="FK__UserActiv__Enter__2A6B46EF">
+  <Association Name="FK__UserActiv__Enter__5E1FF51F">
     <End Type="SJStarERPModel.UserLogin" Role="UserLogin" Multiplicity="1" />
     <End Type="SJStarERPModel.UserActivityLog" Role="UserActivityLog" Multiplicity="*" />
     <ReferentialConstraint>
@@ -4574,6 +4686,60 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="UserActivityLog">
+        <PropertyRef Name="EnteredBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="RefundInformation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ExceededFeeAmountOnCourseChangeId" Type="Int32" />
+    <Property Name="RefundAmount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+    <Property Name="CaseClosed" Type="Boolean" Nullable="false" />
+    <Property Name="EnteredBy" Type="Int32" Nullable="false" />
+    <Property Name="EnteredDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="StatusLine" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CurrDate" Type="DateTime" Precision="3" />
+    <Property Name="AddmissionMasterId" Type="Int32" />
+    <NavigationProperty Name="AddmissionMaster" Relationship="SJStarERPModel.FK__RefundInf__Addmi__15702A09" FromRole="RefundInformation" ToRole="AddmissionMaster" />
+    <NavigationProperty Name="ExceededFeeAmountOnCourseChange" Relationship="SJStarERPModel.FK__RefundInf__Excee__7CA47C3F" FromRole="RefundInformation" ToRole="ExceededFeeAmountOnCourseChange" />
+    <NavigationProperty Name="UserLogin" Relationship="SJStarERPModel.FK__RefundInf__Enter__7BB05806" FromRole="RefundInformation" ToRole="UserLogin" />
+  </EntityType>
+  <Association Name="FK__RefundInf__Addmi__15702A09">
+    <End Type="SJStarERPModel.AddmissionMaster" Role="AddmissionMaster" Multiplicity="0..1" />
+    <End Type="SJStarERPModel.RefundInformation" Role="RefundInformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AddmissionMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RefundInformation">
+        <PropertyRef Name="AddmissionMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__RefundInf__Excee__7CA47C3F">
+    <End Type="SJStarERPModel.ExceededFeeAmountOnCourseChange" Role="ExceededFeeAmountOnCourseChange" Multiplicity="0..1" />
+    <End Type="SJStarERPModel.RefundInformation" Role="RefundInformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExceededFeeAmountOnCourseChange">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RefundInformation">
+        <PropertyRef Name="ExceededFeeAmountOnCourseChangeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__RefundInf__Enter__7BB05806">
+    <End Type="SJStarERPModel.UserLogin" Role="UserLogin" Multiplicity="1" />
+    <End Type="SJStarERPModel.RefundInformation" Role="RefundInformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RefundInformation">
         <PropertyRef Name="EnteredBy" />
       </Dependent>
     </ReferentialConstraint>

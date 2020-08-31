@@ -17,6 +17,7 @@ namespace SJData
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblPerformanceEntryMaster()
         {
+            this.tblGetTermAcceptancyByCandidates = new HashSet<tblGetTermAcceptancyByCandidate>();
             this.tblPerformanceParameterTypeResultMasters = new HashSet<tblPerformanceParameterTypeResultMaster>();
         }
     
@@ -35,6 +36,8 @@ namespace SJData
     
         public virtual AddmissionMaster AddmissionMaster { get; set; }
         public virtual BatchMaster BatchMaster { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblGetTermAcceptancyByCandidate> tblGetTermAcceptancyByCandidates { get; set; }
         public virtual UserLogin UserLogin { get; set; }
         public virtual tblReviewMaster tblReviewMaster { get; set; }
         public virtual tblPerformanceMaster tblPerformanceMaster { get; set; }

@@ -195,7 +195,8 @@ namespace SpiceStarAcademy.ControllersAddFeeType
             log.ModuleName = "FeeCollection";
             log.ControllerName = "FeeManagement";
             log.Activity = "Taking Fee";
-            log.ActivityMessage = "Fee paid successfully for registraion no " + Model.FeeDetail.RegistrationNo + "";
+            log.ActivityMessage = "Fee paid successfully for registration no " + Model.FeeDetail.RegistrationNo + "";
+            log.RegistrationNo = Model.FeeDetail.RegistrationNo;
             LogActivityService logActivityService = new LogActivityService();
             logActivityService.CreateLogActivity(log);
             if (Model.hdnFeeDetailId > 0)
@@ -256,6 +257,7 @@ namespace SpiceStarAcademy.ControllersAddFeeType
             log.ControllerName = "FeeManagement";
             log.Activity = "Change Course";
             log.ActivityMessage = "Course changed from " + OldCourse + " to " + ChangeCourseWith + " regarded registration No. " + RegNo;
+            log.RegistrationNo = RegNo;
             LogActivityService logActivityService = new LogActivityService();
             logActivityService.CreateLogActivity(log);
             string msg = feeManegementService.SaveCourseChange(CourseId, SessionYr, RegNo, UserId, FeeDetailId, OldCourse, Remark);
@@ -270,6 +272,44 @@ namespace SpiceStarAcademy.ControllersAddFeeType
         public JsonResult GetRecieptDetail(string RecieptNo)
         {
             return Json(feeManegementService.GetRecieptDetail(RecieptNo), JsonRequestBehavior.AllowGet);
+        }
+
+        // Refund Code
+        public ActionResult Refund()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetRefundDetailsList(DataTableFilterModel filter)
+        {
+            try
+            {
+                DataTableFilterModel dataFilter = feeManegementService.GetRefundDetailsList(filter);
+                return Json(new { draw = filter.draw, recordsFiltered = dataFilter.recordsFiltered, recordsTotal = dataFilter.recordsTotal, data = dataFilter.data },
+                        JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json(new { }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult OpenRefundPopup(int Id,int? AdmissionId)
+        {
+            var data = new RefundInformationViewModel();
+            return PartialView("_RefundAR", feeManegementService.OpenRefundPopup(Id, AdmissionId));
+        }
+
+        [HttpPost]
+        public ActionResult SaveApprovedAndReject(RefundInformationViewModel Model)
+        {
+            int UserId = Session["UserId"] != null ? Convert.ToInt32(Session["UserId"]) : 0;
+            Model.EnteredBy = UserId;
+            return Json(feeManegementService.SaveApprovedAndReject(Model), JsonRequestBehavior.AllowGet);
         }
     }
 }

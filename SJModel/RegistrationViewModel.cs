@@ -136,5 +136,36 @@ namespace SJModel
         public int? SessionYr { get; set; }
         public bool IsAnyCourseFeePay { get; set; }
         public DateTime? BatchCreationDate { get; set; }
+        public DateTime? DateOfWithdrawal { get; set; }
+        public string DateOfWithdrawalStr
+        {
+            get
+            {
+                return string.Format("{0}", (DateOfWithdrawal.HasValue ? DateOfWithdrawal.Value.Day.ToString().PadLeft(2, '0') + "/" + DateOfWithdrawal.Value.Month.ToString().PadLeft(2, '0') + "/" + DateOfWithdrawal.Value.Year : ""));
+            }
+        }
+        public string UserFname { get; set; }
+        public string UserLname { get; set; }
+        public string FullUserName
+        {
+            get
+            {
+                return string.Format("{0} {1}", UppercaseFirst(UserFname), UppercaseFirst(UserLname));
+            }
+        }
+
+        public int ExceedPaymentRefundId { get; set; }
+        public string RefundStatus { get; set; }
+        public string IsPartWiseOrFullPay { get; set; }
+        public string RefundRemark { get; set; }
+
+        public decimal? FirstInstallment { get; set; }
+        public decimal? SecondInstallment { get; set; }
+        public decimal? ThirdInstallment { get; set; }
+        public decimal? FeeTotalAmount { get; set; }
+        public decimal? FeeDueAmount { get; set; }
+        public DateTime? BatchCommencementDate { get; set; }
+        public string FeeDueDate { get; set; }
+        public bool ShowMedicalConsultPopUp { get; set; }
     }
 }

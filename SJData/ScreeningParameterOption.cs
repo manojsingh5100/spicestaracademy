@@ -21,6 +21,7 @@ namespace SJData
         public bool Poor { get; set; }
         public string Remark { get; set; }
         public int ScreeningTestId { get; set; }
+        public string InterViewerName { get; set; }
     
         public virtual ScreeningParameter ScreeningParameter { get; set; }
         public virtual ScreeningTest ScreeningTest { get; set; }

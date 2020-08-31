@@ -104,6 +104,12 @@
         TableCourseFilter = 8;
         Table = $("#tblMedical").DataTable(medicaltblSetting("tblMedical", "GetRagisterList", "Registration", 0));
         $.fn.dataTable.ext.errMode = 'throw';
+        Table.on('draw.dt', function () {
+            var PageInfo = $('#tblMedical').DataTable().page.info();
+            Table.column(0, { page: 'current' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1 + PageInfo.start;
+            });
+        });
         $('.buttons-excel').css('display', 'none');
         $('.dt-buttons').append("<img src='/Images/excel-icon-transparent-18.jpg' height=32px; width=60px; onclick='btnexport();' title='Export' style='border:1px solid;border-color:#f5eeee;cursor: pointer;' />");
         setTimeout(function () {

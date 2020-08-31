@@ -1,12 +1,12 @@
 ﻿@{
-    ViewBag.Title = "WithdrawalCandidates";
+    ViewBag.Title = "Withdrawn Candidates";
 }
-<title>Reject Candidates</title>
+    <title>Withdrawn Candidates</title>
 <div class="content-wrapper">
     <section class="content-header">
-        <h1>Withdrawal Candidates</h1>
+        <h1>Withdrawn Candidates</h1>
         <ol class="breadcrumb">
-            <li class="active"><i class="fa fa-dashboard"></i> &nbsp;Withdrawal Candidates</li>
+            <li class="active"><i class="fa fa-dashboard"></i> &nbsp;Withdrawn Candidates</li>
         </ol>
     </section>
     <section class="content">
@@ -24,9 +24,10 @@
                                         <th>EmailID</th>
                                         <th>Mobile No</th>
                                         <th>Course</th>
-                                        <th>Status</th>
-                                        <th>Reg.Date</th>
-                                        <th>Action</th>
+                                        <th style="width:20%">Status</th>
+                                        <th>Withdrawn Date</th>
+                                        @*<th>Fee Status</th>*@
+                                        @*<th>Action</th>*@
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -69,6 +70,12 @@
         TableCourseFilter = 6;
         Table = $("#tblRejectRegistration").DataTable(rejectedtblSetting("tblRejectRegistration", "WithdrawalCandidateList", "Registration", 1));
         $.fn.dataTable.ext.errMode = 'throw';
+        Table.on('draw.dt', function () {
+            var PageInfo = $('#tblRejectRegistration').DataTable().page.info();
+            Table.column(0, { page: 'current' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1 + PageInfo.start;
+            });
+        });
         $('.buttons-excel').css('display', 'none');
         $('.dt-buttons').append("<img src='/Images/excel-icon-transparent-18.jpg' height=32px; width=60px; onclick='btnexport();' title='Export' style='border:1px solid;border-color:#f5eeee;cursor: pointer;' />");
         getUserActivities('Withdrawal');

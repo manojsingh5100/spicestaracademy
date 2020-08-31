@@ -18,6 +18,7 @@ namespace SJModel
         public System.DateTime EnteredDate { get; set; }
         public string Fname { get; set; }
         public string Lname { get; set; }
+        public int? RegistrationNo { get; set; }
         public string ActivityDate
         {
             get

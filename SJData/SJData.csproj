@@ -185,6 +185,9 @@
     <Compile Include="ptaEduEvaluationTypeMaster.cs">
       <DependentUpon>SJAcademyDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ptaEmailNotificationSentContent.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="ptaFeeCollection.cs">
       <DependentUpon>SJAcademyDB.tt</DependentUpon>
     </Compile>
@@ -272,6 +275,9 @@
     <Compile Include="Query.cs">
       <DependentUpon>SJAcademyDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="RefundInformation.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="RegistrationMaster.cs">
       <DependentUpon>SJAcademyDB.tt</DependentUpon>
     </Compile>
@@ -327,6 +333,9 @@
       <DependentUpon>SJAcademyDB.tt</DependentUpon>
     </Compile>
     <Compile Include="TatooOrScar.cs">
+      <DependentUpon>SJAcademyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblGetTermAcceptancyByCandidate.cs">
       <DependentUpon>SJAcademyDB.tt</DependentUpon>
     </Compile>
     <Compile Include="tblParameterList.cs">

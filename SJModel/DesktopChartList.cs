@@ -11,13 +11,19 @@ namespace SJModel
     {
         public int TotalRegistartion { get; set; }
         public int TotalAdmission { get; set; }
-        public int TotalMedical { get; set; }
+        public int TotalMedicalSelected { get; set; }
+        public int TotalMedicalRejected { get; set; }
         public int TotalScreenning { get; set; }
+        public int TotalMedical { get; set; }
+        public int TotalScreenningSelected { get; set; }
+        public int TotalScreenningRejected { get; set; }
         public List<RegisterByMonth> TotalRegByMonth { get; set; }
         public List<AxisPoint> MapList { get; set; }
+        public string GetLeadSourecMapList { get; set; }
         public string Map { get; set; }
-
         public IEnumerable<LogActivityViewModel> GetActivityList { get; set; }
+        public int StandBy { get; set; }
+        public int Withdrawn { get; set; }
     }
 
     public class RegisterByMonth

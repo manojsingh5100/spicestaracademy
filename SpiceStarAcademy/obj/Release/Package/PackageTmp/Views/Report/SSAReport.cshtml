@@ -1,6 +1,6 @@
 ﻿@model SJModel.ReportFilterViewModel
 @{
-    ViewBag.Title = "SSAReport";
+    ViewBag.Title = "Aarambh Report";
 }
 <style>
     .select2-container--default .select2-selection--single {
@@ -14,9 +14,9 @@
 <title>SSA Batch Report</title>
 <div class="content-wrapper">
     <section class="content-header">
-        <h1>SSA Batch Report</h1>
+        <h1>Aarambh Report</h1>
         <ol class="breadcrumb">
-            <li class="active"><i class="fa fa-dashboard"></i> &nbsp;SSA Batch Report</li>
+            <li class="active"><i class="fa fa-dashboard"></i> &nbsp;Aarambh Report</li>
         </ol>
     </section>
     <section class="content">
@@ -42,6 +42,7 @@
                                         <th>Add1</th>
                                         <th>Add2</th>
                                         <th>Add3</th>
+                                        <th>PinCode</th>
                                         <th>Contact No</th>
                                         <th>Email</th>
                                         <th>Desig.</th>
@@ -68,6 +69,12 @@
     $(document).ready(function () {
         Table = $("#tblSSAReport").DataTable(ssaReporttblSetting("tblSSAReport", "GetSSAReportList", "Report", 4));
         TableSSAReportFilter();
+        Table.on('draw.dt', function () {
+            var PageInfo = $('#tblSSAReport').DataTable().page.info();
+            Table.column(0, { page: 'current' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1 + PageInfo.start;
+            });
+        });
         HideShowTableColumn("tblSSAReport");
         $.fn.dataTable.ext.errMode = 'throw';
         $('.buttons-excel').css('display', 'none');

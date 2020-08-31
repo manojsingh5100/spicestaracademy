@@ -151,6 +151,60 @@ namespace SJService
             return data;
         }
 
+        public DataTableFilterModel GetRefundDetailsList(DataTableFilterModel filter)
+        {
+            //var data = _context.ExceededFeeAmountOnCourseChanges.Select(item => new FeeRefundViewModel
+            //{
+            //    Id = item.Id,
+            //    RegNo = item.AddmissionMaster.RegistrationNo,
+            //    Amount = item.ExceedAmount,
+            //    Course = item.AddmissionMaster.CourseMaster.CourseName,
+            //    Email = item.AddmissionMaster.Email,
+            //    Fname = item.AddmissionMaster.Fname,
+            //    Lname = item.AddmissionMaster.Lname,
+            //    Mobile = item.AddmissionMaster.MobileNo,
+            //    Status = item.RefundInformations.Any() ? item.RefundInformations.FirstOrDefault().Status : "Pending",
+            //    AdmissionId = item.AdmissionId,
+            //    Remark = item.RefundInformations.Any() ? item.RefundInformations.FirstOrDefault().StatusLine : "",
+            //}).AsEnumerable();
+            var data = _context.RefundInformations.Select(item => new FeeRefundViewModel
+            {
+                Id = item.Id,
+                RegNo = item.AddmissionMaster.RegistrationNo,
+                Amount = item.ExceededFeeAmountOnCourseChange == null ? 0 : item.ExceededFeeAmountOnCourseChange.ExceedAmount,
+                Course = item.AddmissionMaster.CourseMaster.CourseName,
+                Fname = item.AddmissionMaster.Fname,
+                Lname = item.AddmissionMaster.Lname,
+                Mobile = item.AddmissionMaster.MobileNo,
+                AdmissionId = item.AddmissionMaster.Id,
+                Status = item.Status != "" ? item.Status : "Pending",
+                Remark = item.StatusLine
+            }).AsEnumerable();
+
+            var totalCount = data.Count();
+            if (!string.IsNullOrWhiteSpace(filter.search.value))
+            {
+                data = data.Where(d => d.RegNo.ToString().ToLower().Contains(filter.search.value.ToLower()) || (!string.IsNullOrEmpty(d.StudentName) && d.StudentName.ToLower().Contains(filter.search.value.ToLower())) || (!string.IsNullOrEmpty(d.Email) && d.Email.ToLower().Contains(filter.search.value.ToLower())) || (!string.IsNullOrEmpty(d.Mobile) && d.Mobile.ToString().ToLower().Contains(filter.search.value.ToLower())));
+            }
+
+            var o = filter.order[0];
+            var name = filter.columns[filter.order[0].column].data;
+            if (o.dir == "asc")
+            {
+                data = data.OrderBy(x => x.GetType().GetProperty(name).GetValue(x));
+            }
+            else
+            {
+                data = data.OrderByDescending(x => x.GetType().GetProperty(name).GetValue(x));
+            }
+            var filteredCount = data.Count();
+            filter.recordsTotal = totalCount;
+            filter.recordsFiltered = filteredCount;
+            var dataFilter = data.Skip(filter.start).Take(filter.length).ToList();
+            filter.data = dataFilter;
+            return filter;
+        }
+
         public DataTableFilterModel GetFeeTypeDetailList(DataTableFilterModel filter)
         {
             var data = _context.FeeTypeDetails
@@ -512,7 +566,10 @@ namespace SJService
                         IsFeePayStandBy = o.registration.IsFeePayStandBy,
                         SessionYr = o.registration.SessionMaster.SessionYr,
                         BatchCreationDate = o.admission.AddmissionDetails.FirstOrDefault().BatchMaster.DateOfStart,
-                        IsAnyCourseFeePay = _context.FeeDetails.Where(f => f.RegistrationNo == RegistrationId).Any()
+                        IsAnyCourseFeePay = _context.FeeDetails.Where(f => f.RegistrationNo == RegistrationId).Any(),
+                        ExceedPaymentRefundId = o.admission.ExceededFeeAmountOnCourseChanges.Any() ? o.admission.ExceededFeeAmountOnCourseChanges.FirstOrDefault().Id : 0,
+                        RefundStatus = o.admission.ExceededFeeAmountOnCourseChanges.Any() ? (o.admission.ExceededFeeAmountOnCourseChanges.FirstOrDefault().RefundInformations.Any() ? o.admission.ExceededFeeAmountOnCourseChanges.FirstOrDefault().RefundInformations.FirstOrDefault().Status : "Pending") : "",
+                        RefundRemark = o.admission.RefundInformations.Any() ? o.admission.RefundInformations.FirstOrDefault().Status : ""
                     },
                     PaymentTypeList = _context.PaymentTypes.Where(p => p.IsActive).Select(r => new RoleViewModel
                     {
@@ -1056,9 +1113,9 @@ namespace SJService
             try
             {
                 var data = _context.FeeEmailNotifacationLogs.Where(w => w.IsActive == true && w.IsSenEmail == false && w.FeeInstallmentName == Model.FeeInstallmentName).ToList();
-                if(data.Count() > 0)
+                if (data.Count() > 0)
                 {
-                    foreach(var item in data)
+                    foreach (var item in data)
                     {
                         item.IsActive = false;
                     }
@@ -1089,6 +1146,25 @@ namespace SJService
         public string CandidateCourseChange(int CourseId, int SessionYr)
         {
             return _context.SessionMasters.Where(s => s.SessionYr == SessionYr && s.CourseMasterId == CourseId).FirstOrDefault().SessionName;
+        }
+
+        public string SaveSessionChange(int RegNo, int EnteredBy, int SessionId)
+        {
+            string Msg = "Some problem occur!";
+            if (SessionId > 0)
+            {
+                var registerdata = _context.RegistrationMasters.Where(w => w.RegistartionNo == RegNo).FirstOrDefault();
+                if (registerdata != null)
+                {
+                    registerdata.SessionId = SessionId;
+                    var admissiondata = _context.AddmissionDetails.Where(w => w.AddmissionMaster.RegistrationNo == RegNo).FirstOrDefault();
+                    if (admissiondata != null)
+                        admissiondata.SessionId = SessionId;
+                    _context.SaveChanges();
+                    Msg = "Session has been changed succesfully";
+                }
+            }
+            return Msg;
         }
 
         public string SaveCourseChange(int CourseId, int SessionYr, int RegNo, int EnteredBy, int FeeDetailId, string OldCourse, string Remark)
@@ -1586,6 +1662,93 @@ namespace SJService
                     BatchName = s.Name
                 }).ToList()
             }).FirstOrDefault();
+        }
+
+        public RefundInformationViewModel OpenRefundPopup(int Id, int? AdmissionId)
+        {
+            RefundInformationViewModel model = new RefundInformationViewModel();
+            model.AdmissionId = AdmissionId;
+            if (AdmissionId.HasValue)
+            {
+                int regNo = _context.AddmissionMasters.Where(a => a.Id == AdmissionId.Value).FirstOrDefault().RegistrationNo;
+                model.TotalAmount = _context.PartWisePayments.Where(w => w.FeeCollection.FeePaymentDetail.FeeDetail.IsActive && w.FeeCollection.FeePaymentDetail.FeeDetail.RegistrationMaster.RegistartionNo == regNo).Sum(s => s.Amount);
+            }
+            var data = _context.RefundInformations.Where(w => w.Id == Id).FirstOrDefault();
+
+            if (data != null)
+            {
+                model.Id = data.Id;
+                model.RefundAmount = data.RefundAmount;
+                model.Status = data.Status;
+                model.StatusRemark = data.StatusLine;
+                model.CaseClosed = data.CaseClosed;
+                model.CurrentDate = data.CurrDate.HasValue ? data.CurrDate.Value.Day.ToString().PadLeft(2, '0') + "/" + data.CurrDate.Value.Month.ToString().PadLeft(2, '0') + "/" + data.CurrDate.Value.Year : DateTime.Now.Day.ToString().PadLeft(2, '0') + "/" + DateTime.Now.Month.ToString().PadLeft(2, '0') + "/" + DateTime.Now.Year;
+            }
+
+            if (data != null && data.ExceededFeeAmountOnCourseChange != null)
+            {
+                model.ExeedAmount = data.ExceededFeeAmountOnCourseChange.ExceedAmount;
+                model.ExceedFeeAmountOnCourseChangeId = data.ExceededFeeAmountOnCourseChangeId.Value;
+            }
+            else
+                model.ExeedAmount = 0;
+
+            //model.ExceedFeeAmountOnCourseChangeId = Id;
+            //var data = _context.ExceededFeeAmountOnCourseChanges.Where(w => w.Id == Id).FirstOrDefault();
+            //if (data != null)
+            //    model.ExeedAmount = data.ExceedAmount;
+            //if (data != null && data.RefundInformations.Any())
+            //{
+            //    model.Id = data.RefundInformations.FirstOrDefault().Id;
+            //    model.RefundAmount = data.RefundInformations.FirstOrDefault().RefundAmount;
+            //    model.Status = data.RefundInformations.FirstOrDefault().Status;
+            //    model.StatusRemark = data.RefundInformations.FirstOrDefault().StatusLine;
+            //    model.CaseClosed = data.RefundInformations.FirstOrDefault().CaseClosed;
+            //    model.CurrentDate = data.RefundInformations.FirstOrDefault().CurrDate.HasValue ? data.RefundInformations.FirstOrDefault().CurrDate.Value.Day.ToString().PadLeft(2, '0') + "/" + data.RefundInformations.FirstOrDefault().CurrDate.Value.Month.ToString().PadLeft(2, '0') + "/" + data.RefundInformations.FirstOrDefault().CurrDate.Value.Year : DateTime.Now.Day.ToString().PadLeft(2, '0') + "/" + DateTime.Now.Month.ToString().PadLeft(2, '0') + "/" + DateTime.Now.Year;
+            //}
+            return model;
+        }
+
+        public bool SaveApprovedAndReject(RefundInformationViewModel Model)
+        {
+            bool bit = false;
+            string Status = "";
+            if (Model.RefundAmount > 0 && Model.Header == "Approved")
+                Status = "Case closed and approved with " + Model.RefundAmount + " INR.";
+            else if (Model.Header == "Reject")
+                Status = "Case closed with reject";
+            if (Status == "")
+            {
+
+                RefundInformation obj = new RefundInformation
+                {
+                    CaseClosed = Model.CaseClosed,
+                    EnteredDate = DateTime.Now,
+                    RefundAmount = Model.RefundAmount,
+                    ExceededFeeAmountOnCourseChangeId = Model.Id,
+                    StatusLine = Model.StatusRemark,
+                    EnteredBy = Model.EnteredBy,
+                    CurrDate = DateTime.ParseExact(Model.CurrentDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date,
+                    Status = "",
+                    AddmissionMasterId = Model.AdmissionId
+                };
+                if (Model.Id == 0)
+                    obj.ExceededFeeAmountOnCourseChangeId = (int?)null;
+                _context.RefundInformations.Add(obj);
+                _context.SaveChanges();
+                bit = true;
+            }
+            else
+            {
+                var dd = _context.RefundInformations.Where(w => w.Id == Model.Id).FirstOrDefault();
+                if (dd != null)
+                {
+                    dd.Status = Status;
+                }
+                _context.SaveChanges();
+                bit = true;
+            }
+            return bit;
         }
     }
 }

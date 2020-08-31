@@ -50,6 +50,15 @@ namespace SJService
             }).ToList();
         }
 
+        public List<RoleViewModel> GetLeadSourceList()
+        {
+            return _context.ptaLeadSourceMasters.Where(w => w.IsActive).Select(item => new RoleViewModel
+            {
+                Id = item.Id,
+                Name = item.Name
+            }).ToList();
+        }
+
         public int CreateAddmission1(int RegNo, int CreatedBy, int Id, int? BatchId, string CreatedDate)
         {
             var data = _context.RegistrationMasters.Where(r => r.IsActive && r.RegistartionNo == RegNo).FirstOrDefault();
@@ -189,9 +198,9 @@ namespace SJService
 
         public DataTableFilterModel GetAddmissionViewList(DataTableFilterModel filter, int SessionYr)
         {
-            var result = _context.AddmissionMasters.Where(a => a.IsActive && (!a.RegistrationMaster.IsMedicalClear.HasValue || a.RegistrationMaster.IsMedicalClear.Value) && a.AddmissionDetails.FirstOrDefault().BatchMaster.IsActive && a.AddmissionDetails.FirstOrDefault().BatchMaster.Name != "Batch 0");
+            var result = _context.AddmissionMasters.Where(a => a.IsActive && a.RegistrationMaster.IsActive && ((a.MedicalDetails.FirstOrDefault().MedicalStatus == "TMU" && a.RegistrationMaster.FeeDetails.Any()) || !a.RegistrationMaster.IsMedicalClear.HasValue || a.RegistrationMaster.IsMedicalClear.Value) && a.AddmissionDetails.FirstOrDefault().BatchMaster.IsActive && a.AddmissionDetails.FirstOrDefault().BatchId != 19);
             if (SessionYr > 0)
-                result = result.Where(d => d.AddmissionDetails.FirstOrDefault().SessionMaster.SessionYr == SessionYr);
+                result = result.Where(d => d.AddmissionDetails.FirstOrDefault().BatchMaster.DateOfStart.Value.Year == SessionYr);
             var data = result.Select(a => new AddmissionMasterViewModel
             {
                 Id = a.Id,
@@ -202,6 +211,7 @@ namespace SJService
                 CourseName = a.CourseMaster.CourseName,
                 BatchName = a.AddmissionDetails.FirstOrDefault().BatchMaster.Name,
                 BatchId = a.AddmissionDetails.FirstOrDefault().BatchId,
+                BatchStartDate = a.AddmissionDetails.FirstOrDefault().BatchMaster.DateOfStart,
                 SessionName = a.AddmissionDetails.FirstOrDefault().SessionMaster.SessionName,
                 Fname = a.Fname,
                 Lname = a.Lname,
@@ -259,7 +269,7 @@ namespace SJService
             foreach (var i in dataFilter)
             {
                 i.DateOfBirth = i.DOB.HasValue ? i.DOB.Value.ToString("dd-MM-yyyy") : "";
-                i.DateOfAddmission = i.AddmissionDate.HasValue ? i.AddmissionDate.Value.ToString("dd-MM-yyyy") : "";
+                i.DateOfAddmission = i.BatchStartDate.HasValue ? i.BatchStartDate.Value.ToString("dd-MM-yyyy") : "";
             }
             filter.data = dataFilter;
             return filter;
@@ -597,10 +607,26 @@ namespace SJService
                 CorrespondenceCity = model.AddressDetails.Any(ad => ad.AddmissionId == model.Id) ? model.AddressDetails.Where(add => add.AddmissionId == model.Id).FirstOrDefault().CopCity : "",
                 BatchName = model.AddmissionDetails.Any(ad => ad.AddmissionId == model.Id) ? model.AddmissionDetails.Where(add => add.AddmissionId == model.Id).FirstOrDefault().BatchMaster.Name : "",
                 BatchId = model.AddmissionDetails.Any(ad => ad.AddmissionId == model.Id) ? model.AddmissionDetails.Where(add => add.AddmissionId == model.Id).FirstOrDefault().BatchMaster.Id : 0,
-                AdmissionDate = model.AddmissionDate.Value,
+                AdmissionDate = model.AddmissionDetails.FirstOrDefault().BatchMaster.DateOfStart.Value,
                 IsFeePayStandBy = _context.RegistrationMasters.Where(r => r.IsActive && r.RegistartionNo == model.RegistrationNo).Any() ? _context.RegistrationMasters.Where(r => r.IsActive && r.RegistartionNo == model.RegistrationNo).FirstOrDefault().IsFeePayStandBy : false,
-                IsFeePayment = _context.FeeDetails.Where(w => w.IsActive).Any(a => a.RegistrationNo == model.RegistrationNo) ? (_context.FeeDetails.Any(a => a.FeeTypeDetail.IsActive && a.FeeTypeDetail.FeeTypeId == 1) ? true : false) : false
-            }).Where(a=>a.BatchId != 19).AsEnumerable();
+                IsFeePayment = model.RegistrationMaster.FeeDetails.Where(w => w.IsActive).Any(a => a.RegistrationNo == model.RegistrationNo) ? (model.RegistrationMaster.FeeDetails.Any(a => a.FeeTypeDetail.IsActive && a.FeeTypeDetail.FeeTypeId == 1) ? true : false) : false,
+                SourceOfCandidate = model.RegistrationMaster.SourceOfCandidate != null ? model.RegistrationMaster.SourceOfCandidate : "",
+                FeeTotalAmount = model.RegistrationMaster.FeeDetails.Where(w => w.IsActive).FirstOrDefault().FeeTypeDetail.Amount,
+                FeeDueAmount = (model.RegistrationMaster.FeeDetails.Where(w => w.IsActive).FirstOrDefault().FeeTypeDetail.Amount - model.RegistrationMaster.FeeDetails.Where(w => w.IsActive).FirstOrDefault().FeePaymentDetails.Sum(s => s.FeeCollections.Sum(a => a.PartWisePayments.Sum(p => p.Amount)))),
+                FirstInstallment = model.RegistrationMaster.FeeDetails.Where(w => w.IsActive).FirstOrDefault().PaymentTypeId == 1 ? (model.RegistrationMaster.FeeDetails.Where(w => w.IsActive).FirstOrDefault().FeePaymentDetails.FirstOrDefault().FeeCollections.Sum(s => s.PartWisePayments.Sum(q => q.Amount))) : (model.RegistrationMaster.FeeDetails.Where(w => w.IsActive).FirstOrDefault().FeePaymentDetails.FirstOrDefault().FeeCollections.Sum(s => s.PartWisePayments.Sum(q => q.Amount))),
+                SecondInstallment = _context.PartWisePayments.Where(w=> w.FeeCollection.FeePaymentDetail.FeeDetail.IsActive && w.FeeCollection.InstallmentMasterId == 2 &&  w.FeeCollection.FeePaymentDetail.FeeDetail.RegistrationNo == model.RegistrationNo).Sum(s=>s.Amount),
+                ThirdInstallment = _context.PartWisePayments.Where(w => w.FeeCollection.FeePaymentDetail.FeeDetail.IsActive && w.FeeCollection.InstallmentMasterId == 3 && w.FeeCollection.FeePaymentDetail.FeeDetail.RegistrationNo == model.RegistrationNo).Sum(s => s.Amount),
+
+                //SecondInstallment = model.RegistrationMaster.FeeDetails.Where(w => w.IsActive).FirstOrDefault().PaymentTypeId == 1 ? (model.RegistrationMaster.FeeDetails.Where(w => w.IsActive).FirstOrDefault().FeePaymentDetails.
+                //Where(w=>w.FeeCollections.Where(a=>a.InstallmentMasterId == 2).Any()).FirstOrDefault().FeeCollections.Where(w => w.InstallmentMasterId == 2).Sum(s => s.PartWisePayments.Sum(q => q.Amount))) : 0,
+                //ThirdInstallment = model.RegistrationMaster.FeeDetails.Where(w => w.IsActive).FirstOrDefault().PaymentTypeId == 1 ? (model.RegistrationMaster.FeeDetails.Where(w => w.IsActive).FirstOrDefault().FeePaymentDetails.FirstOrDefault().FeeCollections.Where(w => w.InstallmentMasterId == 3).Sum(s => s.PartWisePayments.Sum(q => q.Amount))) : 0,
+
+
+                RefundStatus = model.RegistrationMaster.FeeDetails.Any() ? (model.RegistrationMaster.FeeDetails.FirstOrDefault().FeeTypeDetail.Amount == _context.PartWisePayments.Where(p => p.FeeCollection.FeePaymentDetail.FeeDetail.IsActive && p.FeeCollection.FeePaymentDetail.FeeDetail.RegistrationNo == model.RegistrationNo).Sum(s => s.Amount) ? "success" : (_context.FeeCollections.Where(f => f.FeePaymentDetail.FeeDetail.IsActive && f.FeePaymentDetail.FeeDetail.RegistrationNo == model.RegistrationNo).Sum(s => s.Amount) > 0 ? "orange" : "")) : "",
+
+                //RefundStatus = model.RegistrationMaster.FeeDetails.Any() ? (model.RegistrationMaster.FeeDetails.FirstOrDefault ().FeePaymentDetails.FirstOrDefault().FeeCollections.OrderByDescending(a => a.Id).FirstOrDefault().Amount == model.RegistrationMaster.FeeDetails.FirstOrDefault().FeePaymentDetails.FirstOrDefault().FeeCollections.OrderByDescending(a => a.Id).FirstOrDefault().PartWisePayments.Sum(s => s.Amount) ? "success" : (model.RegistrationMaster.FeeDetails.FirstOrDefault().FeePaymentDetails.FirstOrDefault().FeeCollections.OrderByDescending(a => a.Id).FirstOrDefault().PartWisePayments.Sum(s => s.Amount) > 0 ? "orange" : "")) : "",
+                BatchCommencementDate = model.AddmissionDetails.FirstOrDefault().BatchMaster.DateOfStart
+            }).Where(a => a.BatchId != 19).AsEnumerable();
 
             var totalCount = info.Count();
             if (!string.IsNullOrWhiteSpace(filter.search.value))
@@ -654,6 +680,11 @@ namespace SJService
                     info = info.Where(t => t.PermanentCity == filter.columns[12].search.value);
             }
 
+            if (!string.IsNullOrWhiteSpace(filter.columns[5].search.value))
+            {
+                info = info.Where(t => t.SourceOfCandidate == filter.columns[5].search.value);
+            }
+
             var o = filter.order[0];
             var name = filter.columns[filter.order[0].column].data;
             if (o.dir == "asc")
@@ -664,11 +695,23 @@ namespace SJService
             {
                 info = info.OrderByDescending(x => x.GetType().GetProperty(name).GetValue(x));
             }
-
             var filteredCount = info.Count();
             filter.recordsTotal = totalCount;
             filter.recordsFiltered = filteredCount;
             var dataFilter = info.Skip(filter.start).Take(filter.length).ToList();
+            foreach (var i in dataFilter)
+            {
+                DateTime today = DateTime.Now;
+                if (today < i.BatchCommencementDate.Value.AddMonths(11))
+                    i.FeeDueDate = i.BatchCommencementDate.Value.AddMonths(11).Day.ToString().PadLeft(2, '0') + "/" + i.BatchCommencementDate.Value.AddMonths(11).Month.ToString().PadLeft(2, '0') + "/" + i.BatchCommencementDate.Value.AddMonths(11).Year;
+                else
+                {
+                    if (today < i.BatchCommencementDate.Value.AddMonths(22))
+                        i.FeeDueDate = i.BatchCommencementDate.Value.AddMonths(22).Day.ToString().PadLeft(2, '0') + "/" + i.BatchCommencementDate.Value.AddMonths(22).Month.ToString().PadLeft(2, '0') + "/" + i.BatchCommencementDate.Value.AddMonths(22).Year;
+                    else
+                        i.FeeDueDate = i.BatchCommencementDate.Value.AddMonths(33).Day.ToString().PadLeft(2, '0') + "/" + i.BatchCommencementDate.Value.AddMonths(33).Month.ToString().PadLeft(2, '0') + "/" + i.BatchCommencementDate.Value.AddMonths(33).Year;
+                }
+            }
             filter.data = dataFilter;
             return filter;
         }
@@ -833,6 +876,7 @@ namespace SJService
                 log1.ActioName = "AddTerminationResignationInfo";
                 log1.ModuleName = "Admission";
                 log1.ControllerName = "Addmission";
+                log1.RegistrationNo = Model.RegNo;
                 if (Model.CandidateTerminationResignationInfoId == 0)
                 {
                     CandidateTerminationResignationInfo t = new CandidateTerminationResignationInfo
@@ -866,7 +910,7 @@ namespace SJService
                             if (!string.IsNullOrEmpty(Model.SchedulingDate))
                                 log.SchedulingDate = DateTime.ParseExact(Model.SchedulingDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                             log1.Activity = "Terminate";
-                            log1.ActivityMessage = "Candidate registraion no " + Model.RegNo+ " is terminated.";
+                            log1.ActivityMessage = "Candidate registration no " + Model.RegNo + " is terminated.";
                         }
                         else
                         {
@@ -877,7 +921,7 @@ namespace SJService
                                 log.SchedulingDate = scheduleDate;
                                 log.ResignNoticePeriod = Days;
                                 log1.Activity = "Resignation";
-                                log1.ActivityMessage = "Candidate registraion no " + Model.RegNo + " is resigned.";
+                                log1.ActivityMessage = "Candidate registration no " + Model.RegNo + " is resigned.";
                             }
                         }
                     }
@@ -925,7 +969,7 @@ namespace SJService
                                 if (!string.IsNullOrEmpty(Model.SchedulingDate))
                                     log.SchedulingDate = DateTime.ParseExact(Model.SchedulingDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                                 log1.Activity = "Terminate";
-                                log1.ActivityMessage = "Candidate registraion no " + Model.RegNo + " is terminated.";
+                                log1.ActivityMessage = "Candidate registration no " + Model.RegNo + " is terminated.";
                             }
                             else
                             {
@@ -934,7 +978,7 @@ namespace SJService
                                 log.SchedulingDate = scheduleDate;
                                 log.ResignNoticePeriod = Days;
                                 log1.Activity = "Resignation";
-                                log1.ActivityMessage = "Candidate registraion no " + Model.RegNo + " is resigned.";
+                                log1.ActivityMessage = "Candidate registration no " + Model.RegNo + " is resigned.";
                             }
                         }
 
@@ -989,6 +1033,63 @@ namespace SJService
                 Status = true;
             }
             return Status;
+        }
+
+        public List<TerminationViewModel> GetTerminationResignationInfo()
+        {
+            //var info = _context.CandidateTRInfoes.GroupBy(g=>g.CandidateTerminationResignationInfoId)Select(item => new
+            //{
+
+            //    TerminationOrResignationDate = item.TerminationOrResignationDate,
+            //    StatusInfo = item.StatusInfo,
+            //    DoneBy = item.UserLogin.Fname + " " + item.UserLogin.LName,
+            //    SchedulingDate = item.SchedulingDate,
+            //    CandidateActionName = item.ActionName,
+            //    NoticePeriod = item.ResignNoticePeriod,
+            //    RegNo = item.CandidateTerminationResignationInfo.AddmissionMaster.RegistrationNo,
+            //    Fname = item.CandidateTerminationResignationInfo.AddmissionMaster.Fname,
+            //    Lname = item.CandidateTerminationResignationInfo.AddmissionMaster.Lname
+            //}).AsEnumerable();
+
+            var info = _context.CandidateTRInfoes.GroupBy(g => g.CandidateTerminationResignationInfoId).Select(item => new
+            {
+
+                KeyItem = item.Key,
+                Info = item.OrderByDescending(o => o.Id).FirstOrDefault()
+            }).AsEnumerable();
+
+            var data = info.Select(a => new TerminationViewModel
+            {
+                TerminationOrResignationDate = a.Info.TerminationOrResignationDate.HasValue ? (a.Info.TerminationOrResignationDate.Value.Day.ToString().PadLeft(2, '0') + "/" + a.Info.TerminationOrResignationDate.Value.Month.ToString().PadLeft(2, '0') + "/" + a.Info.TerminationOrResignationDate.Value.Year) : "",
+                StatusInfo = a.Info.StatusInfo,
+                StudentName = a.Info.CandidateTerminationResignationInfo.AddmissionMaster.Fname + " " + a.Info.CandidateTerminationResignationInfo.AddmissionMaster.Lname,
+                DoneBy = a.Info.UserLogin.Fname + " " + a.Info.UserLogin.LName,
+                SchedulingDate = a.Info.SchedulingDate.HasValue ? (a.Info.SchedulingDate.Value.Day.ToString().PadLeft(2, '0') + "/" + a.Info.SchedulingDate.Value.Month.ToString().PadLeft(2, '0') + "/" + a.Info.SchedulingDate.Value.Year) : "",
+                CandidateActionName = a.Info.ActionName,
+                NoticePeriod = a.Info.ResignNoticePeriod.ToString(),
+                RegNo = a.Info.CandidateTerminationResignationInfo.AddmissionMaster.RegistrationNo,
+                FeeDueAmount = (a.Info.CandidateTerminationResignationInfo.AddmissionMaster.RegistrationMaster.FeeDetails.Where(w => w.IsActive).FirstOrDefault().FeeTypeDetail.Amount - a.Info.CandidateTerminationResignationInfo.AddmissionMaster.RegistrationMaster.FeeDetails.Where(w => w.IsActive).FirstOrDefault().FeePaymentDetails.Sum(s => s.FeeCollections.Sum(b => b.PartWisePayments.Sum(p => p.Amount)))),
+                RefundStatus = a.Info.CandidateTerminationResignationInfo.AddmissionMaster.RegistrationMaster.FeeDetails.Any() ? (a.Info.CandidateTerminationResignationInfo.AddmissionMaster.RegistrationMaster.FeeDetails.FirstOrDefault().FeePaymentDetails.FirstOrDefault().FeeCollections.OrderByDescending(o => o.Id).FirstOrDefault().Amount == a.Info.CandidateTerminationResignationInfo.AddmissionMaster.RegistrationMaster.FeeDetails.FirstOrDefault().FeePaymentDetails.FirstOrDefault().FeeCollections.OrderByDescending(o => o.Id).FirstOrDefault().PartWisePayments.Sum(s => s.Amount) ? "success" : (a.Info.CandidateTerminationResignationInfo.AddmissionMaster.RegistrationMaster.FeeDetails.FirstOrDefault().FeePaymentDetails.FirstOrDefault().FeeCollections.OrderByDescending(o => o.Id).FirstOrDefault().PartWisePayments.Sum(s => s.Amount) > 0 ? "orange" : "")) : "",
+                IsFeePayment = a.Info.CandidateTerminationResignationInfo.AddmissionMaster.RegistrationMaster.FeeDetails.Where(w => w.IsActive).Any(b => b.RegistrationNo == a.Info.CandidateTerminationResignationInfo.AddmissionMaster.RegistrationMaster.RegistartionNo) ? (a.Info.CandidateTerminationResignationInfo.AddmissionMaster.RegistrationMaster.FeeDetails.Any(c => c.FeeTypeDetail.IsActive && c.FeeTypeDetail.FeeTypeId == 1) ? true : false) : false
+            }).ToList();
+
+            foreach (var i in data)
+            {
+                if (i.IsFeePayment)
+                {
+                    if (i.RefundStatus == "success")
+                        i.FundStatus = "Fully paid";
+                    else if (i.RefundStatus == "orange")
+                        i.FundStatus = "Partially paid";
+                    else
+                        i.FundStatus = "Unpaid";
+                }
+                else
+                {
+                    i.FundStatus = "Unpaid";
+                }
+            }
+            return data;
         }
     }
 }

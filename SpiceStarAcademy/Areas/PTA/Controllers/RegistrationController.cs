@@ -115,7 +115,7 @@ namespace SpiceStarAcademy.Areas.PTA.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetPartialOtherDocsInfo(int Id,int AdmissionId)
+        public ActionResult GetPartialOtherDocsInfo(int Id, int AdmissionId)
         {
             return PartialView("_PilotOtherDocs", _registrationService.InitialOtherUploadDocsInfo(Id, AdmissionId));
         }

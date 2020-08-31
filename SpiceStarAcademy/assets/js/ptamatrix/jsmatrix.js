@@ -66,6 +66,8 @@ function getpilotcandidatesadmissionlist() {
 }
 
 function Message(Id) {
+    alert("Payment page under construction!");
+    return false;
     window.location.href = '/PTA/FeeCollection?Id=' + Id;
 }
 function getpilotcandidatescreeninglist() {

@@ -1,6 +1,6 @@
 ﻿function GetListOfAxisPoint() { var e = $("#hdnmappoint").val(); return null != e && "" != e ? $.parseJSON(e) : "" }
 function chartHeader() {
-    var e = new Date, t = e.getDate(), r = e.getMonth() + 1, n = e.getFullYear(); t < 10 && (t = "0" + t), r < 10 && (r = "0" + r), $("#headStr").text(t + " " + ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][r - 1] + ", " + n
+    var e = new Date, t = e.getDate(), r = e.getMonth() + 1, n = e.getFullYear(); t < 10 && (t = "0" + t), r < 10 && (r = "0" + r), $("#headStr").text(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][r - 1] + ", " + n
         + "  (Day/No of Registration)")
 }
 
@@ -109,5 +109,5 @@ function calculateBMI(height, weight, id) {
     }
     var bmi = weight / (height / 100 * height / 100);
     $('#divbmi').css('display', 'block');
-    $('#' + id).text("Candidate BMI is: " + bmi.toFixed(2));
+    $('#' + id).text("Candidate BMI: " + bmi.toFixed(2));
 }

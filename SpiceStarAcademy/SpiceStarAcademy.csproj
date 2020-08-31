@@ -225,6 +225,7 @@
     </Compile>
     <Compile Include="Helper\Email.cs" />
     <Compile Include="Helper\EmailNotificationModel.cs" />
+    <Compile Include="Helper\PerformanceEmail.cs" />
     <Compile Include="Models\Common.cs" />
     <Compile Include="Models\Jobclass.cs" />
     <Compile Include="Models\JobFeeClass.cs" />
@@ -7359,6 +7360,9 @@
     <Content Include="Areas\PTA\Views\StudentLogin\Index.cshtml" />
     <Content Include="Areas\PTA\Views\StudentProfile\Index.cshtml" />
     <Content Include="Areas\PTA\Views\Notification\Index.cshtml" />
+    <Content Include="Areas\PerformanceCard\Views\Login\IsAcceptPerformanceCard.cshtml" />
+    <Content Include="Areas\PerformanceCard\Views\Performance\ChangePassword.cshtml" />
+    <Content Include="Areas\PTA\Views\Shared\_FeePaymentEmailNotification.cshtml" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -7382,7 +7386,10 @@
     <Content Include="Templates\FeeReciept.html" />
     <Content Include="Templates\FeeReciept1.html" />
     <Content Include="Templates\FeeReminderTemplate.html" />
+    <Content Include="Templates\PerformanceEmailTemplate.html" />
     <Content Include="Templates\PilotScreeningFeePay.html" />
+    <Content Include="Templates\PTAEmailNotificaionContent.html" />
+    <Content Include="Templates\PTA\ptaFeeNotification.html" />
     <Content Include="Templates\RefundReciept.html" />
     <Content Include="Templates\RegistartionFeeReciept.html" />
     <Content Include="Templates\RejectedEmailTemplate.html" />
@@ -7442,6 +7449,12 @@
     <Content Include="Views\Addmission\CandidateTermination.cshtml" />
     <Content Include="Views\Shared\_TerminationResignationPopup.cshtml" />
     <Content Include="Views\Registration\WithdrawalCandidates.cshtml" />
+    <Content Include="Views\UsetLogActivity\Index.cshtml" />
+    <Content Include="Views\FeeManagement\Refund.cshtml" />
+    <Content Include="Views\Shared\_RefundAR.cshtml" />
+    <Content Include="Views\Addmission\GetTerminationResignationInfo.cshtml" />
+    <Content Include="Views\Report\GeneralReport.cshtml" />
+    <Content Include="Views\Shared\_MedicalFilterPopup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -7450,7 +7463,6 @@
     <Folder Include="PilotCandidateDocs\" />
     <Folder Include="Resumes\" />
     <Folder Include="Uploads\" />
-    <Folder Include="Views\UsetLogActivity\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

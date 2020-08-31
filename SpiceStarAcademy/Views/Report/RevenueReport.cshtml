@@ -6,23 +6,31 @@
     .select2-container--default .select2-selection--single {
         border-radius: 0px !important;
     }
+
     .select2-container .select2-selection--single {
         height: 34px !important;
     }
+
     .select2-container--default .select2-selection--multiple {
         background-color: #ffffff;
         -webkit-border-radius: 2px;
         cursor: text;
         height: 35px;
     }
-    .select2-container--default .select2-selection--multiple .select2-selection__choice {
-        background-color: #170808 !important;
-    }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #170808 !important;
+        }   
+
     .select2-search--inline .select2-search__field {
         margin-top: 0px !important;
     }
 </style>
 <title>Revenue Report</title>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+
 <div class="content-wrapper">
     <section class="content-header">
         <h1>Revenue Report</h1>
@@ -31,7 +39,8 @@
         </ol>
     </section>
     <section class="content" style="padding-bottom:0px !important;">
-        <input type="hidden" id="hdnbarcharjsondata" value="" />
+        <input type="hidden" id="hdnbarcharjsondata" value="" />   
+        <input type="hidden" id="hdnbarcharregjsondata" value="" />
         <input type="hidden" id="hdndonutcharjsondata" value="" />
         <input type="hidden" id="hdnlinecharjsondata" value="" />
         <div class="row">
@@ -62,13 +71,13 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3" style="display:none">
                                 <div class="form-group">
                                     <label>Filter By State</label>
                                     <select class="form-control select2 filter" id="ddlState" onchange="ddlStateChangeFillCity(this , 'ddlCity')" style="width:100%"></select>
                                 </div>
                             </div>
-                            <div class="col-md-3" id="divCity">
+                            <div class="col-md-3" id="divCity" style="display:none">
                                 <div class="form-group">
                                     <label>Filter By City</label>
                                     <select class="form-control select2 filter" id="ddlCity" style="width:100%"></select>
@@ -78,6 +87,17 @@
                                 <div class="form-group">
                                     <label>Filter By Course</label>
                                     @Html.DropDownList("ddlReportCourse", new SelectList(Model.GetCourseList, "Id", "CourseName"), "Select Course", new { @class = "form-control select2 filter", multiple = "multiple", style = "width:100%" })
+                                </div>
+                            </div>
+                            <div class="col-md-3" id="divInstallMent">
+                                <div class="form-group">
+                                    <label>Filter By Installment</label>
+                                    <select class="form-control select2 filter" id="ddlInstallment" style="width:100%">
+                                        <option value="0">Select Installment</option>
+                                        <option value="1">First Installment</option>
+                                        <option value="2">Second Installment</option>
+                                        <option value="3">Third Installment</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -91,10 +111,10 @@
                 </div>
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Fee Analysis (INR Currency / Time)</h3>
+                        <h3 class="box-title">Admissions Fee (INR Currency/Time)</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-default btn-sm" name="barchart"> <span class="glyphicon glyphicon-export"></span></button>
                         </div>
@@ -103,8 +123,22 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Registrations Fee (INR Currency/Time)</h3>
 
-            <div class="col-md-4">
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-default btn-sm" name="regbarchartdata" > <span class="glyphicon glyphicon-export"></span></button>
+                        </div>
+                    </div>
+                    <div class="box-body" id="barChartReg">
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+
+            <div class="col-md-4" style="display:none">
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">Donut Chart</h3>
@@ -117,7 +151,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8" style="display:none">
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">Line Chart &nbsp;&nbsp;&nbsp;(BBA&nbsp;<i class="fa fa-square" style="color:rgba(220,220,220,1)"></i> &nbsp;&nbsp; MBA&nbsp;<i class="fa fa-square" style="color:rgba(60,141,188,1)"></i> &nbsp;&nbsp; PHT&nbsp;<i class="fa fa-square" style="color:rgb(237, 239, 112)"></i>)</h3>
@@ -153,7 +187,15 @@
                     label += "_" + subtext.bercharttext;
                 data = $('#hdnbarcharjsondata').val();
                 JSONToCSVConvertor(data, label, true);
-            } else if ($(this).attr('name') == "donutchart") {
+            }
+            else if ($(this).attr('name') == "regbarchartdata") {
+                var label = 'Registration Data';
+                if (subtext.othertext != "")
+                    label += "_" + subtext.othertext;
+                data = $('#hdnbarcharregjsondata').val();
+                JSONToCSVConvertor(data, label, true);
+            }
+            else if ($(this).attr('name') == "donutchart") {
                 var label = 'No_Of_Candidates_Report';
                 if (subtext.othertext != "")
                     label += "_" + subtext.othertext;
@@ -171,7 +213,22 @@
         });
         setTimeout(function () { $('#ddlReportYears').val(('@Session["CurrentYear"]' != "0" ? "@Session["CurrentYear"]" : "")).trigger('change'); }, 500);
         StopLoading();
+        //=============================================================================
+        //-------------
+        //- BAR CHART -
+        //-------------
+
+
+        //==============================================================================
     });
+
+    download.addEventListener("click", function () {
+        var imgData = document.getElementById('barChart1').toDataURL("image/jpeg", 1.0);
+        var pdf = new jsPDF();
+
+        pdf.addImage(imgData, 'JPEG', 0, 0);
+        pdf.save("download.pdf");
+    }, false);
 </script>
 
 

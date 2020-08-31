@@ -323,7 +323,16 @@
           <Property Name="CourseMasterId" Type="int" Nullable="false" />
           <Property Name="SessionYr" Type="int" />
         </EntityType>
-        <Association Name="FK__ptaAddres__ptaRe__13F1F5EB">
+        <EntityType Name="tblGetTermAcceptancyByCandidate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tblPerformanceEntryMasterId" Type="int" Nullable="false" />
+          <Property Name="Accept" Type="bit" />
+          <Property Name="DateOfAction" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__ptaAddres__ptaRe__24285DB4">
           <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="1" />
           <End Role="ptaAddressDetail" Type="Self.ptaAddressDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -335,7 +344,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaDeclar__ptaRe__14E61A24">
+        <Association Name="FK__ptaDeclar__ptaRe__251C81ED">
           <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="1" />
           <End Role="ptaDeclaration" Type="Self.ptaDeclaration" Multiplicity="*" />
           <ReferentialConstraint>
@@ -347,7 +356,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaEducat__ptaBo__1A9EF37A">
+        <Association Name="FK__ptaEducat__ptaBo__2610A626">
           <End Role="ptaBoardAndUniversityMaster" Type="Self.ptaBoardAndUniversityMaster" Multiplicity="0..1" />
           <End Role="ptaEducationDetail" Type="Self.ptaEducationDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -359,7 +368,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaEducat__ptaEd__1B9317B3">
+        <Association Name="FK__ptaEducat__ptaEd__2704CA5F">
           <End Role="ptaEduEvaluationTypeMaster" Type="Self.ptaEduEvaluationTypeMaster" Multiplicity="0..1" />
           <End Role="ptaEducationDetail" Type="Self.ptaEducationDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -371,7 +380,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaEducat__ptaEd__2057CCD0">
+        <Association Name="FK__ptaEducat__ptaEd__2BC97F7C">
           <End Role="ptaEducationDetail" Type="Self.ptaEducationDetail" Multiplicity="1" />
           <End Role="ptaEducationSubjectMarks" Type="Self.ptaEducationSubjectMarks" Multiplicity="*" />
           <ReferentialConstraint>
@@ -383,7 +392,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaEducat__ptaRe__1C873BEC">
+        <Association Name="FK__ptaEducat__ptaRe__27F8EE98">
           <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="1" />
           <End Role="ptaEducationDetail" Type="Self.ptaEducationDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -395,7 +404,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaEducat__ptaRe__1D7B6025">
+        <Association Name="FK__ptaEducat__ptaRe__28ED12D1">
           <End Role="ptaResultStatusMaster" Type="Self.ptaResultStatusMaster" Multiplicity="0..1" />
           <End Role="ptaEducationDetail" Type="Self.ptaEducationDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -407,7 +416,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaEducat__ptaSt__1E6F845E">
+        <Association Name="FK__ptaEducat__ptaSt__29E1370A">
           <End Role="ptaStreamMaster" Type="Self.ptaStreamMaster" Multiplicity="0..1" />
           <End Role="ptaEducationDetail" Type="Self.ptaEducationDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -419,7 +428,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaEducat__ptaUG__1F63A897">
+        <Association Name="FK__ptaEducat__ptaUG__2AD55B43">
           <End Role="ptaUGBoardAndUniversityMaster" Type="Self.ptaUGBoardAndUniversityMaster" Multiplicity="0..1" />
           <End Role="ptaEducationDetail" Type="Self.ptaEducationDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -431,7 +440,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaGuardi__ptaRe__214BF109">
+        <Association Name="FK__ptaGuardi__ptaRe__2CBDA3B5">
           <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="1" />
           <End Role="ptaGuardian" Type="Self.ptaGuardian" Multiplicity="*" />
           <ReferentialConstraint>
@@ -443,7 +452,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaPasspo__ptaRe__22401542">
+        <Association Name="FK__ptaPasspo__ptaRe__2DB1C7EE">
           <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="1" />
           <End Role="ptaPassport" Type="Self.ptaPassport" Multiplicity="*" />
           <ReferentialConstraint>
@@ -455,7 +464,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaPilotR__Cours__2334397B">
+        <Association Name="FK__ptaPilotR__Cours__3A179ED3">
           <End Role="CourseMaster" Type="Self.CourseMaster" Multiplicity="1" />
           <End Role="ptaPilotRegistrationMaster" Type="Self.ptaPilotRegistrationMaster" Multiplicity="*" />
           <ReferentialConstraint>
@@ -467,7 +476,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaPilotR__Sessi__251C81ED">
+        <Association Name="FK__ptaPilotR__Sessi__3B0BC30C">
           <End Role="SessionMaster" Type="Self.SessionMaster" Multiplicity="1" />
           <End Role="ptaPilotRegistrationMaster" Type="Self.ptaPilotRegistrationMaster" Multiplicity="*" />
           <ReferentialConstraint>
@@ -479,7 +488,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaRegist__ptaGe__2610A626">
+        <Association Name="FK__ptaRegist__ptaGe__2EA5EC27">
           <End Role="ptaGenderMaster" Type="Self.ptaGenderMaster" Multiplicity="1" />
           <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -491,7 +500,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaRegist__ptaLe__2704CA5F">
+        <Association Name="FK__ptaRegist__ptaLe__2F9A1060">
           <End Role="ptaLeadSourceMaster" Type="Self.ptaLeadSourceMaster" Multiplicity="1" />
           <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -503,7 +512,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaRegist__ptaMe__27F8EE98">
+        <Association Name="FK__ptaRegist__ptaMe__308E3499">
           <End Role="ptaMedicalStatusMaster" Type="Self.ptaMedicalStatusMaster" Multiplicity="1" />
           <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -515,7 +524,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaRegist__ptaNa__28ED12D1">
+        <Association Name="FK__ptaRegist__ptaNa__318258D2">
           <End Role="ptaNatioalityMaster" Type="Self.ptaNatioalityMaster" Multiplicity="1" />
           <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -527,7 +536,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaRegist__ptaPi__29E1370A">
+        <Association Name="FK__ptaRegist__ptaPi__3EDC53F0">
           <End Role="ptaPilotRegistrationMaster" Type="Self.ptaPilotRegistrationMaster" Multiplicity="1" />
           <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -539,7 +548,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaRegist__ptaTi__2AD55B43">
+        <Association Name="FK__ptaRegist__ptaTi__32767D0B">
           <End Role="ptaTitleMaster" Type="Self.ptaTitleMaster" Multiplicity="1" />
           <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -551,7 +560,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaScreen__PTAPi__2EA5EC27">
+        <Association Name="FK__ptaScreen__PTAPi__4A4E069C">
           <End Role="ptaPilotRegistrationMaster" Type="Self.ptaPilotRegistrationMaster" Multiplicity="1" />
           <End Role="ptaScreeningInfo" Type="Self.ptaScreeningInfo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -563,7 +572,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaScreen__PTAPi__4E1E9780">
+        <Association Name="FK__ptaScreen__PTAPi__6319B466">
           <End Role="ptaPilotRegistrationMaster" Type="Self.ptaPilotRegistrationMaster" Multiplicity="1" />
           <End Role="ptaScreeningExamFeeInfo" Type="Self.ptaScreeningExamFeeInfo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -575,31 +584,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaScreen__PTASc__2BC97F7C">
-          <End Role="ptaScreeningInfo" Type="Self.ptaScreeningInfo" Multiplicity="0..1" />
-          <End Role="ptaScreeningExamFeeInfo" Type="Self.ptaScreeningExamFeeInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ptaScreeningInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ptaScreeningExamFeeInfo">
-              <PropertyRef Name="PTAScreeningInfoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ptaScreen__PTASc__2CBDA3B5">
-          <End Role="ptaScreeningTestType" Type="Self.ptaScreeningTestType" Multiplicity="0..1" />
-          <End Role="ptaScreeningExamFeeInfo" Type="Self.ptaScreeningExamFeeInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ptaScreeningTestType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ptaScreeningExamFeeInfo">
-              <PropertyRef Name="PTAScreeningTestTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ptaScreen__PTASc__308E3499">
+        <Association Name="FK__ptaScreen__PTASc__5006DFF2">
           <End Role="ptaScreeningInfo" Type="Self.ptaScreeningInfo" Multiplicity="1" />
           <End Role="ptaScreeningTestResult" Type="Self.ptaScreeningTestResult" Multiplicity="*" />
           <ReferentialConstraint>
@@ -611,7 +596,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ptaScreen__PTASc__318258D2">
+        <Association Name="FK__ptaScreen__PTASc__50FB042B">
           <End Role="ptaScreeningTestType" Type="Self.ptaScreeningTestType" Multiplicity="1" />
           <End Role="ptaScreeningTestResult" Type="Self.ptaScreeningTestResult" Multiplicity="*" />
           <ReferentialConstraint>
@@ -619,6 +604,30 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="ptaScreeningTestResult">
+              <PropertyRef Name="PTAScreeningTestTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ptaScreen__PTASc__61316BF4">
+          <End Role="ptaScreeningInfo" Type="Self.ptaScreeningInfo" Multiplicity="0..1" />
+          <End Role="ptaScreeningExamFeeInfo" Type="Self.ptaScreeningExamFeeInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ptaScreeningInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ptaScreeningExamFeeInfo">
+              <PropertyRef Name="PTAScreeningInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ptaScreen__PTASc__6225902D">
+          <End Role="ptaScreeningTestType" Type="Self.ptaScreeningTestType" Multiplicity="0..1" />
+          <End Role="ptaScreeningExamFeeInfo" Type="Self.ptaScreeningExamFeeInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ptaScreeningTestType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ptaScreeningExamFeeInfo">
               <PropertyRef Name="PTAScreeningTestTypeId" />
             </Dependent>
           </ReferentialConstraint>
@@ -685,105 +694,106 @@
           <EntitySet Name="ptaUGBoardAndUniversityMaster" EntityType="Self.ptaUGBoardAndUniversityMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RegistrationMaster" EntityType="Self.RegistrationMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SessionMaster" EntityType="Self.SessionMaster" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__ptaAddres__ptaRe__13F1F5EB" Association="Self.FK__ptaAddres__ptaRe__13F1F5EB">
+          <EntitySet Name="tblGetTermAcceptancyByCandidate" EntityType="Self.tblGetTermAcceptancyByCandidate" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ptaAddres__ptaRe__24285DB4" Association="Self.FK__ptaAddres__ptaRe__24285DB4">
             <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
             <End Role="ptaAddressDetail" EntitySet="ptaAddressDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaDeclar__ptaRe__14E61A24" Association="Self.FK__ptaDeclar__ptaRe__14E61A24">
+          <AssociationSet Name="FK__ptaDeclar__ptaRe__251C81ED" Association="Self.FK__ptaDeclar__ptaRe__251C81ED">
             <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
             <End Role="ptaDeclaration" EntitySet="ptaDeclaration" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaEducat__ptaBo__1A9EF37A" Association="Self.FK__ptaEducat__ptaBo__1A9EF37A">
+          <AssociationSet Name="FK__ptaEducat__ptaBo__2610A626" Association="Self.FK__ptaEducat__ptaBo__2610A626">
             <End Role="ptaBoardAndUniversityMaster" EntitySet="ptaBoardAndUniversityMaster" />
             <End Role="ptaEducationDetail" EntitySet="ptaEducationDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaEducat__ptaEd__1B9317B3" Association="Self.FK__ptaEducat__ptaEd__1B9317B3">
+          <AssociationSet Name="FK__ptaEducat__ptaEd__2704CA5F" Association="Self.FK__ptaEducat__ptaEd__2704CA5F">
             <End Role="ptaEduEvaluationTypeMaster" EntitySet="ptaEduEvaluationTypeMaster" />
             <End Role="ptaEducationDetail" EntitySet="ptaEducationDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaEducat__ptaEd__2057CCD0" Association="Self.FK__ptaEducat__ptaEd__2057CCD0">
+          <AssociationSet Name="FK__ptaEducat__ptaEd__2BC97F7C" Association="Self.FK__ptaEducat__ptaEd__2BC97F7C">
             <End Role="ptaEducationDetail" EntitySet="ptaEducationDetail" />
             <End Role="ptaEducationSubjectMarks" EntitySet="ptaEducationSubjectMarks" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaEducat__ptaRe__1C873BEC" Association="Self.FK__ptaEducat__ptaRe__1C873BEC">
+          <AssociationSet Name="FK__ptaEducat__ptaRe__27F8EE98" Association="Self.FK__ptaEducat__ptaRe__27F8EE98">
             <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
             <End Role="ptaEducationDetail" EntitySet="ptaEducationDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaEducat__ptaRe__1D7B6025" Association="Self.FK__ptaEducat__ptaRe__1D7B6025">
+          <AssociationSet Name="FK__ptaEducat__ptaRe__28ED12D1" Association="Self.FK__ptaEducat__ptaRe__28ED12D1">
             <End Role="ptaResultStatusMaster" EntitySet="ptaResultStatusMaster" />
             <End Role="ptaEducationDetail" EntitySet="ptaEducationDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaEducat__ptaSt__1E6F845E" Association="Self.FK__ptaEducat__ptaSt__1E6F845E">
+          <AssociationSet Name="FK__ptaEducat__ptaSt__29E1370A" Association="Self.FK__ptaEducat__ptaSt__29E1370A">
             <End Role="ptaStreamMaster" EntitySet="ptaStreamMaster" />
             <End Role="ptaEducationDetail" EntitySet="ptaEducationDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaEducat__ptaUG__1F63A897" Association="Self.FK__ptaEducat__ptaUG__1F63A897">
+          <AssociationSet Name="FK__ptaEducat__ptaUG__2AD55B43" Association="Self.FK__ptaEducat__ptaUG__2AD55B43">
             <End Role="ptaUGBoardAndUniversityMaster" EntitySet="ptaUGBoardAndUniversityMaster" />
             <End Role="ptaEducationDetail" EntitySet="ptaEducationDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaGuardi__ptaRe__214BF109" Association="Self.FK__ptaGuardi__ptaRe__214BF109">
+          <AssociationSet Name="FK__ptaGuardi__ptaRe__2CBDA3B5" Association="Self.FK__ptaGuardi__ptaRe__2CBDA3B5">
             <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
             <End Role="ptaGuardian" EntitySet="ptaGuardian" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaPasspo__ptaRe__22401542" Association="Self.FK__ptaPasspo__ptaRe__22401542">
+          <AssociationSet Name="FK__ptaPasspo__ptaRe__2DB1C7EE" Association="Self.FK__ptaPasspo__ptaRe__2DB1C7EE">
             <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
             <End Role="ptaPassport" EntitySet="ptaPassport" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaPilotR__Cours__2334397B" Association="Self.FK__ptaPilotR__Cours__2334397B">
+          <AssociationSet Name="FK__ptaPilotR__Cours__3A179ED3" Association="Self.FK__ptaPilotR__Cours__3A179ED3">
             <End Role="CourseMaster" EntitySet="CourseMaster" />
             <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMaster" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaPilotR__Sessi__251C81ED" Association="Self.FK__ptaPilotR__Sessi__251C81ED">
+          <AssociationSet Name="FK__ptaPilotR__Sessi__3B0BC30C" Association="Self.FK__ptaPilotR__Sessi__3B0BC30C">
             <End Role="SessionMaster" EntitySet="SessionMaster" />
             <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMaster" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaRegist__ptaGe__2610A626" Association="Self.FK__ptaRegist__ptaGe__2610A626">
+          <AssociationSet Name="FK__ptaRegist__ptaGe__2EA5EC27" Association="Self.FK__ptaRegist__ptaGe__2EA5EC27">
             <End Role="ptaGenderMaster" EntitySet="ptaGenderMaster" />
             <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaRegist__ptaLe__2704CA5F" Association="Self.FK__ptaRegist__ptaLe__2704CA5F">
+          <AssociationSet Name="FK__ptaRegist__ptaLe__2F9A1060" Association="Self.FK__ptaRegist__ptaLe__2F9A1060">
             <End Role="ptaLeadSourceMaster" EntitySet="ptaLeadSourceMaster" />
             <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaRegist__ptaMe__27F8EE98" Association="Self.FK__ptaRegist__ptaMe__27F8EE98">
+          <AssociationSet Name="FK__ptaRegist__ptaMe__308E3499" Association="Self.FK__ptaRegist__ptaMe__308E3499">
             <End Role="ptaMedicalStatusMaster" EntitySet="ptaMedicalStatusMaster" />
             <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaRegist__ptaNa__28ED12D1" Association="Self.FK__ptaRegist__ptaNa__28ED12D1">
+          <AssociationSet Name="FK__ptaRegist__ptaNa__318258D2" Association="Self.FK__ptaRegist__ptaNa__318258D2">
             <End Role="ptaNatioalityMaster" EntitySet="ptaNatioalityMaster" />
             <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaRegist__ptaPi__29E1370A" Association="Self.FK__ptaRegist__ptaPi__29E1370A">
+          <AssociationSet Name="FK__ptaRegist__ptaPi__3EDC53F0" Association="Self.FK__ptaRegist__ptaPi__3EDC53F0">
             <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMaster" />
             <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaRegist__ptaTi__2AD55B43" Association="Self.FK__ptaRegist__ptaTi__2AD55B43">
+          <AssociationSet Name="FK__ptaRegist__ptaTi__32767D0B" Association="Self.FK__ptaRegist__ptaTi__32767D0B">
             <End Role="ptaTitleMaster" EntitySet="ptaTitleMaster" />
             <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaScreen__PTAPi__2EA5EC27" Association="Self.FK__ptaScreen__PTAPi__2EA5EC27">
+          <AssociationSet Name="FK__ptaScreen__PTAPi__4A4E069C" Association="Self.FK__ptaScreen__PTAPi__4A4E069C">
             <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMaster" />
             <End Role="ptaScreeningInfo" EntitySet="ptaScreeningInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaScreen__PTAPi__4E1E9780" Association="Self.FK__ptaScreen__PTAPi__4E1E9780">
+          <AssociationSet Name="FK__ptaScreen__PTAPi__6319B466" Association="Self.FK__ptaScreen__PTAPi__6319B466">
             <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMaster" />
             <End Role="ptaScreeningExamFeeInfo" EntitySet="ptaScreeningExamFeeInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaScreen__PTASc__2BC97F7C" Association="Self.FK__ptaScreen__PTASc__2BC97F7C">
-            <End Role="ptaScreeningInfo" EntitySet="ptaScreeningInfo" />
-            <End Role="ptaScreeningExamFeeInfo" EntitySet="ptaScreeningExamFeeInfo" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ptaScreen__PTASc__2CBDA3B5" Association="Self.FK__ptaScreen__PTASc__2CBDA3B5">
-            <End Role="ptaScreeningTestType" EntitySet="ptaScreeningTestType" />
-            <End Role="ptaScreeningExamFeeInfo" EntitySet="ptaScreeningExamFeeInfo" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ptaScreen__PTASc__308E3499" Association="Self.FK__ptaScreen__PTASc__308E3499">
+          <AssociationSet Name="FK__ptaScreen__PTASc__5006DFF2" Association="Self.FK__ptaScreen__PTASc__5006DFF2">
             <End Role="ptaScreeningInfo" EntitySet="ptaScreeningInfo" />
             <End Role="ptaScreeningTestResult" EntitySet="ptaScreeningTestResult" />
           </AssociationSet>
-          <AssociationSet Name="FK__ptaScreen__PTASc__318258D2" Association="Self.FK__ptaScreen__PTASc__318258D2">
+          <AssociationSet Name="FK__ptaScreen__PTASc__50FB042B" Association="Self.FK__ptaScreen__PTASc__50FB042B">
             <End Role="ptaScreeningTestType" EntitySet="ptaScreeningTestType" />
             <End Role="ptaScreeningTestResult" EntitySet="ptaScreeningTestResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ptaScreen__PTASc__61316BF4" Association="Self.FK__ptaScreen__PTASc__61316BF4">
+            <End Role="ptaScreeningInfo" EntitySet="ptaScreeningInfo" />
+            <End Role="ptaScreeningExamFeeInfo" EntitySet="ptaScreeningExamFeeInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ptaScreen__PTASc__6225902D" Association="Self.FK__ptaScreen__PTASc__6225902D">
+            <End Role="ptaScreeningTestType" EntitySet="ptaScreeningTestType" />
+            <End Role="ptaScreeningExamFeeInfo" EntitySet="ptaScreeningExamFeeInfo" />
           </AssociationSet>
           <AssociationSet Name="FK__Registrat__Cours__3D2915A8" Association="Self.FK__Registrat__Cours__3D2915A8">
             <End Role="CourseMaster" EntitySet="CourseMaster" />
@@ -940,6 +950,7 @@
             <End Role="SessionMaster" EntitySet="SessionMasters" />
             <End Role="RegistrationMaster" EntitySet="RegistrationMasters" />
           </AssociationSet>
+          <EntitySet Name="tblGetTermAcceptancyByCandidates" EntityType="SJStarERPModel.tblGetTermAcceptancyByCandidate" />
           </EntityContainer>
         <EntityType Name="CourseMaster">
           <Key>
@@ -1651,6 +1662,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tblGetTermAcceptancyByCandidate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tblPerformanceEntryMasterId" Type="Int32" Nullable="false" />
+          <Property Name="Accept" Type="Boolean" />
+          <Property Name="DateOfAction" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1996,6 +2016,16 @@
                 <ScalarProperty Name="Lname" ColumnName="Lname" />
                 <ScalarProperty Name="Fname" ColumnName="Fname" />
                 <ScalarProperty Name="RegistartionNo" ColumnName="RegistartionNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblGetTermAcceptancyByCandidates">
+            <EntityTypeMapping TypeName="SJStarERPModel.tblGetTermAcceptancyByCandidate">
+              <MappingFragment StoreEntitySet="tblGetTermAcceptancyByCandidate">
+                <ScalarProperty Name="DateOfAction" ColumnName="DateOfAction" />
+                <ScalarProperty Name="Accept" ColumnName="Accept" />
+                <ScalarProperty Name="tblPerformanceEntryMasterId" ColumnName="tblPerformanceEntryMasterId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

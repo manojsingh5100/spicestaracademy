@@ -19,6 +19,7 @@ namespace SJData
         {
             this.AddmissionMasters = new HashSet<AddmissionMaster>();
             this.FeeDetails = new HashSet<FeeDetail>();
+            this.ScreeningTests = new HashSet<ScreeningTest>();
         }
     
         public int Id { get; set; }
@@ -76,5 +77,7 @@ namespace SJData
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FeeDetail> FeeDetails { get; set; }
         public virtual SessionMaster SessionMaster { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ScreeningTest> ScreeningTests { get; set; }
     }
 }

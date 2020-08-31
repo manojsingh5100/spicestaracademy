@@ -13,7 +13,7 @@
     }
 
     .Select_rejectDv1 {
-        display: table;
+        display: none;
         width: 40%;
     }
 
@@ -86,6 +86,7 @@
                                         <th>Gender</th>
                                         <th>Payment Status</th>
                                         <th>Course</th>
+                                        <th>Payment Mode</th>
                                         <th>Batch Name</th>
                                         <th>Reg.Date</th>
                                         <th style="width:130px">Action</th>
@@ -196,12 +197,21 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-5 withdrawal">
+                                <div class="row">
+                                    <div class="col-md-8" style="padding-top:7px;">
+                                        <label style="font-size:18px;font-weight:400">
+                                            <input type="checkbox" id="chkwithdrawal" onclick="" class="flat-red"> Withdrawal
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-4">
-                                @Html.DropDownList("ddlBatch", new SelectList(Model, "Id", "BatchName"), new { @class = "form-control" })
+                                @Html.DropDownList("ddlBatch", new SelectList(Model, "Id", "BatchName"),"Select Batch", new { @class = "form-control" })
                             </div>
                             <div class="col-md-8">
                                 <button type="button" id="btnSubmitScreenTest" onclick="submitScreenTest();" class="btn btn-success" disabled>Save changes</button>
@@ -222,6 +232,12 @@
         TableCourseFilter = 8;
         Table = $("#tblScreening").DataTable(ScreeningblSetting("tblScreening", "GetRagisterList", "Registration", 0));
         $.fn.dataTable.ext.errMode = 'throw';
+        Table.on('draw.dt', function () {
+            var PageInfo = $('#tblScreening').DataTable().page.info();
+            Table.column(0, { page: 'current' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1 + PageInfo.start;
+            });
+        });
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-blue',
             radioClass: 'iradio_flat-blue'
@@ -334,6 +350,7 @@
                 url: "@(Url.Action("ScreeningTestOpenModelPopup", "Registration"))",
                 data: { RegNo: regNo},
                 success: function (data) {
+                    $('#ddlBatch').val('');
                     $('#hdnBtnText').val($(obj).text());
                     $('#screenModel').append(data);
                     $('#modal-default').modal('show');
@@ -341,7 +358,8 @@
                     $('.form-group').removeClass('disableCtrl');
                     $('.hidectrl').removeClass('disableCtrl');
                     $('#btnSubmitScreenTest').show();
-                    $('.Select_rejectDv1').show();
+                    $('.Select_rejectDv1').hide();
+                    $('.withdrawal').hide();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert('Failed!');
@@ -365,6 +383,7 @@
                     $('.hidectrl').addClass('disableCtrl');
                     $('#btnSubmitScreenTest').hide();
                     $('.Select_rejectDv1').hide();
+                    $('.withdrawal').show();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert('Failed!');
@@ -403,6 +422,35 @@
             }
         });
     }
+
+    //$('#ddlBatch').change(function () {
+    //    var changeId = $(this).val();
+    //    var id = $("#hdnid").val();
+    //    $.ajax({
+    //        url: "/Registration/IsOverBatchStrength",
+    //        type: "GET",
+    //        async: false,
+    //        data: { BatchId: changeId },
+    //        success: function (response) {
+    //            if (response != null && response != '' && response > 0) {
+    //                if (response >= 25) {
+    //                    $.confirm({
+    //                        animation: 'news', closeAnimation: 'news', title: 'Batch change alert!', content: 'This batch strength is full!', buttons: {
+    //                            cancel: function () {
+    //                                $('#ddlBatch').val(id).trigger('change');
+    //                            }
+    //                        }
+    //                    })
+    //                } else {
+    //                    $("#hdnid").val(changeId);
+    //                }
+    //            }
+    //        },
+    //        error: function (error) {
+
+    //        }
+    //    });
+    //});
 </script>
 
 

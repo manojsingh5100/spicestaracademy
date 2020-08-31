@@ -58,6 +58,7 @@
         <EntityTypeShape EntityType="SJStarERPModel.RegistrationMaster" Width="1.5" PointX="8.25" PointY="22.375" />
         <AssociationConnector Association="SJStarERPModel.FK__Registrat__Cours__3D2915A8" />
         <AssociationConnector Association="SJStarERPModel.FK__Registrat__Sessi__603D47BB" />
+        <EntityTypeShape EntityType="SJStarERPModel.tblGetTermAcceptancyByCandidate" Width="1.5" PointX="0.75" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

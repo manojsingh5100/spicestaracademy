@@ -19,6 +19,7 @@ namespace SJService
         {
             _context = new SJStarERPEntities();
         }
+
         public DataTableFilterModel GetProjectList(DataTableFilterModel filter, int SessionYr, string Tag = null)
         {
             var data = _context.RegistrationMasters.Where(r => r.IsActive).AsQueryable();
@@ -36,7 +37,12 @@ namespace SJService
                 if (Tag != null && Tag == "Refund")
                     data = data.Where(d => d.IsScreenningClear != null && d.IsScreenningClear == true && d.IsMedicalClear != null && d.IsMedicalClear == false);
                 if (SessionYr > 0)
-                    data = data.Where(d => d.SessionMaster.SessionYr == SessionYr);
+                {
+                    if (filter.columns[10].search.value == "Withdrwan")
+                        data = data.Where(t => t.AddmissionMasters.FirstOrDefault().AddmissionDate.Value.Year == SessionYr);
+                    else
+                        data = data.Where(d => d.SessionMaster.SessionYr == SessionYr);
+                }
             }
 
             var info = data.Select(model => new RegistrationViewModel()
@@ -69,10 +75,11 @@ namespace SJService
                 MedicalStatus = model.AddmissionMasters.Count > 0 ? model.AddmissionMasters.FirstOrDefault().MedicalDetails.FirstOrDefault().MedicalStatus : "",
                 AddMissionId = model.AddmissionMasters.Count > 0 ? model.AddmissionMasters.FirstOrDefault().Id : 0,
                 BatchName = model.AddmissionMasters.Count > 0 ? model.AddmissionMasters.FirstOrDefault().AddmissionDetails.FirstOrDefault().BatchMaster.Name : "",
-                BatchId = model.AddmissionMasters.Count > 0 ? model.AddmissionMasters.FirstOrDefault().AddmissionDetails.FirstOrDefault().BatchId.Value : 0
+                BatchId = model.AddmissionMasters.Count > 0 ? model.AddmissionMasters.FirstOrDefault().AddmissionDetails.FirstOrDefault().BatchId.Value : 0,
+                ShowMedicalConsultPopUp = model.IsMedicalClear.HasValue ? false : (model.IsScreenningClear.Value == true ? true : false)
             }).AsNoTracking().AsEnumerable();
 
-            if (Tag != null && (Tag == "Screen" || Tag == "Medical"))
+            if (Tag != null && (Tag == "Medical"))
                 info = info.Where(d => d.BatchId != 19);
 
             if (!string.IsNullOrWhiteSpace(filter.columns[7].search.value) && filter.columns[7].search.value != "")
@@ -94,6 +101,8 @@ namespace SJService
                     info = info.Where(t => t.IsScreenningClear == false && t.IsStandBy == false);
                 else if (filter.columns[10].search.value == "Stand-By")
                     info = info.Where(t => t.IsStandBy == true);
+                else if (filter.columns[10].search.value == "Withdrwan")
+                    info = info.Where(t => t.MedicalStatus == "Withdrawn");
                 else
                     info = info.Where(t => !t.IsScreenningClear == null);
             }
@@ -295,6 +304,9 @@ namespace SJService
                     Fname = rg.Fname,
                     Lname = rg.Lname,
                     ModOfPayment = ad.MedicalDetails.FirstOrDefault().MedicalStatus,
+                    DateOfWithdrawal = ad.MedicalDetails.FirstOrDefault().DateOfWithdrawn,
+                    UserFname = ad.MedicalDetails.FirstOrDefault().UserLogin.Fname,
+                    UserLname = ad.MedicalDetails.FirstOrDefault().UserLogin.LName
                 }).Where(w => w.RegistartionNo == RegNo).FirstOrDefault();
             return model;
         }
@@ -313,7 +325,7 @@ namespace SJService
                 if (data != null)
                 {
                     obj = data;
-                    var admData = _context.AddmissionMasters.Include("AddressDetails").Include("MedicalDetails").Where(a => a.RegistrationNo == data.RegistartionNo).FirstOrDefault();
+                    var admData = _context.AddmissionMasters.Include("AddmissionDetails").Include("AddressDetails").Include("MedicalDetails").Where(a => a.RegistrationNo == data.RegistartionNo).FirstOrDefault();
                     if (admData != null)
                     {
                         admData.Fname = model.Fname;
@@ -325,7 +337,8 @@ namespace SJService
                         admData.IsValidPassport = model.IsPassport;
                         admData.IsAppeared = model.IsAppeared;
                         admData.Education = model.Education;
-
+                        admData.CourseId = model.CourseId.Value;
+                        admData.AddmissionDetails.FirstOrDefault().SessionId = model.SessionId.Value;
                         admData.AddressDetails.FirstOrDefault().CopAddress = model.CorrespondenceAddress;
                         admData.AddressDetails.FirstOrDefault().CopCity = model.CorrespondenceCity;
                         admData.AddressDetails.FirstOrDefault().CopState = model.CorrespondenceState;
@@ -377,10 +390,10 @@ namespace SJService
                     obj.SourceOfCandidate = model.SourceOfCandidate;
                 else
                     obj.SourceOfCandidate = null;
-                if (model.RegisterDate != null && model.RegisterDate != "")
-                    obj.RegistrationDate = DateTime.ParseExact(model.RegisterDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                else
-                    obj.RegistrationDate = DateTime.Now;
+                //if (model.RegisterDate != null && model.RegisterDate != "")
+                //    obj.RegistrationDate = DateTime.ParseExact(model.RegisterDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                //else
+                //    obj.RegistrationDate = DateTime.Now;
 
                 if (obj.Id == 0)
                 {
@@ -411,7 +424,38 @@ namespace SJService
             }
         }
 
-        public MedicalStatusResponceViewModel UpdateMedicalRemark(int RegNo, string remark, string MdlStatus, int Id, bool IsMedicalStandBy, string tag = null)
+        public MedicalStatusResponceViewModel UpdateWithStopWithdrwn(int RegNo, string MdlStatus, int Id, int UserId)
+        {
+            MedicalStatusResponceViewModel result = new MedicalStatusResponceViewModel();
+            bool status = false;
+            var data = _context.RegistrationMasters.Where(r => r.IsActive && r.RegistartionNo == RegNo && r.Id == Id).FirstOrDefault();
+            if (data != null)
+            {
+                result.Email = data.Email;
+                result.ApplicationNo = data.ApplicationNo;
+                data.MedicalRemark = null;
+                if (!string.IsNullOrEmpty(MdlStatus) && MdlStatus == "NotWithdrawn")
+                {
+                    var admissionData = _context.AddmissionMasters.Where(a => a.RegistrationNo == RegNo).FirstOrDefault();
+                    if (admissionData != null)
+                        admissionData.IsActive = true;
+                    if (MdlStatus == "Withdrawn")
+                        result.Message = "Drop withdrawal registration no " + data.RegistartionNo + ".";
+                }
+                status = true;
+            }
+            var medicalData = _context.MedicalDetails.Where(a => a.AddmissionMaster.RegistrationNo == RegNo).FirstOrDefault();
+            if (medicalData != null)
+            {
+                medicalData.MedicalStatus = null;
+                medicalData.DateOfWithdrawn = null;
+                medicalData.EnteredBy = UserId;
+            }
+            _context.SaveChanges();
+            result.MStatus = status;
+            return result;
+        }
+        public MedicalStatusResponceViewModel UpdateMedicalRemark(int RegNo, string remark, string MdlStatus, int Id, int UserId, string tag = null)
         {
             MedicalStatusResponceViewModel result = new MedicalStatusResponceViewModel();
             bool status = false;
@@ -422,16 +466,14 @@ namespace SJService
                 result.ApplicationNo = data.ApplicationNo;
                 data.MedicalRemark = remark;
                 data.IsMedicalClear = false;
-                data.IsMedicalStandBy = IsMedicalStandBy;
-                if (!IsMedicalStandBy)
+                data.IsMedicalStandBy = MdlStatus == "SBY" ? true : false;
+                if (!string.IsNullOrEmpty(MdlStatus) && MdlStatus != "TMU")
                 {
                     var admissionData = _context.AddmissionMasters.Where(a => a.RegistrationNo == RegNo).FirstOrDefault();
                     if (admissionData != null)
                         admissionData.IsActive = false;
-
-                    if (remark == "Withdrawal")
+                    if (MdlStatus == "Withdrawn")
                     {
-                        admissionData.IsActive = true;
                         admissionData.AddmissionDetails.FirstOrDefault().BatchId = 19;
                         result.Message = "Add registration no " + data.RegistartionNo + " as withdrawal candididate.";
                     }
@@ -440,7 +482,11 @@ namespace SJService
             }
             var medicalData = _context.MedicalDetails.Where(a => a.AddmissionMaster.RegistrationNo == RegNo).FirstOrDefault();
             if (medicalData != null)
+            {
                 medicalData.MedicalStatus = MdlStatus;
+                medicalData.DateOfWithdrawn = DateTime.Now;
+                medicalData.EnteredBy = UserId;
+            }
             _context.SaveChanges();
             result.MStatus = status;
             return result;
@@ -485,7 +531,7 @@ namespace SJService
             int CourseId = Convert.ToInt32(obj.registerInfo.CourseId);
             int RegNo = Convert.ToInt32(obj.registerInfo.RegistartionNo);
             int SessionYr = Convert.ToInt32(obj.registerInfo.SessionMaster.SessionYr);
-
+            int aregno = obj.registerInfo.RegistartionNo;
             ScreeningInfoViewModel model = new ScreeningInfoViewModel
             {
                 RegistrationId = obj.registerInfo.RegistartionNo,
@@ -500,11 +546,14 @@ namespace SJService
                 IsScreeningClr = obj.registerInfo.IsScreenningClear,
                 CourseId = CourseId,
                 SessionYr = SessionYr,
+                LeadSource = obj.registerInfo.SourceOfCandidate,
+                IsWithdrawal = _context.AddmissionMasters.Where(a => a.RegistrationNo == aregno).Any() ? (_context.AddmissionMasters.Where(a => a.RegistrationNo == aregno).FirstOrDefault().MedicalDetails.FirstOrDefault().MedicalStatus == "Withdrawn" ? true : false) : false,
                 SessionName = _context.SessionMasters.Where(s => s.IsActive && s.Id == SessionId).FirstOrDefault().SessionName,
                 CourseName = _context.CourseMasters.Where(c => c.IsActive && c.Id == CourseId).FirstOrDefault().CourseName,
                 BatchId = _context.AddmissionMasters.Any(a => a.RegistrationNo == RegNo) ? _context.AddmissionMasters.Where(b => b.RegistrationNo == RegNo).FirstOrDefault().AddmissionDetails.FirstOrDefault().BatchId : 0,
                 IsAnyCourseFeePay = _context.FeeDetails.Where(f => f.RegistrationNo == RegNo).Any()
             };
+
             model.ScreeningTest = new ScreeningTestViewModel();
             if (obj.ScreeningTestInfo != null)
             {
@@ -539,7 +588,8 @@ namespace SJService
                             Remark = item.Remark,
                             ScreeningParameterId = item.ScreeningParameterId,
                             ScreeningTestId = item.ScreeningTestId,
-                            ParameterName = item.ScreeningParameter.ParameterName
+                            ParameterName = item.ScreeningParameter.ParameterName,
+                            Interviewer = item.InterViewerName
                         };
                         parameterList.Add(p);
                     }
@@ -577,7 +627,12 @@ namespace SJService
                     model.Name = " ( " + Sessiondata.SessionName + " )";
                     model.Id = Sessiondata.Id;
                 }
-                model.SessionListByCId = _context.SessionMasters.Where(s => s.IsActive && s.CourseMasterId == CourseId && s.SessionYr == Year).Select(item => new SemesterMasterViewModel
+                //model.SessionListByCId = _context.SessionMasters.Where(s => s.IsActive && s.CourseMasterId == CourseId && s.SessionYr == Year).Select(item => new SemesterMasterViewModel
+                //{
+                //    SemesterName = item.SessionName,
+                //    Id = item.Id
+                //}).ToList();
+                model.SessionListByCId = _context.SessionMasters.Where(s => s.IsActive && s.CourseMasterId == CourseId).Select(item => new SemesterMasterViewModel
                 {
                     SemesterName = item.SessionName,
                     Id = item.Id
@@ -586,95 +641,133 @@ namespace SJService
             return model;
         }
 
+
+        public string FillDashboardChart(int Month, int Year)
+        {
+            var T_mapList = _context.RegistrationMasters.Where(r => r.IsActive && r.RegistrationDate.Value != null);
+            T_mapList = T_mapList.Where(r => r.RegistrationDate.Value.Year == Year && r.RegistrationDate.Value.Month == Month);
+            var MapList = T_mapList.OrderBy(o => o.RegistrationDate).GroupBy(g => g.RegistrationDate.Value.Day).Select(s => new AxisPoint
+            {
+                Y = s.Count(),
+                X = s.Key
+            }).ToList();
+            return Axis.JConversion(Axis.BarPoints(MapList));
+        }
+
+        public LeadSourceHeadModel FillDashboardLeadChart(int Year)
+        {
+            LeadSourceHeadModel Model = new LeadSourceHeadModel();
+            var T_mapList = _context.RegistrationMasters.Where(r => r.RegistrationDate.Value != null);
+            T_mapList = T_mapList.Where(r => r.RegistrationDate.Value.Year == Year && r.SourceOfCandidate != null && r.SourceOfCandidate != "");
+            var MapList = T_mapList.OrderBy(o => o.RegistrationDate).GroupBy(g => g.SourceOfCandidate).Select(s => new LeadSourceChartViewModel
+            {
+                Yaxix = s.Count(),
+                Xaxis = s.Key
+            }).ToList();
+            Model.GetLeadSourceValues = MapList;
+            return Model;
+        }
+
+        public List<RoleViewModel> GetLeadSourceList()
+        {
+            return _context.ptaLeadSourceMasters.Where(w => w.IsActive).Select(item => new RoleViewModel
+            {
+                Name = item.Name,
+                Id = item.Id
+            }).ToList();
+        }
+
         public DesktopChartList GetDesktopData(int SessionYr)
         {
             int AdmissionCount = 0;
             DateTime today = DateTime.Today;
-            RoleViewModel[] MonthArray = new RoleViewModel[5];
-            MonthArray[0] = new RoleViewModel { Id = today.AddMonths(-1).Month, Year = today.AddMonths(-1).Year };
-            MonthArray[1] = new RoleViewModel { Id = today.AddMonths(-2).Month, Year = today.AddMonths(-2).Year };
-            MonthArray[2] = new RoleViewModel { Id = today.AddMonths(-3).Month, Year = today.AddMonths(-3).Year };
-            MonthArray[3] = new RoleViewModel { Id = today.AddMonths(-4).Month, Year = today.AddMonths(-4).Year };
-            MonthArray[4] = new RoleViewModel { Id = today.AddMonths(-5).Month, Year = today.AddMonths(-5).Year };
-            DesktopChartList list1 = new DesktopChartList();
             var T_registration = _context.RegistrationMasters.AsQueryable();
-            //=================
-            //var T_screenning = _context.RegistrationMasters.Where(r => r.IsScreenningClear != null);
-            var T_screenning = _context.AddmissionMasters.Where(r => r.IsActive && r.RegistrationMaster.IsActive && r.RegistrationMaster.IsScreenningClear.HasValue && r.RegistrationMaster.IsScreenningClear.Value);
+            //====================================================================================================
+            var T_screenning = (from st in _context.ScreeningTests
+                                join rm in _context.RegistrationMasters on st.RegistrationId equals rm.RegistartionNo
+                                where rm.IsActive == true && rm.IsScreenningClear != null && rm.IsStandBy == false
+                                && (rm.PaymentStatus || rm.IsConsultantCandidate || rm.IsHRCandidate)
+                                select new
+                                {
+                                    RegNo = st.RegistrationId,
+                                    Date = st.ScreeningDate,
+                                    IsSelect = rm.IsScreenningClear.Value
+                                });
+            var T_medical = _context.AddmissionMasters.Where(r => r.RegistrationMaster.IsActive && r.RegistrationMaster.IsScreenningClear.HasValue && r.RegistrationMaster.IsScreenningClear.Value && r.RegistrationMaster.IsMedicalClear.HasValue);
 
-            //var T_medical = _context.RegistrationMasters.Where(r => r.IsActive && r.IsScreenningClear.HasValue && r.IsScreenningClear.Value && r.IsMedicalClear.HasValue && r.IsMedicalClear.Value);
-            var T_medical = _context.AddmissionMasters.Where(r => r.IsActive && r.RegistrationMaster.IsActive && r.RegistrationMaster.IsScreenningClear.HasValue && r.RegistrationMaster.IsScreenningClear.Value && r.RegistrationMaster.IsMedicalClear.HasValue && r.RegistrationMaster.IsMedicalClear.Value);
-
+            var T_screenning_selected = T_screenning.Where(w => w.IsSelect);
+            var T_screenning_rejected = T_screenning.Where(w => !w.IsSelect);
+            var T_screening_pending = _context.RegistrationMasters.Where(r => r.IsActive && (r.PaymentStatus || r.IsConsultantCandidate || r.IsHRCandidate) && !r.IsScreenningClear.HasValue);
+            var StandBy = _context.RegistrationMasters.Where(r => (r.PaymentStatus || r.IsConsultantCandidate || r.IsHRCandidate) && r.IsStandBy);
+            var T_medical_selected = T_medical.Where(m => m.IsActive && m.RegistrationMaster.IsMedicalClear.Value);
+            var T_medical_rejected = T_medical.Where(m => !m.IsActive && !m.RegistrationMaster.IsMedicalClear.Value);
+            var T_medical_pending = _context.AddmissionMasters.Where(r => r.IsActive && r.RegistrationMaster.IsActive && r.RegistrationMaster.IsScreenningClear.HasValue && r.RegistrationMaster.IsScreenningClear.HasValue && !r.RegistrationMaster.IsMedicalClear.HasValue);
+            var WithdrwanNo = _context.AddmissionMasters.Where(a => (a.RegistrationMaster.PaymentStatus || a.RegistrationMaster.IsConsultantCandidate || a.RegistrationMaster.IsHRCandidate) && a.MedicalDetails.FirstOrDefault().MedicalStatus == "Withdrawn").AsQueryable();
             //================
-            var T_mapList = _context.RegistrationMasters.Where(r => r.IsActive && r.RegistrationDate.Value != null);
-            var T_TotalRegByMonth = _context.RegistrationMasters.Where(r => r.IsActive);
             if (SessionYr > 0)
             {
-                T_registration = T_registration.Where(r => (r.RegistrationDate.Value.Year == SessionYr) || r.SessionMaster.SessionYr == SessionYr);
+                T_registration = T_registration.Where(r => r.RegistrationDate.Value.Year == SessionYr);
 
-                //AdmissionCount = _context.AddmissionMasters.Where(a => a.IsActive && a.AddmissionDetails.FirstOrDefault().BatchMaster.IsActive && a.AddmissionDetails.FirstOrDefault().BatchId != 19 && a.RegistrationMaster.IsActive && a.RegistrationMaster.IsScreenningClear.HasValue && a.RegistrationMaster.IsScreenningClear.Value && a.RegistrationMaster.IsMedicalClear.HasValue && a.RegistrationMaster.IsMedicalClear.Value && (a.AddmissionDate.Value.Year == SessionYr || a.AddmissionDetails.FirstOrDefault().SessionMaster.SessionYr == SessionYr)).Count();
-                AdmissionCount = _context.AddmissionMasters.Where(a => a.IsActive && (!a.RegistrationMaster.IsMedicalClear.HasValue || a.RegistrationMaster.IsMedicalClear.Value) && a.AddmissionDetails.FirstOrDefault().BatchMaster.IsActive && a.AddmissionDetails.FirstOrDefault().BatchMaster.Name != "Batch 0" && a.AddmissionDetails.FirstOrDefault().SessionMaster.SessionYr == SessionYr).Count();
-
+                AdmissionCount = _context.AddmissionMasters.Where(a => a.IsActive && a.AddmissionDetails.FirstOrDefault().BatchMaster.IsActive && a.AddmissionDetails.FirstOrDefault().BatchId != 19 && a.RegistrationMaster.IsActive && (!a.RegistrationMaster.IsMedicalClear.HasValue || a.RegistrationMaster.IsMedicalClear.Value) && a.AddmissionDetails.FirstOrDefault().BatchMaster.DateOfStart.Value.Year == SessionYr).Count();
                 //=====================
-                T_screenning = T_screenning.Where(s => s.AddmissionDetails.FirstOrDefault().SessionMaster.SessionYr == SessionYr || s.AddmissionDate.Value.Year == SessionYr);
+                T_screenning_selected = T_screenning_selected.Where(s => s.Date.Year == SessionYr);
+                T_screenning_rejected = T_screenning_rejected.Where(s => s.Date.Year == SessionYr);
+                T_screening_pending = T_screening_pending.Where(s => s.RegistrationDate.Value.Year == SessionYr);
+                T_medical_selected = T_medical_selected.Where(s => s.AddmissionDate.Value.Year == SessionYr);
+                T_medical_rejected = T_medical_rejected.Where(s => s.AddmissionDate.Value.Year == SessionYr);
+                T_medical_pending = T_medical_pending.Where(s => s.AddmissionDate.Value.Year == SessionYr);
                 T_medical = T_medical.Where(a => a.AddmissionDetails.FirstOrDefault().SessionMaster.SessionYr == SessionYr || a.AddmissionDate.Value.Year == SessionYr);
-                //=====================
-                T_mapList = T_mapList.Where(r => r.SessionMaster.SessionYr == SessionYr && r.RegistrationDate.Value.Year == SessionYr && r.RegistrationDate.Value.Month == today.Month);
-                //T_TotalRegByMonth = T_TotalRegByMonth.Where(r => r.SessionMaster.SessionYr == SessionYr);
+                StandBy = StandBy.Where(s => s.RegistrationDate.HasValue && s.RegistrationDate.Value.Year == SessionYr);
+                WithdrwanNo = WithdrwanNo.Where(d => d.AddmissionDate.Value.Year == SessionYr);
             }
             else
             {
-                //AdmissionCount = _context.AddmissionMasters.Where(a => a.IsActive && a.AddmissionDetails.FirstOrDefault().BatchMaster.IsActive && a.AddmissionDetails.FirstOrDefault().BatchId != 19 && a.RegistrationMaster.IsActive && a.RegistrationMaster.IsScreenningClear.HasValue && a.RegistrationMaster.IsScreenningClear.Value && a.RegistrationMaster.IsMedicalClear.HasValue && a.RegistrationMaster.IsMedicalClear.Value).Count();
-                AdmissionCount = _context.AddmissionMasters.Where(a => a.IsActive && (!a.RegistrationMaster.IsMedicalClear.HasValue || a.RegistrationMaster.IsMedicalClear.Value) && a.AddmissionDetails.FirstOrDefault().BatchMaster.IsActive && a.AddmissionDetails.FirstOrDefault().BatchMaster.Name != "Batch 0").Count();
-                T_mapList = T_mapList.Where(r => r.RegistrationDate.Value.Year == today.Year && r.RegistrationDate.Value.Month == today.Month);
+                AdmissionCount = _context.AddmissionMasters.Where(a => a.IsActive && a.AddmissionDetails.FirstOrDefault().BatchMaster.IsActive && a.AddmissionDetails.FirstOrDefault().BatchId != 19 && a.RegistrationMaster.IsActive && (!a.RegistrationMaster.IsMedicalClear.HasValue || a.RegistrationMaster.IsMedicalClear.Value)).Count();
             }
-
 
             DesktopChartList list = new DesktopChartList
             {
                 TotalRegistartion = T_registration.Count(),
                 TotalAdmission = AdmissionCount,
-                TotalMedical = T_medical.Count(),
-                TotalScreenning = T_screenning.Count(),
-                MapList = T_mapList.OrderBy(o => o.RegistrationDate).GroupBy(g => g.RegistrationDate.Value.Day).Select(s => new AxisPoint
-                {
-                    Y = s.Count(),
-                    X = s.Key
-                }).ToList()
+                TotalMedical = T_medical_pending.Count(),
+                TotalScreenning = T_screening_pending.Count(),
+                TotalScreenningSelected = T_screenning_selected.Count(),
+                TotalScreenningRejected = T_screenning_rejected.Count(),
+                TotalMedicalSelected = T_medical_selected.Count(),
+                TotalMedicalRejected = T_medical_rejected.Count(),
+                Withdrawn = WithdrwanNo.Count(),
+                StandBy = StandBy.Count()
             };
-            list.Map = Axis.JConversion(Axis.BarPoints(list.MapList));
-
-            var TotalRegByMonth = T_TotalRegByMonth.OrderByDescending(o => o.RegistrationDate).GroupBy(a => new { a.RegistrationDate.Value.Year, a.RegistrationDate.Value.Month }).Select(s => new RegisterByMonth
+            list.Map = FillDashboardChart(today.Month, today.Year);
+            var InitialDate = Convert.ToDateTime("01/06/2018");
+            var MonthWiseData = _context.RegistrationMasters.Where(w => w.IsActive && w.RegistrationDate.Value >= InitialDate);
+            if (SessionYr > 0)
+                MonthWiseData = MonthWiseData.Where(w => w.RegistrationDate.Value.Year == SessionYr);
+            var ExactMonthWiseData = MonthWiseData.GroupBy(o => new
             {
-                NoOfRegister = s.Count(),
-                MonthNum = s.Key.Month,
-                Year = s.Key.Year
-            }).OrderByDescending(d => d.Year).ThenByDescending(t => t.MonthNum).Take(6).ToList();
-
-            list.TotalRegByMonth = new List<RegisterByMonth>();
-            foreach (var item in MonthArray)
+                Month = o.RegistrationDate.Value.Month,
+                Year = o.RegistrationDate.Value.Year
+            }).Select(g => new
             {
-                var d = TotalRegByMonth.Where(t => t.MonthNum == item.Id && t.Year == item.Year).FirstOrDefault();
-                string Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.Id);
-                if (d != null)
+                Month = g.Key.Month,
+                Year = g.Key.Year,
+                Total = g.Count()
+            }).OrderByDescending(o => o.Year)
+                .ThenByDescending(o => o.Month)
+                .ToList();
+            var TotalRegListByMonth = new List<RegisterByMonth>();
+            foreach (var item in ExactMonthWiseData)
+            {
+                string Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.Month);
+                TotalRegListByMonth.Add(new RegisterByMonth
                 {
-                    list.TotalRegByMonth.Add(new RegisterByMonth
-                    {
-                        MonthNum = item.Id,
-                        NoOfRegister = d.NoOfRegister,
-                        Month = Month
-                    });
-                }
-                else
-                {
-                    list.TotalRegByMonth.Add(new RegisterByMonth
-                    {
-                        MonthNum = item.Id,
-                        NoOfRegister = 0,
-                        Month = Month
-                    });
-                }
-            }
+                    MonthNum = item.Month,
+                    NoOfRegister = item.Total,
+                    Year = item.Year,
+                    Month = Month + ", " + item.Year
+                });
+            };
+            list.TotalRegByMonth = TotalRegListByMonth;
             SJService.LogActivityService log = new LogActivityService();
             list.GetActivityList = log.GetTopFiveActities();
             return list;
@@ -682,31 +775,52 @@ namespace SJService
 
         public DataTableFilterModel GetWithdrawalCandidateList(DataTableFilterModel filter, int SessionYr)
         {
-            var data = _context.RegistrationMasters.Where(d => d.IsActive && d.IsScreenningClear != null && d.IsScreenningClear == true && !d.IsStandBy).AsQueryable();
+            var data = _context.AddmissionMasters.Where(a => a.MedicalDetails.FirstOrDefault().MedicalStatus == "Withdrawn").AsQueryable();
             if (SessionYr > 0)
-                data = data.Where(d => d.SessionMaster.SessionYr == SessionYr || (d.RegistrationDate.Value.Year == SessionYr));
-            if (string.IsNullOrWhiteSpace(filter.columns[7].search.value))
-            {
-                data = data.Where(r => r.IsMedicalClear.HasValue && r.AddmissionMasters.FirstOrDefault().AddmissionDetails.FirstOrDefault().BatchId == 19);
-            }
-            else
-            {
-                data = data.Where(r => r.IsMedicalClear.HasValue && r.AddmissionMasters.FirstOrDefault().AddmissionDetails.FirstOrDefault().BatchId != 19 && r.MedicalRemark != "Withdrawal");
-            }
+                data = data.Where(d => d.AddmissionDate.Value.Year == SessionYr);
+            //var data = _context.RegistrationMasters.Where(d => d.IsActive && d.IsScreenningClear != null && d.IsScreenningClear == true && !d.IsStandBy).AsQueryable();
+            //if (SessionYr > 0)
+            //    data = data.Where(d => d.SessionMaster.SessionYr == SessionYr || (d.RegistrationDate.Value.Year == SessionYr));
+            //if (string.IsNullOrWhiteSpace(filter.columns[7].search.value))
+            //{
+            //    data = data.Where(r => r.IsMedicalClear.HasValue && r.AddmissionMasters.FirstOrDefault().AddmissionDetails.FirstOrDefault().BatchId == 19);
+            //}
+            //else
+            //{
+            //    data = data.Where(r => r.IsMedicalClear.HasValue && r.AddmissionMasters.FirstOrDefault().AddmissionDetails.FirstOrDefault().BatchId != 19 && r.MedicalRemark != "Withdrawal");
+            //}
+            //var info = data.Select(model => new RegistrationViewModel()
+            //{
+            //    Id = model.Id,
+            //    DOB = model.DOB,
+            //    Email = model.Email,
+            //    Gender = model.Gender == "M" ? "Male" : "Female",
+            //    Mobile = model.Mobile,
+            //    CourseName = model.CourseMaster.CourseName,
+            //    Fname = model.Fname,
+            //    Lname = model.Lname,
+            //    RegistartionNo = model.RegistartionNo,
+            //    RegistrationDate = model.RegistrationDate,
+            //    MedicalRemark = model.MedicalRemark != null ? model.MedicalRemark : "",
+            //}).AsEnumerable();
+
             var info = data.Select(model => new RegistrationViewModel()
             {
-                Id = model.Id,
+                Id = model.RegistrationMasterId.Value,
                 DOB = model.DOB,
                 Email = model.Email,
                 Gender = model.Gender == "M" ? "Male" : "Female",
-                Mobile = model.Mobile,
+                Mobile = model.MobileNo,
                 CourseName = model.CourseMaster.CourseName,
                 Fname = model.Fname,
                 Lname = model.Lname,
-                RegistartionNo = model.RegistartionNo,
-                RegistrationDate = model.RegistrationDate,
-                MedicalRemark = model.MedicalRemark != null ? model.MedicalRemark : "",
+                RegistartionNo = model.RegistrationNo,
+                RegistrationDate = model.MedicalDetails.FirstOrDefault().DateOfWithdrawn,
+                MedicalRemark = model.RegistrationMaster.MedicalRemark != null ? model.RegistrationMaster.MedicalRemark : "",
+                RefundStatus = model.RegistrationMaster.FeeDetails.Any() ? (model.RegistrationMaster.FeeDetails.FirstOrDefault().FeePaymentDetails.FirstOrDefault().FeeCollections.OrderByDescending(a => a.Id).FirstOrDefault().Amount == model.RegistrationMaster.FeeDetails.FirstOrDefault().FeePaymentDetails.FirstOrDefault().FeeCollections.OrderByDescending(a => a.Id).FirstOrDefault().PartWisePayments.Sum(s => s.Amount) ? "success" : (model.RegistrationMaster.FeeDetails.FirstOrDefault().FeePaymentDetails.FirstOrDefault().FeeCollections.OrderByDescending(a => a.Id).FirstOrDefault().PartWisePayments.Sum(s => s.Amount) > 0 ? "orange" : "")) : "",
+                IsFeePayment = model.RegistrationMaster.FeeDetails.Where(w => w.IsActive).Any(a => a.RegistrationNo == model.RegistrationNo) ? (model.RegistrationMaster.FeeDetails.Any(a => a.FeeTypeDetail.IsActive && a.FeeTypeDetail.FeeTypeId == 1) ? true : false) : false
             }).AsEnumerable();
+
             var totalCount = info.Count();
             if (!string.IsNullOrWhiteSpace(filter.search.value))
             {
@@ -819,7 +933,7 @@ namespace SJService
 
         public List<RoleViewModel> GetScreeningDocument()
         {
-            return _context.DocumentMasters.Where(d => d.IsActive).Select(s => new RoleViewModel
+            return _context.DocumentMasters.Where(d => d.IsActive && d.DepartmentMasterId == 1).Select(s => new RoleViewModel
             {
                 Name = s.DocumentName,
                 Id = s.Id
@@ -961,6 +1075,7 @@ namespace SJService
                                 parameter.Poor = item.Poor;
                                 parameter.Remark = item.Remark;
                                 parameter.ScreeningParameterId = item.ScreeningParameterId;
+                                parameter.InterViewerName = item.Interviewer;
                             }
                             else
                             {
@@ -971,6 +1086,7 @@ namespace SJService
                                     Poor = item.Poor,
                                     Remark = item.Remark,
                                     ScreeningParameterId = item.ScreeningParameterId,
+                                    InterViewerName = item.Interviewer,
                                     ScreeningTestId = test.Id
                                 };
                                 _context.ScreeningParameterOptions.Add(parameter);
@@ -994,6 +1110,7 @@ namespace SJService
                     EyeSightLeft = Model.ScreeningTest.EyeSightLeft,
                     EyeSightRight = Model.ScreeningTest.EyeSightRight,
                     FlyingExp = Model.ScreeningTest.FlyingExp,
+                    RegistrationMasterId = Model.RegId,
                     PassportExpiryDate = Model.ScreeningTest.PassportExpiryDateStr != null ? (DateTime.ParseExact(Model.ScreeningTest.PassportExpiryDateStr, "dd/MM/yyyy", CultureInfo.InvariantCulture)) : (DateTime?)null,
                     PassportIssueDate = Model.ScreeningTest.PassportIssueDateStr != null ? (DateTime.ParseExact(Model.ScreeningTest.PassportIssueDateStr, "dd/MM/yyyy", CultureInfo.InvariantCulture)) : (DateTime?)null,
                     RegistrationId = Model.RegistrationId,
@@ -1016,6 +1133,7 @@ namespace SJService
                             Poor = item.Poor,
                             Remark = item.Remark,
                             ScreeningParameterId = item.ScreeningParameterId,
+                            InterViewerName = item.Interviewer,
                             ScreeningTestId = test.Id
                         };
                         if (item.Poor)
@@ -1065,6 +1183,14 @@ namespace SJService
                         var RegisterNo = admissionService.CreateAddmission1(Model.RegistrationId, Model.CreatedBy, registartion.Id, Model.BatchId, Model.CreatedDate);
                     }
                 }
+            }
+            if (Model.IsWithdrawal == true)
+            {
+                UpdateMedicalRemark(Model.RegistrationId, Model.ScreeningTest.Remark, "Withdrawn", Model.RegId, Model.CreatedBy);
+            }
+            else
+            {
+                UpdateWithStopWithdrwn(Model.RegistrationId, "NotWithdrawn", Model.RegId, Model.CreatedBy);
             }
             return Model;
         }
@@ -1299,6 +1425,30 @@ namespace SJService
             }
             var Result = info.OrderByDescending(o => o.RegistartionNo).ToList();
             return Result;
+        }
+
+        public int IsOverBatchStrength(int BatchId)
+        {
+            var dd = _context.AddmissionMasters.Where(a => a.IsActive && a.AddmissionDetails.FirstOrDefault().BatchMaster.IsActive && a.AddmissionDetails.FirstOrDefault().BatchId == BatchId).Count();
+            if (BatchId == 19)
+                dd = 20;
+            return dd;
+        }
+
+        public string ChangeLeadSource(int RegNo, string LeadSource)
+        {
+            string msg = "";
+            var data = _context.RegistrationMasters.Where(r => r.IsActive && r.RegistartionNo == RegNo).FirstOrDefault();
+            if (data != null)
+            {
+                if (LeadSource == "" || LeadSource == "Select")
+                    data.SourceOfCandidate = null;
+                else
+                    data.SourceOfCandidate = LeadSource;
+                msg = "Lead source succesfully changed";
+                _context.SaveChanges();
+            }
+            return msg;
         }
     }
 }

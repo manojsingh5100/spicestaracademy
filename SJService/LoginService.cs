@@ -87,5 +87,32 @@ namespace SJService
         {
             return _context.UserLogins.Any(u => u.Email == Email);
         }
+
+
+        //================================== Email Template ====================================================
+
+        public bool CreateUpdatePerformanceCandidateResponce(int PerformanceEntryMId, bool Status)
+        {
+            bool IsActive = false;
+            var data = _context.tblGetTermAcceptancyByCandidates.Where(t => t.tblPerformanceEntryMasterId == PerformanceEntryMId).FirstOrDefault();
+            if (data != null)
+            {
+                data.Accept = Status;
+                data.DateOfAction = DateTime.Now;
+            }
+            else
+            {
+                tblGetTermAcceptancyByCandidate model = new tblGetTermAcceptancyByCandidate
+                {
+                    Accept = Status,
+                    DateOfAction = DateTime.Now,
+                    tblPerformanceEntryMasterId = PerformanceEntryMId
+                };
+                _context.tblGetTermAcceptancyByCandidates.Add(model);
+            }
+            _context.SaveChanges();
+            IsActive = true;
+            return IsActive;
+        }
     }
 }

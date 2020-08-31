@@ -26,5 +26,11 @@ namespace SJModel
         public bool CandidateTerminationResignationIsActive { get; set; }
         public bool IsClosed { get; set; }
         public string ClosedComment { get; set; }
+        public string DoneBy { get; set; }
+        public string RefundStatus { get; set; }
+        public bool IsFeePayment { get; set; }
+        public string FundStatus { get; set; }
+
+        public decimal? FeeDueAmount { get; set; }
     }
 }

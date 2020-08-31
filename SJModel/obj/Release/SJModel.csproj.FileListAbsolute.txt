@@ -53,3 +53,13 @@ F:\GitHub\SpiceAcademy\SJModel\obj\Release\SJModel.csproj.CoreCompileInputs.cach
 F:\GitHub\SpiceAcademy\SJModel\obj\Release\SJModel.csproj.CopyComplete
 F:\GitHub\SpiceAcademy\SJModel\obj\Release\SJModel.dll
 F:\GitHub\SpiceAcademy\SJModel\obj\Release\SJModel.pdb
+D:\GitHub\SpiceAcademy\SpiceAcademy\SJModel\bin\Release\SJModel.dll
+D:\GitHub\SpiceAcademy\SpiceAcademy\SJModel\bin\Release\SJModel.pdb
+D:\GitHub\SpiceAcademy\SpiceAcademy\SJModel\bin\Release\Newtonsoft.Json.dll
+D:\GitHub\SpiceAcademy\SpiceAcademy\SJModel\bin\Release\System.ComponentModel.Annotations.dll
+D:\GitHub\SpiceAcademy\SpiceAcademy\SJModel\bin\Release\Newtonsoft.Json.xml
+D:\GitHub\SpiceAcademy\SpiceAcademy\SJModel\obj\Release\SJModel.csprojAssemblyReference.cache
+D:\GitHub\SpiceAcademy\SpiceAcademy\SJModel\obj\Release\SJModel.csproj.CoreCompileInputs.cache
+D:\GitHub\SpiceAcademy\SpiceAcademy\SJModel\obj\Release\SJModel.csproj.CopyComplete
+D:\GitHub\SpiceAcademy\SpiceAcademy\SJModel\obj\Release\SJModel.dll
+D:\GitHub\SpiceAcademy\SpiceAcademy\SJModel\obj\Release\SJModel.pdb

@@ -130,7 +130,7 @@
                                         @Html.TextBoxFor(m => m.AdmissionDetail.CourseName, new { @class = "form-control", @readonly = true })
                                     </div>
                                 </div>
-                                <div class="form-group col-md-6">a
+                                <div class="form-group col-md-6">
                                     <label for="inputSkills" class="col-sm-4 control-label">Education</label>
                                     <div class="col-sm-8">
                                         @Html.TextBoxFor(m => m.AdmissionDetail.Education, new { @class = "form-control", @readonly = true })
@@ -149,7 +149,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputEmail" class="col-sm-4 control-label">Email</label>
+                                    <label for="inputEmail" class="col-sm-4 control-label">Personal Email</label>
                                     <div class="col-sm-8">
                                         @Html.TextBoxFor(m => m.AdmissionDetail.Email, new { @class = "form-control", placeholder = "Email" })
                                     </div>
@@ -167,10 +167,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputName" class="col-sm-4 control-label">Register Email</label>
+                                    <label for="inputName" class="col-sm-4 control-label">Official Email</label>
                                     @*<label for="inputName" class="col-sm-4 control-label">Amity Enroll No</label>*@
                                     <div class="col-sm-8">
-                                        @Html.HiddenFor(m => m.AdmissionDetail.AmityEnNo)
+                                        @*@Html.HiddenFor(m => m.AdmissionDetail.AmityEnNo)*@
                                         @Html.TextBoxFor(m => m.AdmissionDetail.RegisterEmail, new { @class = "form-control", placeholder = "Register email" })
                                     </div>
                                 </div>
@@ -218,6 +218,13 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group col-md-6">
+                                    <label for="inputSkills" class="col-sm-4 control-label">ECN</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.AdmissionDetail.AmityEnNo, new { @class = "form-control", placeholder = "ECN" })
+                                    </div>
+                                </div>
+
                                 <div class="form-group" style="padding-left:75px;">
                                     <div class="col-sm-offset-1 col-sm-10">
                                         <button type="button" onclick="SaveAdmissionDetail();" class="btn btn-success">Update</button>
@@ -244,13 +251,13 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-6" style="display:none">
                                     <label for="inputName" class="col-sm-4 control-label">Vision Left</label>
                                     <div class="col-sm-8">
                                         @Html.TextBoxFor(m => m.MedicalDetail.VisionLeft, new { @class = "form-control", placeholder = "Vision Left" })
                                     </div>
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-6" style="display:none">
                                     <label for="inputExperience" class="col-sm-4 control-label">Vision Right</label>
                                     <div class="col-sm-8">
                                         @Html.TextBoxFor(m => m.MedicalDetail.VisionRight, new { @class = "form-control", placeholder = "Vision Right" })
@@ -295,13 +302,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label class="col-sm-4 control-label">Date Of Joinning</label>
+                                    <label class="col-sm-4 control-label">Aarambh Date</label>
                                     <div class="col-sm-8">
                                         <div class="input-group date">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            @Html.TextBoxFor(m => m.MedicalDetail.JoiningDate, new { @class = "form-control", placeholder = "Date Of Joinning", autocomplete = "off", onkeydown = "return false;" })
+                                            @Html.TextBoxFor(m => m.MedicalDetail.JoiningDate, new { @class = "form-control", placeholder = "Aarambh Date", autocomplete = "off", onkeydown = "return false;" })
                                         </div>
                                     </div>
                                 </div>
@@ -556,6 +563,7 @@
                 }
             }
         }
+        $("#AdmissionDetail_BatchId option[value=19]").hide();
         StopLoading();
     });
 
@@ -910,12 +918,35 @@
     $('#AdmissionDetail_BatchId').change(function () {
         var changeId = $(this).val();
         var id = $("#hdnid").val();
-        if (changeId != id) {
-            $('#divBatchDescription').css("display", "block");
-        } else {
-            $('#AdmissionDetail_BatchDescription').val('');
-            $('#divBatchDescription').css("display", "none");
-        }
+        $.ajax({
+            url: "/Registration/IsOverBatchStrength",
+            type: "GET",
+            async: false,
+            data: { BatchId: changeId },
+            success: function (response) {
+                if (response != null && response != '' && response > 0) {
+                    if (response < 25) {
+                        if (changeId != id) {
+                            $('#divBatchDescription').css("display", "block");
+                        } else {
+                            $('#AdmissionDetail_BatchDescription').val('');
+                            $('#divBatchDescription').css("display", "none");
+                        }
+                    } else {
+                        $.confirm({
+                            animation: 'news', closeAnimation: 'news', title: 'Batch change alert!', content: 'This batch strength is full!', buttons: {
+                                cancel: function () {
+                                    $('#AdmissionDetail_BatchId').val(id).trigger('change');
+                                }
+                            }
+                        })
+                    }
+                }
+            },
+            error: function (error) {
+
+            }
+        });
     });
 
     function validateAddressDetail() {

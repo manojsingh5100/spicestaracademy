@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'E:\Git Projects\7 Oct Project\SpicestarERP\WebApplicationInterface\DataLayer\Model1.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\GitHub\SpiceAcademy\SpiceAcademy\WebApplicationInterface\DataLayer\Model1.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

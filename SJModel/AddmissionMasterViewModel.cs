@@ -60,5 +60,6 @@ namespace SJModel
         public decimal? FeeCapitalAmount { get; set; }
         public List<PaymentInfoViewModel> PaymentDetailList { get; set; }
         public string IsTermResgCandidate { get; set; }
+        public DateTime? BatchStartDate { get; set; }
     }
 }

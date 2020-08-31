@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "Refund";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <title>Refund</title>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Refund
+        </h1>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- /.box -->
+                <div class="box">
+                    <div class="box-body">
+                        <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <strong id="lblMsg">@TempData["msg"]</strong>
+                        </div>
+                        <div class="row col-md-12 table-responsive">
+                            <table id="tblRefund" class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>Reg.No</th>
+                                        <th>Student Name</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>Course</th>
+                                        <th>Status</th>
+                                        <th>Remark</th>
+                                        <th>Exceed Amount</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#dfdbda">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="headerText">Approved</h4>
+            </div>
+            <div class="modal-body" id="divrefundbody" style="background-color:#dfdbda">
+                @*@Html.Partial("_RefundAR")*@
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        //TableCourseFilter = 8;
+        Table = $("#tblRefund").DataTable(refundtblSetting("tblRefund", "GetRefundDetailsList", "FeeManagement", 0));
+        $.fn.dataTable.ext.errMode = 'throw';
+        StopLoading();
+    });
+
+    function OpenRefundPopUp(obj,Id) {
+        $('#headerText').text($(obj).attr("value") + " Remark");
+        $('#divrefundbody').empty();
+             $.ajax({
+                 cache: false,
+                 type: "GET",
+                 url: "@(Url.Action("OpenRefundPopup", "FeeManagement"))",
+                 data: { Id: Id},
+                success: function (data)
+                {
+                    $('#divrefundbody').append(data);
+                    $('#myModal').modal('show');
+                    $("#btnapr").prop("value", $(obj).attr("value"));
+                },
+                error: function (xhr, ajaxOptions, thrownError)
+                {
+                    alert('Failed!');
+                }
+            });
+    }
+
+    @*function openRefundFeeModel(regNo) {
+        $('#divRemarkDetail').empty();
+             $.ajax({
+                 cache: false,
+                 type: "GET",
+                 url: "@(Url.Action("RemarkOpenModelPopup", "CallCenterInfo"))",
+                 data: { RegNo: regNo},
+                success: function (data)
+                {
+                    $('#divRemarkDetail').append(data);
+                    $('#myModal').modal('show');
+                },
+                error: function (xhr, ajaxOptions, thrownError)
+                {
+                    alert('Failed!');
+                }
+            });
+    }*@
+</script>
+
+
+
+

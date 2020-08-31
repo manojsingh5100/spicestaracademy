@@ -2,6 +2,37 @@
 @{
     ViewBag.Title = "DashBoard";
 }
+<style>
+    .pager-nav {
+        margin: 16px 0;
+    }
+
+        .pager-nav span {
+            display: inline-block;
+            padding: 4px 8px;
+            margin: 1px;
+            cursor: pointer;
+            font-size: 14px;
+            background-color: #FFFFFF;
+            border: 1px solid #e1e1e1;
+            border-radius: 3px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.04);
+        }
+
+            .pager-nav span:hover,
+            .pager-nav .pg-selected {
+                background-color: #f9f9f9;
+                border: 1px solid #CCCCCC;
+            }
+
+    #chartdiv {
+        width: 100%;
+        height: 618px;
+    }
+</style>
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -42,13 +73,27 @@
             </div>
             <!-- /.col -->
             <!-- fix for small devices only -->
-            <div class="clearfix visible-sm-block"></div>
+            @*<div class="clearfix visible-sm-block"></div>*@
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box">
                     <span class="info-box-icon bg-green"><i class="fa fa-television"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Total Screening</span>
-                        <span class="info-box-number">@Model.TotalScreenning</span>
+                        <span class="info-box-text">Screening</span>
+                        <span class="info-box-number">@(Model.TotalScreenningSelected + Model.TotalScreenningRejected)</span>
+                    </div>
+                    <div class="info-box-content" style="padding:0px;">
+                        <div class="col-md-4">
+                            <span class="info-box-text" style="font-size:10px;">Selected</span>
+                            <span class="info-box-number">@Model.TotalScreenningSelected</span>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="info-box-text" style="font-size:10px;">Rejected</span>
+                            <span class="info-box-number">@Model.TotalScreenningRejected</span>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="info-box-text" style="font-size:10px;">Pending</span>
+                            <span class="info-box-number">@Model.TotalScreenning</span>
+                        </div>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -57,20 +102,54 @@
             <!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box">
-                    <span class="info-box-icon bg-yellow"><i class="fa fa-medkit"></i></span>
+                    <span class="info-box-icon bg-green"><i class="fa fa-medkit"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Total Medical</span>
-                        <span class="info-box-number">@Model.TotalMedical</span>
+                        <span class="info-box-text">Medical</span>
+                        <span class="info-box-number">@(Model.TotalMedicalSelected + Model.TotalMedicalRejected)</span>
+                    </div>
+                    <div class="info-box-content" style="padding:0px;">
+                        <div class="col-md-4">
+                            <span class="info-box-text" style="font-size:10px;">Selected</span>
+                            <span class="info-box-number">@Model.TotalMedicalSelected</span>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="info-box-text" style="font-size:10px;">Rejected</span>
+                            <span class="info-box-number">@Model.TotalMedicalRejected</span>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="info-box-text" style="font-size:10px;">Pending</span>
+                            <span class="info-box-number">@Model.TotalMedical</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-orange"><i class="fa fa-stack-overflow"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Withdrawn</span>
+                        <span class="info-box-number">@Model.Withdrawn</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
                 <!-- /.info-box -->
             </div>
-            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-blue"><i class="fa fa-pause"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Stand By</span>
+                        <span class="info-box-number">@Model.StandBy</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
         </div>
         <!-- /.row -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title" id="headStr">Monthly Recap Report </h3>
@@ -83,74 +162,11 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-8" style="border-right:1px solid #ccc">
-                                <p class="text-center">
-                                    <strong>@ViewBag.recentmonth</strong>
-                                </p>
-                                <div class='chart'><canvas id='barChart' style='height:256px'></canvas></div>
-                            </div>
-                            @if (Model.TotalRegByMonth.Count > 0)
-                            {
-                                <!-- /.col -->
-                                <div class="col-md-4">
-                                    <p class="text-center">
-                                        <strong>Month wise registration</strong>
-                                    </p>
-                                    <div class="progress-group">
-                                        <span class="progress-te    xt">@Model.TotalRegByMonth[0].Month</span>
-                                        <span class="progress-number"><b>@(Model.TotalRegByMonth[0].NoOfRegister)</b></span>
-                                        <div class="progress sm">
-                                            <div class="progress-bar progress-bar-aqua" style="width: @((Model.TotalRegByMonth[0].NoOfRegister * 100)/1000)%"></div>
-                                        </div>
-                                    </div>
-                                    <!-- /.progress-group -->
-                                    @if (Model.TotalRegByMonth.Count > 1)
-                                    {
-                                        <div class="progress-group">
-                                            <span class="progress-text">@Model.TotalRegByMonth[1].Month</span>
-                                            <span class="progress-number"><b>@(Model.TotalRegByMonth[1].NoOfRegister)</b></span>
-                                            <div class="progress sm">
-                                                <div class="progress-bar progress-bar-red" style="width: @((Model.TotalRegByMonth[1].NoOfRegister * 100)/1000)%"></div>
-                                            </div>
-                                        </div>
-                                    }
-                                    <!-- /.progress-group -->
-                                    @if (Model.TotalRegByMonth.Count > 2)
-                                    {
-                                        <div class="progress-group">
-                                            <span class="progress-text">@Model.TotalRegByMonth[2].Month</span>
-                                            <span class="progress-number"><b>@(Model.TotalRegByMonth[2].NoOfRegister)</b></span>
-                                            <div class="progress sm">
-                                                <div class="progress-bar progress-bar-green" style="width: @((Model.TotalRegByMonth[2].NoOfRegister * 100)/1000)%"></div>
-                                            </div>
-                                        </div>
-                                    }
-                                    <!-- /.progress-group -->
-                                    @if (Model.TotalRegByMonth.Count > 3)
-                                    {
-                                        <div class="progress-group">
-                                            <span class="progress-text">@Model.TotalRegByMonth[3].Month</span>
-                                            <span class="progress-number"><b>@(Model.TotalRegByMonth[3].NoOfRegister)</b></span>
-                                            <div class="progress sm">
-                                                <div class="progress-bar progress-bar-yellow" style="width: @((Model.TotalRegByMonth[3].NoOfRegister * 100)/1000)%"></div>
-                                            </div>
-                                        </div>
-                                    }
-                                    <!-- /.progress-group -->
-                                    @if (Model.TotalRegByMonth.Count > 4)
-                                    {
-                                        <div class="progress-group">
-                                            <span class="progress-text">@Model.TotalRegByMonth[4].Month</span>
-                                            <span class="progress-number"><b>@(Model.TotalRegByMonth[4].NoOfRegister)</b></span>
-                                            <div class="progress sm">
-                                                <div class="progress-bar progress-bar-green" style="width: @((Model.TotalRegByMonth[4].NoOfRegister * 100)/1000)%"></div>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                                <!-- /.col -->
-                            }
+                        <div style="border-right:1px solid #ccc">
+                            <p class="text-center">
+                                <strong>@ViewBag.recentmonth</strong>
+                            </p>
+                            <div class='chart'><canvas id='barChart' style='height:256px'></canvas></div>
                         </div>
                         <!-- /.row -->
                     </div>
@@ -158,41 +174,103 @@
                 <!-- /.box -->
             </div>
             <!-- /.col -->
-        </div>
-        <!-- /.row -->
-        <!-- Main row -->
-        <!-- /.row -->
-        @if (Model.GetActivityList.Count() > 0)
-        {
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="box box-primary">
-                        <div class="box-header ui-sortable-handle" style="cursor: move;">
-                            <h3 class="box-title">Current Top 5 Activities</h3>
+            @if (Model.TotalRegByMonth.Count > 0)
+            {
+                <!-- /.col -->
+                <div class="col-md-4">
+                    <!-- ************************************************************************************************************* -->
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Month wise registration</h3>
+                            <div class="box-tools">
+                                <div id="pageNavPosition" style="padding-left:8px;margin:0px;" class="pager-nav"></div>
+                            </div>
                         </div>
-                        <div class="box-body">
+                        <!-- /.box-header -->
+                        <div class="box-body no-padding">
+                            <table id="pager" class="table wp-list-table widefat striped posts">
+                                <tbody>
+                                    @if (Model.TotalRegByMonth.Count() > 0)
+                                    {
+                                        foreach (var item in Model.TotalRegByMonth)
+                                        {
+                                            <tr style="display:none">
+                                                <td></td>
+                                            </tr>
+                                            <tr class="rows" year="@item.Year" month="@item.MonthNum" mname="@item.Month">
+                                                <td style="cursor:pointer">
+                                                    <div class="progress-group">
+                                                        <span class="progress-text">@item.Month</span>
+                                                        <span class="progress-number"><b>@(item.NoOfRegister)</b></span>
+                                                        <div class="progress sm">
+                                                            <div class="progress-bar progress-bar-aqua" style="width: @((item.NoOfRegister * 100) / 1000)%"></div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
 
-                            @foreach (var item in Model.GetActivityList)
-                            {
-                                <div class="direct-chat-messages">
-                                    <div class="direct-chat-msg" style="font-size:16px;">
-                                        <div class="direct-chat-info clearfix">
-                                            <span class="direct-chat-name pull-left">@item.ByActivity</span>
-                                            <span class="direct-chat-timestamp pull-right">@item.ActivityDate</span>
-                                        </div>
-                                        <img class="direct-chat-img" src="~/Images/iconfinder_activity_3324973.png" alt="message user image">
-                                        <div class="direct-chat-text">
-                                            @item.ActivityMessage
+                    <!-- ************************************************************************************************************* -->
+                </div>
+                <!-- /.col -->
+            }
+            <!-- /.row -->
+            <!-- Main row -->
+            <!-- /.row -->
+            @*@if (Model.GetActivityList.Count() > 0)
+                {
+                    <div class="col-md-6">
+                        <div class="box box-primary">
+                            <div class="box-header ui-sortable-handle" style="cursor: move;">
+                                <h3 class="box-title">Current Top 5 Activities</h3>
+                            </div>
+                            <div class="box-body">
+                                @foreach (var item in Model.GetActivityList)
+                                {
+                                    <div class="direct-chat-messages">
+                                        <div class="direct-chat-msg" style="font-size:16px;">
+                                            <div class="direct-chat-info clearfix">
+                                                <span class="direct-chat-name pull-left">@item.ByActivity</span>
+                                                <span class="direct-chat-timestamp pull-right">@item.ActivityDate</span>
+                                            </div>
+                                            <img class="direct-chat-img" src="~/Images/iconfinder_activity_3324973.png" alt="message user image">
+                                            <div class="direct-chat-text">
+                                                @item.ActivityMessage
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
+                                }
 
+                            </div>
                         </div>
                     </div>
+
+                }*@
+            <div class="col-md-6">
+                <div class="box box-danger">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Lead Sources</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div id="chartdiv"></div>
+                    </div>
+                    <!-- /.box-body -->
                 </div>
             </div>
-        }
+        </div>
     </section>
     <!-- /.content -->
 </div>
@@ -201,7 +279,166 @@
         chartHeader();
         setTimeout(function () { BarChart(GetListOfAxisPoint()); }, 300);
         StopLoading();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "/DashBoard/FillLeadSourceChart",
+            success: function (data) {
+                if (data != null) {
+                    var d = [];
+                    var num = 0;
+                    $.each(data.GetLeadSourceValues, function (i, n) {
+                        var s = {};
+                        s.litres = n.Yaxix;
+                        s.country  = n.Xaxis;
+                        d.push(s);
+                        num = num + 1;
+                    });
+
+                    debugger;
+                    am4core.ready(function () {
+
+                        // Themes begin
+                        am4core.useTheme(am4themes_animated);
+                        // Themes end
+
+                        var chart = am4core.create("chartdiv", am4charts.PieChart3D);
+                        chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+
+                        chart.legend = new am4charts.Legend();
+
+                        chart.data = d;
+
+                        var series = chart.series.push(new am4charts.PieSeries3D());
+                        series.dataFields.value = "litres";
+                        series.dataFields.category = "country";
+                    });
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed!');
+            }
+        });
     });
+
+    $(".rows").click(function () {
+        var year = $(this).attr('year');
+        var month = $(this).attr('month');
+        var name = $(this).attr('mname');
+        $.ajax({
+            url: "/DashBoard/FillDashboardChart",
+            type: "POST",
+            async: false,
+            data: { Month: month, Year: year },
+            success: function (data) {
+                if (data != null) {
+                    $('#hdnmappoint').val(data);
+                    $('.chart').empty().append("<canvas id='barChart' style='height: 256px'></canvas>");
+                    $('#headStr').text(name + " (Day / No of Registration");
+                    BarChart(GetListOfAxisPoint());
+                }
+            },
+            error: function (error) {
+            }
+        });
+    });
+
+
+    /* eslint-env browser */
+    /* global document */
+
+    function Pager(tableName, itemsPerPage) {
+        'use strict';
+
+        this.tableName = tableName;
+        this.itemsPerPage = itemsPerPage;
+        this.currentPage = 1;
+        this.pages = 0;
+        this.inited = false;
+
+        this.showRecords = function (from, to) {
+            let rows = document.getElementById(tableName).rows;
+
+            // i starts from 1 to skip table header row
+            for (let i = 1; i < rows.length; i++) {
+                if (i < from || i > to) {
+                    rows[i].style.display = 'none';
+                } else {
+                    rows[i].style.display = '';
+                }
+            }
+        };
+
+        this.showPage = function (pageNumber) {
+            if (!this.inited) {
+                // Not initialized
+                return;
+            }
+
+            let oldPageAnchor = document.getElementById('pg' + this.currentPage);
+            oldPageAnchor.className = 'pg-normal';
+
+            this.currentPage = pageNumber;
+            let newPageAnchor = document.getElementById('pg' + this.currentPage);
+            newPageAnchor.className = 'pg-selected';
+
+            let from = (pageNumber - 1) * itemsPerPage + 1;
+            let to = from + itemsPerPage - 1;
+            this.showRecords(from, to);
+
+            let pgNext = document.querySelector('.pg-next'),
+                pgPrev = document.querySelector('.pg-prev');
+
+            if (this.currentPage == this.pages) {
+                pgNext.style.display = 'none';
+            } else {
+                pgNext.style.display = '';
+            }
+
+            if (this.currentPage === 1) {
+                pgPrev.style.display = 'none';
+            } else {
+                pgPrev.style.display = '';
+            }
+        };
+
+        this.prev = function () {
+            if (this.currentPage > 1) {
+                this.showPage(this.currentPage - 1);
+            }
+        };
+
+        this.next = function () {
+            if (this.currentPage < this.pages) {
+                this.showPage(this.currentPage + 1);
+            }
+        };
+
+        this.init = function () {
+            let rows = document.getElementById(tableName).rows;
+            let records = (rows.length - 1);
+
+            this.pages = Math.ceil(records / itemsPerPage);
+            this.inited = true;
+        };
+
+        this.showPageNav = function (pagerName, positionId) {
+            if (!this.inited) {
+                return;
+            }
+            let element = document.getElementById(positionId),
+                pagerHtml = '<span onclick="' + pagerName + '.prev();" class="pg-normal pg-prev">&#171;</span>';
+            for (let page = 1; page <= this.pages; page++) {
+                pagerHtml += '<span id="pg' + page + '" class="pg-normal pg-next" onclick="' + pagerName + '.showPage(' + page + ');">' + page + '</span>';
+            }
+            pagerHtml += '<span onclick="' + pagerName + '.next();" class="pg-normal">&#187;</span>';
+            element.innerHTML = pagerHtml;
+        };
+    }
+    let pager = new Pager('pager', 8);
+    pager.init();
+    pager.showPageNav('pager', 'pageNavPosition');
+    pager.showPage(1);
 </script>
 
 

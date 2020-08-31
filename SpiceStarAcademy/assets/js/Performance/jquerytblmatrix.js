@@ -47,7 +47,36 @@ function candidateListingCol() {
             //return row.IsResistrationHistory ? '<button type="button" class="btn btn-success" title="Religated info." style="Padding:0px 8px !important;" onclick="openReliagtePopUp(' + row.RegistartionNo + ');" ><i class="fa fa-info" aria-hidden="true"></i></button>' : "";
         }
     },
-    { "mRender": function (data, type, row) { return '<input type="button" value="PERFORMANCE CARD" onclick="gotoperformance(\'' + row.RegistartionNo + '\')" class="performance-card" />' }, "bSortable": !1 },
+        { "mRender": function (data, type, row) { return '<input type="button" value="PERFORMANCE CARD" onclick="gotoperformance(\'' + row.RegistartionNo + '\')" class="performance-card" />' }, "bSortable": !1 },
+        {
+            "mRender": function (data, type, row) {
+                var str = '';
+                if (row.PerformanceCardList.length > 0) {
+                    $.each(row.PerformanceCardList, function (i, index) {
+                        if (index.ReviewId == 2) {
+                            str += '<span style="background-color:' + (index.AcceptMidTerm == true ? 'orange' : 'grey') + ';border-radius:25px;color: #fff; height:10px;width:20px;padding: 5px 5px 2px 5px;font-weight: bold;cursor:pointer">M</span>';
+                            if (row.PerformanceCardList.length == 1) {
+                                if (index.ReviewId != 1) {
+                                    str += ' <span style="background-color:' + (index.AcceptEndTerm == true ? 'orange' : 'grey') + ';border-radius:25px;color: #fff; height:10px;width:20px;padding: 5px 5px 2px 5px;font-weight: bold;">E</span>';
+                                }
+                            }
+                        }
+                        else if (index.ReviewId == 3) {
+                            if (row.PerformanceCardList.length == 1) {
+                                if (index.ReviewId != 1) {
+                                    str += '<span style="background-color:' + (index.AcceptMidTerm == true ? 'orange' : 'grey') + ';border-radius:25px;color: #fff; height:10px;width:20px;padding: 5px 5px 2px 5px;font-weight: bold;">M</span>';
+                                }
+                            }
+                            str += ' <span style="background-color:' + (index.AcceptEndTerm == true ? 'orange' : 'grey') + ';border-radius:25px;color: #fff; height:10px;width:20px;padding: 5px 5px 2px 5px;font-weight: bold;cursor:pointer">E</span>';
+                        }
+                    });
+                }
+                else {
+                    str += '<span style="background-color:grey;border-radius:25px;color: #fff; height:10px;width:20px;padding: 5px 5px 2px 5px;font-weight: bold;">M</span> <span style="background-color:grey;border-radius:25px;color: #fff; height:10px;width:20px;padding: 5px 5px 2px 5px;font-weight: bold;">E</span>';
+                }
+                return str;
+            }, "bSortable": !1
+        },
     { "mRender": function (data, type, row) { return '<input type="image" src="/Areas/PerformanceCard/Images/reports.png" onclick="GotoShowReport(' + row.RegistartionNo + ')" />' }, "bSortable": !1 },
     {
         "mRender": function (data, type, row) {
@@ -77,7 +106,8 @@ function candidateListingCol() {
             }
             return str;
         }, "bSortable": !1
-    }];
+        }
+    ];
 }
 
 function GotoShowReport(regno) { return window.location.href = "/PerformanceCard/Report?RegNo=" + regno }

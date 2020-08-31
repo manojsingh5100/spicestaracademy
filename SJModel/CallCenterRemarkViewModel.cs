@@ -19,5 +19,8 @@ namespace SJModel
         public List<RoleViewModel> MedicalStatusList { get; set; }
         public string StudentName { get; set; }
         public string Tag { get; set; }
+
+        public string UserName { get; set; }
+        public string EnterDateStr { get; set; }
     }
 }

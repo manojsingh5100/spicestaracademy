@@ -16,6 +16,21 @@ namespace SJService
             _context = new SJStarERPEntities();
         }
 
+        public List<LogActivityViewModel> GetUserActivities()
+        {
+            return _context.UserActivityLogs.Select(item => new LogActivityViewModel
+            {
+                Id = item.Id,
+                RegistrationNo = item.RegistrationNo,
+                Activity = item.Activity,
+                Fname = item.UserLogin.Fname,
+                Lname = item.UserLogin.LName,
+                EnteredDate = item.EnteredDate,
+                ModuleName = item.ModuleName,
+                ActivityMessage = item.ActivityMessage
+            }).OrderByDescending(o => o.Id).ToList();
+        }
+
         public LogActivityViewModel CreateLogActivity(LogActivityViewModel Model)
         {
             UserActivityLog log = new UserActivityLog
@@ -26,7 +41,8 @@ namespace SJService
                 ControllerName = Model.ControllerName,
                 EnteredBy = Model.EnteredBy,
                 EnteredDate = Model.EnteredDate,
-                ModuleName = Model.ModuleName
+                ModuleName = Model.ModuleName,
+                RegistrationNo = Model.RegistrationNo
             };
             _context.UserActivityLogs.Add(log);
             _context.SaveChanges();

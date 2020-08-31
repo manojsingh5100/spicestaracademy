@@ -8,10 +8,14 @@ var lineChart1 = function (obj) { var areaChartData = { labels: obj.LineChartLbl
 }; $('#ddlReportYears').change(function () { var yr = $(this).val(); if (yr != "") { var str = "<option selected value=''>Select Month</option><option value='1'>Janaury</option><option value='2'>February</option><option value='3'>March</option>"; str += "<option value='4'>April</option><option value='5'>May</option><option value='6'>June</option><option value='7'>July</option>"; str += "<option value='8'>August</option><option value='9'>September</option><option value='10'>October</option><option value='11'>November</option><option value='12'>December</option>"; $('#ddlReportMonth').empty().append(str) } else { $('#ddlReportMonth').empty().append("<option selected value=''>Select Month</option>") } }); $('.filter').change(function () {
     var yr = $('#ddlReportYears').val(); var courseId = $('#ddlReportCourse option:selected').text() == "Select Course" ? "" : $('#ddlReportCourse').val().join(); var batchId = $('#ddlReportBatch option:selected').text() == "Select Batch" ? "" : $('#ddlReportBatch').val().join(); var payStatus = $('#ddlReportPaymentStatus').val(); var state = $('#ddlState option:selected').text() == "Select State" ? "" : $('#ddlState option:selected').text(); var city = $('#ddlCity option:selected').text() == "Select City" ? "" : $('#ddlCity option:selected').text(); var month = $('#ddlReportMonth').val(); var pageName = location.pathname.split('/').slice(-1)[0]; if (pageName == "SSAReport") { Table.columns(6).search(yr); Table.columns(7).search(month); Table.columns(14).search(courseId); Table.columns(1).search(batchId); Table.columns(10).search(state); Table.draw() } else if (pageName == "RevenueReport") { showChart() } else {
         Table.columns(6).search(yr); Table.columns(7).search(month); Table.columns(8).search(courseId); Table.columns(11).search(batchId); Table.columns(14).search(payStatus); Table.columns(10).search(state); if (state != "")
-            Table.columns(12).search(city); Table.draw()
+            Table.columns(12).search(city);
+        Table.draw()
     }
 }); function printCanvas(id) { $("#" + id).printElement() }
-var showChart = function () { ExportFileName(); var filterModel = { CourseId: $('#ddlReportCourse option:selected').text() == "Select Course" ? "" : $('#ddlReportCourse').val().join(), BatchId: $('#ddlReportBatch option:selected').text() == "Select Batch" ? "" : $('#ddlReportBatch').val().join(), Year: $('#ddlReportYears').val(), Month: $('#ddlReportMonth').val(), State: $('#ddlState option:selected').text() == "Select State" ? "" : $('#ddlState option:selected').text(), City: $('#ddlCity option:selected').text() == "Select City" ? "" : $('#ddlCity option:selected').text() }; $.ajax({ url: "/Report/GetChartData", type: "POST", async: !1, data: { FilterModel: filterModel }, success: function (response) { if (response != null) { $('#divBarChart').empty().append("<div class='chart'><canvas id='barChart' style='height:230px'></canvas></div>"); $('#divLine').empty().append("<div class='chart' style='height: 300px;'><canvas id='lineChart' style='height:300px'></canvas></div>"); BarChart(response.BarChartData); DonutChart(response.DonutChartData); lineChart1(response.LineChartData); $('#hdnbarcharjsondata').val(exportBarchart(response.BarChartData)); $('#hdndonutcharjsondata').val(exportDonutchart(response.DonutChartData)); $('#hdnlinecharjsondata').val(exportLineChart(response.LineChartData)) } }, error: function (error) { } }) }; function ExportFileName() {
+var showChart = function () {
+    ExportFileName(); var filterModel = { CourseId: $('#ddlReportCourse option:selected').text() == "Select Course" ? "" : $('#ddlReportCourse').val().join(), BatchId: $('#ddlReportBatch option:selected').text() == "Select Batch" ? "" : $('#ddlReportBatch').val().join(), Year: $('#ddlReportYears').val(), Month: $('#ddlReportMonth').val(), State: $('#ddlState option:selected').text() == "Select State" ? "" : $('#ddlState option:selected').text(), City: $('#ddlCity option:selected').text() == "Select City" ? "" : $('#ddlCity option:selected').text(), InstallmentNo: $('#ddlInstallment option:selected').text() == "Select Installment" ? 0 : $('#ddlInstallment option:selected').val() };
+    $.ajax({ url: "/Report/GetChartData", type: "POST", async: !1, data: { FilterModel: filterModel }, success: function (response) { if (response != null) { $('#divBarChart').empty().append("<div class='chart'><canvas id='barChart' style='height:281px'></canvas></div>"); $('#divLine').empty().append("<div class='chart' style='height: 300px;'><canvas id='lineChart' style='height:300px'></canvas></div>"); BarChart(response.BarChartData); BarRegChart(response.BarChartRegistrationData); DonutChart(response.DonutChartData); lineChart1(response.LineChartData); $('#hdnbarcharregjsondata').val(exportBarchart(response.BarChartRegistrationData)); $('#hdnbarcharjsondata').val(exportBarchart(response.BarChartData)); $('#hdndonutcharjsondata').val(exportDonutchart(response.DonutChartData)); $('#hdnlinecharjsondata').val(exportLineChart(response.LineChartData)) } }, error: function (error) { } })
+}; function ExportFileName() {
     var result = {}; var label = ''; var yr = $('#ddlReportYears').find(':selected').text() == "Select Year" ? "" : $('#ddlReportYears').find(':selected').text(); var mon = $('#ddlReportMonth').find(':selected').text() == "Select Month" ? "" : $('#ddlReportMonth').find(':selected').text(); var batch = []; var Course = []; var batches = $('#ddlReportBatch').select2('data'); if (batches.length > 0) { $.each(batches, function (i, item) { batch.push(item.text) }) }
     var courses = $('#ddlReportCourse').select2('data'); if (courses.length > 0) { $.each(courses, function (i, item) { Course.push(item.text) }) }
     result.time = 'Years'; if (yr != "") { label += yr; result.time = "Months"; if (mon != "") { label += "_" + mon; result.time = "Days" } }
@@ -60,4 +64,43 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
     }
     if (CSV == '') { alert("Invalid data"); return }
     var fileName = ReportTitle; var uri = 'data:text/csv;charset=utf-8,' + escape(CSV); var link = document.createElement("a"); link.href = uri; link.style = "visibility:hidden"; link.download = fileName + ".csv"; document.body.appendChild(link); link.click(); document.body.removeChild(link)
+}
+
+var BarRegChart = function (obj123) {
+    $('#barChartReg').empty().append("<div class='chart'><canvas id='barChart1' style='height:280px'></canvas></div>");
+    var areaChartData = {
+        labels: obj123.BarChartLbl,
+        datasets: [
+            {
+                label: 'Digital Goods',
+                fillColor: 'rgba(60,141,188,0.9)',
+                strokeColor: 'rgba(60,141,188,0.8)',
+                pointColor: '#3b8bba',
+                pointStrokeColor: 'rgba(60,141,188,1)',
+                pointHighlightFill: '#fff',
+                pointHighlightStroke: 'rgba(60,141,188,1)',
+                data: obj123.DataY 
+            }
+        ]
+    }
+    var barChartCanvas = $('#barChart1').get(0).getContext('2d')
+    var barChart = new Chart(barChartCanvas)
+    var barChartData = areaChartData
+    var barChartOptions = {
+        scaleBeginAtZero: true,
+        scaleShowGridLines: true,
+        scaleGridLineColor: 'rgba(0,0,0,.05)',
+        scaleGridLineWidth: 1,
+        scaleShowHorizontalLines: true,
+        scaleShowVerticalLines: true,
+        barShowStroke: true,
+        barStrokeWidth: 1,
+        barValueSpacing: 5,
+        barDatasetSpacing: 1,
+        legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].fillColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
+        responsive: true,
+        maintainAspectRatio: true
+    }
+    barChartOptions.datasetFill = false
+    barChart.Bar(barChartData, barChartOptions)
 }

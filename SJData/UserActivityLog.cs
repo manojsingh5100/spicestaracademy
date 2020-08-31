@@ -22,6 +22,7 @@ namespace SJData
         public string ControllerName { get; set; }
         public int EnteredBy { get; set; }
         public System.DateTime EnteredDate { get; set; }
+        public Nullable<int> RegistrationNo { get; set; }
     
         public virtual UserLogin UserLogin { get; set; }
     }

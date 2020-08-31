@@ -22,19 +22,18 @@
                     </a>
                 </li>
 
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-address-book"></i>
-                        <span>Registration</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        @*<li><a href="/Registration/Create" onclick="Loading();"><i class="fa fa-circle-o"></i>New Registration</a></li>*@
-                        <li><a href="/Registration" onclick="Loading();"><i class="fa fa-circle-o"></i>View Registration</a></li>
-                    </ul>
-                </li>
+                @*<li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-address-book"></i>
+                            <span>Registration</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="/Registration" onclick="Loading();"><i class="fa fa-circle-o"></i>View Registration</a></li>
+                        </ul>
+                    </li>*@
 
                 <li class="treeview">
                     <a href="#">
@@ -86,38 +85,50 @@
                         @*<li><a href="/FeeManagement/AddFeeType" onclick="Loading();"><i class="fa fa-circle-o"></i>Add FeeType</a></li>*@
                         <li><a href="/FeeManagement/FeeCandidatesList" onclick="Loading();"><i class="fa fa-circle-o"></i>Fee Candidate List</a></li>
                         @*<li><a href="/FeeManagement/AddFeeCollection" onclick="Loading();"><i class="fa fa-circle-o"></i>Add Fee Collection</a></li>*@
+                        @if (Session["RoleName"] != null && Convert.ToString(Session["RoleName"]) == "Admin")
+                        {
+                            <li>
+                                <a href="/FeeManagement/Refund" onclick="Loading();">
+                                    <i class="fa fa-repeat"></i> <span>Fee Refund</span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </li>
-
-                <li style="display:none">
-                    <a href="/FeeManagement/FeeRefund" onclick="Loading();">
-                        <i class="fa fa-repeat"></i> <span>Fee Refund</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/Registration/WithdrawalCandidates" onclick="Loading();">
-                        <i class="fa fa-recycle"></i> <span>Withdrawal Candidates</span>
-                    </a>
-                </li>
-
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-book"></i>
-                        <span>Report</span>
+                        <span>Reports</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="/Report/Index" onclick="Loading();"><i class="fa fa-circle-o"></i>Report</a></li>
-                        <li><a href="/Report/SSAReport" onclick="Loading();"><i class="fa fa-circle-o"></i>SSA Report</a></li>
+                        @*<li><a href="/Report/GeneralReport" onclick="Loading();"><i class="fa fa-circle-o"></i>General Report</a></li>*@
+                        <li><a href="/Report/Index" onclick="Loading();"><i class="fa fa-circle-o"></i>Fee Collection Report</a></li>
+                        <li><a href="/Report/SSAReport" onclick="Loading();"><i class="fa fa-circle-o"></i>Aarambh Report</a></li>
                         <li><a href="/Report/RevenueReport" onclick="Loading();"><i class="fa fa-circle-o"></i>Revenue Report</a></li>
+                        <li>
+                            <a href="/Registration/WithdrawalCandidates" onclick="Loading();">
+                                <i class="fa fa-recycle"></i> <span>Withdrawal Candidates</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Addmission/GetTerminationResignationInfo" onclick="Loading();">
+                                <i class="fa fa-dashboard"></i> <span>Termination/Resignation</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
                 if (Session["RoleName"] != null && Session["RoleName"].ToString() == "Admin")
                 {
+                    <li>
+                        <a href="/UsetLogActivity" onclick="Loading();">
+                            <i class="fa fa-user-secret"></i> <span>User Activity</span>
+                        </a>
+                    </li>
+
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-shield"></i>
@@ -147,8 +158,8 @@
                     </li>
 
                     @*<li>
-                        <a href="/Admin" onclick="Loading();"><i class="fa fa-list"></i> <span>Control Panel</span></a>
-                    </li>*@
+                            <a href="/Admin" onclick="Loading();"><i class="fa fa-list"></i> <span>Control Panel</span></a>
+                        </li>*@
                 }
             }
             else

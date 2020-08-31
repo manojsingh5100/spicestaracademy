@@ -72,6 +72,7 @@ namespace SJData
         public virtual DbSet<ptaEducationDetail> ptaEducationDetails { get; set; }
         public virtual DbSet<ptaEducationSubjectMark> ptaEducationSubjectMarks { get; set; }
         public virtual DbSet<ptaEduEvaluationTypeMaster> ptaEduEvaluationTypeMasters { get; set; }
+        public virtual DbSet<ptaEmailNotificationSentContent> ptaEmailNotificationSentContents { get; set; }
         public virtual DbSet<ptaFeeCollection> ptaFeeCollections { get; set; }
         public virtual DbSet<ptaFeeDetail> ptaFeeDetails { get; set; }
         public virtual DbSet<ptaFeePaymentDetail> ptaFeePaymentDetails { get; set; }
@@ -113,6 +114,7 @@ namespace SJData
         public virtual DbSet<SessionMaster> SessionMasters { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TatooOrScar> TatooOrScars { get; set; }
+        public virtual DbSet<tblGetTermAcceptancyByCandidate> tblGetTermAcceptancyByCandidates { get; set; }
         public virtual DbSet<tblParameterList> tblParameterLists { get; set; }
         public virtual DbSet<tblParameterType> tblParameterTypes { get; set; }
         public virtual DbSet<tblPerformanceEntryMaster> tblPerformanceEntryMasters { get; set; }
@@ -122,9 +124,10 @@ namespace SJData
         public virtual DbSet<tblPerformancePercentageMaster> tblPerformancePercentageMasters { get; set; }
         public virtual DbSet<tblReviewMaster> tblReviewMasters { get; set; }
         public virtual DbSet<tblWeeklyReviewMaster> tblWeeklyReviewMasters { get; set; }
+        public virtual DbSet<UserActivityLog> UserActivityLogs { get; set; }
         public virtual DbSet<UserLogin> UserLogins { get; set; }
         public virtual DbSet<Query> Queries { get; set; }
-        public virtual DbSet<UserActivityLog> UserActivityLogs { get; set; }
+        public virtual DbSet<RefundInformation> RefundInformations { get; set; }
     
         public virtual ObjectResult<Sp_GetPerformancePWithParamRepots_Result> Sp_GetPerformancePWithParamRepots(string batchId, Nullable<long> type)
         {

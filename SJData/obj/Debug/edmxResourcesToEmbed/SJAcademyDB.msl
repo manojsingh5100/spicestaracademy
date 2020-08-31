@@ -1,16 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="SJStarERPModelStoreContainer" CdmEntityContainer="SJStarERPEntities">
-    <FunctionImportMapping FunctionImportName="Sp_GetPerformancePWithParamRepots" FunctionName="SJStarERPModel.Store.Sp_GetPerformancePWithParamRepots">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="SJStarERPModel.Sp_GetPerformancePWithParamRepots_Result">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="BatchName" ColumnName="BatchName" />
-          <ScalarProperty Name="ParameterName" ColumnName="ParameterName" />
-          <ScalarProperty Name="Result" ColumnName="Result" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <EntitySetMapping Name="AddmissionDetails">
       <EntityTypeMapping TypeName="SJStarERPModel.AddmissionDetail">
         <MappingFragment StoreEntitySet="AddmissionDetail">
@@ -425,6 +415,8 @@
     <EntitySetMapping Name="MedicalDetails">
       <EntityTypeMapping TypeName="SJStarERPModel.MedicalDetail">
         <MappingFragment StoreEntitySet="MedicalDetail">
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateOfWithdrawn" ColumnName="DateOfWithdrawn" />
           <ScalarProperty Name="DateOfJoining" ColumnName="DateOfJoining" />
           <ScalarProperty Name="MedicalStatus" ColumnName="MedicalStatus" />
           <ScalarProperty Name="FitnessDate" ColumnName="FitnessDate" />
@@ -625,6 +617,15 @@
         <MappingFragment StoreEntitySet="ptaEduEvaluationTypeMaster">
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ptaEmailNotificationSentContents">
+      <EntityTypeMapping TypeName="SJStarERPModel.ptaEmailNotificationSentContent">
+        <MappingFragment StoreEntitySet="ptaEmailNotificationSentContents">
+          <ScalarProperty Name="EmailNotificationcontent" ColumnName="EmailNotificationcontent" />
+          <ScalarProperty Name="ptaScreeningEmailNotificationID" ColumnName="ptaScreeningEmailNotificationID" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -1080,6 +1081,7 @@
     <EntitySetMapping Name="ScreeningParameterOptions">
       <EntityTypeMapping TypeName="SJStarERPModel.ScreeningParameterOption">
         <MappingFragment StoreEntitySet="ScreeningParameterOption">
+          <ScalarProperty Name="InterViewerName" ColumnName="InterViewerName" />
           <ScalarProperty Name="ScreeningTestId" ColumnName="ScreeningTestId" />
           <ScalarProperty Name="Remark" ColumnName="Remark" />
           <ScalarProperty Name="Poor" ColumnName="Poor" />
@@ -1093,6 +1095,7 @@
     <EntitySetMapping Name="ScreeningTests">
       <EntityTypeMapping TypeName="SJStarERPModel.ScreeningTest">
         <MappingFragment StoreEntitySet="ScreeningTest">
+          <ScalarProperty Name="RegistrationMasterId" ColumnName="RegistrationMasterId" />
           <ScalarProperty Name="Remark" ColumnName="Remark" />
           <ScalarProperty Name="ScreeningDate" ColumnName="ScreeningDate" />
           <ScalarProperty Name="DocumentMasterId" ColumnName="DocumentMasterId" />
@@ -1162,6 +1165,16 @@
         <MappingFragment StoreEntitySet="TatooOrScar">
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblGetTermAcceptancyByCandidates">
+      <EntityTypeMapping TypeName="SJStarERPModel.tblGetTermAcceptancyByCandidate">
+        <MappingFragment StoreEntitySet="tblGetTermAcceptancyByCandidate">
+          <ScalarProperty Name="DateOfAction" ColumnName="DateOfAction" />
+          <ScalarProperty Name="Accept" ColumnName="Accept" />
+          <ScalarProperty Name="tblPerformanceEntryMasterId" ColumnName="tblPerformanceEntryMasterId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -1276,6 +1289,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="UserActivityLogs">
+      <EntityTypeMapping TypeName="SJStarERPModel.UserActivityLog">
+        <MappingFragment StoreEntitySet="UserActivityLogs">
+          <ScalarProperty Name="RegistrationNo" ColumnName="RegistrationNo" />
+          <ScalarProperty Name="EnteredDate" ColumnName="EnteredDate" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+          <ScalarProperty Name="ActioName" ColumnName="ActioName" />
+          <ScalarProperty Name="ActivityMessage" ColumnName="ActivityMessage" />
+          <ScalarProperty Name="Activity" ColumnName="Activity" />
+          <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="UserLogins">
       <EntityTypeMapping TypeName="SJStarERPModel.UserLogin">
         <MappingFragment StoreEntitySet="UserLogin">
@@ -1345,16 +1373,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="UserActivityLogs">
-      <EntityTypeMapping TypeName="SJStarERPModel.UserActivityLog">
-        <MappingFragment StoreEntitySet="UserActivityLogs">
+    <EntitySetMapping Name="RefundInformations">
+      <EntityTypeMapping TypeName="SJStarERPModel.RefundInformation">
+        <MappingFragment StoreEntitySet="RefundInformation">
+          <ScalarProperty Name="AddmissionMasterId" ColumnName="AddmissionMasterId" />
+          <ScalarProperty Name="CurrDate" ColumnName="CurrDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="StatusLine" ColumnName="StatusLine" />
           <ScalarProperty Name="EnteredDate" ColumnName="EnteredDate" />
           <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
-          <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
-          <ScalarProperty Name="ActioName" ColumnName="ActioName" />
-          <ScalarProperty Name="ActivityMessage" ColumnName="ActivityMessage" />
-          <ScalarProperty Name="Activity" ColumnName="Activity" />
-          <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+          <ScalarProperty Name="CaseClosed" ColumnName="CaseClosed" />
+          <ScalarProperty Name="RefundAmount" ColumnName="RefundAmount" />
+          <ScalarProperty Name="ExceededFeeAmountOnCourseChangeId" ColumnName="ExceededFeeAmountOnCourseChangeId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -87,8 +87,15 @@ namespace SJModel.PTAModel
         public bool LastExamFailedStatus { get; set; }
         public int ScreeningTestResultCount { get; set; }
         public int MedicalImagesCount { get; set; }
+
+        //***********************Priyanka****************
+        public int ScreeningAmount { get; set; }
         public int ScreeningAmountTerm { get; set; }
-        public List<PTAScreeningExamFeeInfo> ptaScreeningExamFeeInfo { get; set; }
+        public string EmailNotificationContent { get; set; }
+        public List<ScreeningAmountTerm> ptaScreeningAmountTerms { get; set; }
+        public PTAScreeningExamFeeInfo ptaScreeningInfo { get; set; }
+        public int SentNotificationCount { get; set; }
+
     }
 
     public class PTAScreeningExamFeeInfo
@@ -105,4 +112,13 @@ namespace SJModel.PTAModel
         public DateTime UpdatedDate { get; set; }
         public int PTAPilotRegistrationMaterId { get; set; }
     }
+
+    public class PTAEmailNotificationContent
+    {
+        public int ID { get; set; }
+        public int ptaScreeningEmailNotificationId { get; set; }
+        public string EmailNotificationContent { get; set; }
+        public string[] RegIds { get; set; }
+    }
+
 }

@@ -11,6 +11,7 @@ namespace SJModel
         public ScreeningTestViewModel ScreeningTest { get; set; }
         public List<RoleViewModel> GetDocumentList { get; set; }
         public List<RoleViewModel> GetTatooList { get; set; }
+        public List<RoleViewModel> GetLeadSourceList { get; set; }
         public List<ScreeningParameterOptionViewModel> ParameterOption { get; set; }
         public List<ScreeningInterviewerResultViewModel> InterviewOption { get; set; }
         public List<SemesterMasterViewModel> GetBatchList { get; set; }
@@ -29,6 +30,7 @@ namespace SJModel
         public string Email { get; set; }
         public string ApplicationNo { get; set; }
         public bool IsStandBy { get; set; }
+        public bool IsWithdrawal { get; set; }
         public bool? IsScreeningClr { get; set; }
         public int CreatedBy { get; set; }
         public string SessionName {get;set;}
@@ -38,5 +40,6 @@ namespace SJModel
         public int CourseId { get; set; }
         public int SessionYr { get; set; }
         public bool IsAnyCourseFeePay { get; set; }
+        public string LeadSource { get; set; }
     }
 }

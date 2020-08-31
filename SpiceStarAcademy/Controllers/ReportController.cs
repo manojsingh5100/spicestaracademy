@@ -14,10 +14,12 @@ namespace SpiceStarAcademy.Controllers
     {
         AddmissionService addmissionService = null;
         ReportService reportService = null;
+        RegistrationService registrationService = null;
         public ReportController()
         {
             addmissionService = new AddmissionService();
             reportService = new ReportService();
+
         }
         // GET: Report
         public ActionResult Index()
@@ -32,8 +34,10 @@ namespace SpiceStarAcademy.Controllers
                                  Id = (int)e,
                                  Name = e.ToString()
                              }).ToList(),
-                YearList = reportService.GetYearList()
+                YearList = reportService.GetYearList(),
             };
+            model.GetLeadSourceList = addmissionService.GetLeadSourceList();
+            model.PieClickPartName = "General";
             return View(model);
         }
 
@@ -131,6 +135,29 @@ namespace SpiceStarAcademy.Controllers
         public JsonResult GetChartData(ReportFilterViewModel FilterModel)
         {
             return Json(reportService.GetFilterizeChartData(FilterModel), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GeneralReport()
+        {
+            return View(addmissionService.GetBatchList());
+        }
+
+        [HttpPost]
+        public ActionResult GetGeneralReportList(DataTableFilterModel filter, string Tag = null)
+        {
+            try
+            {
+                int currDate = Convert.ToInt32(Session["CurrentYear"]);
+                Session["filter"] = Newtonsoft.Json.JsonConvert.SerializeObject(filter);
+                DataTableFilterModel dataFilter = reportService.GetScreenningReportList(filter, currDate);
+                return Json(new { draw = filter.draw, recordsFiltered = dataFilter.recordsFiltered, recordsTotal = dataFilter.recordsTotal, data = dataFilter.data },
+                        JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json(new { }, JsonRequestBehavior.AllowGet);
         }
     }
 }

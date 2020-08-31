@@ -57,7 +57,9 @@ namespace SJService
                     ReviewId = i.ReviewId,
                     WeeklyTermId = i.tblWeeklyReviewMaster,
                     ReviewName = i.tblReviewMaster.Name,
-                    WeeklyTermName = i.tblWeeklyReviewMaster1.Name
+                    WeeklyTermName = i.tblWeeklyReviewMaster1.Name,
+                    AcceptMidTerm = i.tblGetTermAcceptancyByCandidates.Where(t=> i.ReviewId == 2 && t.Accept.HasValue && t.Accept.Value).Any(),
+                    AcceptEndTerm = i.tblGetTermAcceptancyByCandidates.Where(t => i.ReviewId == 3 && t.Accept.HasValue && t.Accept.Value).Any()
                 }).ToList()
             }).AsEnumerable();
             var totalCount = info.Count();
@@ -155,6 +157,7 @@ namespace SJService
                         _context.tblPerformanceParameterResultMasters.Add(parameter);
                     }
                     _context.SaveChanges();
+                    Model.tblPerformanceEntryMasterId = entryMaster.Id;
                 }
                 error.IsSuccess = true;
                 error.Massage = "Candidate performance card detail saved successfully!";
@@ -168,7 +171,7 @@ namespace SJService
             }
         }
 
-        public ResultViewModel DisablePerformanceOption(int RegNo,int BatchId)
+        public ResultViewModel DisablePerformanceOption(int RegNo, int BatchId)
         {
             ResultViewModel res = new ResultViewModel();
             var Result = _context.tblPerformanceEntryMasters.Where(t => t.RegistrationNo == RegNo && t.BatchId == BatchId).ToList();
@@ -396,6 +399,25 @@ namespace SJService
                 }
             }
             return Responce.OrderByDescending(o => o.Id).ToList();
+        }
+
+        public ChangePasswordViewModel ChangePasswordService(ChangePasswordViewModel Model)
+        {
+            ChangePasswordViewModel obj = new ChangePasswordViewModel();
+            var IsOldPasswordExist = _context.UserLogins.Where(u => u.Role.IsPerformanceDept.HasValue && u.Role.IsPerformanceDept.Value && u.Email == Model.Email && u.Password == Model.OldPassword).FirstOrDefault();
+            if(IsOldPasswordExist != null)
+            {
+                IsOldPasswordExist.Password = Model.NewPassword;
+                _context.SaveChanges();
+                obj.IsOldPasswordExist = "Yes";
+                obj.Message = "Password change successfully.";
+            }
+            else
+            {
+                obj.IsOldPasswordExist = "No";
+                obj.Message = "Your Old Password does not match in our record!";
+            }
+            return obj;
         }
     }
 }

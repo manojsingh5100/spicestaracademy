@@ -28,6 +28,7 @@ namespace SJData
             this.FIN_FeeRefundMaster = new HashSet<FIN_FeeRefundMaster>();
             this.MedicalDetails = new HashSet<MedicalDetail>();
             this.tblPerformanceEntryMasters = new HashSet<tblPerformanceEntryMaster>();
+            this.RefundInformations = new HashSet<RefundInformation>();
         }
     
         public int Id { get; set; }
@@ -79,5 +80,7 @@ namespace SJData
         public virtual ICollection<MedicalDetail> MedicalDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPerformanceEntryMaster> tblPerformanceEntryMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RefundInformation> RefundInformations { get; set; }
     }
 }

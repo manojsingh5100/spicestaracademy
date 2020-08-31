@@ -208,8 +208,12 @@ namespace SJService
                         State = s.AddmissionMaster.AddressDetails.FirstOrDefault().PerState,
                         city = s.AddmissionMaster.AddressDetails.FirstOrDefault().PerCity
                     }).FirstOrDefault(),
+                    InstallMentNo = item.InstallmentMasterId,
                     CourseId = item.FeePaymentDetail.FeeDetail.FeeTypeDetail.CourseId
                 }).AsQueryable();
+
+            if (filterModel.InstallmentNo > 0)
+                data = data.Where(w => w.InstallMentNo == filterModel.InstallmentNo);
 
             if (!string.IsNullOrWhiteSpace(filterModel.CourseId))
             {
@@ -273,7 +277,7 @@ namespace SJService
                     else
                         BarY[i - 1] = 0;
                 }
-                model.BarChartLbl = new string[] { "January", "February", "March", "April", "May", "June", "July", "August", "Setember", "October", "November", "December" };
+                model.BarChartLbl = new string[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
                 model.DataY = BarY;
             }
             else
@@ -283,10 +287,10 @@ namespace SJService
                     Year = name,
                     Amount = items.Sum(i => i.Amount)
                 }).OrderBy(o => o.Year).ToList();
-                decimal[] BarY = new decimal[6];
-                string[] chLbl = new string[6];
+                decimal[] BarY = new decimal[3];
+                string[] chLbl = new string[3];
                 int j = 1;
-                for (int i = (DateTime.Now.Year - 5); i <= DateTime.Now.Year; i++)
+                for (int i = (DateTime.Now.Year - 2); i <= DateTime.Now.Year; i++)
                 {
                     chLbl[j - 1] = i.ToString();
                     var a = feeInfo.Where(n => n.Year == i).FirstOrDefault();
@@ -347,7 +351,7 @@ namespace SJService
                 admissionData = admissionData.Where(d => d.AddmissionDate.Value.Month == filterModel.Month);
             }
             RejectedCandidate = registerData.Where(r => (r.IsScreenningClear.HasValue && !r.IsScreenningClear.Value) || (r.IsMedicalClear.HasValue && !r.IsMedicalClear.Value)).Count();
-            PendingCandidate = registerData.Where(r =>r.IsActive && (!r.IsScreenningClear.HasValue || !r.IsMedicalClear.HasValue)).Count();
+            PendingCandidate = registerData.Where(r => r.IsActive && (!r.IsScreenningClear.HasValue || !r.IsMedicalClear.HasValue)).Count();
             AdmissionCandidate = admissionData.Count();
             result[0] = PendingCandidate;
             result[1] = RejectedCandidate;
@@ -361,71 +365,110 @@ namespace SJService
             RevenueReport.BarChartData = GetBarChartData(filterModel);
             RevenueReport.DonutChartData = GetDonutChartData(filterModel);
             RevenueReport.LineChartData = GetLineChartData(filterModel);
+            RevenueReport.BarChartRegistrationData = GetBarChartRegistrationData(filterModel);
+
             return RevenueReport;
         }
 
-        public DataTableFilterModel GetSSAReportList(DataTableFilterModel filter , int SessionYr)
+        public DataTableFilterModel GetSSAReportList(DataTableFilterModel filter, int SessionYr)
         {
-            var info = ((_context.AddmissionMasters.Join(_context.CourseMasters,
-                am => am.CourseId, cm => cm.Id, (am, cm) => new { am, cm })).Join(
-                (_context.AddmissionDetails.Join(_context.BatchMasters, ad => ad.BatchId,
-                  bm => bm.Id, (ad, bm) => new { ad, bm }).Where(a => a.bm.IsActive).Join(
-                  _context.SessionMasters, comb => comb.ad.SessionId, sm => sm.Id,
-                  (comb, sm) => new { comb, sm }).Where(i => i.sm.IsActive).Join
-                (_context.AddressDetails.DefaultIfEmpty(), combined => combined.comb.ad.AddmissionId,
-               add => add.AddmissionId, (combined, add) => new
-               {
-                   AdmissionId = combined.comb.ad.AddmissionId,
-                   AdmissionActive = combined.comb.ad.AddmissionMaster.IsActive,
-                   BatchId = combined.comb.bm.Id,
-                   SessionId = combined.sm.Id,
-                   SessionYr = combined.sm.SessionYr,
-                   BatchName = combined.comb.bm.Name,
-                   SessionName = combined.sm.SessionName,
-                   SessionActive = combined.sm.IsActive,
-                   Address1 = add.CopAddress,
-                   Address2 = add.CopCity,
-                   Address3 = add.CopState,
-                   Pincode = add.CopZip,
-                   ValidPassport = combined.comb.ad.AddmissionMaster.IsValidPassport,
-                   MedicalCenter = combined.comb.ad.AddmissionMaster.MedicalDetails.FirstOrDefault().MedicalCenter,
-                   MedicalStatus = combined.comb.ad.AddmissionMaster.MedicalDetails.FirstOrDefault().MedicalStatus,
-                   MedicalDate = combined.comb.ad.AddmissionMaster.MedicalDetails.FirstOrDefault().MedicalDate,
-                   FitnessDate = combined.comb.ad.AddmissionMaster.MedicalDetails.FirstOrDefault().FitnessDate,
-                   JoiningDate = combined.comb.ad.AddmissionMaster.MedicalDetails.FirstOrDefault().DateOfJoining
-               }).Where(i => i.AdmissionActive && i.SessionActive && i.BatchId != 19)), info1 => info1.am.Id, info2 => info2.AdmissionId,
-                (info1, info2) => new { info1, info2 })).Join(_context.ScreeningTests,
-                res1 => res1.info1.am.RegistrationNo, res2 => res2.RegistrationId,
-                (res1, res2) => new { res1 = res1, res2 = res2 }).GroupBy(g => g.res1.info1.am.Id).Select(item => new ClientReportViewModel
+            RegistrationService rs = new RegistrationService();
+            var info = _context.AddmissionMasters.Where(w => w.IsActive && w.AddmissionDetails.FirstOrDefault().BatchId != 19).
+                Select(item => new ClientReportViewModel
                 {
-                    Id = item.FirstOrDefault().res1.info1.am.Id,
-                    BatchId = item.FirstOrDefault().res1.info2.BatchId,
-                    BatchName = item.FirstOrDefault().res1.info2.BatchName,
-                    InterViewDate = item.FirstOrDefault().res2.ScreeningDate,
-                    Gender = item.FirstOrDefault().res1.info1.am.Gender,
-                    Fname = item.FirstOrDefault().res1.info1.am.Fname,
-                    Lname = item.FirstOrDefault().res1.info1.am.Lname,
-                    DOB = item.FirstOrDefault().res1.info1.am.DOB,
-                    AdmissionDate = item.FirstOrDefault().res1.info1.am.AddmissionDate,
-                    Addresee1 = item.FirstOrDefault().res1.info2.Address1,
-                    Addresee2 = item.FirstOrDefault().res1.info2.Address2,
-                    Addresee3 = item.FirstOrDefault().res1.info2.Address3,
-                    PinCode = item.FirstOrDefault().res1.info2.Pincode,
-                    Contact = item.FirstOrDefault().res1.info1.am.MobileNo,
-                    Email = item.FirstOrDefault().res1.info1.am.Email,
+                    Id = item.Id,
+                    BatchId = item.AddmissionDetails.FirstOrDefault().BatchId.Value,
+                    BatchName = item.AddmissionDetails.FirstOrDefault().BatchMaster.Name,
+                    InterViewDate = item.RegistrationMaster.ScreeningTests.FirstOrDefault().ScreeningDate,
+                    Gender = item.Gender,
+                    Fname = item.Fname,
+                    Lname = item.Lname,
+                    DOB = item.DOB,
+                    AdmissionDate = item.AddmissionDate,
+                    Addresee1 = item.AddressDetails.FirstOrDefault().CopAddress,
+                    Addresee2 = item.AddressDetails.FirstOrDefault().CopCity,
+                    Addresee3 = item.AddressDetails.FirstOrDefault().CopState,
+                    PinCode = item.AddressDetails.FirstOrDefault().CopZip,
+                    Contact = item.MobileNo,
+                    Email = item.Email,
                     Designation = "TCC",
                     DepartMent = "IFSD",
                     Location = "GGN",
-                    MedicalCenter = item.FirstOrDefault().res1.info2.MedicalCenter,
-                    MedicalStatus = item.FirstOrDefault().res1.info2.MedicalStatus,
-                    MDate = item.FirstOrDefault().res1.info2.MedicalDate,
-                    FDate = item.FirstOrDefault().res1.info2.FitnessDate,
-                    JDate = item.FirstOrDefault().res1.info2.JoiningDate,
-                    CourseName = item.FirstOrDefault().res1.info1.am.CourseMaster.CourseName,
-                    CourseId = item.FirstOrDefault().res1.info1.am.CourseId,
-                    IsValidPassport = item.FirstOrDefault().res1.info2.ValidPassport,
-                    SessionYr = item.FirstOrDefault().res1.info2.SessionYr
+                    MedicalCenter = item.MedicalDetails.FirstOrDefault().MedicalCenter,
+                    MedicalStatus = item.MedicalDetails.FirstOrDefault().MedicalStatus,
+                    MDate = item.MedicalDetails.FirstOrDefault().MedicalDate,
+                    FDate = item.MedicalDetails.FirstOrDefault().FitnessDate,
+                    JDate = item.MedicalDetails.FirstOrDefault().DateOfJoining,
+                    CourseName = item.CourseMaster.CourseName,
+                    CourseId = item.CourseId,
+                    IsValidPassport = item.IsValidPassport,
+                    SessionYr = item.AddmissionDetails.FirstOrDefault().SessionMaster.SessionYr
                 }).AsEnumerable();
+
+
+
+
+
+            //var info = ((_context.AddmissionMasters.Join(_context.CourseMasters,
+            //    am => am.CourseId, cm => cm.Id, (am, cm) => new { am, cm })).Join(
+            //    (_context.AddmissionDetails.Join(_context.BatchMasters, ad => ad.BatchId,
+            //      bm => bm.Id, (ad, bm) => new { ad, bm }).Where(a => a.bm.IsActive).Join(
+            //      _context.SessionMasters, comb => comb.ad.SessionId, sm => sm.Id,
+            //      (comb, sm) => new { comb, sm }).Where(i => i.sm.IsActive).Join
+            //    (_context.AddressDetails.DefaultIfEmpty(), combined => combined.comb.ad.AddmissionId,
+            //   add => add.AddmissionId, (combined, add) => new
+            //   {
+            //       AdmissionId = combined.comb.ad.AddmissionId,
+            //       AdmissionActive = combined.comb.ad.AddmissionMaster.IsActive,
+            //       BatchId = combined.comb.bm.Id,
+            //       SessionId = combined.sm.Id,
+            //       SessionYr = combined.sm.SessionYr,
+            //       BatchName = combined.comb.bm.Name,
+            //       SessionName = combined.sm.SessionName,
+            //       SessionActive = combined.sm.IsActive,
+            //       Address1 = add.CopAddress,
+            //       Address2 = add.CopCity,
+            //       Address3 = add.CopState,
+            //       Pincode = add.CopZip,
+            //       ValidPassport = combined.comb.ad.AddmissionMaster.IsValidPassport,
+            //       MedicalCenter = combined.comb.ad.AddmissionMaster.MedicalDetails.FirstOrDefault().MedicalCenter,
+            //       MedicalStatus = combined.comb.ad.AddmissionMaster.MedicalDetails.FirstOrDefault().MedicalStatus,
+            //       MedicalDate = combined.comb.ad.AddmissionMaster.MedicalDetails.FirstOrDefault().MedicalDate,
+            //       FitnessDate = combined.comb.ad.AddmissionMaster.MedicalDetails.FirstOrDefault().FitnessDate,
+            //       JoiningDate = combined.comb.ad.AddmissionMaster.MedicalDetails.FirstOrDefault().DateOfJoining
+            //   }).Where(i => i.AdmissionActive && i.SessionActive && i.BatchId != 19)), info1 => info1.am.Id, info2 => info2.AdmissionId,
+            //    (info1, info2) => new { info1, info2 })).Join(_context.ScreeningTests,
+            //    res1 => res1.info1.am.RegistrationNo, res2 => res2.RegistrationId,
+            //    (res1, res2) => new { res1 = res1, res2 = res2 }).GroupBy(g => g.res1.info1.am.Id).Select(item => new ClientReportViewModel
+            //    {
+            //        Id = item.FirstOrDefault().res1.info1.am.Id,
+            //        BatchId = item.FirstOrDefault().res1.info2.BatchId,
+            //        BatchName = item.FirstOrDefault().res1.info2.BatchName,
+            //        InterViewDate = item.FirstOrDefault().res2.ScreeningDate,
+            //        Gender = item.FirstOrDefault().res1.info1.am.Gender,
+            //        Fname = item.FirstOrDefault().res1.info1.am.Fname,
+            //        Lname = item.FirstOrDefault().res1.info1.am.Lname,
+            //        DOB = item.FirstOrDefault().res1.info1.am.DOB,
+            //        AdmissionDate = item.FirstOrDefault().res1.info1.am.AddmissionDate,
+            //        Addresee1 = item.FirstOrDefault().res1.info2.Address1,
+            //        Addresee2 = item.FirstOrDefault().res1.info2.Address2,
+            //        Addresee3 = item.FirstOrDefault().res1.info2.Address3,
+            //        PinCode = item.FirstOrDefault().res1.info2.Pincode,
+            //        Contact = item.FirstOrDefault().res1.info1.am.MobileNo,
+            //        Email = item.FirstOrDefault().res1.info1.am.Email,
+            //        Designation = "TCC",
+            //        DepartMent = "IFSD",
+            //        Location = "GGN",
+            //        MedicalCenter = item.FirstOrDefault().res1.info2.MedicalCenter,
+            //        MedicalStatus = item.FirstOrDefault().res1.info2.MedicalStatus,
+            //        MDate = item.FirstOrDefault().res1.info2.MedicalDate,
+            //        FDate = item.FirstOrDefault().res1.info2.FitnessDate,
+            //        JDate = item.FirstOrDefault().res1.info2.JoiningDate,
+            //        CourseName = item.FirstOrDefault().res1.info1.am.CourseMaster.CourseName,
+            //        CourseId = item.FirstOrDefault().res1.info1.am.CourseId,
+            //        IsValidPassport = item.FirstOrDefault().res1.info2.ValidPassport,
+            //        SessionYr = item.FirstOrDefault().res1.info2.SessionYr
+            //    }).AsEnumerable();
 
             if (SessionYr > 0)
                 info = info.Where(d => d.SessionYr == SessionYr);
@@ -484,8 +527,11 @@ namespace SJService
             foreach (var i in dataFilter)
             {
                 i.Title = i.Gender == "M" ? "Mr" : "Ms";
-                i.DateOfBirth = i.DOB.HasValue ? i.DOB.Value.ToString("dd-MM-yyyy") : "";
-                i.DateOfInterView = i.InterViewDate.ToString("dd-MM-yyyy");
+                //i.DateOfBirth = i.DOB.HasValue ? i.DOB.Value.ToString("dd/MM/yyyy") : "";
+                //i.DateOfInterView = i.InterViewDate.ToString("dd/MM/yyyy");
+                if (i.DOB.HasValue)
+                    i.DateOfBirth = i.DOB.Value.Day.ToString().PadLeft(2, '0') + "/" + i.DOB.Value.Month.ToString().PadLeft(2, '0') + "/" + i.DOB.Value.Year;
+                i.DateOfInterView = i.InterViewDate.Day.ToString().PadLeft(2, '0') + "/" + i.InterViewDate.Month.ToString().PadLeft(2, '0') + "/" + i.InterViewDate.Year;
                 if (i.MDate.HasValue)
                     i.MedicalDate = i.MDate.Value.Day.ToString().PadLeft(2, '0') + "/" + i.MDate.Value.Month.ToString().PadLeft(2, '0') + "/" + i.MDate.Value.Year;
                 if (i.FDate.HasValue)
@@ -493,6 +539,7 @@ namespace SJService
                 if (i.JDate.HasValue)
                     i.JoiningDate = i.JDate.Value.Day.ToString().PadLeft(2, '0') + "/" + i.JDate.Value.Month.ToString().PadLeft(2, '0') + "/" + i.JDate.Value.Year;
                 i.NOC_PP = i.IsValidPassport ? "Passport" : "";
+                i.Age = rs.CalculateYourAge(i.DOB);
             }
             filter.data = dataFilter;
             return filter;
@@ -512,6 +559,195 @@ namespace SJService
                 years.Add(model);
             }
             return years;
+        }
+
+        //============================================================================================
+        public BarChartViewModel GetBarChartRegistrationData(ReportFilterViewModel filterModel)
+        {
+            var data = _context.RegistrationMasters.Select(item => new
+            {
+                EnteredDate = item.RegistrationDate,
+                RegistartionNo = item.RegistartionNo,
+                CourseId = item.CourseId
+            }).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filterModel.CourseId))
+            {
+                var courseArr = filterModel.CourseId.Split(',').Select(Int32.Parse).ToList();
+                if (courseArr.Count > 0)
+                    data = data.Where(t => courseArr.Any(c => c == t.CourseId));
+            }
+
+            BarChartViewModel model = new BarChartViewModel();
+            if (filterModel.Month > 0)
+            {
+                if (filterModel.Year > 0)
+                    data = data.Where(d => d.EnteredDate.Value.Year == filterModel.Year);
+                var feeInfo = data.Where(d => d.EnteredDate.Value.Month == filterModel.Month)
+                    .GroupBy(x => x.EnteredDate.Value.Day, (name, items) => new
+                    {
+                        Day = name,
+                        Amount = items.Count() * 1000
+                    }).OrderBy(o => o.Day).ToList();
+                decimal[] BarY = new decimal[DateTime.DaysInMonth(filterModel.Year, filterModel.Month)];
+                for (int i = 1; i <= DateTime.DaysInMonth(filterModel.Year, filterModel.Month); i++)
+                {
+                    var a = feeInfo.Where(n => n.Day == i).FirstOrDefault();
+                    if (a != null)
+                        BarY[i - 1] = a.Amount;
+                    else
+                        BarY[i - 1] = 0;
+                }
+                int daysMonth = DateTime.DaysInMonth(filterModel.Year, filterModel.Month);
+                string[] days = new string[daysMonth];
+                for (int i = 1; i <= daysMonth; i++)
+                    days[i - 1] = i.ToString();
+                model.BarChartLbl = days;
+                model.DataY = BarY;
+            }
+            else if (filterModel.Year > 0)
+            {
+                var feeInfo = data.Where(d => d.EnteredDate.Value.Year == filterModel.Year)
+                  .GroupBy(x => x.EnteredDate.Value.Month, (name, items) => new
+                  {
+                      Month = name,
+                      Amount = items.Count() * 1000
+                  }).OrderBy(o => o.Month).ToList();
+                decimal[] BarY = new decimal[12];
+                for (int i = 1; i <= 12; i++)
+                {
+                    var a = feeInfo.Where(n => n.Month == i).FirstOrDefault();
+                    if (a != null)
+                        BarY[i - 1] = a.Amount;
+                    else
+                        BarY[i - 1] = 0;
+                }
+                model.BarChartLbl = new string[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+                model.DataY = BarY;
+            }
+            else
+            {
+                var feeInfo = data.GroupBy(x => x.EnteredDate.Value.Year, (name, items) => new
+                {
+                    Year = name,
+                    Amount = items.Count() * 1000
+                }).OrderBy(o => o.Year).ToList();
+                decimal[] BarY = new decimal[3];
+                string[] chLbl = new string[3];
+                int j = 1;
+                for (int i = (DateTime.Now.Year - 2); i <= DateTime.Now.Year; i++)
+                {
+                    chLbl[j - 1] = i.ToString();
+                    var a = feeInfo.Where(n => n.Year == i).FirstOrDefault();
+                    if (a != null)
+                        BarY[j - 1] = a.Amount;
+                    else
+                        BarY[j - 1] = 0;
+                    j++;
+                }
+                model.BarChartLbl = chLbl;
+                model.DataY = BarY;
+            }
+            return model;
+        }
+
+        //=========================================================================================================
+
+        public DataTableFilterModel GetScreenningReportList(DataTableFilterModel filter, int SessionYr)
+        {
+            var data = _context.RegistrationMasters.Where(r => r.IsActive).AsQueryable();
+            data = data.Where(d => d.PaymentStatus || d.IsConsultantCandidate || d.IsHRCandidate);
+            if (SessionYr > 0)
+                data = data.Where(d => d.SessionMaster.SessionYr == SessionYr);
+            var info = data.Select(model => new RegistrationViewModel()
+            {
+                Id = model.Id,
+                DOB = model.DOB,
+                Email = model.Email.ToLower(),
+                Gender = model.Gender == "M" ? "Male" : "Female",
+                Mobile = model.Mobile,
+                PaymentStatus = model.PaymentStatus,
+                RegistartionNo = model.RegistartionNo,
+                RegistrationDate = model.RegistrationDate,
+                Fname = model.Fname,
+                Lname = model.Lname,
+                PaymentStatusStr = (model.IsConsultantCandidate ? "Consultent Candidate" : (model.IsHRCandidate ? "HR Candidate" : (model.PaymentStatus ? "Success" : "Pending"))),
+                IsScreenningClear = model.IsScreenningClear,
+                IsMedicalClear = model.IsMedicalClear,
+                CourseName = model.CourseMaster.CourseName,
+                MedicalRemark = model.MedicalRemark != null ? model.MedicalRemark : "",
+                IsStandBy = model.IsStandBy,
+                IsConsultantCandidate = model.IsConsultantCandidate,
+                IsHRCandidate = model.IsHRCandidate,
+                IsMedicalStandBy = model.IsMedicalStandBy,
+                CourseId = model.CourseId,
+                SessionId = model.SessionId,
+                IsFeePayStandBy = model.IsFeePayStandBy,
+                SourceOfCandidate = model.SourceOfCandidate != null ? model.SourceOfCandidate : "Empty",
+                ModOfPayment = model.ModOfPayment,
+                IsFeePayment = model.FeeDetails.Where(f => f.IsActive && f.FeeTypeDetail.FeeType.Name == "Admission").FirstOrDefault().FeePaymentDetails.Where(fpd => fpd.IsActive).FirstOrDefault().FeeCollections.Count > 0 ? true : false,
+                MedicalStatus = model.AddmissionMasters.Count > 0 ? model.AddmissionMasters.FirstOrDefault().MedicalDetails.FirstOrDefault().MedicalStatus : "",
+                AddMissionId = model.AddmissionMasters.Count > 0 ? model.AddmissionMasters.FirstOrDefault().Id : 0,
+                BatchName = model.AddmissionMasters.Count > 0 ? model.AddmissionMasters.FirstOrDefault().AddmissionDetails.FirstOrDefault().BatchMaster.Name : "",
+                BatchId = model.AddmissionMasters.Count > 0 ? model.AddmissionMasters.FirstOrDefault().AddmissionDetails.FirstOrDefault().BatchId.Value : 0
+            }).AsEnumerable();
+
+            if (!string.IsNullOrWhiteSpace(filter.columns[7].search.value) && filter.columns[7].search.value != "")
+            {
+                int batch = Convert.ToInt32(filter.columns[7].search.value);
+                info = info.Where(t => t.BatchId == batch);
+                if (string.IsNullOrWhiteSpace(filter.search.value))
+                    info = info.Where(t => !t.IsStandBy && t.IsScreenningClear == true);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.columns[9].search.value))
+                info = info.Where(t => t.CourseName == filter.columns[9].search.value);
+
+            if (!string.IsNullOrWhiteSpace(filter.columns[10].search.value))
+            {
+                if (filter.columns[10].search.value == "Selected")
+                    info = info.Where(t => t.IsStandBy == false && t.IsScreenningClear == true);
+                else if (filter.columns[10].search.value == "Rejected")
+                    info = info.Where(t => t.IsScreenningClear == false && t.IsStandBy == false);
+                else if (filter.columns[10].search.value == "Stand-By")
+                    info = info.Where(t => t.IsStandBy == true);
+                else if (filter.columns[10].search.value == "Withdrwan")
+                    info = info.Where(t => t.MedicalStatus == "Withdrawn");
+                else
+                    info = info.Where(t => !t.IsScreenningClear == null);
+            }
+            if (!string.IsNullOrWhiteSpace(filter.search.value))
+            {
+                info = info.Where(d => (d.RegistartionNo.ToString().ToLower().Contains(filter.search.value.ToLower()) || (!string.IsNullOrEmpty(d.StudentName) && d.StudentName.ToLower().Contains(filter.search.value.ToLower())) || (!string.IsNullOrEmpty(d.Email) && d.Email.ToLower().Contains(filter.search.value.ToLower())) || (!string.IsNullOrEmpty(d.PaymentStatusStr) && d.PaymentStatusStr.ToString().ToLower().Contains(filter.search.value.ToLower())) || (!string.IsNullOrEmpty(d.Mobile) && d.Mobile.ToString().ToLower().Contains(filter.search.value.ToLower())) || (!string.IsNullOrEmpty(d.BatchName) && d.BatchName.ToString().ToLower().Contains(filter.search.value.ToLower()))));
+            }
+            var o = filter.order[0];
+            var name = filter.columns[filter.order[0].column].data;
+            if (o.dir == "asc")
+                info = info.OrderBy(x => x.GetType().GetProperty(name).GetValue(x));
+            else
+                info = info.OrderByDescending(x => x.GetType().GetProperty(name).GetValue(x));
+            if (!string.IsNullOrWhiteSpace(filter.columns[8].search.value))
+                info = info.Where(t => t.CourseName == filter.columns[8].search.value);
+
+            if (!string.IsNullOrWhiteSpace(filter.columns[5].search.value) && filter.columns[5].search.value != "" && !string.IsNullOrWhiteSpace(filter.columns[6].search.value) && filter.columns[6].search.value != "")
+            {
+                DateTime fromDate = DateTime.ParseExact(filter.columns[5].search.value, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date;
+                DateTime toDate = DateTime.ParseExact(filter.columns[6].search.value, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date;
+                info = info.Where(t => t.RegistrationDate.HasValue && t.RegistrationDate.Value.Date >= fromDate && t.RegistrationDate.Value.Date <= toDate);
+            }
+
+            filter.recordsFiltered = info.Count();
+            var dataFilter = filter.length > 0 ? info.Skip(filter.start).Take(filter.length).ToList() : info.ToList();
+            string[] RegList = dataFilter.Select(i => i.Email.ToLower()).ToArray();
+            if (RegList.Length > 0)
+            {
+                foreach (var item in dataFilter)
+                {
+                    item.DateOfBirthNew = item.DateOfBirth;
+                }
+            }
+            filter.data = dataFilter;
+            return filter;
         }
     }
 }

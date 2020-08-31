@@ -54,11 +54,13 @@
     $(document).ready(function () {
         $('#SchedulingDate').datepicker({
             autoclose: true,
-            format: 'dd/mm/yyyy'
+            format: 'dd/mm/yyyy',
+            startDate: '01/01/2018'
         });
         $('#TerminationOrResignationDate').datepicker({
             autoclose: true,
-            format: 'dd/mm/yyyy'
+            format: 'dd/mm/yyyy',
+            startDate: '01/01/2018'
         });
 
         if ("@Model.CandidateTerminationResignationIsActive" == "True" && "@Session["RoleName"]" == "Admin") {

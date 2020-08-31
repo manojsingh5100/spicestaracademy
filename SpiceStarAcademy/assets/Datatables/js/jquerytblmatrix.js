@@ -4,11 +4,11 @@
     else {
         $('#' + selector + '_filter').append("&nbsp;&nbsp;<label>Show <select name='tblAddmissionView_length' onchange='pagelength(this);'  aria-controls='tblAddmissionView' style='height:30px;'><option value='10'>10</option><option value='25'>25</option><option value='50'>50</option><option value='100' >100</option></select> entries</label>");
         if (selector === "tblRejectRegistration")
-            $('#' + selector + '_filter').prepend("<select id='ddlwithdrawal' onclick='filterWithdrawalCandidate(this)' style='height:32px;width:175px;'><option value=''>Withdrawal Candidates</option><option value='All'>All Candidates</option></select>  &nbsp;<select id='ddlcoursefilter' onclick='coursefilter(this," + filterIndex + ")' style='height:32px;width:125px;'><option value=''>Select Course</option><option value='BBA'>BBA</option><option value='MBA'>MBA</option><option value='PHT'>PHT</option></select>&nbsp;&nbsp;&nbsp;&nbsp;");
+            $('#' + selector + '_filter').prepend("<select id='ddlwithdrawal' onclick='filterWithdrawalCandidate(this)' style='height:32px;width:175px;display:none;'><option value=''>Withdrawn Candidates</option><option value='All'>All Candidates</option></select>  &nbsp;<select id='ddlcoursefilter' onclick='coursefilter(this," + filterIndex + ")' style='height:32px;width:125px;'><option value=''>Select Course</option><option value='BBA'>BBA</option><option value='MBA'>MBA</option><option value='PHT'>PHT</option></select>&nbsp;&nbsp;&nbsp;&nbsp;");
         else {
             if (selector === "tblScreening") {
                 var str = '<div class="dateFilter" style="display:inline-block; overflow:hidden; position:absolute;left:100px;"><button type="button" style="width:210px;" class="btn btn-info" data-toggle="collapse" data-target="#demo">Date Time Filter</button><div id = "demo" class="collapse" style = "width: 210px; height:170px !important; padding: 15px; background-color: #e4e4e4;" ><div class="col-md-12 form-group"><input class="form-control" type="text" id="txtfromDate" value="" placeholder="From Date"></div><div class="col-md-12 form-group"><input class="form-control" type="text" id="txttoDate" placeholder="To Date"></div><div class="col-md-12 form-group"><input class="btn btn-default" type="button" name="Clear" value="Clear" onClick="dateClear()">&nbsp;&nbsp;<input class="btn btn-success" type="button" name="Submit" id="btndatefilter" onclick="daterangefilterfunc()" value="Submit"></div></div></div>&nbsp;&nbsp;';
-                $('#' + selector + '_filter').prepend(str + "<select id='ddlcoursefilter' onchange='coursefilter(this," + filterIndex + ")' style='height:32px;width:125px;'><option value=''>Select Course</option><option value='BBA'>BBA</option><option value='MBA'>MBA</option><option value='PHT'>PHT</option></select>&nbsp;&nbsp;<select onchange='screenningstatusfilter(this,11)' id='ddlstatusfilter' style='height:32px;width:125px;margin-right: 5px;'><option value=''>Select Status</option><option value='Pending'>Pending</option><option value='Selected'>Selected</option><option value='Rejected'>Rejected</option><option value='Stand-By'>Stand-By</option></select><select onchange='screenningbatchfilter(this,8)' style='height:32px;width:125px;margin-right: 0px;' id='ddlbatchfilter'><option value=''>Select Batch</option></select>&nbsp;&nbsp;");
+                $('#' + selector + '_filter').prepend(str + "<select id='ddlcoursefilter' onchange='coursefilter(this," + filterIndex + ")' style='height:32px;width:125px;'><option value=''>Select Course</option><option value='BBA'>BBA</option><option value='MBA'>MBA</option><option value='PHT'>PHT</option></select>&nbsp;&nbsp;<select onchange='screenningstatusfilter(this,11)' id='ddlstatusfilter' style='height:32px;width:125px;margin-right: 5px;'><option value=''>Select Status</option><option value='Pending'>Pending</option><option value='Selected'>Selected</option><option value='Rejected'>Rejected</option><option value='Stand-By'>Stand-By</option><option value='Withdrwan'>Withdrawn</option></select><select onchange='screenningbatchfilter(this,8)' style='height:32px;width:125px;margin-right: 0px;' id='ddlbatchfilter'><option value=''>Select Batch</option></select>&nbsp;&nbsp;");
 
                 $('#txtfromDate').datepicker({
                     autoclose: true,
@@ -30,7 +30,7 @@
                 }
             }
         }
-        if (selector === "tblFeeCandidatesList") { $('#' + selector + '_filter').prepend("<select onclick='feeStatusFilter(this,11)' style='height:32px;width:125px;margin-right: 13px;' id='ddlfeestatus' ><option value=''>Select Fee Status</option><option value='Due'>Due</option><option value='Deposited'>Deposited</option></select>&nbsp;&nbsp;<select onchange='screenningbatchfilter(this,8)' style='height:32px;width:125px;margin-right: 0px;' id='ddlbatchfilter'><option value=''>Select Batch</option></select>&nbsp;&nbsp;"); }
+        if (selector === "tblFeeCandidatesList") { $('#' + selector + '_filter').prepend("<select onclick='feeStatusFilter(this,11)' style='height:32px;width:125px;margin-right: 13px;' id='ddlfeestatus' ><option value=''>Select Fee Status</option><option value='Unpaid'>Unpaid</option><option value='Partially'>Partially Paid</option><option value='Fully'>Fully Paid</option></select>&nbsp;&nbsp;<select onchange='screenningbatchfilter(this,8)' style='height:32px;width:125px;margin-right: 0px;' id='ddlbatchfilter'><option value=''>Select Batch</option></select>&nbsp;&nbsp;"); }
     }
 };
 
@@ -38,11 +38,26 @@ TableSSAReportFilter = function SSReportingList() { $('#tblSSAReport_filter').ap
 
 function rejectedCol() {
     return [{ "data": "SrNo" }, { "data": "RegistartionNo" }, { "data": "StudentName" }, { "data": "Email" }, { "data": "Mobile" },
-        //{ "data": "DateOfBirth" },
-        { "data": "CourseName" },
-        { "data": "MedicalRemark" },
-        { "data": "RegisterDate" },
-        { "mRender": function (data, type, row) { var render = withdrawalRenderAction(row); return render }, orderable: !1 }
+    //{ "data": "DateOfBirth" },
+    { "data": "CourseName" },
+    { "data": "MedicalRemark" },
+    { "data": "RegisterDate" }
+    //{
+    //    "data": "IsFeePayment", "render": function (data, type, row) {
+    //        if (row.IsFeePayment) {
+    //            if (row.RefundStatus == "success")
+    //                return "Fully paid";
+    //            else if (row.RefundStatus == "orange")
+    //                return "Partially paid";
+    //            else
+    //                return "Unpaid";
+    //        }
+    //        else {
+    //            return "Unpaid"
+    //        }
+    //    }
+    //}
+    //{ "mRender": function (data, type, row) { var render = withdrawalRenderAction(row); return render }, orderable: !1 }
         //{ "render": function (data, type, row) { return ragistrationStatus(row) } }
     ]
 }
@@ -50,9 +65,9 @@ function rejectedCol() {
 function withdrawalRenderAction(obj) {
     var action = '';
     if (obj.MedicalRemark == null || obj.MedicalRemark == "") {
-        action += '<span id="spnIsMedicalClear_' + obj.Id + '" style="float:left; width:70%;display:block;"> <input type="button" onclick="openRemarkModel(' + obj.Id + ',this,' + obj.RegistartionNo + ')" value="Withdrawal" class="btn btn-default btn-xs" /></span>';
+        action += '<span id="spnIsMedicalClear_' + obj.Id + '" style="float:left; width:70%;display:block;"> <input type="button" onclick="openRemarkModel(' + obj.Id + ',this,' + obj.RegistartionNo + ')" value="Withdrawn" class="btn btn-default btn-xs" /></span>';
     } else {
-        action += '<span id="spnIsMedicalClear_' + obj.Id + '" style="float:left; width:70%;display:block;"> <input type="button" onclick="openRemarkModel(' + obj.Id + ',this,' + obj.RegistartionNo + ')" value="Withdrawal" class="btn btn-warning btn-xs" /></span>';
+        action += '<span id="spnIsMedicalClear_' + obj.Id + '" style="float:left; width:70%;display:block;"> <input type="button" onclick="openRemarkModel(' + obj.Id + ',this,' + obj.RegistartionNo + ')" value="Withdrawn" class="btn btn-warning btn-xs" /></span>';
     }
     return action;
 }
@@ -143,12 +158,12 @@ function screenninglistingCol() {
                     return "<span style='color:#999'>HR Candidate</span>"; else return "<span style='color:#999'>Consultant Candidate</span>"
             }
         }
-    }, { "data": "CourseName" }, {
+    }, { "data": "CourseName" }, { "data": "ModOfPayment" }, {
         "data": "BatchName", "render": function (data, type, row) {
             if (row.IsStandBy || (row.IsScreenningClear != null && row.IsScreenningClear == false))
                 return "";
             else
-                return row.BatchName;
+                return row.BatchName == "Batch 0" ? "" : row.BatchName;
         }
     }, { "data": "RegisterDate" }, { "mRender": function (data, type, row) { var render = RenderAction(row); return render }, orderable: !1 },]
 }
@@ -156,11 +171,22 @@ function RenderAction(obj) {
     var action = ''; if (obj.PaymentStatus || obj.IsConsultantCandidate || obj.IsHRCandidate) {
         if (obj.IsScreenningClear == null) { action += ' <button type="button" onclick="openScreenPopUpModel(' + obj.RegistartionNo + ',this)" class="btn btn-info btn-xs" >Screening</button>' }
         else if (obj.IsStandBy) { action += ' <button type="button" onclick="openScreenPopUpModel(' + obj.RegistartionNo + ',this)" class="btn btn-warning btn-xs" >Stand-By &nbsp;  <i class="fa fa-check" aria-hidden="true"></i></button>' }
+        else if (obj.MedicalStatus == "Withdrawn") {
+            action += ' <button type="button" onclick="openScreenPopUpModel(' + obj.RegistartionNo + ',this)" style="background-color: purple;border:1px solid purple !important;" class="btn btn-warning btn-xs" >Withdrawn </button>'
+        }
         else if (obj.IsScreenningClear == !0) { action += ' <button type="button" onclick="openScreenPopUpModel(' + obj.RegistartionNo + ',this)" class="btn btn-success btn-xs" >Selected &nbsp;  <i class="fa fa-check" aria-hidden="true"></i></button>' }
         else if (obj.IsScreenningClear == !1) { action += ' <button type="button" onclick="openScreenPopUpModel(' + obj.RegistartionNo + ',this)" class="btn btn-danger btn-xs" >Rejected &nbsp;  <i class="fa fa-close" aria-hidden="true"></i></button>' }
 
         if (obj.IsResistrationHistory)
             action += '&nbsp;<button data-toggle="tooltip" title="Registration History!" onclick="OpenReregistrationHistory(\'' + obj.Email + '\',\'' + obj.Mobile + '\')" class="btn btn-primary btn-xs" ><i class="fa fa-info-circle" aria-hidden="true"></i></button>';
+
+        if (obj.IsScreenningClear == !0 && obj.ShowMedicalConsultPopUp) {
+            action += '&nbsp;<button data-toggle="tooltip" title="Medical!" onclick="OpenMedicalPopup(\'' + obj.RegistartionNo + '\')" class="btn btn-warning btn-xs" ><i class="fa fa-medkit" aria-hidden="true"></i></button>';
+        }
+    }
+    var role = $('#hdnRoleType').val();
+    if (role != null && role != undefined && role == 'Admin') {
+        action += '&nbsp;<button type="button" onclick="deleteConfirmation(' + obj.RegistartionNo + ')" class="btn btn-danger btn-xs" >Delete</button>';
     }
     return action
 }
@@ -237,7 +263,7 @@ function admissionViewListingCol() {
     { "data": "DateOfAddmission" },
     {
         "data": "IsValidPassport", "render": function (data, type, row) {
-            return '<div class="round-button"><div class="round-button-circle" style="' + (row.IsTermResgCandidate == "Termination" ? "background:red" : (row.IsTermResgCandidate == "P-Termination" ? "background:#ee7f2e" : (row.IsTermResgCandidate != "" ? "opacity:0.5;cursor: no-drop;" : ""))) + '"> <a href="javascript:void(0)" style="' + (row.IsTermResgCandidate == "Termination" ? "" : (row.IsTermResgCandidate == "Resignation" ? "pointer-events: none;" : (row.IsTermResgCandidate == "P-Resignation" ? "pointer-events: none;" : ""))) + '"  onclick="openTRPopup(this,' + row.Id + ');" class="round-button">T</a></div></div> <div class="round-button"><div class="round-button-circle" style="' + (row.IsTermResgCandidate == "Resignation" ? "background:red" : (row.IsTermResgCandidate == "P-Resignation" ? "background:#ee7f2e" : (row.IsTermResgCandidate != "" ? "opacity:0.5;cursor: no-drop;" : ""))) + '" ><a href="javascript:void(0)" onclick="openTRPopup(this,' + row.Id + ');" class="round-button" style="' + (row.IsTermResgCandidate == "Resignation" ? "" : (row.IsTermResgCandidate == "Termination" ? "pointer-event:none;" : (row.IsTermResgCandidate == "P-Termination" ? "pointer-events: none;" : ""))) + '" >R</a></div></div>';
+            return '<div class="round-button"><div class="round-button-circle" style="' + (row.IsTermResgCandidate == "Termination" ? "background:red" : (row.IsTermResgCandidate == "P-Termination" ? "background:#ee7f2e" : (row.IsTermResgCandidate != "" ? "opacity:0.5;cursor: no-drop;" : ""))) + '"> <a href="javascript:void(0)" style="' + (row.IsTermResgCandidate == "Termination" ? "" : (row.IsTermResgCandidate == "Resignation" ? "pointer-events: none;" : (row.IsTermResgCandidate == "P-Resignation" ? "pointer-events: none;" : ""))) + '"  onclick="openTRPopup(this,' + row.Id + ');" class="round-button">T</a></div></div> <div class="round-button"><div class="round-button-circle" style="' + (row.IsTermResgCandidate == "Resignation" ? "background:red" : (row.IsTermResgCandidate == "P-Resignation" ? "background:#ee7f2e" : (row.IsTermResgCandidate != "" ? "opacity:0.5;cursor: no-drop;" : ""))) + '" ><a href="javascript:void(0)" onclick="openTRPopup(this,' + row.Id + ');" class="round-button" style="' + (row.IsTermResgCandidate == "Resignation" ? "" : (row.IsTermResgCandidate == "Termination" ? "pointer-events:none;" : (row.IsTermResgCandidate == "P-Termination" ? "pointer-events: none;" : ""))) + '" >R</a></div></div>';
         }
     }];
 }
@@ -326,10 +352,17 @@ function feeCandidateListingCol() {
         }
     }, {
         "data": "IsFeePayment", "render": function (data, type, row) {
-            if (row.IsFeePayment)
-                return "<span class='label label-success'> Deposited </span>"; else {
+            if (row.IsFeePayment) {
+                if (row.RefundStatus == "success")
+                    return "<span class='label label-success'>Fully paid</span>";
+                else if (row.RefundStatus == "orange")
+                    return "<span class='label label-warning'> Partially paid </span>";
+                else
+                    return "<span class='label label-danger'>Unpaid</span>";
+            }
+            else {
                 if (row.IsFeePayStandBy)
-                    return "<span class='label label-warning'> Stand-By </span>"; else return "<span class='label label-info'> Fee Due </span>"
+                    return "<span class='label label-warning'> Stand-By </span>"; else return "<span class='label label-danger'>Unpaid</span>"
             }
         }
     }, {
@@ -339,17 +372,38 @@ function feeCandidateListingCol() {
         }
     }]
 }
+
 function reportListingCol() {
-    return [{ "data": "SrNo" }, { "data": "RegistartionNo" }, { "data": "StudentName" }, { "data": "Email" }, { "data": "Mobile" }, { "data": "DOBStr" }, { "data": "Gender", visible: !1 }, { "data": "Education" }, { "data": "CourseName" }, { "data": "PermanentState" }, { "data": "PermanentCity" }, { "data": "BatchName" }, { "data": "AdmissionDateStr" }, {
-        "data": "IsFeePayStandBy", "render": function (data, type, row) {
-            if (row.IsFeePayStandBy)
-                return "Stand-By"; else return ""
-        }
-    }, {
+    return [{ "data": "SrNo" }, { "data": "RegistartionNo" }, { "data": "StudentName" }, { "data": "Email" }, { "data": "Mobile" }, { "data": "DOBStr" }, { "data": "Gender", visible: !1 }, { "data": "Education" }, { "data": "CourseName" }, { "data": "PermanentState" }, { "data": "PermanentCity" }, { "data": "BatchName" }, { "data": "SourceOfCandidate" }, { "data": "AdmissionDateStr" },
+    {
         "data": "IsFeePayment", "render": function (data, type, row) {
-            if (row.IsFeePayment)
-                return "Deposited"; else return "Pending"
+            if (row.IsFeePayment) {
+                if (row.RefundStatus == "success")
+                    return "Fully paid";
+                else if (row.RefundStatus == "orange")
+                    return "Partially paid";
+                else
+                    return "Unpaid";
+            }
+            else {
+                return "Unpaid"
+            }
+        }
+    },
+    //{
+    //    "data": "IsFeePayment", "render": function (data, type, row) {
+    //    return '<button type="button" class="btn btn - info" data-toggle="modal" onclick="GetFeeList(' + row.RegistartionNo +'); " data-target="#modal -default"> Fee Info</button>';
+    //}
+    // },
+        { "data": "FeeTotalAmount" }, { "data": "FirstInstallment" }, { "data": "SecondInstallment" }, { "data": "ThirdInstallment" }, { "data": "FeeDueAmount" }, { "data": "FeeDueDate" }]
+}
+
+function refundlistingCol() {
+    return [{ "data": "Id" }, { "data": "RegNo" }, { "data": "StudentName" }, { "data": "Email" }, { "data": "Mobile" }, { "data": "Course" }, { "data": "Status" }, { "data": "Remark" }, { "data": "Amount" }, {
+        "mRender": function (data, type, row) {
+            return '<input type="button" value="Approved" onclick="OpenRefundPopUp(this,' + row.Id + ');" class="btn btn-success btn-xs" /> <input type="button" value="Reject" onclick="OpenRefundPopUp(this,' + row.Id + ');" class="btn btn-warning btn-xs" />';
         }
     }]
 }
-function ssaReportListingCol() { return [{ "data": "Id" }, { "data": "BatchName" }, { "data": "DateOfInterView" }, { "data": "Title" }, { "data": "FullName" }, { "data": "DateOfBirth" }, { "data": "JoiningDate" }, { "data": "Age" }, { "data": "Addresee1" }, { "data": "Addresee2" }, { "data": "Addresee3" }, { "data": "Contact" }, { "data": "Email" }, { "data": "Designation" }, { "data": "DepartMent" }, { "data": "Location" }, { "data": "MedicalCenter" }, { "data": "NOC_PP" }, { "data": "MedicalDate" }, { "data": "FitnessDate" }, { "data": "MedicalStatus" }, { "data": "CourseName" }] }
+
+function ssaReportListingCol() { return [{ "data": "Id" }, { "data": "BatchName" }, { "data": "DateOfInterView" }, { "data": "Title" }, { "data": "FullName" }, { "data": "DateOfBirth" }, { "data": "JoiningDate" }, { "data": "Age" }, { "data": "Addresee1" }, { "data": "Addresee2" }, { "data": "Addresee3" }, { "data": "PinCode" }, { "data": "Contact" }, { "data": "Email" }, { "data": "Designation" }, { "data": "DepartMent" }, { "data": "Location" }, { "data": "MedicalCenter" }, { "data": "NOC_PP" }, { "data": "MedicalDate" }, { "data": "FitnessDate" }, { "data": "MedicalStatus" }, { "data": "CourseName" }] }

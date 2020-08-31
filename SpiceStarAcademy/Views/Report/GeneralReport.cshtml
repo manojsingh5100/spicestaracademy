@@ -1,0 +1,231 @@
+﻿@model List<SJModel.SemesterMasterViewModel>
+@{
+    ViewBag.Title = "General Report";
+}
+    <title>General Report</title>
+<style>
+    .Select_rejectDv {
+        background-color: #efefef;
+        border-radius: 5px;
+        margin-left: 20px;
+        display: table;
+        width: 50%;
+    }
+
+    .Select_rejectDv1 {
+        display: none;
+        width: 40%;
+    }
+
+    .Select_rejectDv label {
+        text-align: left;
+    }
+
+    .dateFilter {
+        position: absolute;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+        .dateFilter .collapse {
+            -webkit-transition: none;
+            transition: none !important;
+        }
+
+        .dateFilter .in {
+            width: 210px;
+            padding: 30px 5px;
+            background-color: rgb(228, 228, 228);
+            border-radius: 0px 4px 4px 4px;
+            height: 170px;
+            position: relative;
+        }
+
+        .dateFilter .collapsing {
+            width: 210px;
+            height: 170px !important;
+            padding: 30px 5px;
+            background-color: #e4e4e4;
+            position: relative;
+            transition-duration: 0s;
+        }
+</style>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            General Report
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-dashboard"></i> &nbsp;General Report</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <input type="hidden" id="hdnBtnText" value="" />
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- /.box -->
+                <div class="box">
+                    <div class="box-body">
+                        <div class="row col-md-12 table-responsive">
+                            <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <strong id="lblMsg">@TempData["msg"]</strong>
+                            </div>
+                            <table id="tblScreening" class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>Reg.No</th>
+                                        <th>Student Name</th>
+                                        <th>Email Id</th>
+                                        <th>Mobile No</th>
+                                        <th>DOB</th>
+                                        <th>Gender</th>
+                                        <th>Payment Status</th>
+                                        <th>Course</th>
+                                        <th>Payment Mode</th>
+                                        <th>Batch Name</th>
+                                        <th>Reg.Date</th>
+                                        <th style="width:130px">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+<script>
+    $(document).ready(function () {
+        TableCourseFilter = 8;
+        Table = $("#tblScreening").DataTable(ScreeningblSetting("tblScreening", "GetGeneralReportList", "Report", 0));
+        $.fn.dataTable.ext.errMode = 'throw';
+        Table.on('draw.dt', function () {
+            var PageInfo = $('#tblScreening').DataTable().page.info();
+            Table.column(0, { page: 'current' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1 + PageInfo.start;
+            });
+        });
+        
+        $('#SettleDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        }).datepicker("setDate", 'now');
+        $('.dt-buttons').empty().append("<img src='/Images/excel-icon-transparent-18.jpg' height=32px; width=60px; title='Export' onclick='ExportData();' style='border:1px solid;border-color:#f5eeee;cursor: pointer;' />");
+        getUserActivities('Screenning');
+    });
+
+    function daterangefilterfunc(){
+        var status = true;
+        var fromDate = $('#txtfromDate').val();
+        var toDate = $('#txttoDate').val();
+        if (fromDate == "") {
+            $('#txtfromDate').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#txtfromDate').css("border", "");
+        }
+
+        if (toDate == "") {
+            $('#txttoDate').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#txttoDate').css("border", "");
+        }
+
+        if (status) {
+            var fDate = stringtodate(fromDate);
+            var tDate = stringtodate(toDate);
+            if (fDate > tDate) {
+                $("#lblMsg").text('Fromdate can not greater than todate!');
+                Table.columns(5).search('');
+                Table.columns(6).search('');
+                Table.draw();
+                if ($("#lblMsg").text() != "") {
+                    $("#dvMsg").css("display", "block");
+                    $('html, body').animate({
+                        scrollTop: $("#dvMsg").offset().top
+                    }, 2000);
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                }
+            } else {
+                Table.columns(5).search(fromDate);
+                Table.columns(6).search(toDate);
+                $('#demo').collapse('hide');
+                Table.draw();
+            }
+        } else {
+            Table.columns(5).search('');
+            Table.columns(6).search('');
+            Table.draw();
+        }
+    }
+
+    function stringtodate(dateString) {
+        var dateParts = dateString.split("/");
+        var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+        return dateObject;
+    }
+
+    function IsScreenningStandBy() {
+        $.ajax({
+            url: "/Registration/IsScreeningStandBy",
+            type: "GET",
+            async: false,
+            data: { IsStandBy: $('#chkstandby').prop('checked') , RegNo: $('#RegistrationId').val() },
+            success: function (response) {
+                if (response != null) {
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function dateClear() {
+        $('#txtfromDate').val('');
+        $('#txttoDate').val('');
+        $('#txtfromDate').css("border", "");
+        $('#txttoDate').css("border", "");
+        $('#demo').collapse('hide');
+        Table.columns(5).search("");
+        Table.columns(6).search("");
+        Table.draw();
+    }
+
+    function ExportData() {
+        var model = {
+            "IsSelected": ($('#ddlstatusfilter').val() != '' ? $('#ddlstatusfilter').val():''),
+            "CourseId": $('#ddlcoursefilter').val() != '' ? $('#ddlcoursefilter').val():'',
+            "BatchId": ($('#ddlbatchfilter').val() != '' ? $('#ddlbatchfilter').val():0) ,
+            "Search": Table.search(),
+            "PageName": "Screenning"
+        };
+        $.ajax({
+            url: "/Registration/Export",
+            type: "POST",
+            async: false,
+            data: { Model: model},
+            success: function (data) {
+                window.location = '/Registration/Download?filename=' + data;
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>
+
+

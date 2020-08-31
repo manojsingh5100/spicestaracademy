@@ -18,8 +18,8 @@ namespace SJData
         public tblPerformanceMaster()
         {
             this.tblPerformanceEntryMasters = new HashSet<tblPerformanceEntryMaster>();
-            this.tblPerformanceParameterTypeResultMasters = new HashSet<tblPerformanceParameterTypeResultMaster>();
             this.tblPerformancePercentageMasters = new HashSet<tblPerformancePercentageMaster>();
+            this.tblPerformanceParameterTypeResultMasters = new HashSet<tblPerformanceParameterTypeResultMaster>();
         }
     
         public int Id { get; set; }
@@ -29,8 +29,8 @@ namespace SJData
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPerformanceEntryMaster> tblPerformanceEntryMasters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblPerformanceParameterTypeResultMaster> tblPerformanceParameterTypeResultMasters { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPerformancePercentageMaster> tblPerformancePercentageMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPerformanceParameterTypeResultMaster> tblPerformanceParameterTypeResultMasters { get; set; }
     }
 }

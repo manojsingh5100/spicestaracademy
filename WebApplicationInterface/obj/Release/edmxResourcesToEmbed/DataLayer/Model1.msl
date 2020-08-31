@@ -344,5 +344,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tblGetTermAcceptancyByCandidates">
+      <EntityTypeMapping TypeName="SJStarERPModel.tblGetTermAcceptancyByCandidate">
+        <MappingFragment StoreEntitySet="tblGetTermAcceptancyByCandidate">
+          <ScalarProperty Name="DateOfAction" ColumnName="DateOfAction" />
+          <ScalarProperty Name="Accept" ColumnName="Accept" />
+          <ScalarProperty Name="tblPerformanceEntryMasterId" ColumnName="tblPerformanceEntryMasterId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

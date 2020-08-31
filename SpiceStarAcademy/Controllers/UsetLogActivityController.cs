@@ -17,7 +17,7 @@ namespace SpiceStarAcademy.Controllers
         // GET: UsetLogActivity
         public ActionResult Index()
         {
-            return View();
+            return View(logActivityService.GetUserActivities());
         }
 
         [HttpGet]

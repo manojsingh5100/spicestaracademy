@@ -14,6 +14,12 @@ namespace SJData
     
     public partial class ptaScreeningEmailNotificationLog
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ptaScreeningEmailNotificationLog()
+        {
+            this.ptaEmailNotificationSentContents = new HashSet<ptaEmailNotificationSentContent>();
+        }
+    
         public int Id { get; set; }
         public int PTAPilotRegistrationMasterId { get; set; }
         public string CandidateName { get; set; }
@@ -25,6 +31,8 @@ namespace SJData
         public string CourseName { get; set; }
         public bool IsActive { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ptaEmailNotificationSentContent> ptaEmailNotificationSentContents { get; set; }
         public virtual ptaPilotRegistrationMaster ptaPilotRegistrationMaster { get; set; }
     }
 }

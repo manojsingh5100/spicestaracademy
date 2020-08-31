@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SJModel;
 using SJModel.PerformanceModel;
 using SJService;
+using SpiceStarAcademy.Helper;
 using SpiceStarAcademy.Filter;
 
 namespace SpiceStarAcademy.Areas.PerformanceCard.Controllers
@@ -75,6 +76,10 @@ namespace SpiceStarAcademy.Areas.PerformanceCard.Controllers
             var result = _perforamnce.SavePerformanceCardDetail(Model);
             if (result.IsSuccess)
                 TempData["msg"] = result.Massage;
+            var tblPerformanceEntryMasterId = Model.tblPerformanceEntryMasterId.ToString();
+            string Template = Email.GetDynamicTemplateForPerformance(tblPerformanceEntryMasterId,Model.Percentage, Model.ReviewArr, Model.WeeklyArr);
+            TestEmail email = new TestEmail(Template, Model.ReviewArr + " Result Notification", "nagma.khetarpal@spicejet.com");
+            email.SendTestingMail();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -93,6 +98,18 @@ namespace SpiceStarAcademy.Areas.PerformanceCard.Controllers
         public ActionResult OpenBatchRegrateModelPopup(int RegistrationNo)
         {
             return PartialView("_ReligatedInfoPopUp", _perforamnce.GetBatchReligateDetails(RegistrationNo));
+        }
+
+        public ActionResult ChangePassword()
+        {
+            return View(new ChangePasswordViewModel());
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordViewModel Model)
+        {
+            Model.Email = Session["Email"].ToString();
+            return View(_perforamnce.ChangePasswordService(Model));
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿@model SJModel.ReportFilterViewModel
 @{
-    ViewBag.Title = "Report";
+    ViewBag.Title = "Fee Collection Report";
  }
 <style>
     .select2-container--default .select2-selection--single {
@@ -11,12 +11,12 @@
         height: 34px !important;
     }
 </style>
-<title>Report</title>
+<title>Fee Collection Report</title>
 <div class="content-wrapper">
     <section class="content-header">
-        <h1>Report</h1>
+        <h1>Fee Collection Report</h1>
         <ol class="breadcrumb">
-            <li class="active"><i class="fa fa-dashboard"></i> &nbsp;Report</li>
+            <li class="active"><i class="fa fa-dashboard"></i> &nbsp;Fee Collection Report</li>
         </ol>
     </section>
     <section class="content">
@@ -43,9 +43,16 @@
                                         <th>State</th>
                                         <th>City</th>
                                         <th>Batch</th>
+                                        <th>Lead Source</th>
                                         <th>Admission Date</th>
-                                        <th>Fee StandBy</th>
                                         <th>Fee Status</th>
+                                        @*<th>Fee Status</th>*@
+                                        <th>Total Fee Amount</th>
+                                        <th>First Installment</th>
+                                        <th>Second Installment</th>
+                                        <th>Third Installment</th>
+                                        <th>Fee Due Amount</th>
+                                        <th>Fee Due Date</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -57,15 +64,57 @@
         </div>
     </section>
 </div>
+
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog" style="width:1050px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Candidate Fee Detail</h4>
+            </div>
+            <div class="modal-body" id="divFeeList">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 <script>
     $(document).ready(function () {
         Table = $("#tblReport").DataTable(ReporttblSetting("tblReport", "GetCandidateReport", "Report", 1));
         $.fn.dataTable.ext.errMode = 'throw';
+        Table.on('draw.dt', function () {
+            var PageInfo = $('#tblReport').DataTable().page.info();
+            Table.column(0, { page: 'current' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1 + PageInfo.start;
+            });
+        });
         $('.buttons-excel').css('display', 'none');
         $('.dt-buttons').append("<img src='/Images/excel-icon-transparent-18.jpg' height=32px; width=60px; onclick='btnexport();' title='Export' style='border:1px solid;border-color:#f5eeee;cursor: pointer;' />");
         HideShowTableColumn("tblReport");
         $('#ddlReportYears').val(('@Session["CurrentYear"]' != "0" ? "@Session["CurrentYear"]" : "")).trigger('change');
         StopLoading();
     });
+
+    function GetFeeList(regno) {
+        $.ajax({
+            url: "/FeeManagement/GetFeeDetailList",
+            type: "GET",
+            async: false,
+            data: { RegNo: regno },
+            success: function (response) {
+                if (response != null) {
+                    $('#divFeeList').empty();
+                    $('#divFeeList').append(response);
+                    $('#myModal').modal('show');
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
 </script>
 

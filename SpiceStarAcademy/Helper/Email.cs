@@ -5,9 +5,12 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Web;
+using System.Web.Mail;
 using System.Web.Script.Serialization;
+using System.Web.UI.WebControls;
 
 namespace SpiceStarAcademy.Helper
 {
@@ -27,9 +30,27 @@ namespace SpiceStarAcademy.Helper
             return strContent.ToString();
         }
 
+        public static string GetDynamicTemplateForPerformance(string PerformanceMasterId,string Percentage, string Review, string ResultStatus)
+        {
+            var strContent = new StringBuilder();
+            string line;
+            var file = new System.IO.StreamReader(
+                   HttpContext.Current.Server.MapPath("~/Templates/PerformanceEmailTemplate.html"));
+            while ((line = file.ReadLine()) != null)
+            {
+                strContent.Append(line);
+            }
+            file.Close();
+            strContent = strContent.Replace("@@PerformanceMasterId", PerformanceMasterId);
+            strContent = strContent.Replace("@@Percentage", Percentage);
+            strContent = strContent.Replace("@@Review", Review);
+            strContent = strContent.Replace("@@ResultStatus", ResultStatus);
+            return strContent.ToString();
+        }
+
         public static string EmailTemplateForFeeNotification(string mailTemplatePath, FeeEmailNotifacationLogViewModel Model)
         {
-            
+
             var strContent = new StringBuilder();
             string line;
             var file = new System.IO.StreamReader(
@@ -206,5 +227,46 @@ namespace SpiceStarAcademy.Helper
     {
         public Byte[] attachment { get; set; }
         public string fileName { get; set; }
+    }
+
+    public class TestEmail
+    {
+        private string TemplatePath;
+        private string Subject;
+        private string UserEmail;
+        public TestEmail(string TemplatePath1, string SubjectInfo, string Usermail)
+        {
+            this.TemplatePath = TemplatePath1;
+            this.Subject = SubjectInfo;
+            this.UserEmail = Usermail;
+            EmailSender = "sandeepnandla@gmail.com";
+            EmailSenderPassword = "Sandy@123";
+            EmailSenderHost = "smtp.gmail.com";
+            EmailSenderPort = 587;
+            EmailIsSSl = true;
+        }   
+        public string EmailSender { get; set; }
+        public string EmailSenderPassword { get; set; }
+        public string EmailSenderHost { get; set; }
+        public int EmailSenderPort { get; set; }
+        public bool EmailIsSSl { get; set; }
+
+        public void SendTestingMail()
+        {
+            string MailText = TemplatePath;
+            System.Net.Mail.MailMessage _mailmsg = new System.Net.Mail.MailMessage();
+            _mailmsg.IsBodyHtml = true;
+            _mailmsg.From = new System.Net.Mail.MailAddress(EmailSender);
+            _mailmsg.To.Add(UserEmail);
+            _mailmsg.Subject = Subject;
+            _mailmsg.Body = MailText;
+            SmtpClient _smtp = new SmtpClient();
+            _smtp.Host = EmailSenderHost;
+            _smtp.Port = EmailSenderPort;
+            _smtp.EnableSsl = EmailIsSSl;
+            NetworkCredential _network = new NetworkCredential(EmailSender,EmailSenderPassword);
+            _smtp.Credentials = _network;
+            _smtp.Send(_mailmsg);
+        }
     }
 }

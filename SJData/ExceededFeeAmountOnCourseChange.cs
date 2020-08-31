@@ -14,6 +14,12 @@ namespace SJData
     
     public partial class ExceededFeeAmountOnCourseChange
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ExceededFeeAmountOnCourseChange()
+        {
+            this.RefundInformations = new HashSet<RefundInformation>();
+        }
+    
         public int Id { get; set; }
         public decimal ExceedAmount { get; set; }
         public int RegistrationNo { get; set; }
@@ -27,5 +33,7 @@ namespace SJData
         public virtual UserLogin UserLogin { get; set; }
         public virtual FeeDetail FeeDetail { get; set; }
         public virtual FeeDetail FeeDetail1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RefundInformation> RefundInformations { get; set; }
     }
 }

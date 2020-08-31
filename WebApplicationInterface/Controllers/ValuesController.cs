@@ -49,6 +49,25 @@ namespace WebApplicationInterface.Controllers
             return r;
         }
 
+        //[HttpPost]
+        //[Route("api/GetPerformanceCandidateResponse")]
+        //public Respose GetCandidateAcceptTancyPerformance(int PerformanceEntryMId, bool Status)
+        //{
+        //    Common _common = new Common();
+        //    Respose r = new Respose();
+        //    try
+        //    {
+        //        r.IsSuccess = _common.CreateUpdatePerformanceCandidateResponce(PerformanceEntryMId,Status);
+        //        r.Message = "";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        r.IsSuccess = false;
+        //        r.Message = ex.Message + " " + ex.InnerException;
+        //    }
+        //    return r;
+        //}
+
         [HttpPost]
         [Route("api/CreateNewRegistration")]
         public Respose CreateNewRegistration([FromBody]RegistrationViewModel value)
@@ -56,7 +75,7 @@ namespace WebApplicationInterface.Controllers
             Common _common = new Common();
             Respose r = new Respose();
             try
-            { 
+            {
                 if (string.IsNullOrEmpty(value.Email))
                 {
                     r.Id = 0;

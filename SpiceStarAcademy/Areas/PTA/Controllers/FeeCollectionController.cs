@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SJModel;
+using SJModel.PTAModel;
 using SJService.PTA;
 
 namespace SpiceStarAcademy.Areas.PTA.Controllers
@@ -39,6 +40,13 @@ namespace SpiceStarAcademy.Areas.PTA.Controllers
         {
             TempData["msg"] = feeCollectionService.AddUpdateFeeTypeDetail(model);
             return Redirect("CreateFee");
+        }
+
+        public ActionResult FeePaymentPopUp(string AppNo)
+        {
+            PTAFeePaymentViewModel model = feeCollectionService.GetFeeDetails(AppNo);
+            model.CandidateName = Session["UserName"].ToString();
+            return PartialView("_PayFeeModelPopUp", model);
         }
 
         [HttpPost]

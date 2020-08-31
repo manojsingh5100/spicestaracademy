@@ -59,6 +59,7 @@
                     @Html.HiddenFor(m => m.SessionId)
                     @Html.HiddenFor(m => m.SessionYr)
                     @Html.HiddenFor(m => m.page)
+                    @Html.HiddenFor(m=>m.RegisterDate)
                     <div class="row" style="pointer-events: all;">
                         <div class="col-md-3" style="pointer-events: all;">
                             <div class="form-group" style="pointer-events: all;">
@@ -115,7 +116,7 @@
                         <div class="col-md-3" style="pointer-events: all;">
                             <div class="form-group" style="pointer-events: all;">
                                 <label> Select Session </label>
-                                <select class="form-control" id="ddltempSession" disabled> <option value="0">Select Session</option> </select>
+                                <select class="form-control" id="ddltempSession" > <option value="0">Select Session</option> </select>
                             </div>
                         </div>
                         <div class="col-md-3" style="pointer-events: all;">
@@ -125,7 +126,8 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    @Html.TextBoxFor(m => m.RegisterDate, new { @class = "form-control", placeholder = "Registration Date", autocomplete = "off", onkeydown = "return false;" })
+                                    <input type="text" id="RegDate" value="@Model.RegisterDate" class="form-control" placeholder="Registration Date" onkeydown="return false;" autocomplete="off" />
+                                    @*@Html.TextBoxFor(m => m.RegisterDate, new { @class = "form-control", placeholder = "Registration Date", autocomplete = "off", onkeydown = "return false;" })*@
                                 </div>
                             </div>
                         </div>
@@ -137,14 +139,15 @@
                         </div>
                         <div id="divMOPStatus" class="col-md-3" style="pointer-events: all;display:@(Model.PaymentStatus?"block":"none")">
                             <div class="form-group" style="pointer-events: all;">
-                                <label for="AssignJob">Mod Of Payment:</label>
+                                <label for="AssignJob">Mode Of Payment:</label>
                                 <input type="text" value="@Model.ModOfPayment" readonly="readonly" class="form-control" />
                             </div>
                         </div>
                     </div>
-                    <hr />
                     <div class="form-group text-center" id="divbmi">
-                        <span style="background-color:antiquewhite;padding:10px;font-weight:600" id="spncalcBMI"></span>
+                        <span style="background-color:antiquewhite;padding:10px;font-weight:600" id="spncalcBMI">
+                            <hr />
+                        </span>
                         <hr />
                     </div>
                     <div class="row" style="pointer-events: all;">
@@ -301,7 +304,7 @@
                             <div class="form-group" style="pointer-events: all;">
                                 <label for="">Source</label>
                                 @Html.HiddenFor(m => m.SourceOfCandidate)
-                                @Html.DropDownList("ddlSource", new SelectList(Model.GetSourceList, "CourseName", "CourseName"), "Select Source", new { @class = "form-control" })
+                                @Html.DropDownList("ddlSource", new SelectList(Model.GetSourceList, "CourseName", "CourseName"), "Select Source", new { @class = "form-control", @disabled="disabled" })
                             </div>
                         </div>
                     </div>
@@ -364,7 +367,7 @@
             startDate: getDOB1()
         });
 
-        var d = $('#RegisterDate').datepicker({
+        var d = $('#RegDate').datepicker({
             autoclose: true,
             format: 'dd/mm/yyyy'
         });
@@ -386,8 +389,10 @@
         fillStateCityList("ddlCorrState", "ddlCorrCity");
         fillStateCityList("ddlPerState", "ddlPerCity");
         if ('@Model.Id' > 0) {
-            if('@Model.IsAddmission' == 'True')
-                 $('#CourseId').attr('disabled', 'disabled');
+            @*if ('@Model.IsAddmission' == 'True') {
+                $('#CourseId').attr('disabled', 'disabled');
+                $('#ddltempSession').attr('disabled', 'disabled');
+            }*@
             if ('@Model.CorrespondenceState' != "") {
                 var findstateId = GetStateIdByStateName("@Model.CorrespondenceState");
                 $('#ddlCorrState').val(findstateId).trigger('change');
@@ -408,15 +413,19 @@
             if ('@Model.IsConsultantCandidate' == 'True' || '@Model.IsHRCandidate' == 'True')
                 $('#divCashPay').css("display", "none");
 
-            if ('@Model.ModOfPayment' == 'Online')
-                $('#RegisterDate').attr("disabled", "disabled");
-            if ('@Model.IsScreenningClear.HasValue' !='False')
+            @*if ('@Model.ModOfPayment' == 'Online')*@
+                $('#RegDate').attr("disabled", "disabled");
+            @*if ('@Model.IsScreenningClear.HasValue' != 'False') {
                 $('#CourseId').attr("disabled", "disabled");
+                $('#ddltempSession').attr('disabled', 'disabled');
+            }*@
             if ('@Model.SourceOfCandidate' != "" && '@Model.SourceOfCandidate' != 'NULL')
                 $('#ddlSource').val('@Model.SourceOfCandidate');
 
-             if('@Model.IsAnyCourseFeePay' == 'True')
-                 $('#CourseId').attr('disabled', 'disabled');
+            if ('@Model.IsAnyCourseFeePay' == 'True') {
+                $('#CourseId').attr('disabled', 'disabled');
+                $('#ddltempSession').attr('disabled', 'disabled');
+            }
         } else {
             d.datepicker("setDate", 'now');
         }
@@ -690,6 +699,7 @@
         var isconsultantcandidate = $('#IsConsultantCandidate').prop('checked');
         var ispaymentcash = $('#PaymentStatus').prop('checked');
         var course = $('#CourseId').val();
+        $('#RegisterDate').val($('#RegDate').val());
         var status = true;
         if (fname == "") {
             $('#Fname').css("border", "1px solid red");

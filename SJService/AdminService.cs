@@ -22,23 +22,31 @@ namespace SJService
         public DataTableFilterModel GetAdmissionBatchListinfo(DataTableFilterModel filter)
         {
             var data = _context.BatchMasters.Where(a => a.IsActive)
-                .Select(a => new RoleViewModel
+                .Select(a => new
                 {
                     Id = a.Id,
                     Name = a.Name,
                     ActiveStr = a.IsActive ? "Yes" : "No",
                     BatchStartDate = a.DateOfStart,
                     BatchEndDate = a.DateOfEnd
-                }).AsEnumerable();
+                }).ToList().Select(item => new RoleViewModel
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    ActiveStr = item.ActiveStr,
+                    BatchStartDate = item.BatchStartDate,
+                    BatchEndDate = item.BatchEndDate,
+                    Year = Convert.ToInt32(item.Name.Split(' ')[1])
+                }).OrderBy(s => s.Year).AsEnumerable();
             var totalCount = data.Count();
             if (!string.IsNullOrWhiteSpace(filter.search.value))
                 data = data.Where(d => d.Name.ToString().ToLower().Contains(filter.search.value.ToLower()) || d.ActiveStr.ToLower().Contains(filter.search.value.ToLower()));
-            var o = filter.order[0];
-            var name = filter.columns[filter.order[0].column].data;
-            if (o.dir == "asc")
-                data = data.OrderBy(x => x.GetType().GetProperty(name).GetValue(x));
-            else
-                data = data.OrderByDescending(x => x.GetType().GetProperty(name).GetValue(x));
+            //var o = filter.order[0];
+            //var name = filter.columns[filter.order[0].column].data;
+            //if (o.dir == "asc")
+            //    data = data.OrderBy(x => x.GetType().GetProperty(name).GetValue(x));
+            //else
+            //    data = data.OrderByDescending(x => x.GetType().GetProperty(name).GetValue(x));
             var filteredCount = data.Count();
             filter.recordsTotal = totalCount;
             filter.recordsFiltered = filteredCount;

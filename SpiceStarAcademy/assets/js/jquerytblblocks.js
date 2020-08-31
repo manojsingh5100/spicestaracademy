@@ -9,3 +9,4 @@ function feeCandidatestblSetting(tblName, action, controller, orderIndex) { retu
 function feeTypeDetailtblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, feeTypeDetailListingCol(), orderIndex, tblName, 'asc') }
 function ReporttblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, reportListingCol(), orderIndex, tblName, 'desc') }
 function ssaReporttblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, ssaReportListingCol(), orderIndex, tblName, 'asc') }
+function refundtblSetting(tblName, action, controller, orderIndex) { return tblSetting(exportOpt(), "/" + controller + "/" + action, refundlistingCol(), orderIndex, tblName, 'desc') }

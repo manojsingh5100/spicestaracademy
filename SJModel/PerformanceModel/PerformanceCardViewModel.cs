@@ -38,6 +38,7 @@ namespace SJModel.PerformanceModel
         public string PercentageCritiriaJsonInfo { get; set; }
         public string Fname { get; set; }
         public string Lname { get; set; }
+        public int tblPerformanceEntryMasterId { get; set; }
     }
 
     public class ParameterInfoList
@@ -69,5 +70,7 @@ namespace SJModel.PerformanceModel
         public int? WeeklyTermId { get; set; }
         public string ReviewName { get; set; }
         public string WeeklyTermName { get; set; }
+        public bool AcceptMidTerm { get; set; }
+        public bool AcceptEndTerm { get; set; }
     }
 }

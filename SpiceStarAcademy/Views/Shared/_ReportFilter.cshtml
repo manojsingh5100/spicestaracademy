@@ -69,6 +69,12 @@
                 @Html.DropDownList("ddlReportBatch", new SelectList(Model.GetBatchList, "Id", "BatchName"), "Select Batch", new { @class = "form-control select2 filter", placeholder = "aDa", multiple = "multiple", style = "width:100%" })
             </div>
         </div>
+        <div class="col-md-3" id="divlead" style="display:none">
+            <div class="form-group">
+                <label>Lead Source Filter</label>
+                @Html.DropDownList("ddlLeadSource", new SelectList(Model.GetLeadSourceList, "Name", "Name"), "Select Source", new { @class = "form-control select2 filter", style = "width:100%" })
+            </div>
+        </div>
     </div>
     <hr style="margin-top:5px;margin-bottom:5px;" />
     <div class="row">
@@ -109,6 +115,8 @@
             autoclose: true,
             format: 'dd/mm/yyyy'
         });
+        if ('@Model.PieClickPartName' == 'General')
+            $('#divlead').css('display', 'block');
     });
 
     $('#btnclear').click(function () {
@@ -163,6 +171,11 @@
             Table.draw();
         }
     }
+
+    $('#ddlLeadSource').change(function () {
+        Table.columns(5).search($(this).val());
+        Table.draw();
+    });
 
     function stringtodate(dateString) {
         var dateParts = dateString.split("/");

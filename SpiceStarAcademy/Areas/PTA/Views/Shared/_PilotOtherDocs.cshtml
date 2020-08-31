@@ -7,14 +7,14 @@
     }
 </style>
 <section class="content-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <button type="button" class="close cl" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">×</span>
     </button>
     <h1>Other Upload Documents</h1>
 </section>
 <section class="content">
     @Html.HiddenFor(m => m.PilotRegistrationNo)
-    @Html.HiddenFor(m=>m.AdmissionId)
+    @Html.HiddenFor(m => m.AdmissionId)
     @Html.HiddenFor(m => m.OptionOfDM)
     <div class="row">
         <div class="col-md-12">
@@ -22,16 +22,15 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="col-md-5">
-                            <input type="file" multiple id="fileUpload1" class="form-control" onchange="readURL(this)">
+                            <input type="file" multiple id="fileUpload3" class="form-control" onchange="readURLOH(this)">
                         </div>
                         <div class="col-md-7">
-                            <button type="button" id="btnSubmitScreenTest" class="btn btn-success">Upload</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="button" id="btnSubmitScreenTest12" class="btn btn-success">Upload</button>
+                            <button type="button" class="btn btn-danger cl" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12" style="padding-top:10px;" id="divmultiple">
-
                         </div>
                     </div>
                 </div>
@@ -39,7 +38,7 @@
         </div>
 
         <div class="col-md-12" style="display:@(Model.Documents.Count>0?"block":"none")">
-            <div class="box box-primary">
+            <div>
                 <div class="box-body">
                     <div class="row">
                         <div class="col-md-12" style="padding-top:10px;">
@@ -60,7 +59,7 @@
 
 
 <script>
-    function readURL(input) {
+    function readURLOH(input) {
         if (input.files) {
             var filesAmount = input.files.length;
             if (filesAmount > 0) {
@@ -79,19 +78,19 @@
         }
     }
 
-    $('#btnSubmitScreenTest').click(function () {
+    $('#btnSubmitScreenTest12').click(function () {
         var data = new FormData();
         data.append("CandidateId", $('#PilotRegistrationNo').val());
         data.append("AdmissionId", $('#AdmissionId').val());
         data.append("DocumentId", $('#OptionOfDM').val());
-        var files = $("#fileUpload1").get(0).files;
+        var files = $("#fileUpload3").get(0).files;
         if (files.length > 0) {
             for (var j = 0; j < files.length; j++) {
                 data.append("Image" + (j + 1), files[j]);
             }
         }
         $.ajax({
-            url: "/PTA/Registration/SaveOtherFilesUploadData",
+            url: URL,
             type: "POST",
             processData: false,
             contentType: false,

@@ -25,7 +25,10 @@ namespace SJData
         public Nullable<System.DateTime> FitnessDate { get; set; }
         public string MedicalStatus { get; set; }
         public Nullable<System.DateTime> DateOfJoining { get; set; }
+        public Nullable<System.DateTime> DateOfWithdrawn { get; set; }
+        public Nullable<int> EnteredBy { get; set; }
     
         public virtual AddmissionMaster AddmissionMaster { get; set; }
+        public virtual UserLogin UserLogin { get; set; }
     }
 }

@@ -16,5 +16,6 @@ namespace SJModel
         public bool Poor { get; set; }
         public string Remark { get; set; }
         public int ScreeningTestId { get; set; }
+        public string Interviewer { get; set; }
     }
 }

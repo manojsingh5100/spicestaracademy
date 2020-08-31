@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SJService;
+using System.Web.Routing;
 
 namespace SpiceStarAcademy.Areas.PerformanceCard.Controllers
 {
@@ -44,6 +45,7 @@ namespace SpiceStarAcademy.Areas.PerformanceCard.Controllers
                     Session["Department"] = loginInfo.Department;
                     Session["UserId"] = loginInfo.Id;
                     Session["RoleName"] = loginInfo.RoleName;
+                    Session["Email"] = loginInfo.Email;
                     if (Model.RememberMe)
                     {
                         HttpCookie cookie = new HttpCookie("Login");
@@ -72,6 +74,12 @@ namespace SpiceStarAcademy.Areas.PerformanceCard.Controllers
                 TempData["errorMsg"] = ex.Message + "//" + ex.InnerException;
                 return View(loginInfo);
             }
+        }
+
+        public ActionResult IsAcceptPerformanceCard(int PerformanceEntryMId, bool Status)
+        {
+            var data = loginService.CreateUpdatePerformanceCandidateResponce(PerformanceEntryMId,Status);
+            return View();
         }
     }
 }

@@ -50,5 +50,6 @@ namespace WebApplicationInterface.DataLayer
         public virtual DbSet<ptaScreeningTestResult> ptaScreeningTestResults { get; set; }
         public virtual DbSet<ptaScreeningExamFeeInfo> ptaScreeningExamFeeInfoes { get; set; }
         public virtual DbSet<RegistrationMaster> RegistrationMasters { get; set; }
+        public virtual DbSet<tblGetTermAcceptancyByCandidate> tblGetTermAcceptancyByCandidates { get; set; }
     }
 }

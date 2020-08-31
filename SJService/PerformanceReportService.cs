@@ -358,7 +358,7 @@ namespace SJService
 
         public dynamic GetSelectedCandidateOnConsolidatedpage(int RegistraionNo, int BatchId, int ReviewId)
         {
-            var list = _context.tblPerformanceEntryMasters.Where(w=>w.BatchId == w.AddmissionMaster.AddmissionDetails.FirstOrDefault().BatchId).AsQueryable();
+            var list = _context.tblPerformanceEntryMasters.Where(w => w.BatchId == w.AddmissionMaster.AddmissionDetails.FirstOrDefault().BatchId).AsQueryable();
             if (BatchId > 0)
                 list = list.Where(w => w.BatchId == BatchId);
             if (ReviewId > 0)
@@ -863,18 +863,18 @@ namespace SJService
                             Rating = s.tblPerformanceParameterResultMasters.FirstOrDefault().Rating
                         })
                     })
-                }).Where(i => i.BatchId == i.CurrentBatchId &&  i.ReviewId == ReviewId && i.BatchId == BatchId).ToList().Select(l => new
-                 {
-                     Fname = l.Fname,
-                     Lname = l.Lname,
-                     BatchId = l.BatchId,
-                     TotalPercentage = l.TotalPercentage,
-                     PerformanceData = l.PerformanceData.Select(i => new
-                     {
-                         ParameterName = i.ParameterName,
-                         Percentage = (i.performanceData.Sum(s => s.Rating) * 100) / (i.performanceData.Count() * 3)
-                     }).ToList()
-                 }).OrderBy(o => o.Fname).ToList();
+                }).Where(i => i.BatchId == i.CurrentBatchId && i.ReviewId == ReviewId && i.BatchId == BatchId).ToList().Select(l => new
+                {
+                    Fname = l.Fname,
+                    Lname = l.Lname,
+                    BatchId = l.BatchId,
+                    TotalPercentage = l.TotalPercentage,
+                    PerformanceData = l.PerformanceData.Select(i => new
+                    {
+                        ParameterName = i.ParameterName,
+                        Percentage = (i.performanceData.Sum(s => s.Rating) * 100) / (i.performanceData.Count() * 3)
+                    }).ToList()
+                }).OrderBy(o => o.Fname).ToList();
             return list;
         }
     }

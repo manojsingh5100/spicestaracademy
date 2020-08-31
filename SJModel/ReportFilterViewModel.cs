@@ -9,6 +9,10 @@ namespace SJModel
 {
     public class ReportFilterViewModel
     {
+        public ReportFilterViewModel()
+        {
+            GetLeadSourceList = new List<RoleViewModel>();
+        }
         public string CourseId { get; set; }
         public string BatchId { get; set; }
         public string CandidateName { get; set; }
@@ -31,6 +35,8 @@ namespace SJModel
         public int CompareMonth { get; set; }
         public int QuarterMonth { get; set; }
         public int CompareQuarterMonth { get; set; }
+        public int InstallmentNo { get; set; }
+
 
         public List<SemesterMasterViewModel> GetBatchList { get; set; }
         public List<CourseMasterViewModel> GetCourseList { get; set; }
@@ -41,7 +47,7 @@ namespace SJModel
         public List<RoleViewModel> GetCandidateListById { get; set; }
         public List<ReviewMasterViewModel> GetReviewList { get; set; }
         public List<ReviewMasterViewModel> WeeklyTermList { get; set; }
-
+        public List<RoleViewModel> GetLeadSourceList { get; set; }
         public List<SemesterMasterViewModel> GetParameterList { get; set; }
 
         public int TotalStudent { get; set; }

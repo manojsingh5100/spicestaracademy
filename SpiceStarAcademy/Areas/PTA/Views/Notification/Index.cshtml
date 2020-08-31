@@ -15,6 +15,7 @@
         <div class="col-md-12">
             <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong id="lblMsg">@TempData["msg"]</strong>
             </div>
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
@@ -26,10 +27,10 @@
                 <div class="tab-content">
                     <div class="active tab-content" id="feeReminder">
                         <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" id="screeningradio" onclick="radioScreeing()" name="feeReminder">
+                            <input type="radio" class="custom-control-input" id="screeningradio" onchange="radioScreeing()" name="feeReminder">
                             <label class="custom-control-label">Screening</label>
 
-                            <input type="radio" class="custom-control-input" id="admissionradio" onclick="radioAdmission()" name="feeReminder">
+                            <input type="radio" class="custom-control-input" id="admissionradio" onchange="radioAdmission()" name="feeReminder">
                             <label class="custom-control-label">Admission Fee</label>
                         </div>
                     </div>
@@ -37,10 +38,8 @@
                     <div class="row" id="screeningtbl">
                         <div>
                             <label for="inputName" style="margin-left:20px">Payment term</label>
-                            <select class="browser-default custom-select custom-select-lg mb-3">
-                                <option value="1">Screening</option>
-                                <option value="2">ReAppear1</option>
-                                <option value="3">ReAppear2</option>
+                            <select class="browser-default custom-select custom-select-lg mb-3" onchange="paymentTermbyId();" id="PID">
+                                <option value="select"></option>
                             </select>
                         </div>
                         <div class="col-xs-12">
@@ -51,7 +50,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="no-sort">Sr.No.</th>
-                                                    <th>Select Reg.</th>
+                                                    <th><input id="checkAllScreening" type="checkbox" />All</th>
                                                     <th>Reg.No.</th>
                                                     <th>Appl.No.</th>
                                                     <th>Candidate Name</th>
@@ -63,11 +62,13 @@
                                                     <th>Course</th>
                                                     <th>Reg.Date</th>
                                                     <th>Scr. Amount</th>
+                                                    <th>Sent Notification</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="tblScreeningRegistrationList"></tbody>
                                         </table>
-
+                                        @*<button type="button" id="btnSendMail" onclick="SendScreeningMailPopUp();" class="btn btn-success pull-right">Send Mails</button>*@
+                                        <button type="button" id="btnSendMail" class="btn btn-success pull-right" onclick="SendScreeningMailPopUp();" disabled>Send Mail</button>
                                     </div>
                                 </div>
                             </div>
@@ -83,6 +84,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Sr.No.</th>
+                                                    <th><input type="checkbox" id="CheckAllAdmission1" class="case" name="case" onchange="checkAll(this);">&nbsp;&nbsp;Select All </th>
                                                     <th>Reg.No.</th>
                                                     <th>Appl.No.</th>
                                                     <th>Student Name</th>
@@ -96,6 +98,7 @@
                                             </thead>
                                             <tbody id="tbpilotadmissionList"></tbody>
                                         </table>
+                                        <button type="button" id="btnAdmissionSendMail" class="btn btn-primary btn-xs" onclick="sendAdmissionMailPopUp()" disabled>Send mail</button>
                                     </div>
                                 </div>
                             </div>
@@ -107,6 +110,24 @@
         </div>
     </div>
 </div>
+
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog" style="width:1050px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Email Content</h4>
+            </div>
+            <div class="modal-body" id="divFeeList">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success pull-right" onclick="SendScreeningMailContent();">Send Mails</button>&nbsp;
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 <!-- /.tab-content -->
 <script>
     $(document).ready(function () {
@@ -115,7 +136,8 @@
         $("#tblPilotScreeningRegistration").hide();
         $('#screeningtbl').hide();
         $('#admissiontbl').hide();
-    })
+
+    });
 
     function radioScreeing() {
         $("#tblPilotAdmissions").hide();
@@ -128,28 +150,44 @@
             url: "/PTA/Notification/GetPilotCandidateScreeningList",
             async: false,
             success: function (response) {
-                console.log(response);
+                //console.log(response);
                 if (response != null && response.length > 0) {
                     $('#tblScreeningRegistrationList').empty();
                     var tblbody = '';
                     $.each(response, function (i, item) {
                         tblbody += '<tr>';
-                        tblbody += '<td>' + (i + 1) + '</td><td> <input type="checkbox">'  +'</td><td>' + item.PilotRegistartionNo + '</td><td>' + (item.ApplicationNo != null ? item.ApplicationNo : "") + '</td><td>' + item.StudentName + '</td> <td>' + item.Email + '</td> <td>' + item.Mobile + '</td> <td>' + item.DOBStr + '</td> <td>' + item.Gender + '</td><td>' + (item.CreatedBy == 4 ? "Selected" : (item.IsActive ? "Rejected" : "Pending")) + '</td><td>' + item.CourseName + '</td><td>' + item.RegisterDate + '</td><td>' + item.ScreeningAmountTerm +'</td>'
+                        tblbody += '<td>' + (i + 1) + '</td><td style = "text-align:center" > <input type="checkbox" regno=' + item.Id + ' name=' + (item.LastExamFailedStatus ? (item.ScreeningExamFeeNo == 3 ? "no" : "yes") : "no") + ' term=' + item.ScreeningExamFeeNo + '  class=' + (item.LastExamFailedStatus ? (item.ScreeningExamFeeNo == 3 ? "hasbeen" : "initial") : "hasbeen") + ' term=' + item.ScreeningExamFeeNo + ' /></td><td>' + item.PilotRegistartionNo + '</td><td>' + (item.ApplicationNo != null ? item.ApplicationNo : "") + '</td><td>' + item.StudentName + '</td> <td>' + item.Email + '</td> <td>' + item.Mobile + '</td> <td>' + item.DOBStr + '</td> <td>' + item.Gender + '</td><td>' + (item.CreatedBy == 4 ? "Selected" : (item.IsActive ? "Rejected" : "Pending")) + '</td><td>' + item.CourseName + '</td><td>' + item.RegisterDate + '</td><td>' + item.ScreeningAmount + '</td><td>' + item.SentNotificationCount + '</td>'
                         tblbody += '</tr>';
                     });
 
                     $('#tblScreeningRegistrationList').append(tblbody);
+
+                    $(".hasbeen").each(function () {
+                        $(this).prop('checked', true);
+                        $(this).attr('disabled', 'disabled');
+                    });
+                    $("input[name='yes']").change(function () {
+                        if ($('.initial:checked').length > 0)
+                            $('#btnSendMail').removeAttr('disabled');
+                        else
+                            $('#btnSendMail').attr('disabled', 'disabled');
+                    });
+                    setTimeout(function () {
+                        paymentTerm();
+                    }, 2000);
                 }
             },
-
             complete: function () {
                 $("#tblPilotScreeningRegistration").DataTable();
+
                 StopLoading();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert('Failed!');
             }
         });
+
+
     };
 
 
@@ -168,11 +206,16 @@
                     $('#tbpilotadmissionList').empty();
                     var tblbody = '';
                     $.each(response, function (i, item) {
+                        var RegNo = item.PilotRegistartionNo;
                         tblbody += '<tr>';
-                        tblbody += '<td>' + (i + 1) + '</td> <td>' + item.PilotRegistartionNo + '</td><td>' + (item.ApplicationNo != null ? item.ApplicationNo : "") + '</td> <td>' + item.StudentName + '</td> <td>' + item.Email + '</td> <td>' + item.Mobile + '</td> <td>' + item.DOBStr + '</td> <td>' + item.Gender + '</td><td>' + item.CourseName + '</td>  <td>' + item.RegisterDate + '</td>'
+                        tblbody += '<td>' + (i + 1) + '</td> <td><input type="checkbox" regNo=' + item.Id + ' class="case"/>' + '</td><td>' + item.PilotRegistartionNo + '</td><td>' + (item.ApplicationNo != null ? item.ApplicationNo : "") + '</td> <td>' + item.StudentName + '</td> <td>' + item.Email + '</td> <td>' + item.Mobile + '</td> <td>' + item.DOBStr + '</td> <td>' + item.Gender + '</td><td>' + item.CourseName + '</td>  <td>' + item.RegisterDate + '</td>'
                         tblbody += '</tr>';
                     });
                     $('#tbpilotadmissionList').append(tblbody);
+                    if ($('.class:checked').length > 0)
+                        $('#btnAdmissionSendMail').removeAttr('disabled');
+                    else
+                        $('#btnAdmissionSendMail').attr('disabled', 'disabled');
                 }
             },
             complete: function () {
@@ -185,5 +228,199 @@
         });
     };
 
+    function paymentTerm() {
+        debugger;
+        $.ajax({
+            type: "GET",
+            url: "/PTA/Notification/GetPaymentTermDropDown",
+            async: false,
+            success: function (data) {
+                if (data != null > 0) {
+                    $('#PID').html('');
+                    var options = '';
+                    //options += '<option value="Select"></option>';
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].ScreeningAmountTerm == 1) {
+                            options += '<option value="' + data[i].ScreeningAmountTerm + '">' + "Screening" + '</option>';
+                        }
+                        else if (data[i].ScreeningAmountTerm == 2) {
+                            options += '<option value="' + data[i].ScreeningAmountTerm + '">' + "ReAppear1" + '</option>';
+                        }
+                        else if (data[i].ScreeningAmountTerm == 3) {
+                            options += '<option value="' + data[i].ScreeningAmountTerm + '">' + "ReAppear2" + '</option>';
+                        }
+                    }
 
+                    $('#PID').append(options);
+                }
+            },
+            complete: function () {
+                StopLoading();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed!');
+            }
+        });
+
+    }
+
+    function paymentTermbyId() {
+        debugger;
+        $.ajax({
+            type: "GET",
+            url: "/PTA/Notification/GetPaymentTermDropDown?id=" + $('#PID').val() + "",
+            async: false,
+            success: function (data) {
+                if (data != null > 0) {
+                    $('#tblScreeningRegistrationList').empty();
+                    var tblbody = '';
+                    $.each(data, function (i, item) {
+                        tblbody += '<tr>';
+                        tblbody += '<td>' + (i + 1) + '</td><td style = "text-align:center" > <input type="checkbox" regno=' + item.Id + ' name=' + (item.LastExamFailedStatus ? (item.ScreeningExamFeeNo == 3 ? "no" : "yes") : "no") + ' term=' + item.ScreeningExamFeeNo + '  class=' + (item.LastExamFailedStatus ? (item.ScreeningExamFeeNo == 3 ? "hasbeen" : "initial") : "hasbeen") + ' term=' + item.ScreeningExamFeeNo + ' /></td><td>' + item.PilotRegistartionNo + '</td><td>' + (item.ApplicationNo != null ? item.ApplicationNo : "") + '</td><td>' + item.StudentName + '</td> <td>' + item.Email + '</td> <td>' + item.Mobile + '</td> <td>' + item.DOBStr + '</td> <td>' + item.Gender + '</td><td>' + (item.CreatedBy == 4 ? "Selected" : (item.IsActive ? "Rejected" : "Pending")) + '</td><td>' + item.CourseName + '</td><td>' + item.RegisterDate + '</td><td>' + item.ScreeningAmount + '</td><td>' + item.SentNotificationCount + '</td>'
+                        tblbody += '</tr>';
+                    });
+
+                    $('#tblScreeningRegistrationList').append(tblbody);
+                    $(".hasbeen").each(function () {
+                        $(this).prop('checked', true);
+                        $(this).attr('disabled', 'disabled');
+                    });
+                    $("input[name='yes']").change(function () {
+                        if ($('.initial:checked').length > 0)
+                            $('#btnSendMail').removeAttr('disabled');
+                        else
+                            $('#btnSendMail').attr('disabled', 'disabled');
+                    });
+                }
+            },
+            complete: function () {
+                $("#tblPilotScreeningRegistration").DataTable();
+                StopLoading();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed!');
+            }
+        });
+
+    }
+
+    //********************PopUp******************
+
+
+    function SendScreeningMailContent() {
+        debugger;
+        var regarr = [];
+        $(".initial").each(function () {
+            if ($(this).prop('checked'))
+                regarr.push($(this).attr('regno'));
+        });
+        var cotentinfo = $('#content').val();
+        if (regarr.length > 0) {
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "/PTA/Notification/SendScreeningEmailNotificationContent",
+                data: { RegNoArr: regarr, Content: cotentinfo },
+                async: false,
+                success: function (response) {
+                    if (response != null > 0) {
+                        
+                        if (response == true) {
+                            $('#myModal').modal('hide');
+                            $('#lblMsg').html('Email sent Succesfully');
+                            $("#dvMsg").css("display", "block"); 
+                            setTimeout(function () {
+                                $("#dvMsg").css("display", "none");
+                                $('#lblMsg').html('');
+                            }, 8000);
+                        }
+
+                    }
+                },
+                complete: function () {
+                    $("#tblPilotScreeningRegistration").DataTable();
+                    StopLoading();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed!');
+                }
+            });
+        }
+    }
+    function checkMsg(msg) {
+        if (msg != undefined && msg != null && msg != "") {
+            $('#lblMsg').html(msg);
+            $("#dvMsg").css("display", "block");
+            setTimeout(function () {
+                $("#dvMsg").css("display", "none");
+                $('#lblMsg').html('');
+            }, 8000);
+        }
+    }
+    function SendScreeningMailPopUp() {
+        debugger;
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "/PTA/Notification/SendScreeningEmailNotification",
+            async: false,
+            success: function (response) {
+                if (response != null > 0) {
+                    $('#divFeeList').append(response);
+                    $('#myModal').modal('show');
+                }
+            },
+            complete: function () {
+                StopLoading();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed!');
+            }
+        });
+    }
+
+
+
+    $('#checkAllScreening').click(function () {
+        debugger;
+        if ($(this).prop('checked')) {
+            $(".initial").each(function () {
+                $(this).prop('checked', true);
+            });
+        } else {
+            $(".initial").each(function () {
+                $(this).prop('checked', false);
+            });
+        }
+        if ($('.initial:checked').length > 0)
+            $('#btnSendMail').removeAttr('disabled');
+        else
+            $('#btnSendMail').attr('disabled', 'disabled');
+        
+    });
+
+
+
+
+    function checkAll(ele) {
+        debugger;
+        var checkboxes = document.getElementsByTagName('input');
+        if (ele.checked) {
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = true;
+                    $('#btnAdmissionSendMail').removeAttr('disabled');
+                }
+            }
+        } else {
+            for (var i = 0; i < checkboxes.length; i++) {
+                console.log(i)
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = false;
+                    $('#btnAdmissionSendMail').attr('disabled', 'disabled');
+                }
+
+            }
+        }
+    }
 </script>

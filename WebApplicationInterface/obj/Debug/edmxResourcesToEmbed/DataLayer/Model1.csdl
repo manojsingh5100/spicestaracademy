@@ -138,6 +138,7 @@
       <End Role="SessionMaster" EntitySet="SessionMasters" />
       <End Role="RegistrationMaster" EntitySet="RegistrationMasters" />
     </AssociationSet>
+    <EntitySet Name="tblGetTermAcceptancyByCandidates" EntityType="SJStarERPModel.tblGetTermAcceptancyByCandidate" />
   </EntityContainer>
   <EntityType Name="CourseMaster">
     <Key>
@@ -849,4 +850,13 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="tblGetTermAcceptancyByCandidate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tblPerformanceEntryMasterId" Type="Int32" Nullable="false" />
+    <Property Name="Accept" Type="Boolean" />
+    <Property Name="DateOfAction" Type="DateTime" Precision="3" />
+  </EntityType>
 </Schema>

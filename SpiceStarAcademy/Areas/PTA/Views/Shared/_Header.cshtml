@@ -37,8 +37,11 @@
 
 
                         <li class="user-footer">
-                            <div class="pull-right">
-                                <a href="/Login" class="btn btn-default btn-flat">Sign out</a>
+                            <div class="pull-right">                                
+                                @if (Session["RoleName"].ToString() == "Admin")
+                                {<a href="/PTA/Login" class="btn btn-default btn-flat">Sign out</a>}
+                                else if (Session["RoleName"].ToString() == "PTA Student")
+                                {<a href="/PTA/StudentLogin" class="btn btn-default btn-flat">Sign out</a>}                              
                             </div>
                         </li>
                     </ul>
@@ -51,4 +54,5 @@
         </div>
     </nav>
 </header>
+
 

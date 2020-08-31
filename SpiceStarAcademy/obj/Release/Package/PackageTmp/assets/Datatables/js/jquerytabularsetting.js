@@ -1,4 +1,8 @@
-﻿function exportOpt() { return [{ extend: 'excelHtml5', className: 'btn-primary' }] }
+﻿function exportOpt() {
+    return [{
+        extend: 'excelHtml5', exportOptions: {
+            columns: ':visible'
+        }, className: 'btn-primary' }] }
 function getAjax(tbl, url) {
     if (tbl == "tblScreening" || tbl == "tblMedical")
         return {
@@ -25,7 +29,7 @@ function tblSetting(exportBtn, url, cols, orderByIndex, tblName, orderBy) {
                 else if (aData.IsTermResgCandidate == "Resignation")
                     $(nRow).css("background-color", "rgba(251, 132, 132, 0.16)");
             }
-            $("td:first", nRow).html(iDisplayIndex + 1);
+            //$("td:first", nRow).html(iDisplayIndex + 1);
             return nRow;
         }, orderCellsTop: !0, fixedHeader: !0,
         "fnInitComplete": function (oSettings, json) {
@@ -52,11 +56,16 @@ function tblSetting(exportBtn, url, cols, orderByIndex, tblName, orderBy) {
                     $('#ddlcoursefilter').val(data.columns[5].search.value);
                     $('#ddltrfilter').val(data.columns[3].search.value);
                 }
-            } else if (tblName == "tblFeeCandidatesList") {
+            } else if (tblName === "tblReport")
+            {
+                $('#ddlLeadSource').val(data.columns[5].search.value).trigger('change');
+            }
+            else if (tblName == "tblFeeCandidatesList") {
                 addbatchOption('ddlbatchfilter');
                 $('#ddlbatchfilter').val(data.columns[7].search.value);
                 $('#ddlcoursefilter').val(data.columns[8].search.value);
                 $('#ddlfeestatus').val(data.columns[11].search.value);
+                $("#ddlbatchfilter option[value=19]").hide();
             } else {
                 if (tblName == "tblRegistration") {
                     $('#ddlcoursefilter').val(data.columns[8].search.value);
@@ -76,7 +85,7 @@ function deafultAllPaging(tblName) {
         return 10;
 }
 function coursefilter(obj, colnum) { Table.columns(colnum).search(obj.value).draw() }
-function filterWithdrawalCandidate(obj) { Table.columns(7).search(obj.value).draw() }
+function filterWithdrawalCandidate(obj) {Table.columns(7).search(obj.value).draw() }
 function trfilter(obj) { Table.columns(3).search(obj.value).draw() }
 function filterBatch(obj, colnum) { var objName = $("option:selected", obj).text() == "Fiter By Batch" ? "" : $("option:selected", obj).text().trim(); Table.columns(colnum).search(objName).draw() }
 function filterSSAReportBatch(obj, colnum) { var objName = $("option:selected", obj).text() == "Fiter By Batch" ? "" : $("option:selected", obj).text().trim(); Table.columns(colnum).search(objName).draw() }

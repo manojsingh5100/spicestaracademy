@@ -159,6 +159,7 @@ namespace SpiceStarAcademy.Controllers
             log.ControllerName = "Addmission";
             log.Activity = "Update Basic Detail";
             log.ActivityMessage = "Admission basic detail of registraion no " + model.RegNo + " updated.";
+            log.RegistrationNo = model.RegNo;
             logActivityService.CreateLogActivity(log);
             return Json(status, JsonRequestBehavior.AllowGet);
         }
@@ -196,6 +197,7 @@ namespace SpiceStarAcademy.Controllers
             log.ControllerName = "Addmission";
             log.Activity = "Update Address Detail";
             log.ActivityMessage = "Admission address detail of registraion no " + model.RegNo + " updated.";
+            log.RegistrationNo = Convert.ToInt32(model.RegNo);
             logActivityService.CreateLogActivity(log);
             return Json(status, JsonRequestBehavior.AllowGet);
         }
@@ -211,6 +213,7 @@ namespace SpiceStarAcademy.Controllers
             log.ControllerName = "Addmission";
             log.Activity = "Update Medical Detail";
             log.ActivityMessage = "Admission medical detail of registraion no " + model.RegNo + " updated.";
+            log.RegistrationNo = Convert.ToInt32(model.RegNo);
             logActivityService.CreateLogActivity(log);
             return Json(status, JsonRequestBehavior.AllowGet);
         }
@@ -292,6 +295,12 @@ namespace SpiceStarAcademy.Controllers
             SpiceStarAcademy.Models.Common c = new SpiceStarAcademy.Models.Common();
             c.TerminationResignationSheduler();
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetTerminationResignationInfo()
+        {
+            var data = addmissionService.GetTerminationResignationInfo();
+            return View(data);
         }
     }
 }

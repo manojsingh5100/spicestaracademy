@@ -182,6 +182,8 @@ function performanceCardValidation() {
 function saveCandidatePerformaneParameter(model) {
     model.Percentage = $('#spnpercentage').text();
     model.PerformanceReview = $('#txtReview').val();
+    model.ReviewArr = $('#ReviewId option:selected').text();
+    model.WeeklyArr = $('#lblperformanceResult').text();
     $.ajax({
         url: "/PerformanceCard/Performance/SavePerformanceCardDetail", type: "POST", async: !1, data: { Model: model }, success: function (response) {
             if (response != null) {
@@ -204,18 +206,18 @@ function savePerformanceCard() {
         parameterTypeInfo.PerformanceMasterId = performanceIndicator.properties[getResultIndicator($('#lblperformance' + $(this).attr('ptypeId')).text())].value;
         parameterTypeInfo.ParameterTypeId = $(this).attr('ptypeId');
         var parameterinfolist = [];
-            $(this).children('input').each(function (index) {
-                var parameterInfo = {};
-                var identity = $(this).attr('identity').split('-');
-                parameterTypeInfo.PtId = identity[1];
-                parameterTypeInfo.IsApplicable = ($('#chk_' + $(this).attr('identity')).prop('checked') ? false : true);
-                if ($(this).prop('checked')) {
-                    parameterInfo.TblParameterId = identity[1];
-                    parameterInfo.Rating = getRate(index);
-                    parameterInfo.Remarks = $('#txtreview' + $(this).attr('identity')).val();
-                    parameterinfolist.push(parameterInfo);
-                }
-            });
+        $(this).children('input').each(function (index) {
+            var parameterInfo = {};
+            var identity = $(this).attr('identity').split('-');
+            parameterTypeInfo.PtId = identity[1];
+            parameterTypeInfo.IsApplicable = ($('#chk_' + $(this).attr('identity')).prop('checked') ? false : true);
+            if ($(this).prop('checked')) {
+                parameterInfo.TblParameterId = identity[1];
+                parameterInfo.Rating = getRate(index);
+                parameterInfo.Remarks = $('#txtreview' + $(this).attr('identity')).val();
+                parameterinfolist.push(parameterInfo);
+            }
+        });
         parameterTypeInfo.ParameterInfoList = parameterinfolist; parameterTypeInfoList.push(parameterTypeInfo)
     });
     $('.starwars').each(function () {

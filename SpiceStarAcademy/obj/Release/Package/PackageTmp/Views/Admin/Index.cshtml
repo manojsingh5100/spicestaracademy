@@ -96,7 +96,16 @@
         $("#Name").val(""), $("#IsActive").prop("checked", !0)
     }
 
-    $(document).ready(function () { Table = $("#tblBatchAdmin").DataTable(ReportBatchSetting("tblReport")), StopLoading() }),
+    $(document).ready(function () {
+        Table = $("#tblBatchAdmin").DataTable(ReportBatchSetting("tblReport"));
+        Table.on('draw.dt', function () {
+            var PageInfo = $('#tblBatchAdmin').DataTable().page.info();
+            Table.column(0, { page: 'current' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1 + PageInfo.start;
+            });
+        });
+        StopLoading();
+    }),
 
         $("#btnBatchSubmit").click(function () {
             var startDate = $('#BatchStartDateStr').val();

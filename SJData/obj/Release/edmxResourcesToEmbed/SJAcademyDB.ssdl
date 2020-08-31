@@ -396,6 +396,8 @@
     <Property Name="FitnessDate" Type="datetime" />
     <Property Name="MedicalStatus" Type="varchar" MaxLength="250" />
     <Property Name="DateOfJoining" Type="datetime" />
+    <Property Name="DateOfWithdrawn" Type="datetime" />
+    <Property Name="EnteredBy" Type="int" />
   </EntityType>
   <EntityType Name="PartWisePayment">
     <Key>
@@ -572,6 +574,14 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="250" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ptaEmailNotificationSentContents">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ptaScreeningEmailNotificationID" Type="int" Nullable="false" />
+    <Property Name="EmailNotificationcontent" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="ptaFeeCollection">
     <Key>
@@ -959,6 +969,21 @@ warning 6002: The table/view 'SJStarERP.dbo.Query' does not have a primary key d
     <Property Name="IsAadharCard" Type="bit" Nullable="false" />
     <Property Name="DepartmentMasterId" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="RefundInformation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ExceededFeeAmountOnCourseChangeId" Type="int" />
+    <Property Name="RefundAmount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="CaseClosed" Type="bit" Nullable="false" />
+    <Property Name="EnteredBy" Type="int" Nullable="false" />
+    <Property Name="EnteredDate" Type="datetime" Nullable="false" />
+    <Property Name="StatusLine" Type="varchar" MaxLength="100" />
+    <Property Name="Status" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CurrDate" Type="datetime" />
+    <Property Name="AddmissionMasterId" Type="int" />
+  </EntityType>
   <EntityType Name="RegistrationMaster">
     <Key>
       <PropertyRef Name="Id" />
@@ -1066,6 +1091,7 @@ warning 6002: The table/view 'SJStarERP.dbo.Query' does not have a primary key d
     <Property Name="Poor" Type="bit" Nullable="false" />
     <Property Name="Remark" Type="varchar" MaxLength="300" />
     <Property Name="ScreeningTestId" Type="int" Nullable="false" />
+    <Property Name="InterViewerName" Type="varchar" MaxLength="250" />
   </EntityType>
   <EntityType Name="ScreeningTest">
     <Key>
@@ -1084,6 +1110,7 @@ warning 6002: The table/view 'SJStarERP.dbo.Query' does not have a primary key d
     <Property Name="DocumentMasterId" Type="int" />
     <Property Name="ScreeningDate" Type="datetime" Nullable="false" />
     <Property Name="Remark" Type="varchar" MaxLength="500" />
+    <Property Name="RegistrationMasterId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="SendingEmailForRejectedCandidate">
     <Key>
@@ -1136,6 +1163,15 @@ warning 6002: The table/view 'SJStarERP.dbo.Query' does not have a primary key d
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="250" />
     <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="tblGetTermAcceptancyByCandidate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tblPerformanceEntryMasterId" Type="int" Nullable="false" />
+    <Property Name="Accept" Type="bit" />
+    <Property Name="DateOfAction" Type="datetime" />
   </EntityType>
   <EntityType Name="tblParameterList">
     <Key>
@@ -1250,6 +1286,7 @@ warning 6002: The table/view 'SJStarERP.dbo.Query' does not have a primary key d
     <Property Name="ControllerName" Type="varchar" MaxLength="500" Nullable="false" />
     <Property Name="EnteredBy" Type="int" Nullable="false" />
     <Property Name="EnteredDate" Type="datetime" Nullable="false" />
+    <Property Name="RegistrationNo" Type="int" />
   </EntityType>
   <EntityType Name="UserLogin">
     <Key>
@@ -1497,7 +1534,7 @@ warning 6035: The relationship 'FK__Addmissio__Regis__2EDAF651' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Candidate__Candi__50C5FA01">
+  <Association Name="FK__Candidate__Candi__4FD1D5C8">
     <End Role="CandidateTerminationResignationInfo" Type="Self.CandidateTerminationResignationInfo" Multiplicity="1" />
     <End Role="CandidateTRInfo" Type="Self.CandidateTRInfo" Multiplicity="*" />
     <ReferentialConstraint>
@@ -1509,7 +1546,7 @@ warning 6035: The relationship 'FK__Addmissio__Regis__2EDAF651' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Candidate__Enter__52AE4273">
+  <Association Name="FK__Candidate__Enter__50C5FA01">
     <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="1" />
     <End Role="CandidateTRInfo" Type="Self.CandidateTRInfo" Multiplicity="*" />
     <ReferentialConstraint>
@@ -2127,6 +2164,18 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__MedicalDe__Enter__689D8392">
+    <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="MedicalDetail" Type="Self.MedicalDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MedicalDetail">
+        <PropertyRef Name="EnteredBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__PartWiseP__Enter__3E1D39E1">
     <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="1" />
     <End Role="PartWisePayment" Type="Self.PartWisePayment" Multiplicity="*" />
@@ -2223,7 +2272,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaDocume__Docum__57A801BA">
+  <Association Name="FK__ptaDocume__Docum__6C6E1476">
     <End Role="DocumentMaster" Type="Self.DocumentMaster" Multiplicity="1" />
     <End Role="ptaDocumentDetail" Type="Self.ptaDocumentDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -2235,7 +2284,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaDocume__Enter__09FE775D">
+  <Association Name="FK__ptaDocume__Enter__6D6238AF">
     <End Role="ptaStudentLogin" Type="Self.ptaStudentLogin" Multiplicity="0..1" />
     <End Role="ptaDocumentDetail" Type="Self.ptaDocumentDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -2247,7 +2296,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaDocume__Enter__59904A2C">
+  <Association Name="FK__ptaDocume__Enter__6E565CE8">
     <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="0..1" />
     <End Role="ptaDocumentDetail" Type="Self.ptaDocumentDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -2259,7 +2308,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaDocume__ptaAd__5E54FF49">
+  <Association Name="FK__ptaDocume__ptaAd__6F4A8121">
     <End Role="ptaAdmissionMaster" Type="Self.ptaAdmissionMaster" Multiplicity="0..1" />
     <End Role="ptaDocumentDetail" Type="Self.ptaDocumentDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -2271,7 +2320,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaDocume__ptaPi__5D60DB10">
+  <Association Name="FK__ptaDocume__ptaPi__703EA55A">
     <End Role="ptaPilotRegistrationMaster" Type="Self.ptaPilotRegistrationMaster" Multiplicity="1" />
     <End Role="ptaDocumentDetail" Type="Self.ptaDocumentDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -2283,7 +2332,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaDocume__Updat__0AF29B96">
+  <Association Name="FK__ptaDocume__Updat__7132C993">
     <End Role="ptaStudentLogin" Type="Self.ptaStudentLogin" Multiplicity="0..1" />
     <End Role="ptaDocumentDetail" Type="Self.ptaDocumentDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -2295,7 +2344,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaDocume__Updat__5A846E65">
+  <Association Name="FK__ptaDocume__Updat__7226EDCC">
     <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="0..1" />
     <End Role="ptaDocumentDetail" Type="Self.ptaDocumentDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -2388,6 +2437,18 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Principal>
       <Dependent Role="ptaEducationDetail">
         <PropertyRef Name="ptaUGBoardAndUniversityMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ptaEmailN__ptaSc__297722B6">
+    <End Role="ptaScreeningEmailNotificationLogs" Type="Self.ptaScreeningEmailNotificationLogs" Multiplicity="1" />
+    <End Role="ptaEmailNotificationSentContents" Type="Self.ptaEmailNotificationSentContents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ptaScreeningEmailNotificationLogs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ptaEmailNotificationSentContents">
+        <PropertyRef Name="ptaScreeningEmailNotificationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2907,7 +2968,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaStuden__Enter__5C37ACAD">
+  <Association Name="FK__ptaStuden__Enter__65C116E7">
     <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="1" />
     <End Role="ptaStudentLogin" Type="Self.ptaStudentLogin" Multiplicity="*" />
     <ReferentialConstraint>
@@ -2919,7 +2980,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaStuden__ptaRe__090A5324">
+  <Association Name="FK__ptaStuden__ptaRe__66B53B20">
     <End Role="ptaRegistrationInfo" Type="Self.ptaRegistrationInfo" Multiplicity="1" />
     <End Role="ptaStudentLogin" Type="Self.ptaStudentLogin" Multiplicity="*" />
     <ReferentialConstraint>
@@ -2931,7 +2992,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ptaStuden__RoleI__5D2BD0E6">
+  <Association Name="FK__ptaStuden__RoleI__67A95F59">
     <End Role="Role" Type="Self.Role" Multiplicity="1" />
     <End Role="ptaStudentLogin" Type="Self.ptaStudentLogin" Multiplicity="*" />
     <ReferentialConstraint>
@@ -2940,6 +3001,42 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Principal>
       <Dependent Role="ptaStudentLogin">
         <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__RefundInf__Addmi__15702A09">
+    <End Role="AddmissionMaster" Type="Self.AddmissionMaster" Multiplicity="0..1" />
+    <End Role="RefundInformation" Type="Self.RefundInformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AddmissionMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RefundInformation">
+        <PropertyRef Name="AddmissionMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__RefundInf__Enter__7BB05806">
+    <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="1" />
+    <End Role="RefundInformation" Type="Self.RefundInformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RefundInformation">
+        <PropertyRef Name="EnteredBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__RefundInf__Excee__7CA47C3F">
+    <End Role="ExceededFeeAmountOnCourseChange" Type="Self.ExceededFeeAmountOnCourseChange" Multiplicity="0..1" />
+    <End Role="RefundInformation" Type="Self.RefundInformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExceededFeeAmountOnCourseChange">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RefundInformation">
+        <PropertyRef Name="ExceededFeeAmountOnCourseChangeId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2979,7 +3076,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Scheduled__Candi__5772F790">
+  <Association Name="FK__Scheduled__Candi__5A4F643B">
     <End Role="CandidateTRInfo" Type="Self.CandidateTRInfo" Multiplicity="1" />
     <End Role="ScheduledStatusLogForTerminateResignation" Type="Self.ScheduledStatusLogForTerminateResignation" Multiplicity="*" />
     <ReferentialConstraint>
@@ -3000,6 +3097,18 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Principal>
       <Dependent Role="ScreeningTest">
         <PropertyRef Name="DocumentMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Screening__Regis__5F141958">
+    <End Role="RegistrationMaster" Type="Self.RegistrationMaster" Multiplicity="1" />
+    <End Role="ScreeningTest" Type="Self.ScreeningTest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RegistrationMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ScreeningTest">
+        <PropertyRef Name="RegistrationMasterId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3123,6 +3232,18 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__tblGetTer__tblPe__75035A77">
+    <End Role="tblPerformanceEntryMaster" Type="Self.tblPerformanceEntryMaster" Multiplicity="1" />
+    <End Role="tblGetTermAcceptancyByCandidate" Type="Self.tblGetTermAcceptancyByCandidate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPerformanceEntryMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblGetTermAcceptancyByCandidate">
+        <PropertyRef Name="tblPerformanceEntryMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__tblParame__Revie__41B8C09B">
     <End Role="tblReviewMaster" Type="Self.tblReviewMaster" Multiplicity="0..1" />
     <End Role="tblParameterList" Type="Self.tblParameterList" Multiplicity="*" />
@@ -3159,6 +3280,18 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__tblPerfor__Batch__53A266AC">
+    <End Role="BatchMaster" Type="Self.BatchMaster" Multiplicity="1" />
+    <End Role="tblPerformancePercentageMaster" Type="Self.tblPerformancePercentageMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BatchMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblPerformancePercentageMaster">
+        <PropertyRef Name="BatchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__tblPerfor__Batch__5D95E53A">
     <End Role="BatchMaster" Type="Self.BatchMaster" Multiplicity="0..1" />
     <End Role="tblPerformanceEntryMaster" Type="Self.tblPerformanceEntryMaster" Multiplicity="*" />
@@ -3167,18 +3300,6 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="tblPerformanceEntryMaster">
-        <PropertyRef Name="BatchId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__tblPerfor__Batch__66B53B20">
-    <End Role="BatchMaster" Type="Self.BatchMaster" Multiplicity="1" />
-    <End Role="tblPerformancePercentageMaster" Type="Self.tblPerformancePercentageMaster" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="BatchMaster">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="tblPerformancePercentageMaster">
         <PropertyRef Name="BatchId" />
       </Dependent>
     </ReferentialConstraint>
@@ -3207,6 +3328,18 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__tblPerfor__Enter__567ED357">
+    <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="1" />
+    <End Role="tblPerformancePercentageMaster" Type="Self.tblPerformancePercentageMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblPerformancePercentageMaster">
+        <PropertyRef Name="EnteredBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__tblPerfor__Enter__5AB9788F">
     <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="1" />
     <End Role="tblPerformanceParameterResultMaster" Type="Self.tblPerformanceParameterResultMaster" Multiplicity="*" />
@@ -3215,18 +3348,6 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="tblPerformanceParameterResultMaster">
-        <PropertyRef Name="EnteredBy" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__tblPerfor__Enter__6991A7CB">
-    <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="1" />
-    <End Role="tblPerformancePercentageMaster" Type="Self.tblPerformancePercentageMaster" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="UserLogin">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="tblPerformancePercentageMaster">
         <PropertyRef Name="EnteredBy" />
       </Dependent>
     </ReferentialConstraint>
@@ -3291,6 +3412,18 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__tblPerfor__tblPe__54968AE5">
+    <End Role="tblPerformanceMaster" Type="Self.tblPerformanceMaster" Multiplicity="1" />
+    <End Role="tblPerformancePercentageMaster" Type="Self.tblPerformancePercentageMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPerformanceMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblPerformancePercentageMaster">
+        <PropertyRef Name="tblPerformanceMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__tblPerfor__tblPe__55009F39">
     <End Role="tblPerformanceMaster" Type="Self.tblPerformanceMaster" Multiplicity="1" />
     <End Role="tblPerformanceParameterTypeResultMaster" Type="Self.tblPerformanceParameterTypeResultMaster" Multiplicity="*" />
@@ -3315,19 +3448,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__tblPerfor__tblPe__67A95F59">
-    <End Role="tblPerformanceMaster" Type="Self.tblPerformanceMaster" Multiplicity="1" />
-    <End Role="tblPerformancePercentageMaster" Type="Self.tblPerformancePercentageMaster" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tblPerformanceMaster">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="tblPerformancePercentageMaster">
-        <PropertyRef Name="tblPerformanceMasterId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__tblPerfor__tblRe__689D8392">
+  <Association Name="FK__tblPerfor__tblRe__558AAF1E">
     <End Role="tblReviewMaster" Type="Self.tblReviewMaster" Multiplicity="1" />
     <End Role="tblPerformancePercentageMaster" Type="Self.tblPerformancePercentageMaster" Multiplicity="*" />
     <ReferentialConstraint>
@@ -3363,7 +3484,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__tblPerfor__Updat__6A85CC04">
+  <Association Name="FK__tblPerfor__Updat__5772F790">
     <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="0..1" />
     <End Role="tblPerformancePercentageMaster" Type="Self.tblPerformancePercentageMaster" Multiplicity="*" />
     <ReferentialConstraint>
@@ -3387,7 +3508,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__UserActiv__Enter__2A6B46EF">
+  <Association Name="FK__UserActiv__Enter__5E1FF51F">
     <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="1" />
     <End Role="UserActivityLogs" Type="Self.UserActivityLogs" Multiplicity="*" />
     <ReferentialConstraint>
@@ -3411,10 +3532,6 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Function Name="Sp_GetPerformancePWithParamRepots" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="BatchId" Type="varchar" Mode="In" />
-    <Parameter Name="Type" Type="bigint" Mode="In" />
-  </Function>
   <EntityContainer Name="SJStarERPModelStoreContainer">
     <EntitySet Name="AddmissionDetail" EntityType="Self.AddmissionDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AddmissionMaster" EntityType="Self.AddmissionMaster" Schema="dbo" store:Type="Tables" />
@@ -3461,6 +3578,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
     <EntitySet Name="ptaEducationDetail" EntityType="Self.ptaEducationDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ptaEducationSubjectMarks" EntityType="Self.ptaEducationSubjectMarks" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ptaEduEvaluationTypeMaster" EntityType="Self.ptaEduEvaluationTypeMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ptaEmailNotificationSentContents" EntityType="Self.ptaEmailNotificationSentContents" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ptaFeeCollection" EntityType="Self.ptaFeeCollection" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ptaFeeDetail" EntityType="Self.ptaFeeDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ptaFeePaymentDetail" EntityType="Self.ptaFeePaymentDetail" Schema="dbo" store:Type="Tables" />
@@ -3489,6 +3607,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
     <EntitySet Name="ptaStudentLogin" EntityType="Self.ptaStudentLogin" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ptaTitleMaster" EntityType="Self.ptaTitleMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ptaUGBoardAndUniversityMaster" EntityType="Self.ptaUGBoardAndUniversityMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RefundInformation" EntityType="Self.RefundInformation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RegistrationMaster" EntityType="Self.RegistrationMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ScheduledStatusLogForTerminateResignation" EntityType="Self.ScheduledStatusLogForTerminateResignation" Schema="dbo" store:Type="Tables" />
@@ -3502,6 +3621,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
     <EntitySet Name="SessionMaster" EntityType="Self.SessionMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TatooOrScar" EntityType="Self.TatooOrScar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblGetTermAcceptancyByCandidate" EntityType="Self.tblGetTermAcceptancyByCandidate" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblParameterList" EntityType="Self.tblParameterList" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblParameterType" EntityType="Self.tblParameterType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblPerformanceEntryMaster" EntityType="Self.tblPerformanceEntryMaster" Schema="dbo" store:Type="Tables" />
@@ -3640,11 +3760,11 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       <End Role="CandidateActionMaster" EntitySet="CandidateActionMaster" />
       <End Role="CandidateTerminationResignationInfo" EntitySet="CandidateTerminationResignationInfo" />
     </AssociationSet>
-    <AssociationSet Name="FK__Candidate__Candi__50C5FA01" Association="Self.FK__Candidate__Candi__50C5FA01">
+    <AssociationSet Name="FK__Candidate__Candi__4FD1D5C8" Association="Self.FK__Candidate__Candi__4FD1D5C8">
       <End Role="CandidateTerminationResignationInfo" EntitySet="CandidateTerminationResignationInfo" />
       <End Role="CandidateTRInfo" EntitySet="CandidateTRInfo" />
     </AssociationSet>
-    <AssociationSet Name="FK__Candidate__Enter__52AE4273" Association="Self.FK__Candidate__Enter__52AE4273">
+    <AssociationSet Name="FK__Candidate__Enter__50C5FA01" Association="Self.FK__Candidate__Enter__50C5FA01">
       <End Role="UserLogin" EntitySet="UserLogin" />
       <End Role="CandidateTRInfo" EntitySet="CandidateTRInfo" />
     </AssociationSet>
@@ -3848,6 +3968,10 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       <End Role="AddmissionMaster" EntitySet="AddmissionMaster" />
       <End Role="MedicalDetail" EntitySet="MedicalDetail" />
     </AssociationSet>
+    <AssociationSet Name="FK__MedicalDe__Enter__689D8392" Association="Self.FK__MedicalDe__Enter__689D8392">
+      <End Role="UserLogin" EntitySet="UserLogin" />
+      <End Role="MedicalDetail" EntitySet="MedicalDetail" />
+    </AssociationSet>
     <AssociationSet Name="FK__PartWiseP__Enter__3E1D39E1" Association="Self.FK__PartWiseP__Enter__3E1D39E1">
       <End Role="UserLogin" EntitySet="UserLogin" />
       <End Role="PartWisePayment" EntitySet="PartWisePayment" />
@@ -3880,31 +4004,31 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
       <End Role="ptaDeclaration" EntitySet="ptaDeclaration" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaDocume__Docum__57A801BA" Association="Self.FK__ptaDocume__Docum__57A801BA">
+    <AssociationSet Name="FK__ptaDocume__Docum__6C6E1476" Association="Self.FK__ptaDocume__Docum__6C6E1476">
       <End Role="DocumentMaster" EntitySet="DocumentMaster" />
       <End Role="ptaDocumentDetail" EntitySet="ptaDocumentDetail" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaDocume__Enter__09FE775D" Association="Self.FK__ptaDocume__Enter__09FE775D">
+    <AssociationSet Name="FK__ptaDocume__Enter__6D6238AF" Association="Self.FK__ptaDocume__Enter__6D6238AF">
       <End Role="ptaStudentLogin" EntitySet="ptaStudentLogin" />
       <End Role="ptaDocumentDetail" EntitySet="ptaDocumentDetail" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaDocume__Enter__59904A2C" Association="Self.FK__ptaDocume__Enter__59904A2C">
+    <AssociationSet Name="FK__ptaDocume__Enter__6E565CE8" Association="Self.FK__ptaDocume__Enter__6E565CE8">
       <End Role="UserLogin" EntitySet="UserLogin" />
       <End Role="ptaDocumentDetail" EntitySet="ptaDocumentDetail" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaDocume__ptaAd__5E54FF49" Association="Self.FK__ptaDocume__ptaAd__5E54FF49">
+    <AssociationSet Name="FK__ptaDocume__ptaAd__6F4A8121" Association="Self.FK__ptaDocume__ptaAd__6F4A8121">
       <End Role="ptaAdmissionMaster" EntitySet="ptaAdmissionMaster" />
       <End Role="ptaDocumentDetail" EntitySet="ptaDocumentDetail" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaDocume__ptaPi__5D60DB10" Association="Self.FK__ptaDocume__ptaPi__5D60DB10">
+    <AssociationSet Name="FK__ptaDocume__ptaPi__703EA55A" Association="Self.FK__ptaDocume__ptaPi__703EA55A">
       <End Role="ptaPilotRegistrationMaster" EntitySet="ptaPilotRegistrationMaster" />
       <End Role="ptaDocumentDetail" EntitySet="ptaDocumentDetail" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaDocume__Updat__0AF29B96" Association="Self.FK__ptaDocume__Updat__0AF29B96">
+    <AssociationSet Name="FK__ptaDocume__Updat__7132C993" Association="Self.FK__ptaDocume__Updat__7132C993">
       <End Role="ptaStudentLogin" EntitySet="ptaStudentLogin" />
       <End Role="ptaDocumentDetail" EntitySet="ptaDocumentDetail" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaDocume__Updat__5A846E65" Association="Self.FK__ptaDocume__Updat__5A846E65">
+    <AssociationSet Name="FK__ptaDocume__Updat__7226EDCC" Association="Self.FK__ptaDocume__Updat__7226EDCC">
       <End Role="UserLogin" EntitySet="UserLogin" />
       <End Role="ptaDocumentDetail" EntitySet="ptaDocumentDetail" />
     </AssociationSet>
@@ -3935,6 +4059,10 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
     <AssociationSet Name="FK__ptaEducat__ptaUG__2AD55B43" Association="Self.FK__ptaEducat__ptaUG__2AD55B43">
       <End Role="ptaUGBoardAndUniversityMaster" EntitySet="ptaUGBoardAndUniversityMaster" />
       <End Role="ptaEducationDetail" EntitySet="ptaEducationDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ptaEmailN__ptaSc__297722B6" Association="Self.FK__ptaEmailN__ptaSc__297722B6">
+      <End Role="ptaScreeningEmailNotificationLogs" EntitySet="ptaScreeningEmailNotificationLogs" />
+      <End Role="ptaEmailNotificationSentContents" EntitySet="ptaEmailNotificationSentContents" />
     </AssociationSet>
     <AssociationSet Name="FK__ptaFeeCol__Enter__12C8C788" Association="Self.FK__ptaFeeCol__Enter__12C8C788">
       <End Role="UserLogin" EntitySet="UserLogin" />
@@ -4108,17 +4236,29 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       <End Role="UserLogin" EntitySet="UserLogin" />
       <End Role="ptaScreeningInfo" EntitySet="ptaScreeningInfo" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaStuden__Enter__5C37ACAD" Association="Self.FK__ptaStuden__Enter__5C37ACAD">
+    <AssociationSet Name="FK__ptaStuden__Enter__65C116E7" Association="Self.FK__ptaStuden__Enter__65C116E7">
       <End Role="UserLogin" EntitySet="UserLogin" />
       <End Role="ptaStudentLogin" EntitySet="ptaStudentLogin" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaStuden__ptaRe__090A5324" Association="Self.FK__ptaStuden__ptaRe__090A5324">
+    <AssociationSet Name="FK__ptaStuden__ptaRe__66B53B20" Association="Self.FK__ptaStuden__ptaRe__66B53B20">
       <End Role="ptaRegistrationInfo" EntitySet="ptaRegistrationInfo" />
       <End Role="ptaStudentLogin" EntitySet="ptaStudentLogin" />
     </AssociationSet>
-    <AssociationSet Name="FK__ptaStuden__RoleI__5D2BD0E6" Association="Self.FK__ptaStuden__RoleI__5D2BD0E6">
+    <AssociationSet Name="FK__ptaStuden__RoleI__67A95F59" Association="Self.FK__ptaStuden__RoleI__67A95F59">
       <End Role="Role" EntitySet="Role" />
       <End Role="ptaStudentLogin" EntitySet="ptaStudentLogin" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RefundInf__Addmi__15702A09" Association="Self.FK__RefundInf__Addmi__15702A09">
+      <End Role="AddmissionMaster" EntitySet="AddmissionMaster" />
+      <End Role="RefundInformation" EntitySet="RefundInformation" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RefundInf__Enter__7BB05806" Association="Self.FK__RefundInf__Enter__7BB05806">
+      <End Role="UserLogin" EntitySet="UserLogin" />
+      <End Role="RefundInformation" EntitySet="RefundInformation" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RefundInf__Excee__7CA47C3F" Association="Self.FK__RefundInf__Excee__7CA47C3F">
+      <End Role="ExceededFeeAmountOnCourseChange" EntitySet="ExceededFeeAmountOnCourseChange" />
+      <End Role="RefundInformation" EntitySet="RefundInformation" />
     </AssociationSet>
     <AssociationSet Name="FK__Registrat__Cours__3D2915A8" Association="Self.FK__Registrat__Cours__3D2915A8">
       <End Role="CourseMaster" EntitySet="CourseMaster" />
@@ -4132,12 +4272,16 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       <End Role="SessionMaster" EntitySet="SessionMaster" />
       <End Role="RegistrationMaster" EntitySet="RegistrationMaster" />
     </AssociationSet>
-    <AssociationSet Name="FK__Scheduled__Candi__5772F790" Association="Self.FK__Scheduled__Candi__5772F790">
+    <AssociationSet Name="FK__Scheduled__Candi__5A4F643B" Association="Self.FK__Scheduled__Candi__5A4F643B">
       <End Role="CandidateTRInfo" EntitySet="CandidateTRInfo" />
       <End Role="ScheduledStatusLogForTerminateResignation" EntitySet="ScheduledStatusLogForTerminateResignation" />
     </AssociationSet>
     <AssociationSet Name="FK__Screening__Docum__02C769E9" Association="Self.FK__Screening__Docum__02C769E9">
       <End Role="DocumentMaster" EntitySet="DocumentMaster" />
+      <End Role="ScreeningTest" EntitySet="ScreeningTest" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Screening__Regis__5F141958" Association="Self.FK__Screening__Regis__5F141958">
+      <End Role="RegistrationMaster" EntitySet="RegistrationMaster" />
       <End Role="ScreeningTest" EntitySet="ScreeningTest" />
     </AssociationSet>
     <AssociationSet Name="FK__Screening__Scree__00DF2177" Association="Self.FK__Screening__Scree__00DF2177">
@@ -4180,6 +4324,10 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       <End Role="CourseMaster" EntitySet="CourseMaster" />
       <End Role="SessionMaster" EntitySet="SessionMaster" />
     </AssociationSet>
+    <AssociationSet Name="FK__tblGetTer__tblPe__75035A77" Association="Self.FK__tblGetTer__tblPe__75035A77">
+      <End Role="tblPerformanceEntryMaster" EntitySet="tblPerformanceEntryMaster" />
+      <End Role="tblGetTermAcceptancyByCandidate" EntitySet="tblGetTermAcceptancyByCandidate" />
+    </AssociationSet>
     <AssociationSet Name="FK__tblParame__Revie__41B8C09B" Association="Self.FK__tblParame__Revie__41B8C09B">
       <End Role="tblReviewMaster" EntitySet="tblReviewMaster" />
       <End Role="tblParameterList" EntitySet="tblParameterList" />
@@ -4192,13 +4340,13 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       <End Role="AddmissionMaster" EntitySet="AddmissionMaster" />
       <End Role="tblPerformanceEntryMaster" EntitySet="tblPerformanceEntryMaster" />
     </AssociationSet>
+    <AssociationSet Name="FK__tblPerfor__Batch__53A266AC" Association="Self.FK__tblPerfor__Batch__53A266AC">
+      <End Role="BatchMaster" EntitySet="BatchMaster" />
+      <End Role="tblPerformancePercentageMaster" EntitySet="tblPerformancePercentageMaster" />
+    </AssociationSet>
     <AssociationSet Name="FK__tblPerfor__Batch__5D95E53A" Association="Self.FK__tblPerfor__Batch__5D95E53A">
       <End Role="BatchMaster" EntitySet="BatchMaster" />
       <End Role="tblPerformanceEntryMaster" EntitySet="tblPerformanceEntryMaster" />
-    </AssociationSet>
-    <AssociationSet Name="FK__tblPerfor__Batch__66B53B20" Association="Self.FK__tblPerfor__Batch__66B53B20">
-      <End Role="BatchMaster" EntitySet="BatchMaster" />
-      <End Role="tblPerformancePercentageMaster" EntitySet="tblPerformancePercentageMaster" />
     </AssociationSet>
     <AssociationSet Name="FK__tblPerfor__Enter__503BEA1C" Association="Self.FK__tblPerfor__Enter__503BEA1C">
       <End Role="UserLogin" EntitySet="UserLogin" />
@@ -4208,13 +4356,13 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       <End Role="UserLogin" EntitySet="UserLogin" />
       <End Role="tblPerformanceParameterTypeResultMaster" EntitySet="tblPerformanceParameterTypeResultMaster" />
     </AssociationSet>
+    <AssociationSet Name="FK__tblPerfor__Enter__567ED357" Association="Self.FK__tblPerfor__Enter__567ED357">
+      <End Role="UserLogin" EntitySet="UserLogin" />
+      <End Role="tblPerformancePercentageMaster" EntitySet="tblPerformancePercentageMaster" />
+    </AssociationSet>
     <AssociationSet Name="FK__tblPerfor__Enter__5AB9788F" Association="Self.FK__tblPerfor__Enter__5AB9788F">
       <End Role="UserLogin" EntitySet="UserLogin" />
       <End Role="tblPerformanceParameterResultMaster" EntitySet="tblPerformanceParameterResultMaster" />
-    </AssociationSet>
-    <AssociationSet Name="FK__tblPerfor__Enter__6991A7CB" Association="Self.FK__tblPerfor__Enter__6991A7CB">
-      <End Role="UserLogin" EntitySet="UserLogin" />
-      <End Role="tblPerformancePercentageMaster" EntitySet="tblPerformancePercentageMaster" />
     </AssociationSet>
     <AssociationSet Name="FK__tblPerfor__Param__5CA1C101" Association="Self.FK__tblPerfor__Param__5CA1C101">
       <End Role="tblParameterType" EntitySet="tblParameterType" />
@@ -4236,6 +4384,10 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       <End Role="tblPerformanceEntryMaster" EntitySet="tblPerformanceEntryMaster" />
       <End Role="tblPerformanceParameterTypeResultMaster" EntitySet="tblPerformanceParameterTypeResultMaster" />
     </AssociationSet>
+    <AssociationSet Name="FK__tblPerfor__tblPe__54968AE5" Association="Self.FK__tblPerfor__tblPe__54968AE5">
+      <End Role="tblPerformanceMaster" EntitySet="tblPerformanceMaster" />
+      <End Role="tblPerformancePercentageMaster" EntitySet="tblPerformancePercentageMaster" />
+    </AssociationSet>
     <AssociationSet Name="FK__tblPerfor__tblPe__55009F39" Association="Self.FK__tblPerfor__tblPe__55009F39">
       <End Role="tblPerformanceMaster" EntitySet="tblPerformanceMaster" />
       <End Role="tblPerformanceParameterTypeResultMaster" EntitySet="tblPerformanceParameterTypeResultMaster" />
@@ -4244,11 +4396,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       <End Role="tblPerformanceParameterTypeResultMaster" EntitySet="tblPerformanceParameterTypeResultMaster" />
       <End Role="tblPerformanceParameterResultMaster" EntitySet="tblPerformanceParameterResultMaster" />
     </AssociationSet>
-    <AssociationSet Name="FK__tblPerfor__tblPe__67A95F59" Association="Self.FK__tblPerfor__tblPe__67A95F59">
-      <End Role="tblPerformanceMaster" EntitySet="tblPerformanceMaster" />
-      <End Role="tblPerformancePercentageMaster" EntitySet="tblPerformancePercentageMaster" />
-    </AssociationSet>
-    <AssociationSet Name="FK__tblPerfor__tblRe__689D8392" Association="Self.FK__tblPerfor__tblRe__689D8392">
+    <AssociationSet Name="FK__tblPerfor__tblRe__558AAF1E" Association="Self.FK__tblPerfor__tblRe__558AAF1E">
       <End Role="tblReviewMaster" EntitySet="tblReviewMaster" />
       <End Role="tblPerformancePercentageMaster" EntitySet="tblPerformancePercentageMaster" />
     </AssociationSet>
@@ -4260,7 +4408,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       <End Role="tblWeeklyReviewMaster" EntitySet="tblWeeklyReviewMaster" />
       <End Role="tblPerformanceEntryMaster" EntitySet="tblPerformanceEntryMaster" />
     </AssociationSet>
-    <AssociationSet Name="FK__tblPerfor__Updat__6A85CC04" Association="Self.FK__tblPerfor__Updat__6A85CC04">
+    <AssociationSet Name="FK__tblPerfor__Updat__5772F790" Association="Self.FK__tblPerfor__Updat__5772F790">
       <End Role="UserLogin" EntitySet="UserLogin" />
       <End Role="tblPerformancePercentageMaster" EntitySet="tblPerformancePercentageMaster" />
     </AssociationSet>
@@ -4268,7 +4416,7 @@ warning 6035: The relationship 'FK__FIN_FeeRe__RegNo__10566F31' has columns that
       <End Role="tblReviewMaster" EntitySet="tblReviewMaster" />
       <End Role="tblWeeklyReviewMaster" EntitySet="tblWeeklyReviewMaster" />
     </AssociationSet>
-    <AssociationSet Name="FK__UserActiv__Enter__2A6B46EF" Association="Self.FK__UserActiv__Enter__2A6B46EF">
+    <AssociationSet Name="FK__UserActiv__Enter__5E1FF51F" Association="Self.FK__UserActiv__Enter__5E1FF51F">
       <End Role="UserLogin" EntitySet="UserLogin" />
       <End Role="UserActivityLogs" EntitySet="UserActivityLogs" />
     </AssociationSet>

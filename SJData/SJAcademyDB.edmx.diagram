@@ -5,102 +5,105 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="2dfb5a2923274429bacc323b5453fbb9" Name="Diagram1" ZoomLevel="85">
-        <EntityTypeShape EntityType="SJStarERPModel.AddmissionDetail" Width="1.5" PointX="5.25" PointY="55.5" />
-        <EntityTypeShape EntityType="SJStarERPModel.AddmissionMaster" Width="1.5" PointX="5.25" PointY="65.125" />
-        <EntityTypeShape EntityType="SJStarERPModel.AddressDetail" Width="1.5" PointX="7.5" PointY="96.875" />
-        <EntityTypeShape EntityType="SJStarERPModel.BankAndAmountDetail" Width="1.5" PointX="36" PointY="61" />
-        <EntityTypeShape EntityType="SJStarERPModel.BatchHistoryDetail" Width="1.5" PointX="16.5" PointY="68.375" />
-        <EntityTypeShape EntityType="SJStarERPModel.BatchMaster" Width="1.5" PointX="3" PointY="49.875" />
-        <EntityTypeShape EntityType="SJStarERPModel.CallCenterRemark" Width="1.5" PointX="5.25" PointY="97.5" />
-        <EntityTypeShape EntityType="SJStarERPModel.CandidateActionMaster" Width="1.5" PointX="8.25" PointY="78.375" />
-        <EntityTypeShape EntityType="SJStarERPModel.CandidateTerminationResignationInfo" Width="1.5" PointX="10.5" PointY="74" />
-        <EntityTypeShape EntityType="SJStarERPModel.CandidateTRInfo" Width="1.5" PointX="21.75" PointY="65.5" />
-        <EntityTypeShape EntityType="SJStarERPModel.CourseChangeHistoryDetail" Width="1.5" PointX="7.5" PointY="69.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.CourseMaster" Width="1.5" PointX="9" PointY="45.625" />
-        <EntityTypeShape EntityType="SJStarERPModel.DepartmentMaster" Width="1.5" PointX="6.75" PointY="46.25" />
-        <EntityTypeShape EntityType="SJStarERPModel.DocumentDetail" Width="1.5" PointX="16.5" PointY="72.375" />
-        <EntityTypeShape EntityType="SJStarERPModel.DocumentMaster" Width="1.5" PointX="11.25" PointY="49.5" />
-        <EntityTypeShape EntityType="SJStarERPModel.ExceededFeeAmountOnCourseChange" Width="1.5" PointX="29.25" PointY="61.25" />
-        <EntityTypeShape EntityType="SJStarERPModel.FeeCollection" Width="1.5" PointX="31.5" PointY="61.25" />
-        <EntityTypeShape EntityType="SJStarERPModel.FeeDetail" Width="1.5" PointX="27" PointY="65.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.AddmissionDetail" Width="1.5" PointX="5.25" PointY="68.5" />
+        <EntityTypeShape EntityType="SJStarERPModel.AddmissionMaster" Width="1.5" PointX="11.25" PointY="61.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.AddressDetail" Width="1.5" PointX="13.5" PointY="90" />
+        <EntityTypeShape EntityType="SJStarERPModel.BankAndAmountDetail" Width="1.5" PointX="45" PointY="64" />
+        <EntityTypeShape EntityType="SJStarERPModel.BatchHistoryDetail" Width="1.5" PointX="13.5" PointY="66.625" />
+        <EntityTypeShape EntityType="SJStarERPModel.BatchMaster" Width="1.5" PointX="6" PointY="49.75" />
+        <EntityTypeShape EntityType="SJStarERPModel.CallCenterRemark" Width="1.5" PointX="5.25" PointY="98.75" />
+        <EntityTypeShape EntityType="SJStarERPModel.CandidateActionMaster" Width="1.5" PointX="14.25" PointY="43.375" />
+        <EntityTypeShape EntityType="SJStarERPModel.CandidateTerminationResignationInfo" Width="1.5" PointX="16.5" PointY="60" />
+        <EntityTypeShape EntityType="SJStarERPModel.CandidateTRInfo" Width="1.5" PointX="21.75" PointY="68.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.CourseChangeHistoryDetail" Width="1.5" PointX="16.5" PointY="68.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.CourseMaster" Width="1.5" PointX="9" PointY="53.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.DepartmentMaster" Width="1.5" PointX="6.75" PointY="53.75" />
+        <EntityTypeShape EntityType="SJStarERPModel.DocumentDetail" Width="1.5" PointX="19.5" PointY="68.625" />
+        <EntityTypeShape EntityType="SJStarERPModel.DocumentMaster" Width="1.5" PointX="11.25" PointY="78.625" />
+        <EntityTypeShape EntityType="SJStarERPModel.ExceededFeeAmountOnCourseChange" Width="1.5" PointX="32.25" PointY="63.5" />
+        <EntityTypeShape EntityType="SJStarERPModel.FeeCollection" Width="1.5" PointX="40.5" PointY="63.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.FeeDetail" Width="1.5" PointX="30" PointY="63.75" />
         <EntityTypeShape EntityType="SJStarERPModel.FeeEmailNotifacationLog" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.FeePaymentDetail" Width="1.5" PointX="29.25" PointY="65.875" />
-        <EntityTypeShape EntityType="SJStarERPModel.FeeSettlementOnCourseChnageLog" Width="1.5" PointX="18.75" PointY="69.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.FeeType" Width="1.5" PointX="3.75" PointY="82" />
-        <EntityTypeShape EntityType="SJStarERPModel.FeeTypeDetail" Width="1.5" PointX="6" PointY="81.25" />
-        <EntityTypeShape EntityType="SJStarERPModel.FIN_BankDetail" Width="1.5" PointX="18" PointY="76.375" />
-        <EntityTypeShape EntityType="SJStarERPModel.FIN_FeeReceiptDetail" Width="1.5" PointX="15.75" PointY="76.5" />
-        <EntityTypeShape EntityType="SJStarERPModel.FIN_FeeReceiptMaster" Width="1.5" PointX="13.5" PointY="68.875" />
-        <EntityTypeShape EntityType="SJStarERPModel.FIN_FeeRefundDetail" Width="1.5" PointX="12.75" PointY="73.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.FIN_FeeRefundMaster" Width="1.5" PointX="10.5" PointY="68.875" />
-        <EntityTypeShape EntityType="SJStarERPModel.InstallmentMaster" Width="1.5" PointX="6" PointY="75.125" />
-        <EntityTypeShape EntityType="SJStarERPModel.LocationMaster" Width="1.5" PointX="11.25" PointY="77.625" />
-        <EntityTypeShape EntityType="SJStarERPModel.MedicalDetail" Width="1.5" PointX="7.5" PointY="100.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.PartWisePayment" Width="1.5" PointX="33.75" PointY="60.625" />
-        <EntityTypeShape EntityType="SJStarERPModel.PaymentMode" Width="1.5" PointX="27" PointY="72.125" />
-        <EntityTypeShape EntityType="SJStarERPModel.PaymentType" Width="1.5" PointX="24.75" PointY="73.875" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaAddressDetail" Width="1.5" PointX="18.75" PointY="60.625" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaAdmissionMaster" Width="1.5" PointX="11.25" PointY="53.75" />
+        <EntityTypeShape EntityType="SJStarERPModel.FeePaymentDetail" Width="1.5" PointX="35.25" PointY="63.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.FeeSettlementOnCourseChnageLog" Width="1.5" PointX="24.75" PointY="68.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.FeeType" Width="1.5" PointX="25.5" PointY="76.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.FeeTypeDetail" Width="1.5" PointX="27.75" PointY="75.5" />
+        <EntityTypeShape EntityType="SJStarERPModel.FIN_BankDetail" Width="1.5" PointX="24" PointY="63.625" />
+        <EntityTypeShape EntityType="SJStarERPModel.FIN_FeeReceiptDetail" Width="1.5" PointX="21.75" PointY="63.75" />
+        <EntityTypeShape EntityType="SJStarERPModel.FIN_FeeReceiptMaster" Width="1.5" PointX="19.5" PointY="63.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.FIN_FeeRefundDetail" Width="1.5" PointX="21.75" PointY="59" />
+        <EntityTypeShape EntityType="SJStarERPModel.FIN_FeeRefundMaster" Width="1.5" PointX="19.5" PointY="58.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.InstallmentMaster" Width="1.5" PointX="38.25" PointY="60.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.LocationMaster" Width="1.5" PointX="17.25" PointY="86.875" />
+        <EntityTypeShape EntityType="SJStarERPModel.MedicalDetail" Width="1.5" PointX="16.5" PointY="63.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.PartWisePayment" Width="1.5" PointX="42.75" PointY="63.625" />
+        <EntityTypeShape EntityType="SJStarERPModel.PaymentMode" Width="1.5" PointX="33" PointY="60.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.PaymentType" Width="1.5" PointX="27.75" PointY="72.375" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaAddressDetail" Width="1.5" PointX="15.75" PointY="49.875" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaAdmissionMaster" Width="1.5" PointX="11.25" PointY="54.75" />
         <EntityTypeShape EntityType="SJStarERPModel.ptaBankAndAmountDetail" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaBankDetail" Width="1.5" PointX="16.5" PointY="49.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaBoardAndUniversityMaster" Width="1.5" PointX="19.5" PointY="39.375" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaBankDetail" Width="1.5" PointX="22.5" PointY="48.5" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaBoardAndUniversityMaster" Width="1.5" PointX="16.5" PointY="47.25" />
         <EntityTypeShape EntityType="SJStarERPModel.ptaCountryCityInfo" Width="1.5" PointX="2.75" PointY="3.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaDeclaration" Width="1.5" PointX="18.75" PointY="49.375" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaDocumentDetail" Width="1.5" PointX="13.5" PointY="58.375" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaEducationDetail" Width="1.5" PointX="21.75" PointY="53.875" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaEducationSubjectMark" Width="1.5" PointX="24" PointY="55" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaEduEvaluationTypeMaster" Width="1.5" PointX="19.5" PointY="80.375" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaFeeCollection" Width="1.5" PointX="24" PointY="59" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaFeeDetail" Width="1.5" PointX="13.5" PointY="53.5" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaFeePaymentDetail" Width="1.5" PointX="18.75" PointY="52.5" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaFeeType" Width="1.5" PointX="9" PointY="41.625" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaFeeTypeDetail" Width="1.5" PointX="11.25" PointY="41" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaGenderMaster" Width="1.5" PointX="14.25" PointY="50.125" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaGuardian" Width="1.5" PointX="18.75" PointY="57.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaInstallmentMaster" Width="1.5" PointX="21.75" PointY="51.25" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaLeadSourceMaster" Width="1.5" PointX="14.25" PointY="80.25" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaMedicalStatusMaster" Width="1.5" PointX="14.25" PointY="45" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaNatioalityMaster" Width="1.5" PointX="14.25" PointY="47.625" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaPartWisePayment" Width="1.5" PointX="26.25" PointY="56.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaPassport" Width="1.5" PointX="18.75" PointY="65.875" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaPaymentMode" Width="1.5" PointX="16.5" PointY="46.5" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaPaymentType" Width="1.5" PointX="11.25" PointY="46.5" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaPilotRegistrationMaster" Width="1.5" PointX="14.25" PointY="35.625" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaRegistrationInfo" Width="1.5" PointX="16.5" PointY="53.625" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaResultStatusMaster" Width="1.5" PointX="19.5" PointY="46.25" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaScreeningEmailNotificationLog" Width="1.5" PointX="16.5" PointY="37" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaScreeningExamfailedLog" Width="1.5" PointX="10.5" PointY="60.5" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaScreeningExamFeeInfo" Width="1.5" PointX="13.5" PointY="64.25" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaScreeningInfo" Width="1.5" PointX="8.25" PointY="60.25" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaScreeningTestResult" Width="1.5" PointX="10.5" PointY="65" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaScreeningTestType" Width="1.5" PointX="8.25" PointY="75" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaStreamMaster" Width="1.5" PointX="19.5" PointY="42.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaStudentLogin" Width="1.5" PointX="5.25" PointY="59.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaTitleMaster" Width="1.5" PointX="14.25" PointY="42.5" />
-        <EntityTypeShape EntityType="SJStarERPModel.ptaUGBoardAndUniversityMaster" Width="1.5" PointX="19.5" PointY="35.875" />
-        <EntityTypeShape EntityType="SJStarERPModel.RegistrationMaster" Width="1.5" PointX="3" PointY="68.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.Role" Width="1.5" PointX="0.75" PointY="56" />
-        <EntityTypeShape EntityType="SJStarERPModel.ScheduledStatusLogForTerminateResignation" Width="1.5" PointX="24" PointY="66.625" />
-        <EntityTypeShape EntityType="SJStarERPModel.ScreeningInterviewer" Width="1.5" PointX="25.5" PointY="42.875" />
-        <EntityTypeShape EntityType="SJStarERPModel.ScreeningInterviewerResult" Width="1.5" PointX="27.75" PointY="46.625" />
-        <EntityTypeShape EntityType="SJStarERPModel.ScreeningParameter" Width="1.5" PointX="22.5" PointY="42.875" />
-        <EntityTypeShape EntityType="SJStarERPModel.ScreeningParameterOption" Width="1.5" PointX="24.75" PointY="46.375" />
-        <EntityTypeShape EntityType="SJStarERPModel.ScreeningTest" Width="1.5" PointX="22.5" PointY="45.625" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaDeclaration" Width="1.5" PointX="15.75" PointY="74" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaDocumentDetail" Width="1.5" PointX="13.5" PointY="60.5" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaEducationDetail" Width="1.5" PointX="18.75" PointY="51.875" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaEducationSubjectMark" Width="1.5" PointX="21" PointY="53" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaEduEvaluationTypeMaster" Width="1.5" PointX="16.5" PointY="33.375" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaEmailNotificationSentContent" Width="1.5" PointX="15.75" PointY="24.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaFeeCollection" Width="1.5" PointX="27" PointY="62.5" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaFeeDetail" Width="1.5" PointX="16.5" PointY="55.5" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaFeePaymentDetail" Width="1.5" PointX="24.75" PointY="58.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaFeeType" Width="1.5" PointX="12" PointY="28.625" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaFeeTypeDetail" Width="1.5" PointX="14.25" PointY="28" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaGenderMaster" Width="1.5" PointX="11.25" PointY="45" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaGuardian" Width="1.5" PointX="15.75" PointY="80.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaInstallmentMaster" Width="1.5" PointX="24.75" PointY="54.75" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaLeadSourceMaster" Width="1.5" PointX="11.25" PointY="39.625" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaMedicalStatusMaster" Width="1.5" PointX="11.25" PointY="42.5" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaNatioalityMaster" Width="1.5" PointX="11.25" PointY="50.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaPartWisePayment" Width="1.5" PointX="29.25" PointY="60.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaPassport" Width="1.5" PointX="15.75" PointY="77" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaPaymentMode" Width="1.5" PointX="22.5" PointY="75.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaPaymentType" Width="1.5" PointX="14.25" PointY="46.5" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaPilotRegistrationMaster" Width="1.5" PointX="11.25" PointY="32.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaRegistrationInfo" Width="1.5" PointX="13.5" PointY="53.625" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaResultStatusMaster" Width="1.5" PointX="16.5" PointY="36.875" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaScreeningEmailNotificationLog" Width="1.5" PointX="13.5" PointY="23.5" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaScreeningExamfailedLog" Width="1.5" PointX="5.25" PointY="58.5" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaScreeningExamFeeInfo" Width="1.5" PointX="10.5" PointY="70.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaScreeningInfo" Width="1.5" PointX="8.25" PointY="68.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaScreeningTestResult" Width="1.5" PointX="10.5" PointY="75" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaScreeningTestType" Width="1.5" PointX="3" PointY="56" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaStreamMaster" Width="1.5" PointX="16.5" PointY="43.75" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaStudentLogin" Width="1.5" PointX="5.25" PointY="62.875" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaTitleMaster" Width="1.5" PointX="11.25" PointY="47.625" />
+        <EntityTypeShape EntityType="SJStarERPModel.ptaUGBoardAndUniversityMaster" Width="1.5" PointX="16.5" PointY="40.375" />
+        <EntityTypeShape EntityType="SJStarERPModel.RegistrationMaster" Width="1.5" PointX="9" PointY="78.625" />
+        <EntityTypeShape EntityType="SJStarERPModel.Role" Width="1.5" PointX="0.75" PointY="59" />
+        <EntityTypeShape EntityType="SJStarERPModel.ScheduledStatusLogForTerminateResignation" Width="1.5" PointX="24" PointY="72.375" />
+        <EntityTypeShape EntityType="SJStarERPModel.ScreeningInterviewer" Width="1.5" PointX="16.5" PointY="93.375" />
+        <EntityTypeShape EntityType="SJStarERPModel.ScreeningInterviewerResult" Width="1.5" PointX="18.75" PointY="79" />
+        <EntityTypeShape EntityType="SJStarERPModel.ScreeningParameter" Width="1.5" PointX="16.5" PointY="96.375" />
+        <EntityTypeShape EntityType="SJStarERPModel.ScreeningParameterOption" Width="1.5" PointX="18.75" PointY="82.75" />
+        <EntityTypeShape EntityType="SJStarERPModel.ScreeningTest" Width="1.5" PointX="13.5" PointY="81.875" />
         <EntityTypeShape EntityType="SJStarERPModel.SendingEmailForRejectedCandidate" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.SessionInstallmentMaster" Width="1.5" PointX="8.25" PointY="65.5" />
-        <EntityTypeShape EntityType="SJStarERPModel.SessionMaster" Width="1.5" PointX="9" PointY="50.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.SessionInstallmentMaster" Width="1.5" PointX="8.25" PointY="63.5" />
+        <EntityTypeShape EntityType="SJStarERPModel.SessionMaster" Width="1.5" PointX="9" PointY="48.625" />
         <EntityTypeShape EntityType="SJStarERPModel.sysdiagram" Width="1.5" PointX="4.75" PointY="3.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.TatooOrScar" Width="1.5" PointX="20.25" PointY="32.875" />
-        <EntityTypeShape EntityType="SJStarERPModel.tblParameterList" Width="1.5" PointX="24.75" PointY="69.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.tblParameterType" Width="1.5" PointX="19.5" PointY="83.25" />
-        <EntityTypeShape EntityType="SJStarERPModel.tblPerformanceEntryMaster" Width="1.5" PointX="16.5" PointY="62.5" />
-        <EntityTypeShape EntityType="SJStarERPModel.tblPerformanceMaster" Width="1.5" PointX="6" PointY="52.625" />
-        <EntityTypeShape EntityType="SJStarERPModel.tblPerformanceParameterResultMaster" Width="1.5" PointX="27" PointY="60.625" />
-        <EntityTypeShape EntityType="SJStarERPModel.tblPerformanceParameterTypeResultMaster" Width="1.5" PointX="21.75" PointY="60.625" />
-        <EntityTypeShape EntityType="SJStarERPModel.tblPerformancePercentageMaster" Width="1.5" PointX="8.25" PointY="55.25" />
-        <EntityTypeShape EntityType="SJStarERPModel.tblReviewMaster" Width="1.5" PointX="6" PointY="42.5" />
-        <EntityTypeShape EntityType="SJStarERPModel.tblWeeklyReviewMaster" Width="1.5" PointX="14.25" PointY="82.75" />
-        <EntityTypeShape EntityType="SJStarERPModel.UserLogin" Width="1.5" PointX="3" PointY="56.625" />
+        <EntityTypeShape EntityType="SJStarERPModel.TatooOrScar" Width="1.5" PointX="11.25" PointY="85.375" />
+        <EntityTypeShape EntityType="SJStarERPModel.tblGetTermAcceptancyByCandidate" Width="1.5" PointX="15.75" PointY="84.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.tblParameterList" Width="1.5" PointX="24.75" PointY="79.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.tblParameterType" Width="1.5" PointX="16.5" PointY="90.5" />
+        <EntityTypeShape EntityType="SJStarERPModel.tblPerformanceEntryMaster" Width="1.5" PointX="13.5" PointY="70.75" />
+        <EntityTypeShape EntityType="SJStarERPModel.tblPerformanceMaster" Width="1.5" PointX="6" PointY="46.375" />
+        <EntityTypeShape EntityType="SJStarERPModel.tblPerformanceParameterResultMaster" Width="1.5" PointX="27" PointY="68.125" />
+        <EntityTypeShape EntityType="SJStarERPModel.tblPerformanceParameterTypeResultMaster" Width="1.5" PointX="18.75" PointY="73" />
+        <EntityTypeShape EntityType="SJStarERPModel.tblPerformancePercentageMaster" Width="1.5" PointX="8.25" PointY="58.25" />
+        <EntityTypeShape EntityType="SJStarERPModel.tblReviewMaster" Width="1.5" PointX="6" PointY="73.375" />
+        <EntityTypeShape EntityType="SJStarERPModel.tblWeeklyReviewMaster" Width="1.5" PointX="11.25" PointY="82" />
+        <EntityTypeShape EntityType="SJStarERPModel.UserActivityLog" Width="1.5" PointX="5.25" PointY="101.625" />
+        <EntityTypeShape EntityType="SJStarERPModel.UserLogin" Width="1.5" PointX="3" PointY="59.375" />
         <EntityTypeShape EntityType="SJStarERPModel.Query" Width="1.5" PointX="6.75" PointY="0.75" />
         <AssociationConnector Association="SJStarERPModel.FK__Addmissio__Addmi__71D1E811" />
         <AssociationConnector Association="SJStarERPModel.FK__Addmissio__Batch__72C60C4A" />
@@ -126,13 +129,13 @@
         <AssociationConnector Association="SJStarERPModel.FK__BatchHist__Batch__625A9A57" />
         <AssociationConnector Association="SJStarERPModel.FK__BatchHist__Batch__634EBE90" />
         <AssociationConnector Association="SJStarERPModel.FK__BatchHist__Enter__6442E2C9" />
+        <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__Batch__53A266AC" />
         <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__Batch__5D95E53A" />
-        <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__Batch__66B53B20" />
         <AssociationConnector Association="SJStarERPModel.FK__CallCente__Enter__7B5B524B" />
         <AssociationConnector Association="SJStarERPModel.FK__Candidate__Candi__4B0D20AB" />
-        <AssociationConnector Association="SJStarERPModel.FK__Candidate__Candi__50C5FA01" />
-        <AssociationConnector Association="SJStarERPModel.FK__Candidate__Enter__52AE4273" />
-        <AssociationConnector Association="SJStarERPModel.FK__Scheduled__Candi__5772F790" />
+        <AssociationConnector Association="SJStarERPModel.FK__Candidate__Candi__4FD1D5C8" />
+        <AssociationConnector Association="SJStarERPModel.FK__Candidate__Enter__50C5FA01" />
+        <AssociationConnector Association="SJStarERPModel.FK__Scheduled__Candi__5A4F643B" />
         <AssociationConnector Association="SJStarERPModel.FK__CourseCha__Cours__1C5231C2" />
         <AssociationConnector Association="SJStarERPModel.FK__CourseCha__Cours__1D4655FB" />
         <AssociationConnector Association="SJStarERPModel.FK__CourseCha__Enter__2022C2A6" />
@@ -152,7 +155,7 @@
         <AssociationConnector Association="SJStarERPModel.FK__DocumentD__Creat__403A8C7D" />
         <AssociationConnector Association="SJStarERPModel.FK__DocumentD__Docum__7E37BEF6" />
         <AssociationConnector Association="SJStarERPModel.FK__DocumentD__Updat__412EB0B6" />
-        <AssociationConnector Association="SJStarERPModel.FK__ptaDocume__Docum__57A801BA" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaDocume__Docum__6C6E1476" />
         <AssociationConnector Association="SJStarERPModel.FK__Screening__Docum__02C769E9" />
         <AssociationConnector Association="SJStarERPModel.FK__ExceededF__Enter__370627FE" />
         <AssociationConnector Association="SJStarERPModel.FK__ExceededF__FeeDe__361203C5" />
@@ -189,28 +192,30 @@
         <AssociationConnector Association="SJStarERPModel.FK__FIN_FeeRe__Locat__19DFD96B" />
         <AssociationConnector Association="SJStarERPModel.FK__FIN_FeeRe__Modif__1AD3FDA4" />
         <AssociationConnector Association="SJStarERPModel.FK__SessionIn__Insta__3AD6B8E2" />
+        <AssociationConnector Association="SJStarERPModel.FK__MedicalDe__Enter__689D8392" />
         <AssociationConnector Association="SJStarERPModel.FK__PartWiseP__Enter__3E1D39E1" />
         <AssociationConnector Association="SJStarERPModel.FK__PartWiseP__Payme__3D2915A8" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaAddres__ptaRe__24285DB4" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaAdmiss__Admis__65F62111" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaAdmiss__Sessi__6501FCD8" />
-        <AssociationConnector Association="SJStarERPModel.FK__ptaDocume__ptaAd__5E54FF49" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaDocume__ptaAd__6F4A8121" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaFeeDet__PTAAd__084B3915" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaRegist__Admis__67DE6983" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaFeePay__PTABa__0D0FEE32" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaEducat__ptaBo__2610A626" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaDeclar__ptaRe__251C81ED" />
-        <AssociationConnector Association="SJStarERPModel.FK__ptaDocume__Enter__09FE775D" />
-        <AssociationConnector Association="SJStarERPModel.FK__ptaDocume__Enter__59904A2C" />
-        <AssociationConnector Association="SJStarERPModel.FK__ptaDocume__ptaPi__5D60DB10" />
-        <AssociationConnector Association="SJStarERPModel.FK__ptaDocume__Updat__0AF29B96" />
-        <AssociationConnector Association="SJStarERPModel.FK__ptaDocume__Updat__5A846E65" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaDocume__Enter__6D6238AF" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaDocume__Enter__6E565CE8" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaDocume__ptaPi__703EA55A" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaDocume__Updat__7132C993" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaDocume__Updat__7226EDCC" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaEducat__ptaEd__2704CA5F" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaEducat__ptaEd__2BC97F7C" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaEducat__ptaRe__27F8EE98" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaEducat__ptaRe__28ED12D1" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaEducat__ptaSt__29E1370A" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaEducat__ptaUG__2AD55B43" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaEmailN__ptaSc__297722B6" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaFeeCol__Enter__12C8C788" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaFeeCol__PTAFe__11D4A34F" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaFeeCol__PTAIn__14B10FFA" />
@@ -238,7 +243,7 @@
         <AssociationConnector Association="SJStarERPModel.FK__ptaScreen__PTAPi__6BAEFA67" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaScreen__PTAPi__7167D3BD" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaRegist__ptaTi__32767D0B" />
-        <AssociationConnector Association="SJStarERPModel.FK__ptaStuden__ptaRe__090A5324" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaStuden__ptaRe__66B53B20" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaScreen__Enter__6ABAD62E" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaScreen__PTASc__6CA31EA0" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaScreen__PTASc__6D9742D9" />
@@ -249,9 +254,10 @@
         <AssociationConnector Association="SJStarERPModel.FK__ptaScreen__PTASc__5006DFF2" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaScreen__Updat__4C364F0E" />
         <AssociationConnector Association="SJStarERPModel.FK__ptaScreen__PTASc__50FB042B" />
-        <AssociationConnector Association="SJStarERPModel.FK__ptaStuden__Enter__5C37ACAD" />
-        <AssociationConnector Association="SJStarERPModel.FK__ptaStuden__RoleI__5D2BD0E6" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaStuden__Enter__65C116E7" />
+        <AssociationConnector Association="SJStarERPModel.FK__ptaStuden__RoleI__67A95F59" />
         <AssociationConnector Association="SJStarERPModel.FK__Registrat__Sessi__603D47BB" />
+        <AssociationConnector Association="SJStarERPModel.FK__Screening__Regis__5F141958" />
         <AssociationConnector Association="SJStarERPModel.FK__UserLogin__RoleI__1273C1CD" />
         <AssociationConnector Association="SJStarERPModel.FK__Screening__Scree__208CD6FA" />
         <AssociationConnector Association="SJStarERPModel.FK__Screening__Scree__01D345B0" />
@@ -260,6 +266,7 @@
         <AssociationConnector Association="SJStarERPModel.FK__Screening__Tatoo__7FEAFD3E" />
         <AssociationConnector Association="SJStarERPModel.FK__SessionIn__Enter__3CBF0154" />
         <AssociationConnector Association="SJStarERPModel.FK__SessionIn__Updat__3DB3258D" />
+        <AssociationConnector Association="SJStarERPModel.FK__tblGetTer__tblPe__75035A77" />
         <AssociationConnector Association="SJStarERPModel.FK__tblParame__Revie__41B8C09B" />
         <AssociationConnector Association="SJStarERPModel.FK__tblParame__tblPa__42E1EEFE" />
         <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__tblPa__59C55456" />
@@ -270,18 +277,21 @@
         <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__tblPe__540C7B00" />
         <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__tblWe__4F47C5E3" />
         <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__tblWe__5BAD9CC8" />
+        <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__tblPe__54968AE5" />
         <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__tblPe__55009F39" />
-        <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__tblPe__67A95F59" />
         <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__Enter__5AB9788F" />
         <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__tblPe__58D1301D" />
         <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__Enter__55F4C372" />
-        <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__Enter__6991A7CB" />
-        <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__tblRe__689D8392" />
-        <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__Updat__6A85CC04" />
+        <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__Enter__567ED357" />
+        <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__tblRe__558AAF1E" />
+        <AssociationConnector Association="SJStarERPModel.FK__tblPerfor__Updat__5772F790" />
         <AssociationConnector Association="SJStarERPModel.FK__tblWeekly__tblRe__46B27FE2" />
-        <EntityTypeShape EntityType="SJStarERPModel.UserActivityLog" Width="1.5" PointX="5.25" PointY="39" />
-        <AssociationConnector Association="SJStarERPModel.FK__UserActiv__Enter__2A6B46EF" />
-      </Diagram>
+        <AssociationConnector Association="SJStarERPModel.FK__UserActiv__Enter__5E1FF51F" />
+        <EntityTypeShape EntityType="SJStarERPModel.RefundInformation" Width="1.5" PointX="37.5" PointY="63.5" />
+        <AssociationConnector Association="SJStarERPModel.FK__RefundInf__Addmi__15702A09" />
+        <AssociationConnector Association="SJStarERPModel.FK__RefundInf__Excee__7CA47C3F" />
+        <AssociationConnector Association="SJStarERPModel.FK__RefundInf__Enter__7BB05806" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

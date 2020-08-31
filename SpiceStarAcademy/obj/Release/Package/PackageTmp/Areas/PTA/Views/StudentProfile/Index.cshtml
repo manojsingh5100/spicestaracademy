@@ -1,0 +1,1371 @@
+﻿@model SJModel.PTAModel.StudentInfoViewModel
+@{
+    ViewBag.Title = "Student Profile";
+    Layout = "~/Areas/PTA/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .alert1 {
+        padding: 0px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    .select2-container--default .select2-selection--single {
+        border-radius: 0px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 34px !important;
+    }
+
+    .fee-stucture-title {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .payment-done {
+        color: green;
+        font-weight: bold;
+    }
+
+    .payment-pending {
+        color: red;
+        font-weight: bold;
+    }
+
+    .done-section {
+        background-color: #b9f9b9;
+        font-weight: bold;
+    }
+
+    .title-fee {
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .fee-heading {
+        background-color: #666 !important;
+        color: #fff;
+    }
+
+    .installment-title {
+        font-weight: bold;
+    }
+</style>
+<link href="~/Plugins/iCheck/square/blue.css" rel="stylesheet" />
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog" style="width:1024px !important; ">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="col-md-12 text-center">Admission Fee Payment</h4>
+            </div>
+            <div class="modal-body">
+                <div id="payFees"></div>
+                @* @Html.Partial("_PayFeeModelPopUp")*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Student Profile
+            <button type="button" onclick="OpenFeePopModel('@(Model.ApplicationNo)')" class="btn btn-success pull-right">Pay Fees</button>
+        </h1>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row">
+            <div class="col-md-3">
+                <!-- Profile Image -->
+                <div class="box box-primary">
+                    <div class="box-body box-profile">
+                        <img class="profile-user-img img-responsive img-circle" src="/Images/profile.jpg" id="imgProfile" alt="User profile picture">
+                        <h3 class="profile-username text-center">@(Model.CandidateName)</h3>
+                        <p class="text-muted text-center"> @Model.Email </p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="file" id="candidateuploadFile" style="width:100%" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row" style="padding-left:65px;padding-top:15px;">
+                            <div class="col-md-12">
+                                <input type="button" class="btn btn-success" id="btncandidateUpload" value="Upload" />
+                                <input type="button" class="btn btn-danger" id="btncandidateRemove" onclick="removeimage('@(Model.ApplicationNo)')" value="Remove" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="alert alert-success fade in alert-dismissable text-center" id="dvMsg" style="display:none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong id="lblMsg">@TempData["msg"]</strong>
+                </div>
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#basicDetail" data-toggle="tab">Basic Detail</a></li>
+                        <li><a href="#medicalDetail" data-toggle="tab">Medical Detail</a></li>
+                        <li><a href="#addressDetail" data-toggle="tab">Address Detail</a></li>
+                        <li><a href="#FeeDetail" data-toggle="tab">Fee Detail</a></li>
+                        <li><a href="#educationDetail" data-toggle="tab">Education Detail</a></li>
+                        <li><a href="#docsDetails" data-toggle="tab">Upload Docs</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="active tab-pane" id="basicDetail">
+                            <form class="form-horizontal" id="frmBasicDetail" onsubmit="return validateBasicDetail();" action="/StudentProfile/UpdateProfileAllInfo" method="post">
+                                <div class="form-group col-md-6">
+                                    <label for="inputName" class="col-sm-4 control-label">Application No</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(x => x.ApplicationNo, new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputName" class="col-sm-4 control-label">Session</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(x => x.SessionName, new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputName" class="col-sm-4 control-label">Course</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(x => x.CourseName, new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputSkills" class="col-sm-4 control-label">Batch Name</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(x => x.Batch, new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputName" class="col-sm-4 control-label">Email</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputExperience" class="col-sm-4 control-label">DOB</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(x => x.DOB, new { @class = "form-control", autocomplete = "off", onkeydown = "return false;" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputSkills" class="col-sm-4 control-label">Mobile No.</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(x => x.Mobile, new { @class = "form-control", onkeypress = "return isNumber(event,this)", @maxlength = "12" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputSkills" class="col-sm-4 control-label">Education</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(x => x.Education, new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputSkills" class="col-sm-4 control-label">Valid Passport</label>
+                                    <div class="col-sm-8">
+                                        @Html.CheckBoxFor(x => x.ValidPassport)
+                                    </div>
+                                </div>
+                                <div class="form-group" style="padding-left:75px; margin-left:35px">
+                                    <div class="col-sm-offset-1 col-sm-10">
+                                        <button type="button" onclick="SaveBasicsDetails();" class="btn btn-success">Update</button>
+                                        <button type="button" onclick="window.location.href = '/Addmission/AddmissionView'" class="btn btn-default">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane" id="addressDetail">
+                            @Html.HiddenFor(m => m.AddressInfo.Id)
+                            <form class="form-horizontal" id="frmBasicDetail">
+
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-3 control-label">Correspondence Address 1</label>
+                                    <div class="col-sm-3">
+                                        @Html.TextBoxFor(x => x.AddressInfo.CorAddress1, new { @class = "form-control", placeholder = "correspondence Address" })
+                                    </div>
+                                    <div>
+                                        <label for="inputName" class="col-sm-3 control-label">Correspondence Address 2</label>
+                                        <div class="col-sm-3">
+                                            @Html.TextBoxFor(x => x.AddressInfo.CorAddress2, new { @class = "form-control", placeholder = "correspondence Address" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-3 control-label">Correspondence Country</label>
+                                    <div class="col-sm-3">
+                                        @Html.DropDownList("ddlcorCountry", new SelectList(Model.CountryList, "Id", "Name", Model.AddressInfo.CorCountry), "Select Country", new { @class = "form-control", onchange = "fillcitycountry('State')", placeholder = "correspondence Country" })
+                                    </div>
+
+                                    <div>
+                                        <label for="inputName" class="col-sm-3 control-label">Correspondence State</label>
+                                        <div class="col-sm-3">
+                                            <select id="ddlcorState" onchange="fillcitycountry('District')" class="form-control">
+                                                <option value="">Select State</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail" class="col-sm-3 control-label">Correspondence District</label>
+                                    <div class="col-sm-3">
+                                        <select id="ddlCordistrict" onchange="fillcitycountry('City')" class="form-control">
+                                            <option value="">Select District</option>
+                                        </select>
+                                    </div>
+                                    <label for="inputEmail" class="col-sm-3 control-label">Correspondence City</label>
+                                    <div class="col-sm-3">
+                                        <select id="ddlcorCity" class="form-control">
+                                            <option value="">Select City</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputExperience" class="col-sm-3 control-label">Correspondence Zip</label>
+                                    <div class="col-sm-3">
+                                        @Html.TextBoxFor(x => x.AddressInfo.CorPin, new { @class = "form-control", placeholder = "correspondence Zip", onkeypress = "return isNumber(event,this)", @maxlength = "6" })
+                                    </div>
+                                </div>
+                                <div class="form-group" style="padding-top:10px;padding-bottom:10px;">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <div class="checkbox">
+                                            <label>
+                                                @Html.CheckBox("chkAddres", new { onclick = "fillPermanentAdd(this)" })  Same as correspondence
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-3 control-label">Permanent Address 1</label>
+                                    <div class="col-sm-3">
+                                        @Html.TextBoxFor(x => x.AddressInfo.PerAddress1, new { @class = "form-control", placeholder = "Permanent Address1" })
+                                    </div>
+                                    <div>
+                                        <label for="inputName" class="col-sm-3 control-label">Permanent Address 2</label>
+                                        <div class="col-sm-3">
+                                            @Html.TextBoxFor(x => x.AddressInfo.PerAddress2, new { @class = "form-control", placeholder = "Permanent Address 2" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-3 control-label">Permanent Country</label>
+                                    <div class="col-sm-3">
+                                        @Html.DropDownList("ddlPerCountry", new SelectList(Model.CountryList, "Id", "Name", Model.AddressInfo.PerCountry), "Select Country", new { @class = "form-control", onchange = "fillPercitycountry('State')", placeholder = "Permanent Country" })
+                                    </div>
+                                    <div>
+                                        <label for="inputName" class="col-sm-3 control-label">Permanent State</label>
+                                        <div class="col-sm-3">
+                                            <select id="ddlPerState" onchange="fillPercitycountry('District')" class="form-control">
+                                                <option value="">Select State</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail" class="col-sm-3 control-label">Permanent District</label>
+                                    <div class="col-sm-3">
+                                        <select id="ddlPerdistrict" onchange="fillPercitycountry('City')" class="form-control">
+                                            <option value="">Select District</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="inputEmail" class="col-sm-3 control-label">Permanent City</label>
+                                        <div class="col-sm-3">
+                                            <select id="ddlPerCity" class="form-control">
+                                                <option value="">Select City</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail" class="col-sm-3 control-label">Permanent Zip</label>
+                                    <div class="col-sm-3">
+                                        @Html.TextBoxFor(x => x.AddressInfo.PerPin, new { @class = "form-control", placeholder = "Permanent Zip", onkeypress = "return isNumber(event,this)", @maxlength = "6" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <button type="button" onclick="UpdateAddressDetail();" class="btn btn-success">Update</button>
+                                        <button type="button" onclick="window.location.href = '/Addmission/AddmissionView'" class="btn btn-default">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane" style="padding:5px 25px 25px" id="educationDetail">
+                            <!-- <h3>Educational Qualifications</h3> -->
+                            <form>
+
+                                @foreach (var item in Model.EducationInfo)
+                                {
+                                    if (item.Class != "UG")
+                                    {
+                                        <div class="page-header">
+                                            <h3>@item.Class Class</h3>
+                                        </div>
+                                        <div class="row grid-divider">
+                                            <div class="col-sm-3">
+                                                <div class="col-padding">
+                                                    <h4>Name Of Institute</h4>
+                                                    <input type="text" id="NameOfInstitute@(item.Class)" value="@item.NameOfInstitute" class="form-control" placeholder="Institute Name" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-padding">
+                                                    <h4>Board/University</h4>
+                                                    <input type="hidden" id="hdn@(item.Class)" value="@item.ptaBoardAndUniversityMasterId" />
+                                                    @Html.DropDownList("ddlboardandun" + item.Class, new SelectList(Model.GetBoardAndUniversityList, "Id", "Name"), "Please Select", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-padding">
+                                                    <h4>Year Of Passing</h4>
+                                                    <input type="text" id="YearOfPassing10th" class="form-control" value="@item.YearOfPassing" placeholder="Year of Passing" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-padding">
+                                                    <h4>Evaluation Type</h4>
+                                                    <input type="hidden" id="hdn@(item.Class)" value="@item.ptaEduEvaluationTypeMasterId" />
+                                                    @Html.DropDownList("ddlEduEvu" + item.Class, new SelectList(Model.GetEvaluationTypeList, "Id", "Name"), "Please Select", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-padding">
+                                                    <h4>Percentage/CGPA</h4>
+                                                    <input type="text" id="PercentageOrCGPA10th" class="form-control" value="@item.PercentageOrCGPA" placeholder="Percentage" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        if (item.SubjectMarks.Count > 0)
+                                        {
+                                            <div class="row grid-divider">
+                                                <div class="col-sm-12"><h4 style="background-color: #e4e4e4; padding: 3px;">Marks scored</h4></div>
+                                            </div>
+                                            <div class="row grid-divider">
+                                                <div class="col-sm-3">
+                                                    <div class="col-padding">
+                                                        <h4>Subjects</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="col-padding">
+                                                        <h4>Maximum Marks</h4>
+                                                        <p></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="col-padding">
+                                                        <h4>Marks obtained</h4>
+                                                        <p></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="col-padding">
+                                                        <h4>Percentage</h4>
+                                                        <p></p>
+                                                    </div>
+                                                </div>
+                                                @foreach (var obj in item.SubjectMarks)
+                                                {
+                                                    <div class="col-sm-3">
+                                                        <div class="col-padding">
+                                                            <h4> @obj.SubjectName </h4>
+                                                            <p></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="col-padding">
+                                                            <h4></h4>
+                                                            <input type="text" id="" class="form-control" value="@obj.MaximumMarks" placeholder="Percentage" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="col-padding">
+                                                            <h4></h4>
+                                                            <input type="text" id="" class="form-control" value="@obj.ObtainedMarks" placeholder="Percentage" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="col-padding">
+                                                            <h4></h4>
+                                                            <input type="text" id="" class="form-control" value="@obj.Percentage" placeholder="Percentage" />
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="page-header">
+                                            <h3>@item.Class</h3>
+                                        </div>
+                                        <div class="row grid-divider">
+                                            <div class="col-sm-3">
+                                                <div class="col-padding">
+                                                    <h4>Name Of Institute</h4>
+                                                    <input type="text" id="NameOfInstituteGraguate" value="@item.NameOfInstitute" class="form-control" placeholder="Name of Institute" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-padding">
+                                                    <h4>Board/University</h4>
+                                                    <input type="hidden" id="hdn@(item.Class)" value="@item.ptaUGBoardAndUniversityMasterId" />
+                                                    @Html.DropDownList("UGddlboardandun" + item.Class, new SelectList(Model.GetBoardAndUniversityListUG, "Id", "Name"), "Please Select", new { @class = "form-control" })
+                                                    @*@Html.DropDownListFor(x => x.GetBoardAndUniversityListUG, new SelectList(Model.GetBoardAndUniversityListUG, "Id", "Name"), "Please Select", new { @class = "form-control" })*@
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-padding">
+                                                    <h4>Degree</h4>
+                                                    <p><input type="text" id="degreeUG" name="txtDegreeUG" class="form-control"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-padding">
+                                                    <h4>Year Of Passing</h4>
+                                                    <input type="text" id="YearofPassingundergraduate" value="@item.YearOfPassing" class="form-control" placeholder="Year of Passing" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row grid-divider">
+                                            <div class="col-sm-3">
+                                                <div class="col-padding">
+                                                    <h4>Result Status</h4>
+                                                    @Html.DropDownListFor(x => x.Resultstatusinfo, new SelectList(Model.Resultstatusinfo, "Id", "Name"), "Please Select", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-padding">
+                                                    <h4>Evaluation Type</h4>
+                                                    <input type="hidden" id="hdn@(item.Class)" value="@item.ptaEduEvaluationTypeMasterId" />
+                                                    @Html.DropDownList("ddlEduEvu" + item.Class, new SelectList(Model.GetEvaluationTypeList, "Id", "Name"), "Please Select", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-padding">
+                                                    <h4>Percentage/CGPA</h4>
+                                                    <input type="text" id="PercentageOrCGPAgraduate" class="form-control" placeholder="Percentage" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </form>
+                        </div>
+
+
+                        @**********************Fee Details**************************@
+                        <div class="tab-pane" style="padding:5px 25px 25px" id="FeeDetail">
+                            <form action="/StudentProfile/AddFeeType" method="post" onsubmit="return validate();">
+                                <div class="row" style="pointer-events: all;">
+                                    <div class="col-md-4" style="pointer-events: all;">
+                                        <div class="form-group" style="pointer-events: all;">
+                                            <label>Course Name:</label>
+                                            @Html.DropDownListFor(m => m.CourseId, new SelectList(Model.CourseList, "Id", "Name"), "Select Course Name", new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4" style="pointer-events: all;">
+                                        @Html.HiddenFor(m => m.Id)
+                                        <div class="form-group has-feedback" style="pointer-events: all;">
+                                            <label>Session:</label>
+                                            <select name="SessionMasterId" id="SessionMasterId" class="form-control">
+                                                <option value=""> Select Session </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4" style="pointer-events: all;">
+                                        <div class="form-group" style="pointer-events: all;">
+                                            <label>Fee Name:</label>
+                                            @Html.DropDownListFor(m => m.FeeTypeId, new SelectList(Model.FeeTypeList, "Id", "Name"), "Select Fee Type", new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="pointer-events: all;">
+                                    <div class="col-md-4" style="pointer-events: all;">
+                                        <div class="form-group has-feedback" style="pointer-events: all;">
+                                            <label>Amount:</label>
+                                            @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", onkeypress = "return isDecimalNumber(event,this)", placeholder = "Amount" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4" style="pointer-events: all;">
+                                        <div class="form-group has-feedback" style="pointer-events: all;">
+                                            <label>Active:</label><br />
+                                            @Html.CheckBoxFor(m => m.IsActive)
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row text-center" style="pointer-events: all;">
+                                    <div class="col-md-12" style="pointer-events: all;">
+                                        <div class="form-group pull-left" style="pointer-events: all;">
+                                            <button type="submit" id="btnSubmit" class="btn btn-success"> Submit  </button> &nbsp;
+                                            <a class="btn btn-default" id="btnFormClear" href="JavaScript:Void(0);">Clear</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        @********************Documents Upload**************************@
+
+                        <div class="tab-pane" id="docsDetails">
+                            <div class="row grid-divider">
+                                <div class="col-md-8">
+                                    <div id="divmedicalmodel">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row grid-divider">
+                                <div class="col-md-4">
+                                    <input type="file" id="educationUploadFile" style="width:100%" class="form-control" />
+                                </div>
+                                <div>
+                                    <input type="button" class="btn btn-success" id="btnEducationUpload" value="Upload" />
+                                </div>
+                                <div class="col-md-12">
+
+                                    <table class="table-responsive table table-striped" id="tblshowuploadfiles" border="1" style="width:100%;font-weight:600">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Document Title</th>
+                                                <th>Type</th>
+                                                <th>Date of Upload</th>
+                                                <th>Download</th>
+                                                <th>Action</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{int i = 0;}
+                                            @foreach (var item in Model.ptaDocumentDetails)
+                                            {
+
+                                                <tr>
+                                                    @{i++;
+                                                    }
+                                                    <td>@i</td>
+                                                    <td><input type="text" class="form-control" value="@item.DocumentName" /> </td>
+                                                    <td><input type="text" class="form-control" value="@item.Extension" /></td>
+                                                    <td><input type="text" class="form-control" value="@item.EneteredDate" /></td>
+                                                    <td>
+                                                        <a id="achDownloadFile" style="width:140px;height:33px;padding-top: 5px;font-size: 14px;" class="btn btn-default btn-xs" href="@item.DocumentPath" download>Download File</a>
+
+                                                    </td>
+                                                    <td><input type="button" class="btn btn-danger" onclick="RemoveFile(@item.Id)" value="Remove" /></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.tab-content -->
+        </div>
+    </section>
+</div>
+
+<!-- /.col -->
+<!-- /.row -->
+<!-- /.content -->
+<script src="~/Plugins/iCheck/icheck.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#divmedicalmodel').empty();
+        $.ajax({
+
+            cache: false,
+            type: "GET",
+            url: "/PTA/StudentProfile/GetPartialMedicalInfo",
+            success: function (data) {
+                $('#divmedicalmodel').empty().append(data);
+                $('.cl').remove();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed!');
+            }
+        });
+
+        //======================================
+
+        $('#tblshowuploadfiles').DataTable();
+        $('#DOB').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+        $('#btncandidateUpload').attr("disabled", "disabled");
+        fillStateCityList("ddlCorrState", "ddlCorrCity");
+        fillStateCityList("ddlPerState", "ddlPerCity");
+        defaultimageload();
+        $('#ddlboardandun10th').val($('#hdn10th').val()).trigger('change');
+        $('#ddlboardandun12th').val($('#hdn12th').val()).trigger('change');
+        $('#ddlEduEvu10th').val($('#hdn10th').val()).trigger('change');
+        $('#ddlEduEvu12th').val($('#hdn12th').val()).trigger('change');
+        $('#UGddlboardandunUG').val($('#hdnUG').val()).trigger('change');
+        Dfaultfilladdressddl("@(Model.AddressInfo.CorState)", "@(Model.AddressInfo.CorDistrict)", "@(Model.AddressInfo.CorCity)", "");
+        Dfaultfilladdressddl("@(Model.AddressInfo.PerState)","@(Model.AddressInfo.PerDistrict)","@(Model.AddressInfo.PerCity)","Permanent");
+        StopLoading();
+    });
+
+    function Dfaultfilladdressddl(state, district, city, key) {
+        if (key == "") {
+            var countryid = ($('#ddlcorCountry option:selected').text() != "Select Country" ? $('#ddlcorCountry option:selected').text() : null);
+            if (countryid != null && countryid != "") {
+                $.ajax({
+                    url: "/PTA/StudentProfile/FillCityCountry",
+                    type: "POST",
+                    data: { Id: countryid, Country: "State" },
+                    success: function (result) {
+                        if (result != null && result.length > 0) {
+                            var str = '<option value="">Select State</option>';
+                            $.each(result, function (i, item) {
+                                str += '<option value=' + item.Id + '>' + item.Name + '</option>';
+                            });
+                            if (countryid != null && countryid != '') {
+                                $('#ddlcorState').empty().append(str);
+                                if (state != null && state != '') {
+                                    $('#ddlcorState').val(state);
+                                }
+                            }
+                            var stateid = ($('#ddlcorState option:selected').text() != "Select State" ? $('#ddlcorState option:selected').text() : null);
+                            if (stateid != null && stateid != "") {
+                                $.ajax({
+                                    url: "/PTA/StudentProfile/FillCityCountry",
+                                    type: "POST",
+                                    data: { Id: countryid, Country: "District", State: stateid },
+                                    success: function (result) {
+                                        if (result != null && result.length > 0) {
+                                            var str = '<option value="">Select District</option>';
+                                            $.each(result, function (i, item) {
+                                                str += '<option value=' + item.Id + '>' + item.Name + '</option>';
+                                            });
+                                            if (stateid != null && stateid != '') {
+                                                $('#ddlCordistrict').empty().append(str);
+                                                if (district != null && district != '') {
+                                                    $('#ddlCordistrict').val(district);
+                                                }
+                                            }
+                                            var districtid = ($('#ddlCordistrict option:selected').text() != "Select District" ? $('#ddlCordistrict option:selected').text() : null);
+                                            if (districtid != null && districtid != "") {
+                                                $.ajax({
+                                                    url: "/PTA/StudentProfile/FillCityCountry",
+                                                    type: "POST",
+                                                    data: { Id: countryid, Country: "City", State: stateid, District: districtid },
+                                                    success: function (result) {
+                                                        if (result != null && result.length > 0) {
+                                                            var str = '<option value="">Select City</option>';
+                                                            $.each(result, function (i, item) {
+                                                                str += '<option value=' + item.Id + '>' + item.Name + '</option>';
+                                                            });
+                                                            if (districtid != null && districtid != '') {
+                                                                $('#ddlcorCity').empty().append(str);
+                                                                if (city != null && city != '') {
+                                                                    $('#ddlcorCity').val(city);
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    error: function (err) {
+                                                        alert(err.statusText);
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    },
+                                    error: function (err) {
+                                        alert(err.statusText);
+                                    }
+                                });
+                            }
+                        }
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                });
+            }
+        } else {
+            var Percountryid = ($('#ddlPerCountry option:selected').text() != "Select Country" ? $('#ddlPerCountry option:selected').text() : null);
+            if (Percountryid != null && Percountryid != "") {
+                $.ajax({
+                    url: "/PTA/StudentProfile/FillCityCountry",
+                    type: "POST",
+                    data: { Id: Percountryid, Country: "State" },
+                    success: function (result) {
+                        if (result != null && result.length > 0) {
+                            var str = '<option value="">Select State</option>';
+                            $.each(result, function (i, item) {
+                                str += '<option value=' + item.Id + '>' + item.Name + '</option>';
+                            });
+                            if (Percountryid != null && Percountryid != '') {
+                                $('#ddlPerState').empty().append(str);
+                                if (state != null && state != '') {
+                                    $('#ddlPerState').val(state);
+                                }
+                            }
+                            var Perstateid = ($('#ddlPerState option:selected').text() != "Select State" ? $('#ddlPerState option:selected').text() : null);
+                            if (Perstateid != null && Perstateid != "") {
+                                $.ajax({
+                                    url: "/PTA/StudentProfile/FillCityCountry",
+                                    type: "POST",
+                                    data: { Id: Percountryid, Country: "District", State: Perstateid },
+                                    success: function (result) {
+                                        if (result != null && result.length > 0) {
+                                            var str = '<option value="">Select District</option>';
+                                            $.each(result, function (i, item) {
+                                                str += '<option value=' + item.Id + '>' + item.Name + '</option>';
+                                            });
+                                            if (Perstateid != null && Perstateid != '') {
+                                                $('#ddlPerdistrict').empty().append(str);
+                                                if (district != null && district != '') {
+                                                    $('#ddlPerdistrict').val(district);
+                                                }
+                                            }
+                                            var Perdistrictid = ($('#ddlPerdistrict option:selected').text() != "Select District" ? $('#ddlPerdistrict option:selected').text() : null);
+                                            if (Perdistrictid != null && Perdistrictid != "") {
+                                                $.ajax({
+                                                    url: "/PTA/StudentProfile/FillCityCountry",
+                                                    type: "POST",
+                                                    data: { Id: Percountryid, Country: "City", State: Perstateid, District: Perdistrictid },
+                                                    success: function (result) {
+                                                        if (result != null && result.length > 0) {
+                                                            var str = '<option value="">Select City</option>';
+                                                            $.each(result, function (i, item) {
+                                                                str += '<option value=' + item.Id + '>' + item.Name + '</option>';
+                                                            });
+                                                            if (Perdistrictid != null && Perdistrictid != '') {
+                                                                $('#ddlPerCity').empty().append(str);
+                                                                if (city != null && city != '') {
+                                                                    $('#ddlPerCity').val(city);
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    error: function (err) {
+                                                        alert(err.statusText);
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    },
+                                    error: function (err) {
+                                        alert(err.statusText);
+                                    }
+                                });
+                            }
+                        }
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                });
+            }
+        }
+    }
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+    //****************************Get Session Details*********************************//
+    $('#CourseId').change(function () {
+        jQuery.ajaxSetup({ async: false });
+        jQuery.get('/StudentProfile/GetSessionListByCourseId', { CourseId: $(this).val() != "" ? $(this).val() : 0 }, function (response) {
+            var str = '<option value="">Select Session</option>';
+            if (response != null && response.length > 0) {
+                console.log(response);
+                $.each(response, function (i, item) {
+                    str += '<option value=' + item.Id + '>' + item.Name + '</option>';
+                });
+                $('#SessionMasterId').empty().append(str);
+            } else
+                $('#SessionMasterId').empty().append(str);
+        });
+    });
+
+    function validate() {
+        var SessionId = $('#SessionMasterId').val();
+        var CourseId = $('#CourseId').val();
+        var CourseSession = $('#CourseDurationId').val();
+        var FeeType = $('#FeeTypeId').val();
+        var Amount = $('#Amount').val();
+        var status = true;
+        if (SessionId == "" || SessionId == null || SessionId == undefined) {
+            $('#SessionMasterId').css("border", "1px solid red");
+            status = false;
+        }
+        else {
+            $('#SessionMasterId').css("border", "");
+        }
+        if (CourseId == "" || CourseId == null || CourseId == undefined) {
+            $('#CourseId').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#CourseId').css("border", "");
+        }
+        if (FeeType == "" || FeeType == null || FeeType == undefined) {
+            $('#FeeTypeId').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#FeeTypeId').css("border", "");
+        }
+
+        if (Amount == "" || Amount == null) {
+            $('#Amount').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#Amount').css("border", "");
+        }
+        return status;
+    }
+
+    function fillcitycountry(name) {
+        if (name == "State") {
+            $('#ddlcorState').empty().append('<option value="">Select State</option>');
+            $('#ddlCordistrict').empty().append('<option value="">Select District</option>');
+            $('#ddlcorCity').empty().append('<option value="">Select City</option>');
+        }
+        else if(name == "District") {
+            $('#ddlCordistrict').empty().append('<option value="">Select District</option>');
+            $('#ddlcorCity').empty().append('<option value="">Select City</option>');
+        }
+        else if (name == "City") {
+            $('#ddlcorCity').empty().append('<option value="">Select City</option>');
+        }
+        var countryid = ($('#ddlcorCountry option:selected').text() != "Select Country" ? $('#ddlcorCountry option:selected').text() : null);
+        var stateid = ($('#ddlcorState option:selected').text() != "Select State" ? $('#ddlcorState option:selected').text() : null);
+        var districtid = ($('#ddlCordistrict option:selected').text() != "Select District" ? $('#ddlCordistrict option:selected').text() : null);
+        var cityid = ($('#ddlcorCity option:selected').text() != "Select City" ? $('#ddlcorCity option:selected').text() : null);
+        if (countryid != null) {
+            $.ajax({
+                url: "/PTA/StudentProfile/FillCityCountry",
+                type: "POST",
+                data: { Id: countryid, Country: name, State: stateid, District: districtid, City: cityid },
+                success: function (result) {
+                    if (result != null && result.length > 0) {
+                        var str = '<option value="">Select ' + name + '</option>';
+                        $.each(result, function (i, item) {
+                            str += '<option value=' + item.Id + '>' + item.Name + '</option>';
+                        });
+                             if (name == "State") {
+                                $('#ddlcorState').empty().append(str);
+                            }
+                            else if (name == "District") {
+                                $('#ddlCordistrict').empty().append(str);
+                            }
+                            else if (name == "City") {
+                                $('#ddlcorCity').empty().append(str);
+                            }
+                    }
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        }
+    }
+
+    function fillPercitycountry(name) {
+        if (name == "State") {
+            $('#ddlPerState').empty().append('<option value="">Select State</option>');
+            $('#ddlPerdistrict').empty().append('<option value="">Select District</option>');
+            $('#ddlPerCity').empty().append('<option value="">Select City</option>');
+        }
+        else if (name == "District") {
+            $('#ddlPerdistrict').empty().append('<option value="">Select District</option>');
+            $('#ddlPerCity').empty().append('<option value="">Select City</option>');
+        }
+        else if (name == "City") {
+            $('#ddlPerCity').empty().append('<option value="">Select City</option>');
+        }
+        var Percountryid = ($('#ddlPerCountry option:selected').text() != "Select Country" ? $('#ddlPerCountry option:selected').text() : null);
+        var Perstateid = ($('#ddlPerState option:selected').text() != "Select State" ? $('#ddlPerState option:selected').text() : null);
+        var Perdistrictid = ($('#ddlPerdistrict option:selected').text() != "Select District" ? $('#ddlPerdistrict option:selected').text() : null);
+        var Percityid = ($('#ddlPerCity option:selected').text() != "Select City" ? $('#ddlPerCity option:selected').text() : null);
+        if (Percountryid != null) {
+            $.ajax({
+                url: "/PTA/StudentProfile/FillCityCountry",
+                type: "POST",
+                data: { Id: Percountryid, Country: name, State: Perstateid, District: Perdistrictid, City: Percityid },
+                success: function (result) {
+                    if (result != null && result.length > 0) {
+                        var str = '<option value="">Select ' + name + '</option>';
+                        $.each(result, function (i, item) {
+                            str += '<option value=' + item.Id + '>' + item.Name + '</option>';
+                        });
+
+                             if (name == "State") {
+                                $('#ddlPerState').empty().append(str);
+                            }
+                            else if (name == "District") {
+                                $('#ddlPerdistrict').empty().append(str);
+                            }
+                            else if (name == "City") {
+                                $('#ddlPerCity').empty().append(str);
+                            }
+                    }
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        }
+    }
+
+    function defaultimageload() {
+        var application = $('#ApplicationNo').val();
+        if (application != "") {
+            $.ajax({
+                url: "/PTA/StudentProfile/Defaultimageload",
+                type: "POST",
+                data: { Application: application },
+                success: function (result) {
+                    if (result != null && result != "") {
+                        $("#imgProfile").attr("src", result);
+                        $('#btncandidateUpload').attr("disabled", "disabled");
+                    }
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        }
+    }
+
+    function checkMsg(msg) {
+        if (msg != undefined && msg != null && msg != "") {
+            $('#lblMsg').html(msg);
+            $("#dvMsg").css("display", "block");
+            setTimeout(function () {
+                $("#dvMsg").css("display", "none");
+                $('#lblMsg').html('');
+            }, 8000);
+        }
+    }
+
+    function readURLprofile(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imgProfile').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function readURLDoc(input) {
+        if (input.files) {
+            var filesAmount = input.files.length;
+            if (filesAmount > 0) {
+                var placeToInsertImagePreview = $('#divmultiple');
+                for (i = 0; i < filesAmount; i++) {
+                    var reader = new FileReader();
+                    reader.onload = function (event) {
+                        $($.parseHTML('<img style="border:1px #00000000 solid;width:170px;height:200px;padding:5px;">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                    }
+                    reader.readAsDataURL(input.files[i]);
+                }
+            } else {
+                $(input).val("");
+                $('#divmultiple').empty();
+            }
+        }
+    }
+
+    function OpenFeePopModel(ApplicationNo) {
+        $('#payFees').empty();
+        var obj = { AppNo : ApplicationNo}
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "/PTA/FeeCollection/FeePaymentPopUp",
+            data: obj ,
+            success: function (data) {
+                $('#payFees').append(data);
+                $('#myModal').modal('show');
+            }
+        })
+    }
+
+    //*************************Education Upload***********************//
+    $("#educationUploadFile").change(function () {
+        if ($(this).val() == "") {
+            $('#educationUploadFile').attr("disabled", "disabled")
+            return false;
+        }
+        else {
+            var file_size = $(this)[0].files[0].size;
+            var ext = $(this)[0].files[0].name.split('.').pop().toLowerCase();
+            if (file_size > 204800) {
+                $('#lblMsg').html('File size is greater than 200KB!');
+                $(this).val("");
+                if ($('#lblMsg').text() != undefined && $('#lblMsg').text() != null && $('#lblMsg').text() != "") {
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                        $('#lblMsg').html('');
+                    }, 8000);
+                }
+                $('#btnEducationUpload').attr("disabled", "disabled")
+                return false;
+            }
+            else if (ext != 'jpg' && ext != 'jpeg' && ext != 'png') {
+                $('#lblMsg').html('File extention should be jpg,jpeg,png!');
+                if ($('#lblMsg').text() != undefined && $('#lblMsg').text() != null && $('#lblMsg').text() != "") {
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                        $('#lblMsg').html('');
+                    }, 8000);
+                }
+                $('#btnEducationUpload').attr("disabled", "disabled")
+                return false;
+            }
+        }
+        $('#btnEducationUpload').removeAttr("disabled");
+    });
+
+    function RemoveFile(Id) {
+        debugger;
+        $.ajax({
+            url: '/PTA/StudentProfile/RemoveFile',
+            type: "POST",
+            data: { DocumentId: Id },
+            success: function (result) {
+
+            },
+            error: function (err) {
+                alert(err.statusText);
+            }
+        });
+    }
+    //**********************
+
+
+    //******************************Candidate Upload*******************//
+    $("#candidateuploadFile").change(function () {
+        if ($(this).val() == "") {
+            $('#imgProfile').attr('src', '/Images/profile.jpg');
+            $('#candidateuploadFile').attr("disabled", "disabled")
+            return false;
+        }
+        else {
+            var file_size = $(this)[0].files[0].size;
+            var ext = $(this)[0].files[0].name.split('.').pop().toLowerCase();
+            if (file_size > 204800) {
+                $('#lblMsg').html('File size is greater than 200KB!');
+                $(this).val("");
+                if ($('#lblMsg').text() != undefined && $('#lblMsg').text() != null && $('#lblMsg').text() != "") {
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                        $('#lblMsg').html('');
+                    }, 8000);
+                }
+                $('#imgProfile').attr('src', '/Images/profile.jpg');
+                $('#btncandidateUpload').attr("disabled", "disabled")
+                return false;
+            }
+            else if (ext != 'jpg' && ext != 'jpeg' && ext != 'png') {
+                $('#lblMsg').html('File extention should be jpg,jpeg,png!');
+                if ($('#lblMsg').text() != undefined && $('#lblMsg').text() != null && $('#lblMsg').text() != "") {
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#dvMsg").css("display", "none");
+                        $('#lblMsg').html('');
+                    }, 8000);
+                }
+                $('#imgProfile').attr('src', '/Images/profile.jpg');
+                $('#btncandidateUpload').attr("disabled", "disabled")
+                return false;
+            }
+        }
+        $('#btncandidateUpload').removeAttr("disabled");
+        readURLprofile(this);
+    });
+
+    //**************************
+
+    $('#btnEducationUpload').click(function () {
+        debugger;
+        var data = new FormData();
+        data.append("AppNo", $('#ApplicationNo').val());
+        var files = $("#educationUploadFile").get(0).files;
+        if (files.length > 0) {
+            for (var j = 0; j < files.length; j++) {
+                data.append("Image" + (j + 1), files[j]);
+            }
+        }
+        $.ajax({
+            url: '/PTA/StudentProfile/SaveOtherFilesUploadData',
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function (response) {
+                $('#myOtherDocsModal').modal('hide');
+                $("#lblMsg").text(response);
+                if ($("#lblMsg").text() != "") {
+                    $("#dvMsg").css("display", "block");
+                    setTimeout(function () {
+                        $("#lblMsg").text('');
+                        $("#dvMsg").css("display", "none");
+                    }, 8000);
+                }
+            },
+            error: function (er) {
+                alert(er);
+            }
+        });
+    });
+
+
+    $('#btncandidateUpload').click(function () {
+        var fileUpload = $("#candidateuploadFile").get(0);
+        var files = fileUpload.files;
+        if (files.length > 0) {
+            var fileData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+            fileData.append('AppNo', $('#ApplicationNo').val());
+            $.ajax({
+                url: '/StudentProfile/candidateUploadFiles',
+                type: "POST",
+                contentType: false,
+                processData: false,
+                data: fileData,
+                success: function (result) {
+                    alert(result);
+                    $('#btncandidateUpload').attr("disabled", "disabled");
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        }
+    });
+
+
+
+    function SaveBasicsDetails() {
+        var email = $('#Email').val();
+        var dob = $('#DOB').val();
+        var mobile = $('#Mobile').val();
+        status = true;
+        if (email == "" || !validateEmail("Email")) {
+            $('#Email').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#Email').css("border", "");
+        }
+
+        if (mobile == "" && mobile.length < 10) {
+            $('#Mobile').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#Mobile').css("border", "");
+        }
+        if (dob == "") {
+            $('#DOB').css("border", "1px solid red");
+            status = false;
+        } else {
+            $('#DOB').css("border", "");
+        }
+        if (status != "false") {
+            var basicData = {};
+            basicData.ApplicationNo = $('#ApplicationNo').val();
+            basicData.Email = email;
+            basicData.DOBStr = dob;
+            basicData.Mobile = mobile;
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/PTA/StudentProfile/UpdateBasicsDetails",
+                    data: { Model: basicData },
+                    success: function (response) {
+                        if (response != "") {
+                            $('#lblMsg').text(response);
+                            if ($('#lblMsg').text() != undefined && $('#lblMsg').text() != null && $('#lblMsg').text() != "") {
+                                $("#dvMsg").css("display", "block");
+                                setTimeout(function () {
+                                    $("#dvMsg").css("display", "none");
+                                    $('#lblMsg').html('');
+                                }, 8000);
+                            }
+                        }
+                    }
+                });
+        } else {
+            return false;
+        }
+    }
+
+    function UpdateAddressDetail() {
+        var corCountry = $('#ddlcorCountry option:selected').text == "Select Country" ? "" : $('#ddlcorCountry option:selected').text();
+        var corDistrict = $('#ddlCordistrict option:selected').text == "Select Country" ? "" : $('#ddlCordistrict option:selected').text();
+        var corState = $('#ddlcorState option:selected').text() == "Select State" ? "" : $('#ddlcorState option:selected').text();
+        var corCity = $('#ddlcorCity option:selected').text() == "Select City" ? "" : $('#ddlcorCity option:selected').text();
+        var perCountry = $('#ddlPerCountry option:selected').text() == "Select State" ? "" : $('#ddlPerCountry option:selected').text();
+        var perDistrict = $('#ddlPerdistrict option:selected').text() == "Select State" ? "" : $('#ddlPerdistrict option:selected').text();
+        var perState = $('#ddlPerState option:selected').text() == "Select State" ? "" : $('#ddlPerState option:selected').text();
+        var perCity = $('#ddlPerCity option:selected').text() == "Select City" ? "" : $('#ddlPerCity option:selected').text();
+        var frmData = {};
+        frmData.Id = $('#AddressInfo_Id').val();
+        frmData.CorAddress1 = $('#AddressInfo_CorAddress1').val();
+        frmData.CorAddress2 = $('#AddressInfo_CorAddress2').val();
+        frmData.CorCountry = corCountry;
+        frmData.CorState = corState;
+        frmData.CorDistrict = corDistrict;
+        frmData.CorCity = corCity;
+        frmData.CorPin = $('#AddressInfo_CorPin').val();
+        frmData.PerAddress1 = $('#AddressInfo_PerAddress1').val();
+        frmData.PerAddress2 = $('#AddressInfo_PerAddress2').val();
+        frmData.PerPin = $('#AddressInfo_PerPin').val();
+        frmData.PerCountry = perCountry;
+        frmData.PerState = perState;
+        frmData.PerDistrict = perDistrict;
+        frmData.PerCity = perCity;
+        frmData.ApplicationNo = $('#ApplicationNo').val();
+
+        $.ajax(
+            {
+                type: "POST",
+                url: "/PTA/StudentProfile/UpdateAddressDetails",
+                data: { Model: frmData },
+                success: function (response) {
+                    if (response != "") {
+                        $('#lblMsg').text(response);
+                        if ($('#lblMsg').text() != undefined && $('#lblMsg').text() != null && $('#lblMsg').text() != "") {
+                            $("#dvMsg").css("display", "block");
+                            setTimeout(function () {
+                                $("#dvMsg").css("display", "none");
+                                $('#lblMsg').html('');
+                            }, 8000);
+                        }
+                    }
+                }
+            });
+
+    }
+
+    function fillPermanentAdd(obj) {
+        var c_adddress1 = $('#AddressInfo_CorAddress1').val();
+        var c_adddress2 = $('#AddressInfo_CorAddress2').val();
+        var Country = $('#ddlcorCountry option:selected').text();
+        var c_city = $('#ddlcorCity option:selected').text();
+        var c_state = $('#ddlcorState option:selected').text();
+        var c_District = $('#ddlCordistrict option:selected').text();
+        var c_zip = $('#AddressInfo_CorPin').val();
+        if ($(obj).prop("checked")) {
+            $('#AddressInfo_PerAddress1').val(c_adddress1);
+            $('#AddressInfo_PerAddress2').val(c_adddress2);
+            $('#ddlPerCountry option:selected').text(Country);
+            $('#ddlPerState option:selected').text(c_state);
+            $('#ddlPerCity option:selected').text(c_city);
+            $('#ddlPerdistrict option:selected').text(c_District);
+            $('#AddressInfo_PerPin').val(c_zip);
+        } else {
+            $('#AddressInfo_PerAddress1').val('');
+            $('#AddressInfo_PerAddress2').val('');
+            $('#ddlPerState').empty().append('<option value="">Select State</option>');
+            $('#ddlPerdistrict').empty().append('<option value="">Select District</option>');
+            $('#ddlPerCity').empty().append('<option value="">Select City</option>');
+            $('#AddressInfo_PerPin').val('');
+        }
+    }
+
+    function validateEmail(emailField) {
+        var reg = /^([A-Za-z0-9_\-\.])+\@@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if (reg.test($("#" + emailField).val()) == false) {
+            return false;
+        }
+        return true;
+    }
+
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+
+
+    function isDecimalNumber(evt, element) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+
+        if (
+            (charCode != 46 || $(element).val().indexOf('.') != -1) &&
+            (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+
+    function validateBasicDetail() {
+        var email = $('#Email').val();
+        var dob = $('#DOB').val();
+        var mobile = $('#Mobile').val();
+
+        return status;
+    }
+
+    function removeimage() {
+        debugger;
+        var AppNo = $('#ApplicationNo').val();
+        if (AppNo != "")
+        $.ajax({
+            url: '/PTA/StudentProfile/RemovePhoto',
+            type: "POST",
+            data: { ApplicationNo: AppNo },
+            success: function (result) {
+                if (result != null && result == "Delete") {
+                    $('#btncandidateUpload').attr("disabled", "disabled");
+                    $('#imgProfile').attr('src', '/Images/profile.jpg');
+                }
+            },
+            error: function (err) {
+                alert(err.statusText);
+            }
+        });
+    }
+
+</script>

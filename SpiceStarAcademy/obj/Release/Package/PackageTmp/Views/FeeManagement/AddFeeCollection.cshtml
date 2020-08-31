@@ -119,15 +119,29 @@
                         <div class="col-sm-2">
                             @Html.TextBoxFor(m => m.RegistrationInfo.SessionName, new { @class = "form-control", placeholder = "Session Name", disabled = "disabled" })
                         </div>
-                        <label class="col-sm-1 ">Amity Enroll No :</label>
-                        <div class="col-sm-2">
-                            @Html.TextBoxFor(m => m.RegistrationInfo.AmityEnNo, new { @class = "form-control", placeholder = "Amity Enroll No", disabled = "disabled" })
-                        </div>
-                        <div class="col-sm-3">
-                            <button type="button" class="btn btn-info" data-toggle="modal" onclick="GetFeeList();" data-target="#modal-default">
-                                Candidate Fee Collection
-                            </button>
-                        </div>
+                        @*<label class="col-sm-1 ">Amity Enroll No :</label>
+        <div class="col-sm-2">
+            @Html.TextBoxFor(m => m.RegistrationInfo.AmityEnNo, new { @class = "form-control", placeholder = "Amity Enroll No", disabled = "disabled" })
+        </div>*@
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-info" data-toggle="modal" onclick="GetFeeList();" data-target="#modal-default">
+                            Candidate Fee Collection
+                        </button>
+                        @*<button type="button" id="btnrefund123" style="display:@(Model.RegistrationInfo.ExceedPaymentRefundId == 0?"none":"block")" onclick="OpenRefundPopUp(this, '@Model.RegistrationInfo.ExceedPaymentRefundId');" class="btn btn-primary pull-right btnrefund" @(Model.RegistrationInfo.RefundStatus != "Pending" ? "disabled" : "")>Refund</button>*@
+
+                        <button type="button" id="btnrefund123" adm="@(Model.RegistrationInfo.AddMissionId)" style="display:@(Model.RegistrationInfo.ExceedPaymentRefundId == 0?"block":"block")" onclick="OpenRefundPopUp(this, '@Model.RegistrationInfo.ExceedPaymentRefundId');" class="btn btn-primary pull-right btnrefund" @(Model.RegistrationInfo.RefundStatus != "Pending" ? "" : "")>Refund</button>
+                    </div>
+                        @*<div class="col-sm-2" style="display:@(Model.RegistrationInfo.ExceedPaymentRefundId == 0?"none":"block")">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" style="padding:0px;text-align:center">Refund</div>
+                                <div class="panel-body" style="padding:5px;">
+                                    <div class="row">
+                                        <div class="col-md-3" style="padding-right:0px;padding-left:5px;"><button type="button" onclick="OpenRefundPopUp(this, '@Model.RegistrationInfo.ExceedPaymentRefundId');" class="btn btn-primary pull-right btnrefund" @(Model.RegistrationInfo.RefundStatus != "Pending" ? "disabled" : "") >Refund</button></div>
+                                        <div class="col-md-6" style="padding-right:0px;padding-left:13px;"><button type="button" onclick="OpenRefundPopUp(this, '@Model.RegistrationInfo.ExceedPaymentRefundId');" class="btn btn-danger btnrefund" @(Model.RegistrationInfo.RefundStatus != "Pending" ? "disabled" : "")>Reject</button></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
                     </div>
 
                     <div class="form-group" id="divcoursechnage" style="padding: 0px 20px;display:none">
@@ -281,6 +295,20 @@
     <!-- /.modal-dialog -->
 </div>
 
+<div id="myrefund" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#dfdbda">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="headerText">Approved</h4>
+            </div>
+            <div class="modal-body" id="divrefundbody" style="background-color:#dfdbda">
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="~/Plugins/iCheck/icheck.min.js"></script>
 <script src="~/assets/js/considerationoffeeamount.js"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -325,6 +353,11 @@
                 $(".cl").children("option[value^=1]").hide()
             else if ($('.cl option:selected').text() == "BBA")
                 $(".cl").children("option[value^=2]").hide()
+        }
+        if('@Model.RegistrationInfo.RefundRemark' != "Pending" && '@Model.RegistrationInfo.RefundRemark' != null && '@Model.RegistrationInfo.RefundRemark' != "")
+        {
+            $('#btnrefund123').text('@Model.RegistrationInfo.RefundRemark');
+            $('#btnrefund123').attr('disabled','disabled');
         }
     });
 
@@ -1052,6 +1085,36 @@
             }
         });
       }
+    }
+
+    function OpenRefundPopUp(obj, Id) {
+        if ($(obj).text() != "Refund") {
+            $('#headerText').text($(obj).text() + " Remark");
+            $('#chkbutton').css("display", "none");
+        }
+        else
+            $('#headerText').text("Refund Remark");
+        var adm = $(obj).attr('adm');
+        $('#divrefundbody').empty();
+             $.ajax({
+                 cache: false,
+                 type: "GET",
+                 url: "@(Url.Action("OpenRefundPopup", "FeeManagement"))",
+                 data: { Id: Id, AdmissionId:adm},
+                success: function (data)
+                {
+                    $('#divrefundbody').append(data);
+                    $('#myrefund').modal('show');
+                    if ($(obj).text() != "Refund")
+                        $("#btnapr").prop("value", $(obj).attr("value"));
+                    else
+                        $("#btnapr").prop("value", "Submit");
+                },
+                error: function (xhr, ajaxOptions, thrownError)
+                {
+                    alert('Failed!');
+                }
+            });
     }
 
     function AddlastRow(payAmount, capitalAmount) {

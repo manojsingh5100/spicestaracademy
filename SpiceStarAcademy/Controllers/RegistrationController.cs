@@ -43,16 +43,18 @@ namespace SpiceStarAcademy.Controllers
             return View();
         }
 
-        public ActionResult UpdateMedicalRemark(int RegNo, string Remark, string MdlStatus, int Id, bool IsMedicalStandBy, string tag = null)
-       {
-            var Result = registerService.UpdateMedicalRemark(RegNo, Remark, MdlStatus, Id, IsMedicalStandBy,tag);
+        public ActionResult UpdateMedicalRemark(int RegNo, string Remark, string MdlStatus, int Id, string tag = null)
+        {
+            int UserId = Convert.ToInt32(Session["UserId"]);
+            var Result = registerService.UpdateMedicalRemark(RegNo, Remark, MdlStatus, Id, UserId, tag);
             Models.Common cm = new Models.Common();
-            cm.GetResult(Result.Email, Convert.ToInt64(Result.ApplicationNo), "Selected", "Rejected");
+          //  cm.GetResult(Result.Email, Convert.ToInt64(Result.ApplicationNo), "Selected", "Rejected");
             LogActivityViewModel log = new LogActivityViewModel();
-            log.EnteredBy = Convert.ToInt32(Session["UserId"]);
+            log.EnteredBy = UserId;
             log.EnteredDate = DateTime.Now;
             log.ActioName = "UpdateMedicalRemark";
             log.ControllerName = "Registration";
+            log.RegistrationNo = RegNo;
             if (string.IsNullOrEmpty(Result.Message))
             {
                 log.ModuleName = "Medical";
@@ -147,6 +149,7 @@ namespace SpiceStarAcademy.Controllers
             log.ActioName = "Create";
             log.ModuleName = "Registration";
             log.ControllerName = "Registration";
+            log.RegistrationNo = model.RegistartionNo;
             model = registerService.AddUpdate(model);
             if (model.Id == 0)
             {
@@ -206,10 +209,11 @@ namespace SpiceStarAcademy.Controllers
                 log.ModuleName = "Medical";
                 log.ControllerName = "Registration";
                 log.Activity = "Medical Selected";
-                log.ActivityMessage = "Medical clearance of registraion no " + info.RegistartionNo + " is cleared.";
+                log.ActivityMessage = "Medical clearance of registration no " + info.RegistartionNo + " is cleared.";
+                log.RegistrationNo = info.RegistartionNo;
                 logActivityService.CreateLogActivity(log);
                 Models.Common cm = new Models.Common();
-                cm.GetResult(info.Email, Convert.ToInt64(info.ApplicationNo), "Selected", "Selected");
+              //  cm.GetResult(info.Email, Convert.ToInt64(info.ApplicationNo), "Selected", "Selected");
             }
             return Json(info, JsonRequestBehavior.AllowGet);
         }
@@ -223,12 +227,6 @@ namespace SpiceStarAcademy.Controllers
         {
             CallCenterRemarkViewModel model = new CallCenterRemarkViewModel();
             model.Tag = Tag;
-            model.remarkList = (from RemarksOfMedical e in Enum.GetValues(typeof(RemarksOfMedical))
-                                select new RoleViewModel
-                                {
-                                    Id = (int)e,
-                                    Name = e.ToString().Replace('_', ' ')
-                                }).ToList();
             model.MedicalStatusList = (from MedicalStatus e in Enum.GetValues(typeof(MedicalStatus))
                                        select new RoleViewModel
                                        {
@@ -241,19 +239,12 @@ namespace SpiceStarAcademy.Controllers
             if (RegisterData != null)
             {
                 if (RegisterData.IsMedicalClear.HasValue && !RegisterData.IsMedicalClear.Value && RegisterData.MedicalRemark != null && RegisterData.MedicalRemark != "")
-                {
-                    var result = model.remarkList.Where(r => r.Name == RegisterData.MedicalRemark).FirstOrDefault();
-                    if (result != null)
-                        model.MedicalRemarkNum = result.Id;
-                    else
-                    {
-                        model.MedicalRemarkNum = (int)RemarksOfMedical.Others_with_Free_Text;
-                        model.Remarks = RegisterData.MedicalRemark;
-                    }
-                }
+                    model.Remarks = RegisterData.MedicalRemark;
             }
             model.IsMedicalStandBy = RegisterData.IsMedicalStandBy;
             model.StudentName = RegisterData.StudentName;
+            model.UserName = RegisterData.FullUserName;
+            model.EnterDateStr = RegisterData.DateOfWithdrawalStr;
             model.MedicalFitnessStatus = RegisterData.ModOfPayment;
             return PartialView("_MedicalRemark", model);
         }
@@ -288,6 +279,7 @@ namespace SpiceStarAcademy.Controllers
             model.GetTatooList = registerService.GetScreeningTatooList();
             model.GetBatchList = addmissionService.GetBatchList();
             model.GetCourseList = addmissionService.GetCourseList();
+            model.GetLeadSourceList = registerService.GetLeadSourceList();
             return PartialView("_ScreenTestPopUp", model);
         }
 
@@ -298,6 +290,7 @@ namespace SpiceStarAcademy.Controllers
             model.GetTatooList = registerService.GetScreeningTatooList();
             model.GetBatchList = addmissionService.GetBatchList();
             model.GetCourseList = addmissionService.GetCourseList();
+            model.GetLeadSourceList = registerService.GetLeadSourceList();
             return PartialView("_ScreenTestPopUp", model);
         }
 
@@ -330,7 +323,7 @@ namespace SpiceStarAcademy.Controllers
                     RegistrationNo = Obj.RegistrationId
                 };
                 registerService.SaveSendRejectedEmailInfo(objSend);
-                cm.GetResult(Model.Email, Convert.ToInt64(Model.ApplicationNo), "Rejected", "Pending");
+               //cm.GetResult(Model.Email, Convert.ToInt64(Model.ApplicationNo), "Rejected", "Pending");
                 //  Email.SendEmailWithSingleTemplate(Obj.Email, "Spice Star - Candidate Rejected", "~/Templates/RejectedEmailTemplate.html");
             }
             string msg = "";
@@ -342,6 +335,7 @@ namespace SpiceStarAcademy.Controllers
                 log.ActioName = "ScreeningTestSubmit";
                 log.ModuleName = "Screenning";
                 log.ControllerName = "Registration";
+                log.RegistrationNo = Model.RegistrationId;
                 if (Model.IsSelected.HasValue && !Model.IsSelected.Value)
                 {
                     if (Model.IsStandBy)
@@ -516,6 +510,28 @@ namespace SpiceStarAcademy.Controllers
         }
 
         [HttpGet]
+        public ActionResult SaveSessionChange(int RegNo, int SessionId, string sessioncall = null)
+        {
+            FeeManagementService _feeService = new FeeManagementService();
+            int UserId = Session["UserId"] != null ? Convert.ToInt32(Session["UserId"]) : 0;
+            if (!string.IsNullOrEmpty(sessioncall))
+            {
+                LogActivityViewModel log = new LogActivityViewModel();
+                log.EnteredBy = UserId;
+                log.EnteredDate = DateTime.Now;
+                log.ActioName = "SaveSessionChange";
+                log.ModuleName = "Screenning";
+                log.ControllerName = "Registration";
+                log.Activity = "Change Session";
+                log.ActivityMessage = "Session has been changed with RegNo:" + RegNo;
+                log.RegistrationNo = RegNo;
+                LogActivityService logActivityService = new LogActivityService();
+                logActivityService.CreateLogActivity(log);
+            }
+            return Json(_feeService.SaveSessionChange(RegNo,UserId,SessionId), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         public ActionResult SaveCourseChange(int CourseId, int SessionYr, int RegNo, string OldCourse)
         {
             FeeManagementService _feeService = new FeeManagementService();
@@ -529,9 +545,22 @@ namespace SpiceStarAcademy.Controllers
             log.ControllerName = "Registration";
             log.Activity = "Change Course";
             log.ActivityMessage = "Course changed from " + OldCourse + " to " + ChangeCourseWith + " regarded registration No. " + RegNo;
+            log.RegistrationNo = RegNo;
             LogActivityService logActivityService = new LogActivityService();
             logActivityService.CreateLogActivity(log);
             return Json(_feeService.SaveCourseChange(CourseId, SessionYr, RegNo, UserId, 0, OldCourse, null), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult IsOverBatchStrength(int BatchId)
+        {
+            return Json(registerService.IsOverBatchStrength(BatchId), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult ChangeLeadSource(int RegNo, string LeadSource)
+        {
+            return Json(registerService.ChangeLeadSource(RegNo,LeadSource), JsonRequestBehavior.AllowGet);
         }
     }
 }
